@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Case Studies — Shivansh Mathur</title>
+  <meta name="description" content="Browse all UX and product design case studies by domain, business impact, and UX scope.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="./output.css" rel="stylesheet">
+</head>
+<body class="bg-white text-neutral-900 font-sans antialiased">
+
+  <!-- ========== NAVIGATION ========== -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-neutral-200" role="banner">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Primary navigation">
+      <a href="./index.html" class="text-lg font-semibold tracking-tight text-neutral-900 hover:text-accent transition-colors">
+        Shivansh Mathur
+      </a>
+      <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-600" role="list">
+        <li><a href="./work.html" class="text-neutral-900">Work</a></li>
+        <li><a href="./about.html" class="hover:text-neutral-900 transition-colors">About</a></li>
+        <li><a href="./thinking.html" class="hover:text-neutral-900 transition-colors">Thinking</a></li>
+        <li><a href="./resume.html" class="hover:text-neutral-900 transition-colors">Resume</a></li>
+        <li><a href="./contact.html" class="hover:text-neutral-900 transition-colors">Contact</a></li>
+        <li><a href="./dummy.html" class="hover:text-neutral-900 transition-colors">Dummy</a></li>
+      </ul>
+      <button type="button" class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-md hover:bg-neutral-100 transition-colors" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu" id="menu-toggle">
+        <span class="block w-5 h-0.5 bg-neutral-900 transition-all duration-200"></span>
+        <span class="block w-5 h-0.5 bg-neutral-900 mt-1.5 transition-all duration-200"></span>
+        <span class="block w-5 h-0.5 bg-neutral-900 mt-1.5 transition-all duration-200"></span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden hidden border-t border-neutral-200 bg-white" role="dialog" aria-label="Mobile navigation">
+      <ul class="flex flex-col px-6 py-4 gap-1 text-base font-medium text-neutral-700" role="list">
+        <li><a href="./work.html" class="block py-3 px-2 rounded-md bg-neutral-50 text-neutral-900">Work</a></li>
+        <li><a href="./about.html" class="block py-3 px-2 rounded-md hover:bg-neutral-50 transition-colors">About</a></li>
+        <li><a href="./thinking.html" class="block py-3 px-2 rounded-md hover:bg-neutral-50 transition-colors">Thinking</a></li>
+        <li><a href="./resume.html" class="block py-3 px-2 rounded-md hover:bg-neutral-50 transition-colors">Resume</a></li>
+        <li><a href="./contact.html" class="block py-3 px-2 rounded-md hover:bg-neutral-50 transition-colors">Contact</a></li>
+        <li><a href="./dummy.html" class="block py-3 px-2 rounded-md hover:bg-neutral-50 transition-colors">Dummy</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="pt-16">
+    <!-- ========== PAGE HEADER ========== -->
+    <div class="px-6 pt-12 pb-8 md:pt-16 md:pb-10 border-b border-neutral-200">
+      <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-neutral-950">All Case Studies</h1>
+        <p class="mt-3 text-neutral-600 max-w-xl">Browse by company, domain, impact, or scope. Every project includes the problem, process, and outcome.</p>
+      </div>
+    </div>
+
+    <!-- ========== TWO-COLUMN LAYOUT ========== -->
+    <div class="max-w-6xl mx-auto px-6 py-8 md:py-10">
+      <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+
+        <!-- ===== MOBILE FILTER TOGGLE ===== -->
+        <div class="lg:hidden">
+          <button type="button" id="filter-toggle" class="w-full flex items-center justify-between px-4 py-3 border border-neutral-200 rounded-lg text-sm font-medium text-neutral-700 hover:border-neutral-400 transition-colors">
+            <span class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+              Filter Case Studies
+              <span id="mobile-filter-count" class="hidden px-2 py-0.5 text-xs font-semibold bg-neutral-900 text-white rounded-full"></span>
+            </span>
+            <svg class="w-4 h-4 transition-transform" id="filter-toggle-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+        </div>
+
+        <!-- ===== LEFT: FILTER PANEL ===== -->
+        <aside id="filter-panel" class="hidden lg:block lg:w-64 shrink-0" aria-label="Filter case studies">
+          <div class="lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:pr-2">
+
+            <!-- Filter Header -->
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-sm font-semibold text-neutral-900">Filter Case Studies</h2>
+              <button type="button" id="reset-filters" class="hidden text-xs font-medium text-accent hover:text-accent-hover transition-colors">
+                Reset Filters
+              </button>
+            </div>
+
+            <!-- Active Filter Count -->
+            <div id="active-filter-bar" class="hidden mb-6 px-3 py-2 bg-neutral-100 rounded-lg text-xs text-neutral-600">
+              <span id="active-filter-count">0</span> filters active
+            </div>
+
+            <!-- FILTER: Company -->
+            <fieldset class="mb-6">
+              <legend class="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">Company</legend>
+              <div class="space-y-2" data-filter-group="company">
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="MedTech Corp" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">MedTech Corp</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="CloudOps Inc." class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">CloudOps Inc.</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="PharmaSolutions Ltd." class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">PharmaSolutions Ltd.</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="RetailX" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">RetailX</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="FinServe" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">FinServe</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="HealthBridge" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">HealthBridge</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="NovaPharma" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">NovaPharma</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Opus SaaS" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Opus SaaS</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <hr class="border-neutral-200 mb-6">
+
+            <!-- FILTER: Domain -->
+            <fieldset class="mb-6">
+              <legend class="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">Domain</legend>
+              <div class="space-y-2" data-filter-group="domain">
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Healthcare" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Healthcare</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Pharma" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Pharma</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="SaaS" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">SaaS</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Fintech" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Fintech</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Consumer" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Consumer</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Internal Tools" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Internal Tools</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <hr class="border-neutral-200 mb-6">
+
+            <!-- FILTER: Product Type -->
+            <fieldset class="mb-6">
+              <legend class="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">Product Type</legend>
+              <div class="space-y-2" data-filter-group="productType">
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="B2B" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">B2B</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="B2C" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">B2C</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="D2C" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">D2C</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Internal Platform" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Internal Platform</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <hr class="border-neutral-200 mb-6">
+
+            <!-- FILTER: UX Work Done -->
+            <fieldset class="mb-6">
+              <legend class="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">UX Work Done</legend>
+              <div class="space-y-2" data-filter-group="uxScope">
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="User Research" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">User Research</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Strategy & Problem Framing" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Strategy &amp; Problem Framing</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Wireframing" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Wireframing</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="UI / Visual Design" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">UI / Visual Design</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Design System" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Design System</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Usability Testing" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Usability Testing</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <hr class="border-neutral-200 mb-6">
+
+            <!-- FILTER: Business Impact -->
+            <fieldset class="mb-6">
+              <legend class="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">Business Impact</legend>
+              <div class="space-y-2" data-filter-group="impact">
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Revenue Growth" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Revenue Growth</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Automation / Cost Reduction" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Automation / Cost Reduction</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Retention / Engagement" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Retention / Engagement</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Operational Efficiency" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Operational Efficiency</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Failed / Rolled Back" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">&#10060; Failed / Rolled Back</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <hr class="border-neutral-200 mb-6">
+
+            <!-- FILTER: Status -->
+            <fieldset class="mb-2">
+              <legend class="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">Status</legend>
+              <div class="space-y-2" data-filter-group="status">
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Live" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Live</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Iterated" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Iterated</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Rolled Back" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Rolled Back</span>
+                </label>
+                <label class="flex items-center gap-2.5 cursor-pointer group">
+                  <input type="checkbox" value="Sunset" class="w-4 h-4 rounded border-neutral-300 text-neutral-900 focus:ring-accent accent-neutral-900">
+                  <span class="text-sm text-neutral-700 group-hover:text-neutral-900 transition-colors">Sunset</span>
+                </label>
+              </div>
+            </fieldset>
+
+          </div>
+        </aside>
+
+        <!-- ===== RIGHT: PROJECT LISTING ===== -->
+        <section class="flex-1 min-w-0" aria-label="Case study listing">
+
+          <!-- Results count -->
+          <div class="flex items-center justify-between mb-6">
+            <p class="text-sm text-neutral-500">Showing <span id="results-count" class="font-medium text-neutral-700">8</span> projects</p>
+          </div>
+
+          <!-- Project Grid -->
+          <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- Cards are rendered by JS from project data -->
+          </div>
+
+          <!-- Empty State -->
+          <div id="empty-state" class="hidden py-20 text-center">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-neutral-100 mb-4">
+              <svg class="w-5 h-5 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <p class="text-base font-medium text-neutral-700">No case studies match your filters.</p>
+            <p class="mt-1 text-sm text-neutral-500">Try removing some filters to see more results.</p>
+            <button type="button" id="empty-reset" class="mt-4 text-sm font-medium text-accent hover:text-accent-hover transition-colors">Reset All Filters</button>
+          </div>
+
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="border-t border-neutral-200 bg-neutral-50 py-16 px-6" role="contentinfo">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div>
+          <p class="text-base font-semibold text-neutral-900">Shivansh Mathur</p>
+          <p class="mt-1 text-sm text-neutral-500">Product &amp; UX Designer</p>
+          <p class="mt-4 text-xs text-neutral-400">&copy; 2026 Shivansh Mathur. All rights reserved.</p>
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-neutral-900 mb-4">Navigation</p>
+          <ul class="space-y-2.5 text-sm text-neutral-600" role="list">
+            <li><a href="./work.html" class="hover:text-neutral-900 transition-colors">Work</a></li>
+            <li><a href="./about.html" class="hover:text-neutral-900 transition-colors">About</a></li>
+            <li><a href="./resume.html" class="hover:text-neutral-900 transition-colors">Resume</a></li>
+            <li><a href="./thinking.html" class="hover:text-neutral-900 transition-colors">Thinking</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-neutral-900 mb-4">Get in Touch</p>
+          <ul class="space-y-2.5 text-sm text-neutral-600" role="list">
+            <li><a href="mailto:hello@shivanshmathur.com" class="hover:text-neutral-900 transition-colors">hello@shivanshmathur.com</a></li>
+            <li><a href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer" class="hover:text-neutral-900 transition-colors">LinkedIn</a></li>
+            <li><a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="hover:text-neutral-900 transition-colors">Twitter / X</a></li>
+            <li><a href="https://dribbble.com/" target="_blank" rel="noopener noreferrer" class="hover:text-neutral-900 transition-colors">Dribbble</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* =============================================
+       PROJECT DATA
+       ============================================= */
+    var projects = [
+      {
+        slug: 'patient-portal-redesign',
+        name: 'Patient Portal Redesign',
+        company: 'MedTech Corp',
+        domain: 'Healthcare',
+        productType: 'B2B',
+        role: 'Lead Designer',
+        uxScope: ['User Research', 'Wireframing', 'UI / Visual Design', 'Usability Testing'],
+        impact: ['Revenue Growth', 'Retention / Engagement'],
+        status: 'Live',
+        description: 'Redesigned the patient-facing portal to reduce support tickets and improve appointment completion rates across three care pathways.'
+      },
+      {
+        slug: 'workflow-automation-dashboard',
+        name: 'Workflow Automation Dashboard',
+        company: 'CloudOps Inc.',
+        domain: 'SaaS',
+        productType: 'Internal Platform',
+        role: 'Sole Designer',
+        uxScope: ['Strategy & Problem Framing', 'Wireframing', 'UI / Visual Design'],
+        impact: ['Automation / Cost Reduction', 'Operational Efficiency'],
+        status: 'Live',
+        description: 'Designed an internal dashboard that automated manual reporting workflows, saving the operations team 20+ hours per week.'
+      },
+      {
+        slug: 'clinical-trial-data-platform',
+        name: 'Clinical Trial Data Platform',
+        company: 'PharmaSolutions Ltd.',
+        domain: 'Pharma',
+        productType: 'Internal Platform',
+        role: 'Lead Designer',
+        uxScope: ['User Research', 'Strategy & Problem Framing', 'Wireframing', 'UI / Visual Design', 'Design System'],
+        impact: ['Revenue Growth', 'Automation / Cost Reduction'],
+        status: 'Live',
+        description: 'Built a data ingestion and visualization platform for clinical trial managers to track patient enrollment and site performance in real time.'
+      },
+      {
+        slug: 'checkout-flow-redesign',
+        name: 'Checkout Flow Redesign',
+        company: 'RetailX',
+        domain: 'Consumer',
+        productType: 'B2C',
+        role: 'Lead Designer',
+        uxScope: ['User Research', 'Wireframing', 'Usability Testing'],
+        impact: ['Failed / Rolled Back'],
+        status: 'Rolled Back',
+        description: 'A checkout simplification initiative that looked promising in testing but decreased conversion in production. Rolled back after two weeks with documented learnings.'
+      },
+      {
+        slug: 'advisor-portfolio-platform',
+        name: 'Advisor Portfolio Platform',
+        company: 'FinServe',
+        domain: 'Fintech',
+        productType: 'B2B',
+        role: 'Senior Designer',
+        uxScope: ['Strategy & Problem Framing', 'Wireframing', 'UI / Visual Design', 'Design System'],
+        impact: ['Revenue Growth', 'Retention / Engagement'],
+        status: 'Live',
+        description: 'Designed a portfolio management interface for financial advisors, improving client onboarding speed by 40% and reducing data entry errors.'
+      },
+      {
+        slug: 'telehealth-scheduling-system',
+        name: 'Telehealth Scheduling System',
+        company: 'HealthBridge',
+        domain: 'Healthcare',
+        productType: 'B2C',
+        role: 'Lead Designer',
+        uxScope: ['User Research', 'Wireframing', 'UI / Visual Design', 'Usability Testing'],
+        impact: ['Operational Efficiency', 'Retention / Engagement'],
+        status: 'Iterated',
+        description: 'Designed a scheduling flow for telehealth visits that reduced no-show rates by 28%. Continued through two major iterations based on post-launch data.'
+      },
+      {
+        slug: 'drug-interaction-checker',
+        name: 'Drug Interaction Checker',
+        company: 'NovaPharma',
+        domain: 'Pharma',
+        productType: 'B2B',
+        role: 'Sole Designer',
+        uxScope: ['User Research', 'Strategy & Problem Framing', 'UI / Visual Design'],
+        impact: ['Operational Efficiency'],
+        status: 'Sunset',
+        description: 'A drug interaction checking tool for pharmacists that was eventually sunset due to regulatory changes. The design system components were reused across three other products.'
+      },
+      {
+        slug: 'customer-success-dashboard',
+        name: 'Customer Success Dashboard',
+        company: 'Opus SaaS',
+        domain: 'SaaS',
+        productType: 'B2B',
+        role: 'Lead Designer',
+        uxScope: ['Strategy & Problem Framing', 'Wireframing', 'UI / Visual Design', 'Design System', 'Usability Testing'],
+        impact: ['Retention / Engagement', 'Revenue Growth'],
+        status: 'Live',
+        description: 'Designed a customer health scoring dashboard for CSMs to proactively identify churn risks. Contributed to a 15% improvement in net revenue retention.'
+      }
+    ];
+
+    /* =============================================
+       DOM REFS
+       ============================================= */
+    var grid = document.getElementById('project-grid');
+    var emptyState = document.getElementById('empty-state');
+    var resultsCount = document.getElementById('results-count');
+    var resetBtn = document.getElementById('reset-filters');
+    var emptyResetBtn = document.getElementById('empty-reset');
+    var filterPanel = document.getElementById('filter-panel');
+    var filterToggle = document.getElementById('filter-toggle');
+    var filterToggleIcon = document.getElementById('filter-toggle-icon');
+    var mobileFilterCount = document.getElementById('mobile-filter-count');
+    var activeFilterBar = document.getElementById('active-filter-bar');
+    var activeFilterCount = document.getElementById('active-filter-count');
+    var menuToggle = document.getElementById('menu-toggle');
+    var mobileMenu = document.getElementById('mobile-menu');
+
+    /* =============================================
+       STATUS BADGE STYLES
+       ============================================= */
+    var statusStyles = {
+      'Live':        'bg-green-50 text-green-700',
+      'Iterated':    'bg-blue-50 text-blue-700',
+      'Rolled Back': 'bg-amber-50 text-amber-700',
+      'Sunset':      'bg-neutral-100 text-neutral-600'
+    };
+
+    /* =============================================
+       IMPACT TAG STYLES
+       ============================================= */
+    var impactStyles = {
+      'Revenue Growth':              'text-green-700 bg-green-50',
+      'Automation / Cost Reduction':  'text-purple-700 bg-purple-50',
+      'Retention / Engagement':       'text-blue-700 bg-blue-50',
+      'Operational Efficiency':       'text-teal-700 bg-teal-50',
+      'Failed / Rolled Back':         'text-amber-700 bg-amber-50'
+    };
+
+    /* =============================================
+       RENDER PROJECT CARD
+       ============================================= */
+    function renderCard(project) {
+      var statusClass = statusStyles[project.status] || 'bg-neutral-100 text-neutral-600';
+      var impactTags = project.impact.map(function (tag) {
+        var cls = impactStyles[tag] || 'text-neutral-600 bg-neutral-100';
+        var label = tag === 'Failed / Rolled Back' ? '\u274C ' + tag : tag;
+        return '<span class="text-xs font-medium ' + cls + ' px-2.5 py-1 rounded-full">' + label + '</span>';
+      }).join('');
+
+      var uxTags = project.uxScope.map(function (tag) {
+        return '<span class="text-xs text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded">' + tag + '</span>';
+      }).join('');
+
+      return '<a href="./work/' + project.slug + '.html" class="group block border border-neutral-200 rounded-xl p-6 hover:border-neutral-400 hover:shadow-sm transition-all"' +
+        ' data-company="' + project.company + '"' +
+        ' data-domain="' + project.domain + '"' +
+        ' data-product-type="' + project.productType + '"' +
+        ' data-ux-scope="' + project.uxScope.join(',') + '"' +
+        ' data-impact="' + project.impact.join(',') + '"' +
+        ' data-status="' + project.status + '"' +
+        '>' +
+        '<div class="flex items-center justify-between mb-3">' +
+          '<div class="flex flex-wrap gap-2 text-xs font-medium">' +
+            '<span class="px-2.5 py-1 bg-neutral-100 text-neutral-600 rounded-full">' + project.domain + '</span>' +
+            '<span class="px-2.5 py-1 bg-neutral-100 text-neutral-600 rounded-full">' + project.productType + '</span>' +
+          '</div>' +
+          '<span class="text-xs font-medium px-2.5 py-1 rounded-full shrink-0 ' + statusClass + '">' + project.status + '</span>' +
+        '</div>' +
+        '<h3 class="text-lg font-semibold text-neutral-900 group-hover:text-accent transition-colors">' + project.name + '</h3>' +
+        '<p class="mt-1 text-sm text-neutral-500">' + project.company + '</p>' +
+        '<p class="mt-3 text-sm text-neutral-600 leading-relaxed">' + project.description + '</p>' +
+        '<div class="mt-3 flex flex-wrap gap-1.5">' + uxTags + '</div>' +
+        '<div class="mt-3 flex flex-wrap gap-2">' +
+          '<span class="text-xs font-medium text-neutral-500 border border-neutral-200 px-2.5 py-1 rounded-full">Role: ' + project.role + '</span>' +
+          impactTags +
+        '</div>' +
+        '<span class="mt-5 inline-flex items-center text-sm font-medium text-neutral-900 group-hover:text-accent transition-colors">' +
+          'View Case Study' +
+          '<svg class="ml-1 w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>' +
+        '</span>' +
+      '</a>';
+    }
+
+    /* =============================================
+       GET ACTIVE FILTERS
+       ============================================= */
+    function getActiveFilters() {
+      var filters = {};
+      var groups = document.querySelectorAll('[data-filter-group]');
+      groups.forEach(function (group) {
+        var key = group.getAttribute('data-filter-group');
+        var checked = group.querySelectorAll('input[type="checkbox"]:checked');
+        var values = [];
+        checked.forEach(function (cb) { values.push(cb.value); });
+        if (values.length > 0) {
+          filters[key] = values;
+        }
+      });
+      return filters;
+    }
+
+    /* =============================================
+       COUNT ACTIVE FILTERS
+       ============================================= */
+    function countActiveFilters(filters) {
+      var count = 0;
+      for (var key in filters) {
+        count += filters[key].length;
+      }
+      return count;
+    }
+
+    /* =============================================
+       MATCH PROJECT AGAINST FILTERS
+       ============================================= */
+    function matchProject(project, filters) {
+      // Company
+      if (filters.company && filters.company.indexOf(project.company) === -1) return false;
+      // Domain
+      if (filters.domain && filters.domain.indexOf(project.domain) === -1) return false;
+      // Product Type
+      if (filters.productType && filters.productType.indexOf(project.productType) === -1) return false;
+      // UX Scope (any match)
+      if (filters.uxScope) {
+        var hasMatch = false;
+        for (var i = 0; i < filters.uxScope.length; i++) {
+          if (project.uxScope.indexOf(filters.uxScope[i]) !== -1) { hasMatch = true; break; }
+        }
+        if (!hasMatch) return false;
+      }
+      // Impact (any match)
+      if (filters.impact) {
+        var hasImpact = false;
+        for (var j = 0; j < filters.impact.length; j++) {
+          if (project.impact.indexOf(filters.impact[j]) !== -1) { hasImpact = true; break; }
+        }
+        if (!hasImpact) return false;
+      }
+      // Status
+      if (filters.status && filters.status.indexOf(project.status) === -1) return false;
+
+      return true;
+    }
+
+    /* =============================================
+       RENDER ALL
+       ============================================= */
+    function render() {
+      var filters = getActiveFilters();
+      var count = countActiveFilters(filters);
+      var filtered = projects.filter(function (p) { return matchProject(p, filters); });
+
+      // Render cards
+      grid.innerHTML = filtered.map(renderCard).join('');
+
+      // Results count
+      resultsCount.textContent = filtered.length;
+
+      // Empty state
+      if (filtered.length === 0) {
+        emptyState.classList.remove('hidden');
+        grid.classList.add('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+        grid.classList.remove('hidden');
+      }
+
+      // Filter count indicators
+      if (count > 0) {
+        resetBtn.classList.remove('hidden');
+        activeFilterBar.classList.remove('hidden');
+        activeFilterCount.textContent = count;
+        mobileFilterCount.classList.remove('hidden');
+        mobileFilterCount.textContent = count;
+      } else {
+        resetBtn.classList.add('hidden');
+        activeFilterBar.classList.add('hidden');
+        mobileFilterCount.classList.add('hidden');
+      }
+
+      // Persist filters to URL
+      updateURL(filters);
+    }
+
+    /* =============================================
+       URL STATE
+       ============================================= */
+    function updateURL(filters) {
+      var params = new URLSearchParams();
+      for (var key in filters) {
+        params.set(key, filters[key].join(','));
+      }
+      var search = params.toString();
+      var url = window.location.pathname + (search ? '?' + search : '');
+      window.history.replaceState(null, '', url);
+    }
+
+    function restoreFromURL() {
+      var params = new URLSearchParams(window.location.search);
+      params.forEach(function (value, key) {
+        var group = document.querySelector('[data-filter-group="' + key + '"]');
+        if (!group) return;
+        var values = value.split(',');
+        values.forEach(function (val) {
+          var cb = group.querySelector('input[value="' + val + '"]');
+          if (cb) cb.checked = true;
+        });
+      });
+    }
+
+    /* =============================================
+       RESET
+       ============================================= */
+    function resetAll() {
+      document.querySelectorAll('[data-filter-group] input[type="checkbox"]').forEach(function (cb) {
+        cb.checked = false;
+      });
+      render();
+    }
+
+    /* =============================================
+       EVENT LISTENERS
+       ============================================= */
+    // Filter checkboxes
+    document.querySelectorAll('[data-filter-group] input[type="checkbox"]').forEach(function (cb) {
+      cb.addEventListener('change', render);
+    });
+
+    // Reset buttons
+    resetBtn.addEventListener('click', resetAll);
+    emptyResetBtn.addEventListener('click', resetAll);
+
+    // Mobile filter toggle
+    if (filterToggle) {
+      filterToggle.addEventListener('click', function () {
+        var isHidden = filterPanel.classList.contains('hidden');
+        if (isHidden) {
+          filterPanel.classList.remove('hidden');
+          filterToggleIcon.style.transform = 'rotate(180deg)';
+        } else {
+          filterPanel.classList.add('hidden');
+          filterToggleIcon.style.transform = '';
+        }
+      });
+    }
+
+    // Mobile nav toggle
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', function () {
+        var isOpen = !mobileMenu.classList.contains('hidden');
+        mobileMenu.classList.toggle('hidden');
+        menuToggle.setAttribute('aria-expanded', String(!isOpen));
+      });
+      mobileMenu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          mobileMenu.classList.add('hidden');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    /* =============================================
+       INIT
+       ============================================= */
+    restoreFromURL();
+    render();
+
+  })();
+  </script>
+</body>
+</html>
+

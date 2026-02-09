@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clinical Trial Data Platform — Case Study — Shivansh Mathur</title>
+  <meta name="description" content="Built a data ingestion and visualization platform for clinical trial managers at PharmaSolutions Ltd. to track patient enrollment and site performance in real time.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="../output.css" rel="stylesheet">
+</head>
+<body class="bg-white text-neutral-900 font-sans antialiased">
+
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-neutral-200" role="banner">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Primary navigation">
+      <a href="../index.html" class="text-lg font-semibold tracking-tight text-neutral-900 hover:text-accent transition-colors">Shivansh Mathur</a>
+      <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-600" role="list">
+        <li><a href="../work.html" class="text-neutral-900">Work</a></li>
+        <li><a href="../about.html" class="hover:text-neutral-900 transition-colors">About</a></li>
+        <li><a href="../thinking.html" class="hover:text-neutral-900 transition-colors">Thinking</a></li>
+        <li><a href="../resume.html" class="hover:text-neutral-900 transition-colors">Resume</a></li>
+        <li><a href="../contact.html" class="hover:text-neutral-900 transition-colors">Contact</a></li>
+        <li><a href="../dummy.html" class="hover:text-neutral-900 transition-colors">Dummy</a></li>
+      </ul>
+      <button type="button" class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-md hover:bg-neutral-100 transition-colors" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu" id="menu-toggle">
+        <span class="block w-5 h-0.5 bg-neutral-900 transition-all duration-200"></span><span class="block w-5 h-0.5 bg-neutral-900 mt-1.5 transition-all duration-200"></span><span class="block w-5 h-0.5 bg-neutral-900 mt-1.5 transition-all duration-200"></span>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="md:hidden hidden border-t border-neutral-200 bg-white" role="dialog" aria-label="Mobile navigation">
+      <ul class="flex flex-col px-6 py-4 gap-1 text-base font-medium text-neutral-700" role="list">
+        <li><a href="../work.html" class="block py-3 px-2 rounded-md bg-neutral-50 text-neutral-900">Work</a></li>
+        <li><a href="../about.html" class="block py-3 px-2 rounded-md hover:bg-neutral-50 transition-colors">About</a></li>
+        <li><a href="../thinking.html" class="block py-3 px-2 rounded-md hover:bg-neutral-50 transition-colors">Thinking</a></li>
+        <li><a href="../resume.html" class="block py-3 px-2 rounded-md hover:bg-neutral-50 transition-colors">Resume</a></li>
+        <li><a href="../contact.html" class="block py-3 px-2 rounded-md hover:bg-neutral-50 transition-colors">Contact</a></li>
+        <li><a href="../dummy.html" class="block py-3 px-2 rounded-md hover:bg-neutral-50 transition-colors">Dummy</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <nav id="case-nav" class="fixed top-16 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-b border-neutral-100 -translate-y-full opacity-0 transition-all duration-200" aria-label="Case study sections">
+    <div class="max-w-6xl mx-auto px-6 overflow-x-auto"><ul class="flex items-center gap-6 h-11 text-xs font-medium text-neutral-500 whitespace-nowrap" role="list">
+      <li><a href="#overview" class="case-nav-link hover:text-neutral-900 transition-colors py-3">Overview</a></li><li><a href="#context" class="case-nav-link hover:text-neutral-900 transition-colors py-3">Context</a></li><li><a href="#problem" class="case-nav-link hover:text-neutral-900 transition-colors py-3">Problem</a></li><li><a href="#research" class="case-nav-link hover:text-neutral-900 transition-colors py-3">Research</a></li><li><a href="#strategy" class="case-nav-link hover:text-neutral-900 transition-colors py-3">Strategy</a></li><li><a href="#design" class="case-nav-link hover:text-neutral-900 transition-colors py-3">Design</a></li><li><a href="#validation" class="case-nav-link hover:text-neutral-900 transition-colors py-3">Validation</a></li><li><a href="#outcomes" class="case-nav-link hover:text-neutral-900 transition-colors py-3">Outcomes</a></li><li><a href="#reflection" class="case-nav-link hover:text-neutral-900 transition-colors py-3">Reflection</a></li>
+    </ul></div>
+  </nav>
+
+  <main class="pt-16">
+
+    <section class="pt-12 pb-10 md:pt-16 md:pb-12 px-6 border-b border-neutral-200" aria-labelledby="case-title">
+      <div class="max-w-3xl mx-auto">
+        <a href="../work.html" class="inline-flex items-center text-sm text-neutral-500 hover:text-neutral-900 transition-colors mb-8"><svg class="mr-1 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>All Case Studies</a>
+        <div class="mb-4"><span class="text-xs font-medium px-3 py-1 rounded-full bg-green-50 text-green-700">Live</span></div>
+        <h1 id="case-title" class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-950 leading-tight">Clinical Trial Data Platform</h1>
+        <p class="mt-4 text-lg text-neutral-600 leading-relaxed max-w-2xl">Built a data ingestion and visualization platform for clinical trial managers to track patient enrollment and site performance in real time.</p>
+        <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-y-5 gap-x-8">
+          <div><p class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Company</p><p class="mt-1 text-sm font-medium text-neutral-900">PharmaSolutions Ltd.</p></div>
+          <div><p class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Domain</p><p class="mt-1 text-sm font-medium text-neutral-900">Pharma</p></div>
+          <div><p class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Product Type</p><p class="mt-1 text-sm font-medium text-neutral-900">Internal Platform</p></div>
+          <div><p class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Role</p><p class="mt-1 text-sm font-medium text-neutral-900">Lead Designer</p></div>
+          <div><p class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Timeline</p><p class="mt-1 text-sm font-medium text-neutral-900">8 months (Sep 2019 – Apr 2020)</p></div>
+          <div><p class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Team</p><p class="mt-1 text-sm font-medium text-neutral-900">1 PM, 4 Engineers, 1 Data Analyst, 1 Designer</p></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="px-6 py-10 md:py-14 bg-neutral-50"><div class="max-w-4xl mx-auto"><div class="aspect-[16/9] bg-neutral-200 rounded-xl flex items-center justify-center"><span class="text-neutral-400 text-sm">Platform screenshot placeholder</span></div></div></div>
+
+    <section id="overview" class="py-16 md:py-20 px-6 scroll-mt-28" aria-labelledby="overview-heading">
+      <div class="max-w-3xl mx-auto">
+        <h2 id="overview-heading" class="text-xs font-semibold text-neutral-500 uppercase tracking-wider">Quick Overview</h2>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Problem Summary</h3><p class="text-sm text-neutral-600 leading-relaxed">Clinical trial managers at PharmaSolutions were tracking patient enrollment, site performance, and regulatory milestones across 15+ trials using disconnected spreadsheets and email threads. Enrollment delays were detected weeks late, costing the company millions in extended trial timelines.</p></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">My Responsibility</h3><p class="text-sm text-neutral-600 leading-relaxed">Led design from discovery through launch. Conducted research with trial managers and medical directors. Designed the complete platform including data visualization, alerting system, and design system foundations. Partnered closely with the data engineering team on pipeline architecture.</p></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Outcome Summary</h3><p class="text-sm text-neutral-600 leading-relaxed">Reduced enrollment delay detection from weeks to hours. Platform became the primary tool for 40+ trial managers across 3 offices. Design system components were reused across 3 subsequent products.</p></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Key Impact Areas</h3><div class="flex flex-wrap gap-2">
+            <span class="text-xs font-medium text-green-700 bg-green-50 px-2.5 py-1 rounded-full">Revenue Growth</span>
+            <span class="text-xs font-medium text-purple-700 bg-purple-50 px-2.5 py-1 rounded-full">Automation / Cost Reduction</span>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="context" class="py-16 md:py-20 px-6 bg-neutral-50 scroll-mt-28" aria-labelledby="context-heading">
+      <div class="max-w-3xl mx-auto">
+        <h2 id="context-heading" class="text-xl font-bold tracking-tight text-neutral-950">Context &amp; Background</h2>
+        <div class="mt-8 space-y-6 text-sm text-neutral-600 leading-relaxed">
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Business Context</h3><p>PharmaSolutions managed clinical trials for pharmaceutical companies. Each delayed trial day cost sponsors $20,000–$100,000 depending on the phase. The company's competitive advantage depended on faster, more transparent trial management — but their internal tooling was years behind.</p></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">User Context</h3><p>Trial managers coordinated across 5-20 research sites per trial. They needed to track enrollment targets, monitor protocol deviations, and report to sponsors weekly. Most were experienced professionals with domain expertise but limited technical fluency — they needed clarity, not complexity.</p></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Constraints</h3><p>Strict regulatory requirements around data handling (GxP compliance). Data sources were heterogeneous — some sites used electronic systems, others submitted paper forms. The engineering team was building the data pipeline in parallel with the UI, creating dependencies and unknowns throughout the project.</p></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Why This Mattered</h3><p>Three major sponsor contracts were up for renewal, and all three had expressed frustration with reporting delays. If PharmaSolutions couldn't demonstrate better trial visibility, they risked losing $4M+ in annual revenue.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="problem" class="py-16 md:py-20 px-6 scroll-mt-28" aria-labelledby="problem-heading">
+      <div class="max-w-3xl mx-auto">
+        <h2 id="problem-heading" class="text-xl font-bold tracking-tight text-neutral-950">Problem Framing</h2>
+        <div class="mt-8 space-y-6 text-sm text-neutral-600 leading-relaxed">
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Problem Statement</h3><p>"How might we give trial managers real-time visibility into enrollment progress and site performance — so delays are detected early and sponsor reporting becomes effortless?"</p></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Key Assumptions</h3><ul class="list-disc pl-5 space-y-1.5"><li>Trial managers would adopt a new tool if it reduced their reporting burden.</li><li>Automated data ingestion could handle the variety of source formats.</li><li>Visualizing enrollment trends would surface problems earlier than spreadsheet reviews.</li><li>Sponsors would value transparency even when the news was bad.</li></ul></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Risks</h3><ul class="list-disc pl-5 space-y-1.5"><li>Data quality from paper-based sites could undermine trust in the platform.</li><li>Regulatory review could delay launch beyond the sponsor renewal deadline.</li><li>Building the pipeline and UI simultaneously meant requirements were shifting.</li></ul></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Success Criteria</h3><p>Primary: detect enrollment delays within 48 hours instead of 2-3 weeks. Secondary: reduce weekly sponsor report preparation from 8 hours to under 1 hour. Stretch: retain all three at-risk sponsor contracts.</p></div>
+        </div>
+        <div class="mt-10 p-6 bg-neutral-50 rounded-xl border border-neutral-200"><div class="aspect-[16/7] bg-neutral-100 rounded-lg flex items-center justify-center"><span class="text-neutral-400 text-sm">Data flow / system architecture placeholder</span></div></div>
+      </div>
+    </section>
+
+    <section id="research" class="py-16 md:py-20 px-6 bg-neutral-50 scroll-mt-28" aria-labelledby="research-heading">
+      <div class="max-w-3xl mx-auto">
+        <h2 id="research-heading" class="text-xl font-bold tracking-tight text-neutral-950">Research &amp; Insights</h2>
+        <div class="mt-8 space-y-6 text-sm text-neutral-600 leading-relaxed">
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Research Methods</h3>
+            <div class="flex flex-wrap gap-2 mt-2 mb-3">
+              <span class="text-xs font-medium text-neutral-600 bg-neutral-100 px-2.5 py-1 rounded-full">Stakeholder Interviews (10)</span>
+              <span class="text-xs font-medium text-neutral-600 bg-neutral-100 px-2.5 py-1 rounded-full">Workflow Shadowing</span>
+              <span class="text-xs font-medium text-neutral-600 bg-neutral-100 px-2.5 py-1 rounded-full">Competitor Analysis</span>
+              <span class="text-xs font-medium text-neutral-600 bg-neutral-100 px-2.5 py-1 rounded-full">Data Audit</span>
+            </div>
+            <p>Interviewed 10 trial managers across 3 offices. Shadowed 2 complete weekly reporting cycles. Audited existing data sources to understand quality and completeness. Analyzed 3 competitor platforms to understand industry benchmarks.</p>
+          </div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Key Insights</h3>
+            <div class="space-y-4 mt-3">
+              <div class="pl-4 border-l-2 border-accent/30"><p class="text-sm font-medium text-neutral-800">Insight 1: Trial managers needed alerts, not dashboards.</p><p class="mt-1 text-sm text-neutral-500">They didn't want to monitor a dashboard all day — they wanted to be notified when something deviated from plan.</p></div>
+              <div class="pl-4 border-l-2 border-accent/30"><p class="text-sm font-medium text-neutral-800">Insight 2: Sponsor reporting was the real pain point — not internal tracking.</p><p class="mt-1 text-sm text-neutral-500">Most of the 8 hours per week went into formatting data for sponsor-specific report templates, not analyzing it.</p></div>
+              <div class="pl-4 border-l-2 border-accent/30"><p class="text-sm font-medium text-neutral-800">Insight 3: Trust required showing data sources and freshness.</p><p class="mt-1 text-sm text-neutral-500">Trial managers wouldn't trust a number unless they could trace it back to the source system and see when it was last updated.</p></div>
+            </div>
+          </div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">How Insights Influenced Direction</h3><p>The alert insight led us to build a notification system as a core feature, not an add-on. The sponsor reporting pain shifted our priority from "beautiful dashboard" to "exportable, sponsor-ready reports." The trust requirement resulted in data provenance indicators on every metric.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="strategy" class="py-16 md:py-20 px-6 scroll-mt-28" aria-labelledby="strategy-heading">
+      <div class="max-w-3xl mx-auto">
+        <h2 id="strategy-heading" class="text-xl font-bold tracking-tight text-neutral-950">Strategy &amp; Decision Making</h2>
+        <div class="mt-8 space-y-6 text-sm text-neutral-600 leading-relaxed">
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Options Considered</h3>
+            <div class="mt-3 space-y-4">
+              <div class="p-4 border border-neutral-200 rounded-lg"><p class="text-sm font-semibold text-neutral-900">Option A: Enhance existing spreadsheets with automation</p><p class="mt-1 text-sm text-neutral-600">Pros: familiar workflow, fast. Cons: wouldn't scale, no real-time capability, data silos remain.</p><p class="mt-1 text-xs font-medium text-neutral-400 uppercase">Rejected — doesn't solve the fundamental visibility problem.</p></div>
+              <div class="p-4 border border-accent/30 bg-accent/5 rounded-lg"><p class="text-sm font-semibold text-neutral-900">Option B: Purpose-built platform with alert system and export <span class="text-xs font-medium text-accent ml-1">Selected</span></p><p class="mt-1 text-sm text-neutral-600">Pros: solves core problems, scalable, competitive differentiator. Cons: 8-month build, parallel pipeline dependency.</p><p class="mt-1 text-xs font-medium text-accent">Selected — aligned with business urgency and long-term strategy.</p></div>
+              <div class="p-4 border border-neutral-200 rounded-lg"><p class="text-sm font-semibold text-neutral-900">Option C: License a CTMS (Clinical Trial Management System)</p><p class="mt-1 text-sm text-neutral-600">Pros: industry standard, feature-rich. Cons: $500K+ implementation, 12+ month timeline, limited customization.</p><p class="mt-1 text-xs font-medium text-neutral-400 uppercase">Rejected — too expensive and slow for the timeline.</p></div>
+            </div>
+          </div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Key Trade-offs</h3><ul class="list-disc pl-5 space-y-1.5"><li><strong>Build incrementally vs. launch complete:</strong> Shipped enrollment tracking first, then added site performance and reporting features in two subsequent releases.</li><li><strong>Perfect data vs. good-enough data:</strong> Accepted 90% data accuracy from paper-based sites with visible confidence indicators, rather than delaying launch for 100% accuracy.</li><li><strong>GxP compliance vs. speed:</strong> Worked with the regulatory team to define a compliant-enough MVP that could be hardened post-launch.</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="design" class="py-16 md:py-20 px-6 bg-neutral-50 scroll-mt-28" aria-labelledby="design-heading">
+      <div class="max-w-3xl mx-auto">
+        <h2 id="design-heading" class="text-xl font-bold tracking-tight text-neutral-950">Design Execution</h2>
+        <div class="mt-8 space-y-10">
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-3">User Flows</h3><p class="text-sm text-neutral-600 leading-relaxed mb-4">Mapped three primary workflows: daily enrollment monitoring, weekly sponsor report generation, and ad-hoc site performance deep-dives. Each flow was designed to be completable in under 5 minutes.</p><div class="p-4 bg-neutral-100 rounded-xl"><div class="aspect-[16/7] bg-neutral-200 rounded-lg flex items-center justify-center"><span class="text-neutral-400 text-sm">User flow diagram placeholder</span></div></div></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-3">Wireframes &amp; Prototypes</h3><p class="text-sm text-neutral-600 leading-relaxed mb-4">Iterated through 4 rounds of wireframes with trial managers. Used Figma prototypes for the more complex interactions — particularly the alert configuration and export flows.</p><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div class="p-4 bg-neutral-100 rounded-xl"><div class="aspect-[4/3] bg-neutral-200 rounded-lg flex items-center justify-center"><span class="text-neutral-400 text-xs">Wireframe — enrollment dashboard</span></div></div><div class="p-4 bg-neutral-100 rounded-xl"><div class="aspect-[4/3] bg-neutral-200 rounded-lg flex items-center justify-center"><span class="text-neutral-400 text-xs">Wireframe — alert configuration</span></div></div></div></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-3">Visual Design &amp; Design System</h3><p class="text-sm text-neutral-600 leading-relaxed mb-4">Created a purpose-built design system for data-heavy pharma interfaces. Established patterns for data tables, enrollment charts, confidence indicators, and exportable report components. The system was later adopted by 3 other product teams.</p><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div class="p-4 bg-neutral-100 rounded-xl"><div class="aspect-[4/3] bg-neutral-200 rounded-lg flex items-center justify-center"><span class="text-neutral-400 text-xs">Final UI — enrollment tracker</span></div></div><div class="p-4 bg-neutral-100 rounded-xl"><div class="aspect-[4/3] bg-neutral-200 rounded-lg flex items-center justify-center"><span class="text-neutral-400 text-xs">Final UI — sponsor report export</span></div></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="validation" class="py-16 md:py-20 px-6 scroll-mt-28" aria-labelledby="validation-heading">
+      <div class="max-w-3xl mx-auto">
+        <h2 id="validation-heading" class="text-xl font-bold tracking-tight text-neutral-950">Validation &amp; Iteration</h2>
+        <div class="mt-8 space-y-6 text-sm text-neutral-600 leading-relaxed">
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Testing Approach</h3><p>Pilot launched with 5 trial managers on 3 active trials for 4 weeks before full rollout. Collected structured feedback weekly and tracked actual usage via analytics.</p></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">What Changed</h3><ul class="list-disc pl-5 space-y-1.5"><li>Redesigned the alert threshold configuration after pilot users found it confusing — simplified from custom ranges to predefined severity levels.</li><li>Added a "data quality score" per site after trial managers requested a way to assess how reliable each site's data was.</li><li>Built a quick-export button for the enrollment summary — users were taking screenshots instead of using the full export flow.</li></ul></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Feedback</h3><div class="p-4 bg-neutral-50 rounded-lg border border-neutral-200"><p class="text-sm text-neutral-700 italic">"For the first time, I can walk into a sponsor meeting with live data instead of week-old spreadsheets."</p><p class="mt-2 text-xs text-neutral-400">— Senior Trial Manager, pilot week 3</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="outcomes" class="py-16 md:py-20 px-6 bg-neutral-50 scroll-mt-28" aria-labelledby="outcomes-heading">
+      <div class="max-w-3xl mx-auto">
+        <h2 id="outcomes-heading" class="text-xl font-bold tracking-tight text-neutral-950">Outcomes &amp; Impact</h2>
+        <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6">
+          <div class="text-center p-4 bg-white rounded-xl border border-neutral-200"><p class="text-2xl md:text-3xl font-bold text-neutral-900">48h</p><p class="mt-1 text-xs text-neutral-500">Delay detection (from weeks)</p></div>
+          <div class="text-center p-4 bg-white rounded-xl border border-neutral-200"><p class="text-2xl md:text-3xl font-bold text-neutral-900">87%</p><p class="mt-1 text-xs text-neutral-500">Reduction in report prep time</p></div>
+          <div class="text-center p-4 bg-white rounded-xl border border-neutral-200"><p class="text-2xl md:text-3xl font-bold text-neutral-900">40+</p><p class="mt-1 text-xs text-neutral-500">Active users across 3 offices</p></div>
+          <div class="text-center p-4 bg-white rounded-xl border border-neutral-200"><p class="text-2xl md:text-3xl font-bold text-neutral-900">3/3</p><p class="mt-1 text-xs text-neutral-500">At-risk contracts renewed</p></div>
+        </div>
+        <div class="mt-10 space-y-6 text-sm text-neutral-600 leading-relaxed">
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">Business Impact</h3><p>All three at-risk sponsor contracts were renewed, with the platform cited as a key differentiator. The company started including platform access as a selling point in new business pitches, contributing to two new contract wins worth $1.2M annually.</p></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">User Impact</h3><p>Trial managers shifted from reactive firefighting to proactive management. The alert system caught two critical enrollment delays in the first month that would have gone unnoticed for weeks under the old process.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reflection" class="py-16 md:py-20 px-6 scroll-mt-28" aria-labelledby="reflection-heading">
+      <div class="max-w-3xl mx-auto">
+        <h2 id="reflection-heading" class="text-xl font-bold tracking-tight text-neutral-950">Reflection</h2>
+        <div class="mt-8 space-y-6 text-sm text-neutral-600 leading-relaxed">
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">What I Would Do Differently</h3><p>I would have brought sponsor-facing users into the research earlier. We designed the export flow based on trial manager descriptions of what sponsors wanted — but when sponsors actually saw the reports, they requested different formatting and metrics. Adding a sponsor interview round would have saved rework.</p></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">What This Project Taught Me</h3><p>That in regulated industries, "good enough" data with clear provenance is more valuable than perfect data that arrives late. This project taught me to design for trust and transparency — showing users where numbers come from is as important as showing the numbers themselves.</p></div>
+          <div><h3 class="text-sm font-semibold text-neutral-900 mb-2">How It Shaped My Approach</h3><p>This was where I learned to design for complex data environments. I now always ask: "what's the source, how fresh is it, and how confident should the user be?" These questions have become fundamental to how I approach any data-heavy product.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 md:py-20 px-6 bg-neutral-50" aria-labelledby="related-heading">
+      <div class="max-w-3xl mx-auto">
+        <h2 id="related-heading" class="text-xl font-bold tracking-tight text-neutral-950">Related Work</h2>
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <a href="./drug-interaction-checker.html" class="group block p-5 border border-neutral-200 rounded-xl bg-white hover:border-neutral-400 hover:shadow-sm transition-all"><span class="text-xs font-medium text-neutral-500">Pharma · B2B</span><h3 class="mt-2 text-base font-semibold text-neutral-900 group-hover:text-accent transition-colors">Drug Interaction Checker</h3><p class="mt-1 text-sm text-neutral-600">Pharmacist-facing tool eventually sunset due to regulatory changes.</p><span class="mt-3 inline-flex items-center text-xs font-medium text-neutral-900 group-hover:text-accent transition-colors">View Case Study <svg class="ml-1 w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></span></a>
+          <a href="./workflow-automation-dashboard.html" class="group block p-5 border border-neutral-200 rounded-xl bg-white hover:border-neutral-400 hover:shadow-sm transition-all"><span class="text-xs font-medium text-neutral-500">SaaS · Internal</span><h3 class="mt-2 text-base font-semibold text-neutral-900 group-hover:text-accent transition-colors">Workflow Automation Dashboard</h3><p class="mt-1 text-sm text-neutral-600">Internal dashboard saving 20+ hours/week in manual reporting.</p><span class="mt-3 inline-flex items-center text-xs font-medium text-neutral-900 group-hover:text-accent transition-colors">View Case Study <svg class="ml-1 w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 md:py-20 px-6" aria-labelledby="case-cta-heading">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 id="case-cta-heading" class="text-2xl md:text-3xl font-bold tracking-tight text-neutral-950">Interested in working together?</h2>
+        <p class="mt-3 text-neutral-600">Explore more case studies or reach out directly.</p>
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+          <a href="../work.html" class="inline-flex items-center px-6 py-3 bg-neutral-900 text-white text-sm font-medium rounded-lg hover:bg-neutral-800 transition-colors"><svg class="mr-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back to All Case Studies</a>
+          <a href="../contact.html" class="inline-flex items-center px-6 py-3 border border-neutral-300 text-neutral-700 text-sm font-medium rounded-lg hover:border-neutral-400 hover:text-neutral-900 transition-colors">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-neutral-200 bg-neutral-50 py-16 px-6" role="contentinfo"><div class="max-w-6xl mx-auto"><div class="grid grid-cols-1 md:grid-cols-3 gap-12"><div><p class="text-base font-semibold text-neutral-900">Shivansh Mathur</p><p class="mt-1 text-sm text-neutral-500">Product &amp; UX Designer</p><p class="mt-4 text-xs text-neutral-400">&copy; 2026 Shivansh Mathur. All rights reserved.</p></div><div><p class="text-sm font-semibold text-neutral-900 mb-4">Navigation</p><ul class="space-y-2.5 text-sm text-neutral-600" role="list"><li><a href="../work.html" class="hover:text-neutral-900 transition-colors">Work</a></li><li><a href="../about.html" class="hover:text-neutral-900 transition-colors">About</a></li><li><a href="../resume.html" class="hover:text-neutral-900 transition-colors">Resume</a></li><li><a href="../thinking.html" class="hover:text-neutral-900 transition-colors">Thinking</a></li></ul></div><div><p class="text-sm font-semibold text-neutral-900 mb-4">Get in Touch</p><ul class="space-y-2.5 text-sm text-neutral-600" role="list"><li><a href="mailto:hello@shivanshmathur.com" class="hover:text-neutral-900 transition-colors">hello@shivanshmathur.com</a></li><li><a href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer" class="hover:text-neutral-900 transition-colors">LinkedIn</a></li><li><a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="hover:text-neutral-900 transition-colors">Twitter / X</a></li><li><a href="https://dribbble.com/" target="_blank" rel="noopener noreferrer" class="hover:text-neutral-900 transition-colors">Dribbble</a></li></ul></div></div></div></footer>
+
+  <script>
+  (function(){
+    'use strict';
+    var mt=document.getElementById('menu-toggle'),mm=document.getElementById('mobile-menu');if(mt&&mm){mt.addEventListener('click',function(){var o=!mm.classList.contains('hidden');mm.classList.toggle('hidden');mt.setAttribute('aria-expanded',String(!o));});mm.querySelectorAll('a').forEach(function(l){l.addEventListener('click',function(){mm.classList.add('hidden');mt.setAttribute('aria-expanded','false');});});}
+    var cn=document.getElementById('case-nav'),hs=document.getElementById('case-title');if(cn&&hs){var obs=new IntersectionObserver(function(e){e.forEach(function(en){if(!en.isIntersecting){cn.classList.remove('-translate-y-full','opacity-0');cn.classList.add('translate-y-0','opacity-100');}else{cn.classList.add('-translate-y-full','opacity-0');cn.classList.remove('translate-y-0','opacity-100');}});},{threshold:0});obs.observe(hs);}
+    var nl=document.querySelectorAll('.case-nav-link'),ss=[];nl.forEach(function(l){var h=l.getAttribute('href');if(h&&h.startsWith('#')){var s=document.getElementById(h.substring(1));if(s)ss.push({el:s,link:l});}});
+    if(ss.length>0){var so=new IntersectionObserver(function(e){e.forEach(function(en){var m=ss.find(function(s){return s.el===en.target;});if(m&&en.isIntersecting){nl.forEach(function(l){l.classList.remove('text-neutral-900','font-semibold');});m.link.classList.add('text-neutral-900','font-semibold');}});},{rootMargin:'-20% 0px -70% 0px',threshold:0});ss.forEach(function(s){so.observe(s.el);});}
+  })();
+  </script>
+</body>
+</html>
+
