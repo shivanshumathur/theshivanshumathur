@@ -138,12 +138,17 @@
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 22px;
       overflow: hidden;
-      transition: border-color 0.2s, background 0.3s;
+      box-shadow: 0 1px 2px var(--shadow), 0 0 0 0 transparent;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  border-color 0.3s, background 0.3s;
     }
     .card:hover {
       border-color: var(--border-hover);
+      transform: translateY(-3px) scale(1.005);
+      box-shadow: 0 12px 40px var(--shadow), 0 2px 6px var(--shadow);
     }
 
     /* ===== Bento grid — pinned to left 50% ===== */
@@ -151,7 +156,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       grid-template-rows: auto auto auto;
-      gap: 12px;
+      gap: 14px;
       width: 100%;
       max-width: 700px;
     }
@@ -162,7 +167,7 @@
       content: '';
       position: absolute;
       inset: -1px;
-      border-radius: 17px;
+      border-radius: 23px;
       padding: 1px;
       background: conic-gradient(
         from var(--laser-angle, 0deg),
@@ -185,7 +190,7 @@
       content: '';
       position: absolute;
       inset: -1px;
-      border-radius: 17px;
+      border-radius: 23px;
       background: var(--bg-card);
       z-index: 0;
     }
@@ -240,22 +245,38 @@
       }
     }
 
+    /* ===== Staggered load animation ===== */
+    @keyframes bento-rise {
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .bento > * {
+      opacity: 0;
+      animation: bento-rise 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+    .bento > *:nth-child(1) { animation-delay: 0.08s; }
+    .bento > *:nth-child(2) { animation-delay: 0.18s; }
+    .bento > *:nth-child(3) { animation-delay: 0.28s; }
+    .bento > *:nth-child(4) { animation-delay: 0.36s; }
+    .bento > *:nth-child(5) { animation-delay: 0.44s; }
+
     /* ===== Profile card ===== */
     .profile-banner {
       width: 100%;
-      height: 90px;
+      height: 100px;
       background: var(--bg-elevated);
       position: relative;
       overflow: hidden;
     }
     .profile-avatar {
-      width: 60px;
-      height: 60px;
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
       border: 3px solid var(--bg-card);
       position: relative;
-      margin-top: -30px;
+      margin-top: -32px;
       overflow: hidden;
+      box-shadow: 0 4px 12px var(--shadow);
     }
     .profile-avatar img {
       width: 100%;
@@ -277,9 +298,9 @@
       align-items: center;
       padding: 3px 10px;
       background: var(--bg-active);
-      border: 1px solid var(--border-hover);
-      border-radius: 6px;
-      font-size: 11px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 10px;
       font-weight: 600;
       color: var(--text-secondary);
       letter-spacing: 0.5px;
@@ -289,33 +310,34 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 16px;
+      padding: 9px 18px;
       background: #2563eb;
       color: #fff;
-      border-radius: 8px;
+      border-radius: 980px;
       font-size: 12px;
       font-weight: 600;
       text-decoration: none;
-      transition: background 0.2s;
+      transition: background 0.25s, transform 0.25s;
     }
-    .btn-chat:hover { background: #1d4ed8; }
+    .btn-chat:hover { background: #1d4ed8; transform: scale(1.03); }
     .btn-linkedin {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 16px;
+      padding: 9px 18px;
       background: var(--bg-active);
-      border: 1px solid var(--border-hover);
+      border: 1px solid var(--border);
       color: var(--icon-hover);
-      border-radius: 8px;
+      border-radius: 980px;
       font-size: 12px;
       font-weight: 500;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: all 0.25s;
     }
     .btn-linkedin:hover {
       background: var(--bg-hover);
       color: var(--text-primary);
+      transform: scale(1.03);
     }
 
     /* ===== Clock card ===== */
@@ -325,6 +347,12 @@
     .cell-listen,
     .cell-quote {
       aspect-ratio: 1 / 1;
+    }
+    /* Disable lift on 1×1 tiles — subtle border glow instead */
+    .cell-clock:hover,
+    .cell-listen:hover,
+    .cell-quote:hover {
+      transform: translateY(-2px) scale(1);
     }
 
     .analog-clock {
@@ -401,7 +429,7 @@
     .card-note {
       background: #d97706;
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 22px;
       overflow: hidden;
     }
 
@@ -429,7 +457,7 @@
       position: absolute;
       width: 80px;
       height: 100px;
-      border-radius: 10px;
+      border-radius: 12px;
       object-fit: cover;
       border: 2px solid var(--border);
       box-shadow: 0 4px 16px var(--shadow);
@@ -437,30 +465,34 @@
 
     /* ===== App icon row ===== */
     .app-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: var(--bg-card-hover);
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--bg-card);
       border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       color: var(--icon-color);
+      box-shadow: 0 1px 3px var(--shadow);
     }
     .app-btn:hover {
       background: var(--bg-card-hover);
       border-color: var(--border-hover);
+      transform: scale(1.08);
+      box-shadow: 0 6px 20px var(--shadow);
     }
 
     /* ===== Bottom dock ===== */
     .dock-bar {
       background: var(--bg-elevated);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 7px 14px;
-      transition: background 0.4s ease;
+      border-radius: 22px;
+      padding: 8px 16px;
+      box-shadow: 0 8px 32px var(--shadow);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
     }
     body.wp-has-wallpaper .dock-bar {
       background: rgba(22,22,22,0.55);
@@ -544,9 +576,9 @@
       gap: 6px;
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
-      color: var(--text-tertiary);
+      color: var(--text-muted);
     }
 
     /* ===== Settings Window (macOS System Settings style) ===== */
@@ -558,10 +590,11 @@
       align-items: center;
       justify-content: center;
       background: var(--overlay-bg);
-      backdrop-filter: blur(3px);
+      backdrop-filter: saturate(150%) blur(12px);
+      -webkit-backdrop-filter: saturate(150%) blur(12px);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.2s ease;
+      transition: opacity 0.25s ease;
     }
     .settings-overlay.open {
       opacity: 1;
@@ -570,33 +603,40 @@
     .settings-window {
       position: relative;
       width: 82vw;
-      max-width: 860px;
+      max-width: 880px;
       height: 80vh;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 18px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transform: scale(0.96) translateY(16px);
-      transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 0 0 0.5px var(--border),
+                  0 4px 16px rgba(0,0,0,0.06),
+                  0 24px 80px rgba(0,0,0,0.22);
+      transform: scale(0.94) translateY(20px);
+      opacity: 0;
+      transition: transform 0.35s cubic-bezier(0.2,0.9,0.3,1), opacity 0.25s ease;
     }
     .settings-overlay.open .settings-window {
       transform: scale(1) translateY(0);
+      opacity: 1;
     }
 
     /* Title bar */
     .settings-titlebar {
       display: flex;
       align-items: center;
-      padding: 12px 16px;
+      padding: 14px 20px;
       background: var(--bg-subtle);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
     }
     .settings-titlebar-dots {
       display: flex;
-      gap: 7px;
+      gap: 8px;
       flex-shrink: 0;
     }
     .settings-titlebar-dots span {
@@ -628,6 +668,7 @@
       font-size: 13px;
       font-weight: 600;
       color: var(--text-secondary);
+      letter-spacing: -0.1px;
     }
     .settings-titlebar-spacer {
       width: 80px;
@@ -641,14 +682,16 @@
       overflow: hidden;
     }
 
-    /* Settings sidebar */
+    /* Settings sidebar — Apple System Settings style */
     .settings-sidebar {
-      width: 220px;
+      width: 230px;
       flex-shrink: 0;
       border-right: 1px solid var(--border);
       overflow-y: auto;
-      padding: 12px 0;
+      padding: 14px 12px;
       background: var(--bg-subtle);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
     }
     .settings-sidebar::-webkit-scrollbar { width: 4px; }
     .settings-sidebar::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 2px; }
@@ -656,7 +699,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 7px 16px;
+      padding: 8px 12px;
       font-size: 13px;
       font-weight: 500;
       color: var(--text-secondary);
@@ -666,28 +709,37 @@
       width: 100%;
       text-align: left;
       font-family: inherit;
-      transition: all 0.1s;
-      border-radius: 0;
+      transition: all 0.15s ease;
+      border-radius: 8px;
+      letter-spacing: -0.1px;
+      margin-bottom: 2px;
     }
     .settings-sidebar-item:hover {
       background: var(--bg-hover);
-      color: var(--icon-hover);
+      color: var(--text-primary);
     }
     .settings-sidebar-item.active {
-      background: rgba(59,130,246,0.15);
-      color: rgba(59,130,246,0.9);
+      background: var(--accent, rgba(59,130,246,0.95));
+      color: #fff;
+      font-weight: 600;
+    }
+    .settings-sidebar-item.active .settings-sidebar-icon {
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
     }
     .settings-sidebar-item svg {
       flex-shrink: 0;
-      opacity: 0.5;
+      opacity: 0.6;
+    }
+    .settings-sidebar-item:hover svg {
+      opacity: 0.9;
     }
     .settings-sidebar-item.active svg {
       opacity: 1;
     }
     .settings-sidebar-icon {
-      width: 26px;
-      height: 26px;
-      border-radius: 6px;
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -698,7 +750,7 @@
     .settings-pane {
       flex: 1;
       overflow-y: auto;
-      padding: 28px 32px;
+      padding: 32px 36px;
     }
     .settings-pane::-webkit-scrollbar { width: 6px; }
     .settings-pane::-webkit-scrollbar-track { background: transparent; }
@@ -708,19 +760,47 @@
     .settings-pane-content { display: none; }
     .settings-pane-content.active { display: block; }
 
-    .settings-section { margin-bottom: 28px; }
+    .settings-section { margin-bottom: 32px; }
     .settings-section:last-child { margin-bottom: 0; }
     .settings-section-title {
-      font-size: 18px;
+      font-size: 22px;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: 18px;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
     }
     .settings-section-subtitle {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-muted);
-      margin-top: -12px;
-      margin-bottom: 18px;
+      margin-top: 0;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* Apple-style grouped settings rows — rounded container with internal dividers */
+    .settings-group {
+      background: var(--bg-hover);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .settings-group .settings-row {
+      border: none;
+      border-radius: 0;
+      margin-bottom: 0;
+      background: none;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .settings-group .settings-row:last-child {
+      border-bottom: none;
+    }
+    .settings-group .settings-row:hover {
+      background: rgba(128,128,128,0.04);
+      border-color: transparent;
+    }
+    .settings-group .settings-row:last-child:hover {
+      border-color: transparent;
     }
 
     /* Settings control row */
@@ -728,85 +808,110 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 18px;
+      padding: 16px 20px;
       background: var(--bg-hover);
       border: 1px solid var(--border-subtle);
-      border-radius: 10px;
+      border-radius: 14px;
       margin-bottom: 10px;
+      transition: border-color 0.2s;
+    }
+    .settings-row:hover {
+      border-color: var(--border);
     }
     .settings-row:last-child { margin-bottom: 0; }
     .settings-row-label {
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--text-secondary);
+      letter-spacing: -0.05px;
     }
     .settings-row-sublabel {
       font-size: 11px;
       color: var(--text-muted);
-      margin-top: 2px;
+      margin-top: 3px;
+      line-height: 1.4;
     }
 
-    /* Toggle switch */
+    /* Apple-style helper text below sections */
+    .settings-helper {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      padding: 0 4px;
+      line-height: 1.5;
+    }
+
+    /* Toggle switch (macOS-style) */
     .toggle-switch {
       position: relative;
-      width: 42px;
-      height: 24px;
+      width: 44px;
+      height: 26px;
       background: var(--text-faint);
-      border-radius: 12px;
+      border-radius: 13px;
       cursor: pointer;
       border: none;
       padding: 0;
-      transition: background 0.2s;
+      flex-shrink: 0;
+      transition: background 0.25s cubic-bezier(0.4,0,0.2,1);
     }
     .toggle-switch.on { background: var(--accent, #0082FF); }
     .toggle-switch::after {
       content: '';
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       background: #fff;
       top: 2px;
       left: 2px;
-      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+      transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
     }
     .toggle-switch.on::after { transform: translateX(18px); }
 
     /* Accent color dots grid */
     .accent-dots {
       display: flex;
-      gap: 12px;
+      gap: 14px;
       flex-wrap: wrap;
+      padding: 4px 0;
     }
     .accent-dot {
-      width: 28px;
-      height: 28px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       cursor: pointer;
-      border: 2px solid transparent;
+      border: 3px solid transparent;
       padding: 0;
-      transition: all 0.15s;
+      transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
       position: relative;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
     }
-    .accent-dot:hover { transform: scale(1.15); }
+    .accent-dot:hover { transform: scale(1.18); box-shadow: 0 3px 10px rgba(0,0,0,0.22); }
     .accent-dot.active {
-      border-color: var(--text-primary);
-      box-shadow: 0 0 0 2px var(--text-faint);
+      border-color: #fff;
+      box-shadow: 0 0 0 2.5px currentColor, 0 2px 8px rgba(0,0,0,0.15);
+      transform: scale(1.05);
     }
     .accent-dot.active::after {
-      content: '';
+      content: '✓';
       position: absolute;
-      inset: 4px;
-      border-radius: 50%;
-      border: 2px solid rgba(0,0,0,0.2);
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
 
     /* Accent slider (rainbow) */
     .accent-track {
       position: relative;
       width: 100%;
-      height: 28px;
-      border-radius: 8px;
+      height: 32px;
+      border-radius: 16px;
       background: linear-gradient(to right,
         hsl(0,80%,55%), hsl(30,80%,55%), hsl(60,80%,55%),
         hsl(90,80%,55%), hsl(120,80%,55%), hsl(150,80%,55%),
@@ -815,7 +920,8 @@
       );
       padding: 4px;
       border: 1px solid var(--border-hover);
-      margin-top: 12px;
+      margin-top: 14px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.12);
     }
     .accent-slider {
       -webkit-appearance: none;
@@ -829,33 +935,38 @@
     }
     .accent-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 22px; height: 22px;
+      width: 26px; height: 26px;
       border-radius: 50%;
       background: #fff;
-      border: 3px solid rgba(0,0,0,0.2);
-      box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+      border: 2px solid rgba(0,0,0,0.06);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.04);
       cursor: grab;
+      transition: box-shadow 0.15s;
+    }
+    .accent-slider::-webkit-slider-thumb:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,0,0,0.04);
     }
     .accent-slider::-moz-range-thumb {
-      width: 22px; height: 22px;
+      width: 26px; height: 26px;
       border-radius: 50%;
       background: #fff;
-      border: 3px solid rgba(0,0,0,0.2);
-      box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+      border: 2px solid rgba(0,0,0,0.06);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.04);
       cursor: grab;
     }
 
-    /* Typography buttons */
+    /* Typography buttons — Apple segmented control */
     .font-btns {
       display: flex;
       gap: 0;
       background: var(--bg-active);
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
       border: 1px solid var(--border);
+      position: relative;
     }
     .font-btn {
-      padding: 8px 18px;
+      padding: 10px 22px;
       font-size: 15px;
       font-weight: 600;
       color: var(--text-tertiary);
@@ -863,52 +974,83 @@
       border: none;
       cursor: pointer;
       font-family: inherit;
-      transition: all 0.15s;
+      transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
       border-right: 1px solid var(--border);
+      letter-spacing: -0.2px;
+      position: relative;
     }
     .font-btn:last-child { border-right: none; }
-    .font-btn:hover { color: var(--text-secondary); }
+    .font-btn:hover { color: var(--text-secondary); background: var(--bg-hover); }
     .font-btn.active {
       background: var(--accent, #0082FF);
       color: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
     }
     .font-btn[data-font="sans"] { font-family: 'Poppins', sans-serif; }
     .font-btn[data-font="serif"] { font-family: Georgia, 'Times New Roman', serif; }
     .font-btn[data-font="mono"] { font-family: 'Share Tech Mono', 'Courier New', monospace; }
 
-    /* Text size slider */
-    .size-slider-wrap { position: relative; width: 100%; margin-top: 8px; }
+    /* Font preview text */
+    .font-preview {
+      margin-top: 16px;
+      padding: 20px 24px;
+      background: var(--bg-hover);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      text-align: center;
+    }
+    .font-preview-text {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.4;
+      letter-spacing: -0.2px;
+    }
+    .font-preview-caption {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* Text size slider — Apple style */
+    .size-slider-wrap { position: relative; width: 100%; margin-top: 10px; }
     .size-slider {
       -webkit-appearance: none;
       appearance: none;
       width: 100%;
-      height: 4px;
-      border-radius: 4px;
+      height: 5px;
+      border-radius: 3px;
       background: var(--border-hover);
       outline: none;
       cursor: pointer;
+      transition: background 0.2s;
     }
     .size-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 18px; height: 18px;
+      width: 22px; height: 22px;
       border-radius: 50%;
-      background: var(--accent, #0082FF);
-      border: 3px solid var(--bg-card);
-      box-shadow: 0 0 0 2px var(--accent, #0082FF);
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.04);
       cursor: grab;
+      transition: box-shadow 0.15s;
+    }
+    .size-slider::-webkit-slider-thumb:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.04);
     }
     .size-slider::-moz-range-thumb {
-      width: 18px; height: 18px;
+      width: 22px; height: 22px;
       border-radius: 50%;
-      background: var(--accent, #0082FF);
-      border: 3px solid var(--bg-card);
-      box-shadow: 0 0 0 2px var(--accent, #0082FF);
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.04);
       cursor: grab;
     }
     .size-labels {
       display: flex;
       justify-content: space-between;
-      margin-top: 10px;
+      margin-top: 12px;
+      padding: 0 2px;
     }
     .size-labels span {
       font-size: 11px;
@@ -916,113 +1058,196 @@
       font-weight: 500;
       cursor: pointer;
       transition: color 0.15s;
+      padding: 2px 0;
     }
     .size-labels span:hover { color: var(--text-secondary); }
-    .size-labels span.active { color: var(--accent, #0082FF); }
+    .size-labels span.active { color: var(--accent, #0082FF); font-weight: 600; }
 
-    /* Theme mode buttons */
+    /* Theme mode buttons — Apple-style larger previews */
     .theme-row {
       display: flex;
-      gap: 20px;
-      align-items: center;
+      gap: 24px;
+      align-items: flex-start;
     }
     .theme-btn {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       cursor: pointer;
       border: none;
       background: none;
       padding: 0;
       font-family: inherit;
+      transition: transform 0.2s;
     }
+    .theme-btn:hover { transform: scale(1.04); }
     .theme-icon {
-      width: 50px;
-      height: 34px;
-      border-radius: 8px;
-      border: 2px solid var(--border-hover);
-      transition: border-color 0.15s;
+      width: 80px;
+      height: 56px;
+      border-radius: 12px;
+      border: 3px solid var(--border-hover);
+      transition: border-color 0.25s, box-shadow 0.25s;
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+      position: relative;
     }
-    .theme-icon.light { background: linear-gradient(135deg, #f0f0f0, #ddd); }
-    .theme-icon.dark  { background: linear-gradient(135deg, #222, #111); }
-    .theme-icon.auto  { background: linear-gradient(135deg, #f0f0f0 50%, #222 50%); }
-    .theme-btn.active .theme-icon { border-color: var(--accent, #0082FF); }
+    .theme-btn:hover .theme-icon {
+      box-shadow: 0 4px 16px var(--shadow);
+    }
+    .theme-icon.light {
+      background: linear-gradient(160deg, #fafafa, #e8e8e8);
+    }
+    .theme-icon.light::before {
+      content: '';
+      position: absolute;
+      bottom: 4px; left: 6px; right: 6px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(0,0,0,0.06);
+    }
+    .theme-icon.dark  {
+      background: linear-gradient(160deg, #2a2a2e, #111113);
+    }
+    .theme-icon.dark::before {
+      content: '';
+      position: absolute;
+      bottom: 4px; left: 6px; right: 6px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.06);
+    }
+    .theme-icon.auto  {
+      background: linear-gradient(135deg, #fafafa 50%, #1a1a1e 50%);
+    }
+    .theme-btn.active .theme-icon {
+      border-color: var(--accent, #0082FF);
+      box-shadow: 0 0 0 2px var(--accent, #0082FF), 0 4px 16px rgba(0,130,255,0.15);
+    }
     .theme-btn span {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--text-tertiary);
       font-weight: 500;
+      letter-spacing: -0.05px;
     }
 
-    /* About pane */
+    /* About pane — Apple-style card */
     .about-card {
-      padding: 28px;
+      padding: 36px 32px;
       background: var(--bg-hover);
       border: 1px solid var(--border-subtle);
-      border-radius: 12px;
+      border-radius: 18px;
       text-align: center;
     }
+    .about-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
     .about-card h3 {
-      font-size: 16px;
+      font-size: 19px;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: 4px;
+      margin-bottom: 2px;
+      letter-spacing: -0.3px;
+    }
+    .about-card .about-version {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
     }
     .about-card p {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-muted);
       line-height: 1.6;
     }
+    .about-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 20px 0;
+    }
+    .about-detail {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      line-height: 1.5;
+    }
 
     @media (max-width: 768px) {
-      .settings-window { width: 96vw; height: 92vh; border-radius: 10px; }
-      .settings-sidebar { width: 160px; }
-      .settings-pane { padding: 20px; }
+      .settings-window { width: 96vw; height: 92vh; border-radius: 12px; }
+      .settings-sidebar { width: 170px; }
+      .settings-pane { padding: 24px; }
     }
     @media (max-width: 540px) {
       .settings-sidebar { display: none; }
     }
-    .theme-btn.active span { color: var(--icon-hover); }
+    .theme-btn.active span { color: var(--accent, #0082FF); font-weight: 600; }
 
     /* ===== Wallpaper picker ===== */
     .wallpaper-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
     }
     .wallpaper-option {
       cursor: pointer;
-      border: 2px solid transparent;
-      border-radius: 10px;
+      border: 3px solid transparent;
+      border-radius: 16px;
       overflow: hidden;
-      transition: border-color 0.15s, transform 0.15s;
+      transition: border-color 0.25s, transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.3s;
       background: none;
       padding: 0;
       font-family: inherit;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      position: relative;
     }
-    .wallpaper-option:hover { transform: scale(1.03); }
-    .wallpaper-option.active { border-color: var(--accent, #0082FF); }
+    .wallpaper-option:hover { transform: scale(1.04); box-shadow: 0 8px 24px var(--shadow); }
+    .wallpaper-option.active {
+      border-color: var(--accent, #0082FF);
+      box-shadow: 0 0 0 2px var(--accent, #0082FF), 0 4px 16px rgba(0,130,255,0.12);
+    }
+    /* Checkmark overlay on active wallpaper */
+    .wallpaper-option.active::after {
+      content: '✓';
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--accent, #0082FF);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
     .wallpaper-thumb {
       width: 100%;
       aspect-ratio: 16/10;
-      border-radius: 8px;
+      border-radius: 12px;
       background-size: cover;
       background-position: center;
     }
     .wallpaper-label {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
       color: var(--text-tertiary);
-      padding-bottom: 4px;
+      padding-bottom: 6px;
+      letter-spacing: -0.05px;
     }
-    .wallpaper-option.active .wallpaper-label { color: var(--accent, #0082FF); }
+    .wallpaper-option.active .wallpaper-label { color: var(--accent, #0082FF); font-weight: 600; }
 
     /* Wallpaper thumbnail definitions */
     .wp-default   { background: var(--bg); }
@@ -1066,9 +1291,9 @@
       position: absolute;
       inset: 0;
       background: var(--overlay-bg);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
-      transition: opacity 0.3s ease;
+      backdrop-filter: saturate(150%) blur(12px);
+      -webkit-backdrop-filter: saturate(150%) blur(12px);
+      transition: opacity 0.35s ease;
     }
     .app-overlay.minimizing .app-backdrop {
       opacity: 0;
@@ -1080,12 +1305,17 @@
       height: 84vh;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 18px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transform: scale(0.96) translateY(16px);
-      transition: transform 0.25s cubic-bezier(0.4,0,0.2,1),
+      box-shadow: 0 0 0 0.5px var(--border),
+                  0 4px 12px rgba(0,0,0,0.08),
+                  0 24px 80px rgba(0,0,0,0.22);
+      transform: scale(0.94) translateY(20px);
+      opacity: 0;
+      transition: transform 0.35s cubic-bezier(0.2,0.9,0.3,1),
+                  opacity 0.25s ease,
                   width 0.35s cubic-bezier(0.4,0,0.2,1),
                   height 0.35s cubic-bezier(0.4,0,0.2,1),
                   max-width 0.35s cubic-bezier(0.4,0,0.2,1),
@@ -1093,6 +1323,7 @@
     }
     .app-overlay.open .app-frame {
       transform: scale(1) translateY(0);
+      opacity: 1;
     }
 
     /* Fullscreen / maximize state */
@@ -1102,6 +1333,7 @@
       height: 100vh !important;
       border-radius: 0 !important;
       border: none !important;
+      box-shadow: none !important;
     }
     /* Hide backdrop when fullscreen */
     .app-overlay.fullscreen-active .app-backdrop {
@@ -1129,14 +1361,16 @@
     .finder-titlebar {
       display: flex;
       align-items: center;
-      padding: 12px 16px;
+      padding: 14px 18px;
       background: var(--bg-subtle);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
     }
     .finder-titlebar-dots {
       display: flex;
-      gap: 7px;
+      gap: 8px;
       flex-shrink: 0;
     }
     .finder-titlebar-dots span {
@@ -1198,10 +1432,11 @@
       text-align: center;
       font-size: 13px;
       font-weight: 600;
+      letter-spacing: -0.1px;
       color: var(--text-secondary);
     }
     .finder-titlebar-spacer {
-      width: 54px;
+      width: 56px;
       flex-shrink: 0;
     }
 
@@ -1209,30 +1444,40 @@
     .finder-toolbar {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 8px 16px;
+      gap: 6px;
+      padding: 8px 18px;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
       background: var(--bg-subtle);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
     }
     .finder-nav-btn {
       background: none;
       border: none;
       cursor: pointer;
       color: var(--text-muted);
-      padding: 4px;
-      border-radius: 4px;
+      padding: 5px 6px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: color 0.12s;
+      transition: color 0.15s, background 0.15s;
     }
-    .finder-nav-btn:hover { color: var(--text-secondary); }
+    .finder-nav-btn:hover {
+      color: var(--text-secondary);
+      background: var(--bg-hover);
+    }
+    .finder-nav-btn:active {
+      background: var(--border);
+    }
     .finder-nav-btn.disabled { opacity: 0.3; pointer-events: none; }
     .finder-breadcrumb {
       font-size: 12px;
+      font-weight: 500;
       color: var(--text-muted);
-      margin-left: 6px;
+      margin-left: 8px;
+      letter-spacing: -0.1px;
     }
 
     /* Finder body: sidebar + main */
@@ -1244,13 +1489,15 @@
 
     /* Sidebar */
     .finder-sidebar {
-      width: 180px;
+      width: 190px;
       flex-shrink: 0;
       border-right: 1px solid var(--border);
-      padding: 16px 0;
+      padding: 12px 10px;
       overflow-y: auto;
       background: var(--bg-subtle);
-      transition: width 0.25s ease, padding 0.25s ease, opacity 0.2s ease, border-right-width 0.25s ease;
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      transition: width 0.3s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease, opacity 0.2s ease, border-right-width 0.3s ease;
     }
     .finder-sidebar.collapsed {
       width: 0;
@@ -1264,20 +1511,20 @@
     .sidebar-section-label {
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
       color: var(--text-muted);
-      padding: 0 16px;
-      margin-bottom: 6px;
+      padding: 0 10px;
+      margin-bottom: 4px;
     }
     .sidebar-section-label:not(:first-child) {
-      margin-top: 18px;
+      margin-top: 20px;
     }
     .sidebar-item {
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 16px;
+      padding: 6px 10px;
       font-size: 12px;
       font-weight: 500;
       color: var(--text-secondary);
@@ -1287,25 +1534,28 @@
       width: 100%;
       text-align: left;
       font-family: inherit;
-      transition: all 0.1s;
-      border-radius: 0;
+      transition: all 0.15s ease;
+      border-radius: 8px;
+      letter-spacing: -0.05px;
     }
     .sidebar-item:hover {
       background: var(--bg-hover);
-      color: var(--icon-hover);
+      color: var(--text-primary);
     }
     .sidebar-item.active {
       background: rgba(59,130,246,0.15);
-      color: rgba(59,130,246,0.9);
+      color: rgba(59,130,246,0.95);
+      font-weight: 600;
     }
-    .sidebar-item svg { flex-shrink: 0; opacity: 0.6; }
-    .sidebar-item.active svg { opacity: 1; }
+    .sidebar-item svg { flex-shrink: 0; opacity: 0.55; }
+    .sidebar-item:hover svg { opacity: 0.8; }
+    .sidebar-item.active svg { opacity: 1; color: rgba(59,130,246,0.95); }
 
     /* Main content area */
     .finder-main {
       flex: 1;
       overflow-y: auto;
-      padding: 20px 24px;
+      padding: 24px 28px;
       display: flex;
       flex-direction: column;
     }
@@ -1321,19 +1571,45 @@
     .project-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 18px;
       flex: 1;
     }
     @container (max-width: 600px) {
       .project-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
     }
+
+    /* Staggered entrance for project cards */
+    @keyframes pc-rise {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .project-grid > .project-card {
+      animation: pc-rise 0.5s cubic-bezier(0.25,0.46,0.45,0.94) both;
+    }
+    .project-grid > .project-card:nth-child(1)  { animation-delay: 0.04s; }
+    .project-grid > .project-card:nth-child(2)  { animation-delay: 0.09s; }
+    .project-grid > .project-card:nth-child(3)  { animation-delay: 0.14s; }
+    .project-grid > .project-card:nth-child(4)  { animation-delay: 0.19s; }
+    .project-grid > .project-card:nth-child(5)  { animation-delay: 0.24s; }
+    .project-grid > .project-card:nth-child(6)  { animation-delay: 0.29s; }
+    .project-grid > .project-card:nth-child(7)  { animation-delay: 0.34s; }
+    .project-grid > .project-card:nth-child(8)  { animation-delay: 0.39s; }
+    .project-grid > .project-card:nth-child(9)  { animation-delay: 0.44s; }
+    .project-grid > .project-card:nth-child(10) { animation-delay: 0.49s; }
+    .project-grid > .project-card:nth-child(11) { animation-delay: 0.54s; }
+    .project-grid > .project-card:nth-child(12) { animation-delay: 0.59s; }
+    .project-grid > .project-card:nth-child(n+13) { animation-delay: 0.64s; }
+
     .project-card {
       cursor: pointer;
-      border-radius: 10px;
+      border-radius: 18px;
       overflow: hidden;
       background: var(--bg-card-hover);
       border: 1px solid var(--border);
-      transition: all 0.15s ease;
+      box-shadow: 0 1px 2px var(--shadow), 0 0 0 0.5px var(--border);
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  border-color 0.3s;
       font-family: inherit;
       text-align: left;
       color: inherit;
@@ -1342,52 +1618,54 @@
     }
     .project-card:hover {
       border-color: var(--border-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px var(--shadow);
+      transform: translateY(-5px) scale(1.012);
+      box-shadow: 0 16px 52px var(--shadow), 0 4px 12px var(--shadow);
     }
     .project-card:focus-visible {
       outline: none;
       border-color: rgba(59,130,246,0.5);
-      box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
     }
     .project-card-thumb {
       width: 100%;
       aspect-ratio: 16 / 10;
       object-fit: cover;
       display: block;
+      position: relative;
     }
     .project-card-body {
-      padding: 14px 16px 16px;
+      padding: 16px 18px 18px;
       flex: 1;
       display: flex;
       flex-direction: column;
     }
     .project-card-name {
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 4px;
-      line-height: 1.3;
+      line-height: 1.25;
+      letter-spacing: -0.3px;
     }
     .project-card-desc {
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--text-tertiary);
-      line-height: 1.5;
+      line-height: 1.55;
       flex: 1;
     }
     .project-card-meta {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-top: 10px;
+      margin-top: 14px;
     }
     .project-card-badge {
       font-size: 9px;
       font-weight: 700;
       letter-spacing: 0.4px;
       text-transform: uppercase;
-      padding: 2px 8px;
-      border-radius: 3px;
+      padding: 3px 10px;
+      border-radius: 20px;
     }
     .badge-live {
       background: rgba(34,197,94,0.12);
@@ -1401,7 +1679,7 @@
       background: rgba(245,158,11,0.12);
       color: rgba(245,158,11,0.85);
     }
-    .badge-rolledback {
+    .badge-rolledback, .badge-rolled-back {
       background: rgba(239,68,68,0.12);
       color: rgba(239,68,68,0.8);
     }
@@ -1409,15 +1687,189 @@
       font-size: 10px;
       font-weight: 500;
       color: var(--text-muted);
+      letter-spacing: 0.1px;
     }
 
     /* Finder footer */
     .finder-footer {
       flex-shrink: 0;
-      padding: 10px 24px;
+      padding: 10px 28px;
       border-top: 1px solid var(--border-subtle);
       font-size: 11px;
+      font-weight: 500;
       color: var(--text-muted);
+      letter-spacing: -0.05px;
+    }
+
+    /* ===== Selected Projects Folder View ===== */
+    .hot-folder-view {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .hot-folder-view.active {
+      display: flex;
+    }
+    .hot-folder-view::-webkit-scrollbar { width: 6px; }
+    .hot-folder-view::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 3px; }
+
+    /* Hero */
+    .hot-hero {
+      padding: 56px 40px 48px;
+      text-align: center;
+      position: relative;
+    }
+    .hot-hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #f97316;
+      margin-bottom: 12px;
+    }
+    .hot-hero-title {
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+    .hot-hero-subtitle {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    /* Showcase grid */
+    .hot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 0 40px 56px;
+      max-width: 960px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hot-card-featured {
+      grid-column: 1 / -1;
+    }
+
+    /* Showcase card */
+    .hot-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px var(--shadow);
+      transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94),
+                  box-shadow 0.4s cubic-bezier(0.25,0.46,0.45,0.94),
+                  border-color 0.3s;
+      font-family: inherit;
+      text-align: left;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .hot-card:hover {
+      transform: translateY(-5px) scale(1.008);
+      box-shadow: 0 20px 60px var(--shadow), 0 4px 12px var(--shadow);
+      border-color: var(--border-hover);
+    }
+    .hot-card:focus-visible {
+      outline: none;
+      border-color: rgba(59,130,246,0.5);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+
+    /* Thumb / gradient area */
+    .hot-card-thumb {
+      width: 100%;
+      aspect-ratio: 2.4 / 1;
+      position: relative;
+    }
+    .hot-card-featured .hot-card-thumb {
+      aspect-ratio: 3 / 1;
+    }
+
+    /* Content area */
+    .hot-card-body {
+      padding: 20px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hot-card-company {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .hot-card-name {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+      color: var(--text-primary);
+    }
+    .hot-card-featured .hot-card-name {
+      font-size: 28px;
+      letter-spacing: -0.8px;
+    }
+    .hot-card-desc {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+    }
+    .hot-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent, #0082FF);
+      transition: gap 0.3s;
+    }
+    .hot-card:hover .hot-card-cta {
+      gap: 8px;
+    }
+
+    /* Entrance stagger */
+    @keyframes hot-card-in {
+      from { opacity: 0; transform: translateY(28px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .hot-folder-view.active .hot-hero {
+      animation: hot-card-in 0.5s cubic-bezier(0.25,0.46,0.45,0.94) 0.05s both;
+    }
+    .hot-folder-view.active .hot-card:nth-child(1) {
+      animation: hot-card-in 0.55s cubic-bezier(0.25,0.46,0.45,0.94) 0.12s both;
+    }
+    .hot-folder-view.active .hot-card:nth-child(2) {
+      animation: hot-card-in 0.55s cubic-bezier(0.25,0.46,0.45,0.94) 0.22s both;
+    }
+    .hot-folder-view.active .hot-card:nth-child(3) {
+      animation: hot-card-in 0.55s cubic-bezier(0.25,0.46,0.45,0.94) 0.32s both;
+    }
+
+    @media (max-width: 600px) {
+      .hot-hero { padding: 36px 20px 32px; }
+      .hot-hero-title { font-size: 30px; }
+      .hot-grid { grid-template-columns: 1fr; padding: 0 20px 40px; }
+      .hot-card-featured .hot-card-thumb { aspect-ratio: 2.4 / 1; }
+      .hot-card-featured .hot-card-name { font-size: 22px; }
     }
 
     /* ===== Case Study View ===== */
@@ -1448,7 +1900,7 @@
       position: sticky;
       top: 0;
       align-self: flex-start;
-      padding: 24px 0;
+      padding: 24px 8px;
       border-left: none;
       border-right: none;
       max-height: 100vh;
@@ -1460,33 +1912,39 @@
 
     .cs-nav-title {
       font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 1px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
       color: var(--text-muted);
-      padding: 0 20px 14px;
+      padding: 0 12px 12px;
     }
     .cs-nav-item {
       display: block;
       width: 100%;
-      padding: 8px 20px;
+      padding: 7px 12px;
       font-size: 12px;
       font-weight: 500;
-      color: var(--text-tertiary);
+      color: var(--text-muted);
       background: none;
       border: none;
-      border-right: 2px solid transparent;
+      border-right: none;
+      border-left: 2px solid transparent;
       text-align: left;
       cursor: pointer;
-      transition: color 0.15s, border-color 0.15s, background 0.15s;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
       font-family: inherit;
+      border-radius: 6px;
+      letter-spacing: -0.05px;
     }
     .cs-nav-item:hover {
-      color: var(--text-secondary);
+      color: var(--text-primary);
+      background: var(--bg-hover);
     }
     .cs-nav-item.active {
-      color: var(--accent, #0082FF);
-      border-right-color: var(--accent, #0082FF);
+      color: var(--text-primary);
+      background: var(--bg-hover);
+      border-left-color: var(--text-primary);
+      font-weight: 600;
     }
 
     .case-study-scroll {
@@ -1506,14 +1964,14 @@
     .cs-hero {
       position: relative;
       width: 100%;
-      padding: 56px 48px 40px;
+      padding: 60px 48px 44px;
       overflow: hidden;
       flex-shrink: 0;
     }
     .cs-hero-bg {
       position: absolute;
       inset: 0;
-      opacity: 0.15;
+      opacity: 0.12;
     }
     .cs-hero-content {
       position: relative;
@@ -1523,73 +1981,75 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 12px;
+      padding: 5px 14px;
       background: var(--bg-active);
       border: 1px solid var(--border);
       border-radius: 20px;
       font-size: 11px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--text-secondary);
-      margin-bottom: 16px;
+      margin-bottom: 18px;
+      letter-spacing: 0.1px;
     }
     .cs-title {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 700;
       color: var(--text-primary);
-      line-height: 1.2;
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
+      line-height: 1.15;
+      letter-spacing: -0.8px;
+      margin-bottom: 10px;
     }
     .cs-subtitle {
       font-size: 15px;
       color: var(--text-secondary);
-      line-height: 1.5;
+      line-height: 1.6;
       max-width: 600px;
     }
     .cs-meta-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 24px;
-      margin-top: 24px;
+      gap: 28px;
+      margin-top: 28px;
     }
     .cs-meta-item {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
     }
     .cs-meta-label {
       font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.8px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
       color: var(--text-muted);
     }
     .cs-meta-value {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--icon-hover);
+      letter-spacing: -0.1px;
     }
 
     /* Content sections */
     .cs-body {
-      padding: 40px 48px 60px;
+      padding: 44px 48px 64px;
       flex: 1;
       min-width: 0;
       order: 1;
     }
     .cs-section {
-      margin-bottom: 40px;
+      margin-bottom: 44px;
     }
     .cs-section-title {
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 1.2px;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
       color: var(--text-primary);
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
     .cs-section-title::after {
       content: '';
@@ -1599,8 +2059,9 @@
     }
     .cs-text {
       font-size: 14px;
-      line-height: 1.75;
+      line-height: 1.8;
       color: var(--text-secondary);
+      letter-spacing: -0.05px;
     }
     .cs-text strong {
       color: var(--icon-hover);
@@ -1609,15 +2070,15 @@
     .cs-list {
       list-style: none;
       padding: 0;
-      margin: 12px 0 0;
+      margin: 14px 0 0;
     }
     .cs-list li {
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.7;
       color: var(--text-secondary);
-      padding-left: 18px;
+      padding-left: 20px;
       position: relative;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
     .cs-list li::before {
       content: '';
@@ -1627,33 +2088,39 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: rgba(99, 102, 241, 0.5);
+      background: var(--accent, rgba(99, 102, 241, 0.5));
     }
 
     /* Outcome cards */
     .cs-outcomes {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 12px;
-      margin-top: 16px;
+      gap: 14px;
+      margin-top: 18px;
     }
     .cs-outcome-card {
       background: var(--bg-hover);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
+      border-radius: 14px;
+      padding: 18px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .cs-outcome-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 4px 16px var(--shadow);
     }
     .cs-outcome-stat {
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 700;
-      color: #a78bfa;
+      color: var(--accent, #a78bfa);
       line-height: 1;
+      letter-spacing: -0.5px;
     }
     .cs-outcome-label {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--text-tertiary);
-      margin-top: 6px;
-      line-height: 1.4;
+      margin-top: 8px;
+      line-height: 1.45;
     }
 
     /* Team Overview */
@@ -1713,7 +2180,7 @@
 
     /* How we Started — Discovery section */
     .cs-image-block {
-      border-radius: 8px;
+      border-radius: 14px;
       overflow: hidden;
       border: 1px solid var(--border);
       margin: 24px auto;
@@ -1749,13 +2216,13 @@
     }
     .cs-synthesis {
       margin-top: 24px;
-      padding: 16px 18px;
+      padding: 16px 20px;
       background: rgba(0, 130, 255, 0.04);
-      border-left: 2px solid rgba(0, 130, 255, 0.3);
-      border-radius: 0 8px 8px 0;
+      border-left: 3px solid rgba(0, 130, 255, 0.3);
+      border-radius: 0 12px 12px 0;
     }
     .cs-synthesis p {
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.7;
       color: var(--text-secondary);
       font-style: italic;
@@ -1769,33 +2236,39 @@
       gap: 12px;
     }
     .cs-decision-item {
-      padding: 14px 16px;
+      padding: 16px 18px;
       background: var(--bg-hover);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 12px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .cs-decision-item:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 2px 8px var(--shadow);
     }
     .cs-decision-item strong {
       display: block;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--icon-hover);
-      margin-bottom: 4px;
+      margin-bottom: 5px;
+      letter-spacing: -0.1px;
     }
     .cs-decision-item span {
       font-size: 13px;
-      line-height: 1.6;
+      line-height: 1.65;
       color: var(--text-secondary);
     }
     /* Key learning callout */
     .cs-learning {
       margin-top: 8px;
-      padding: 14px 18px;
+      padding: 16px 20px;
       background: rgba(255, 170, 0, 0.04);
-      border-left: 2px solid rgba(255, 170, 0, 0.3);
-      border-radius: 0 8px 8px 0;
+      border-left: 3px solid rgba(255, 170, 0, 0.3);
+      border-radius: 0 12px 12px 0;
     }
     .cs-learning p {
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.7;
       color: var(--text-secondary);
       font-style: italic;
@@ -1819,6 +2292,880 @@
       .cs-title { font-size: 22px; }
       .cs-body { padding: 24px 20px 40px; }
       .cs-outcomes { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ===== Apple-style Case Studies ===== */
+
+    /* Override body-wrap to column layout (nav on top, content below) */
+    #cs-novartis-market-model .cs-body-wrap,
+    #cs-novartis-finplan .cs-body-wrap {
+      flex-direction: column;
+    }
+
+    /* Override sidebar → horizontal sticky nav bar (Apple-style) */
+    #cs-novartis-market-model .cs-sidebar,
+    #cs-novartis-finplan .cs-sidebar {
+      width: 100%;
+      min-width: unset;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      order: unset;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 32px;
+      max-height: unset;
+      overflow-y: visible;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+    }
+    #cs-novartis-market-model .cs-sidebar::-webkit-scrollbar,
+    #cs-novartis-finplan .cs-sidebar::-webkit-scrollbar { display: none; }
+
+    #cs-novartis-market-model .cs-nav-title,
+    #cs-novartis-finplan .cs-nav-title {
+      padding: 0;
+      padding-right: 24px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    #cs-novartis-market-model .cs-nav-item,
+    #cs-novartis-finplan .cs-nav-item {
+      width: auto;
+      padding: 14px 16px;
+      border-left: none;
+      border-right: none;
+      border-bottom: 2px solid transparent;
+      border-radius: 0;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      white-space: nowrap;
+      background: none;
+      letter-spacing: -0.1px;
+    }
+    #cs-novartis-market-model .cs-nav-item:hover,
+    #cs-novartis-finplan .cs-nav-item:hover {
+      color: var(--text-primary);
+      background: none;
+    }
+    #cs-novartis-market-model .cs-nav-item.active,
+    #cs-novartis-finplan .cs-nav-item.active {
+      color: var(--text-primary);
+      font-weight: 600;
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: var(--text-primary);
+      background: none;
+    }
+
+    /* Override body — full width, no padding */
+    #cs-novartis-market-model .cs-body,
+    #cs-novartis-finplan .cs-body {
+      padding: 0;
+      order: unset;
+    }
+
+    /* ---------- Hero ---------- */
+    .apple-hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 48px 80px;
+      min-height: 420px;
+      overflow: hidden;
+      scroll-margin-top: 0;
+    }
+    /* FinPlan hero - left aligned with animated gradient */
+    #cs-novartis-finplan .apple-hero {
+      align-items: flex-start;
+      text-align: left;
+      padding: 160px 48px 140px;
+    }
+    .apple-hero-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.10;
+    }
+    /* Animated gradient for FinPlan hero - darker, more vibrant */
+    #cs-novartis-finplan .apple-hero-bg {
+      background: linear-gradient(135deg, 
+        rgba(4, 96, 169, 0.18) 0%, 
+        rgba(231, 74, 33, 0.14) 25%,
+        rgba(236, 154, 30, 0.12) 50%,
+        rgba(4, 96, 169, 0.18) 75%,
+        rgba(231, 74, 33, 0.14) 100%);
+      background-size: 200% 200%;
+      animation: gradientShift 15s ease infinite;
+      opacity: 1;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    /* Novartis logo in hero */
+    .apple-hero-logo {
+      width: 180px;
+      height: auto;
+      margin-bottom: 32px;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+    }
+    #cs-novartis-finplan .apple-hero-logo {
+      width: 140px;
+      filter: drop-shadow(0 2px 12px rgba(4, 96, 169, 0.15));
+    }
+    body.dashboard-body.light-mode #cs-novartis-finplan .apple-hero-logo {
+      filter: drop-shadow(0 2px 12px rgba(4, 96, 169, 0.25));
+    }
+    .apple-hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+    }
+    #cs-novartis-finplan .apple-hero-content {
+      max-width: 800px;
+      width: 100%;
+      margin: 0;
+    }
+    #cs-novartis-finplan .apple-hero-subtitle {
+      margin: 0;
+      max-width: 100%;
+      text-align: left;
+    }
+    #cs-novartis-finplan .apple-meta-grid {
+      margin: 48px 0 0;
+      text-align: left;
+      justify-items: start;
+    }
+    #cs-novartis-finplan .apple-meta-item {
+      text-align: left;
+    }
+    /* Larger metrics for scale section */
+    #cs-novartis-finplan #fp-scale .apple-meta-value {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    #cs-novartis-finplan #fp-scale .apple-meta-label {
+      font-size: 12px;
+    }
+    /* Mandate section - left aligned, consistent with hero */
+    #cs-novartis-finplan #fp-mandate .apple-section {
+      text-align: left;
+      padding: 80px 48px;
+    }
+    #cs-novartis-finplan #fp-mandate .apple-feature {
+      max-width: 100%;
+      margin: 0;
+      align-items: flex-start;
+      width: 100%;
+    }
+    /* Section headings - left aligned for FinPlan */
+    #cs-novartis-finplan .apple-section {
+      text-align: left;
+    }
+    #cs-novartis-finplan .apple-section-headline {
+      margin-left: 0;
+      text-align: left;
+      max-width: 100%;
+    }
+    #cs-novartis-finplan #fp-mandate .apple-section-body {
+      text-align: left;
+      margin-left: 0;
+    }
+    /* Image matches text height in mandate section */
+    #cs-novartis-finplan #fp-mandate .apple-feature {
+      align-items: stretch;
+    }
+    #cs-novartis-finplan #fp-mandate .apple-feature-img {
+      flex: 0 0 auto;
+      width: 45%;
+      max-width: 400px;
+      overflow: hidden;
+      align-self: stretch;
+    }
+    #cs-novartis-finplan #fp-mandate .apple-feature-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* Problem section - image on left, text on right */
+    #cs-novartis-finplan #fp-problem .apple-feature {
+      align-items: stretch;
+      margin: 0;
+      max-width: 100%;
+    }
+    #cs-novartis-finplan #fp-problem .apple-feature-img {
+      flex: 0 0 auto;
+      width: 45%;
+      max-width: 400px;
+      overflow: hidden;
+      align-self: stretch;
+    }
+    #cs-novartis-finplan #fp-problem .apple-feature-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    #cs-novartis-finplan #fp-problem .apple-feature-text {
+      flex: 1;
+      text-align: left;
+    }
+    #cs-novartis-finplan #fp-problem .apple-section-body {
+      text-align: left;
+      margin-left: 0;
+    }
+    /* Insight section - full width */
+    #cs-novartis-finplan #fp-insight .apple-section-headline {
+      max-width: 100%;
+    }
+    #cs-novartis-finplan #fp-insight .apple-section-body {
+      max-width: 100%;
+      text-align: left;
+    }
+    #cs-novartis-finplan #fp-insight .apple-list {
+      max-width: 100%;
+      text-align: left;
+    }
+    #cs-novartis-finplan #fp-insight .apple-img-full {
+      max-width: 100%;
+      aspect-ratio: auto;
+      margin-top: 48px;
+    }
+    #cs-novartis-finplan #fp-insight .apple-img-full img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    /* Platform layers grid */
+    .platform-layers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 48px;
+      max-width: 100%;
+    }
+    .platform-layer-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: left;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .platform-layer-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .platform-layer-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .platform-layer-logo {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
+    .platform-layer-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+      color: var(--text-primary);
+    }
+    .platform-layer-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    .platform-layer-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .platform-layer-features li {
+      position: relative;
+      padding: 6px 0 6px 20px;
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .platform-layer-features li:last-child {
+      border-bottom: none;
+    }
+    .platform-layer-features li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent, #0082FF);
+    }
+    @media (max-width: 1024px) {
+      .platform-layers-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      .platform-layers-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+    /* Strategy section - text left, image right */
+    #cs-novartis-finplan #fp-strategy .apple-feature {
+      align-items: stretch;
+      margin: 0;
+      max-width: 100%;
+    }
+    #cs-novartis-finplan #fp-strategy .apple-feature-text {
+      flex: 1;
+      text-align: left;
+    }
+    #cs-novartis-finplan #fp-strategy .apple-section-body {
+      text-align: left;
+      margin-left: 0;
+    }
+    #cs-novartis-finplan #fp-strategy .apple-feature-img {
+      flex: 0 0 auto;
+      width: 55%;
+      max-width: 600px;
+      padding: 0;
+      margin: 0;
+    }
+    #cs-novartis-finplan #fp-strategy .strategy-journey-img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      margin: 0;
+      padding: 0;
+    }
+    .apple-hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      background: var(--bg-active);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+    .apple-hero-title {
+      font-size: 64px;
+      font-weight: 700;
+      letter-spacing: -3px;
+      line-height: 1.0;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+    #cs-novartis-finplan .apple-hero-title {
+      font-size: 48px;
+      letter-spacing: -2px;
+      line-height: 1.1;
+    }
+    .apple-hero-subtitle {
+      font-size: 21px;
+      font-weight: 400;
+      line-height: 1.47;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ---------- Apple Section ---------- */
+    .apple-section {
+      padding: 80px 48px;
+      text-align: center;
+    }
+    .apple-section--alt {
+      background: var(--bg-elevated);
+    }
+    .apple-section--dark {
+      background: #000;
+      color: #fff;
+    }
+    body.dashboard-body.light-mode .apple-section--dark {
+      background: #1d1d1f;
+      color: #fff;
+    }
+    .apple-section--dark .apple-section-eyebrow,
+    .apple-section--dark .apple-section-headline,
+    .apple-section--dark .apple-feature-title {
+      color: #fff;
+    }
+    .apple-section--dark .apple-section-body,
+    .apple-section--dark .apple-feature-desc {
+      color: rgba(255,255,255,0.7);
+    }
+    .apple-section-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent, #0082FF);
+      margin-bottom: 8px;
+    }
+    .apple-section-headline {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -1.2px;
+      line-height: 1.08;
+      color: var(--text-primary);
+      max-width: 700px;
+      margin: 0 auto 20px;
+    }
+    .apple-section-body {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .apple-section-body strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ---------- Meta grid (overview) ---------- */
+    .apple-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      max-width: 660px;
+      margin: 48px auto 0;
+      text-align: center;
+    }
+    .apple-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .apple-meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .apple-meta-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* ---------- Feature showcase ---------- */
+    .apple-feature {
+      display: flex;
+      align-items: center;
+      gap: 56px;
+      max-width: 920px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .apple-feature--reverse {
+      flex-direction: row-reverse;
+    }
+    .apple-feature-text {
+      flex: 1;
+      min-width: 0;
+    }
+    .apple-feature-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--accent, #0082FF);
+      margin-bottom: 10px;
+    }
+    .apple-feature-title {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      line-height: 1.12;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+    .apple-feature-desc {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+    .apple-feature-img {
+      flex: 1;
+      min-width: 0;
+      aspect-ratio: 4 / 3;
+      background: var(--bg-hover);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 500;
+      overflow: hidden;
+    }
+    .apple-section--dark .apple-feature-img {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.08);
+    }
+
+    /* ---------- Stats / Impact grid ---------- */
+    .apple-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 800px;
+      margin: 56px auto 0;
+    }
+    .apple-stat-card {
+      padding: 28px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      text-align: center;
+    }
+    .apple-section--dark .apple-stat-card {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .apple-stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent, #0082FF);
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: -1px;
+    }
+    .apple-section--dark .apple-stat-value {
+      color: #5ac8fa;
+    }
+    .apple-stat-label {
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--text-tertiary);
+    }
+    .apple-section--dark .apple-stat-label {
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ---------- Reflection / Quote ---------- */
+    .apple-quote {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.5;
+      letter-spacing: -0.5px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin: 0 auto;
+      font-style: italic;
+    }
+    .apple-quote::before {
+      content: '\201C';
+      display: block;
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--accent, #0082FF);
+      font-style: normal;
+      margin-bottom: 12px;
+    }
+
+    /* ---------- Image placeholder ---------- */
+    .apple-img-full {
+      width: 100%;
+      max-width: 860px;
+      margin: 48px auto 0;
+      aspect-ratio: 16 / 9;
+      background: var(--bg-hover);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .apple-section--dark .apple-img-full {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+
+    /* ---------- Divider ---------- */
+    .apple-divider {
+      width: 100%;
+      max-width: 680px;
+      height: 1px;
+      background: var(--border);
+      margin: 0 auto;
+    }
+
+    /* ---------- Apple-style bullet list ---------- */
+    .apple-list {
+      list-style: none;
+      padding: 0;
+      margin: 24px auto 0;
+      max-width: 600px;
+      text-align: left;
+    }
+    .apple-list li {
+      position: relative;
+      padding: 10px 0 10px 28px;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .apple-list li:last-child { border-bottom: none; }
+    .apple-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 16px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent, #0082FF);
+      opacity: 0.7;
+    }
+    .apple-list li strong { color: var(--text-primary); font-weight: 600; }
+    .apple-section--dark .apple-list li {
+      color: rgba(255,255,255,0.7);
+      border-bottom-color: rgba(255,255,255,0.08);
+    }
+    .apple-section--dark .apple-list li strong { color: #fff; }
+    .apple-section--dark .apple-list li::before { background: #fbbf24; }
+
+    /* ---------- Before / After comparison table ---------- */
+    .apple-comparison {
+      max-width: 720px;
+      margin: 48px auto 0;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .apple-comparison-row {
+      display: grid;
+      grid-template-columns: 2fr 3fr 3fr;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .apple-comparison-row:last-child { border-bottom: none; }
+    .apple-comparison-row.apple-comparison-header {
+      background: var(--bg-active);
+    }
+    .apple-comparison-cell {
+      padding: 14px 20px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
+    .apple-comparison-header .apple-comparison-cell {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 12px 20px;
+    }
+    .apple-comparison-cell:first-child {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .apple-comparison-cell:nth-child(2) {
+      color: var(--text-muted);
+      border-left: 1px solid var(--border-subtle);
+    }
+    .apple-comparison-cell:nth-child(3) {
+      border-left: 1px solid var(--border-subtle);
+      color: var(--accent, #0082FF);
+      font-weight: 600;
+    }
+
+    /* ---------- Responsibility / role grid ---------- */
+    .apple-role-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      max-width: 720px;
+      margin: 40px auto 0;
+      text-align: left;
+    }
+    .apple-role-card {
+      padding: 24px;
+      background: var(--bg-hover);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+    }
+    .apple-role-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--bg-active);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      color: var(--accent, #0082FF);
+    }
+    .apple-role-card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      letter-spacing: -0.1px;
+    }
+    .apple-role-card-desc {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text-tertiary);
+    }
+    .apple-section--alt .apple-role-card {
+      background: var(--bg-card);
+    }
+
+    /* ---------- Deep-dive collapsible ---------- */
+    .apple-deep-dive {
+      max-width: 640px;
+      margin: 40px auto 0;
+      text-align: left;
+    }
+    .apple-deep-dive-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 20px;
+      background: var(--bg-hover);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .apple-deep-dive-toggle:hover {
+      background: var(--bg-active);
+      border-color: var(--border);
+    }
+    .apple-deep-dive-toggle svg {
+      transition: transform 0.3s;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .apple-deep-dive.open .apple-deep-dive-toggle svg {
+      transform: rotate(90deg);
+    }
+    .apple-deep-dive-content {
+      display: none;
+      padding: 20px;
+      margin-top: 8px;
+      background: var(--bg-hover);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+    }
+    .apple-deep-dive.open .apple-deep-dive-content {
+      display: block;
+    }
+    .apple-deep-dive-content li {
+      padding: 8px 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      border-bottom: 1px solid var(--border-subtle);
+      list-style: none;
+      position: relative;
+      padding-left: 20px;
+    }
+    .apple-deep-dive-content li:last-child { border-bottom: none; }
+    .apple-deep-dive-content li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .apple-role-grid { grid-template-columns: 1fr; }
+      .apple-comparison-row { grid-template-columns: 1fr; }
+      .apple-comparison-cell:nth-child(2),
+      .apple-comparison-cell:nth-child(3) { border-left: none; border-top: 1px solid var(--border-subtle); }
+    }
+
+    /* ---------- Scroll reveal ---------- */
+    .apple-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .apple-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 768px) {
+      .apple-hero { padding: 64px 24px 48px; min-height: 300px; }
+      #cs-novartis-finplan .apple-hero { padding: 120px 24px 100px; }
+      #cs-novartis-finplan .apple-hero-logo { width: 110px; }
+      .apple-hero-title { font-size: 40px; letter-spacing: -2px; }
+      #cs-novartis-finplan .apple-hero-title { font-size: 36px; letter-spacing: -1.5px; }
+      .apple-hero-subtitle { font-size: 17px; }
+      .apple-hero-logo { width: 140px; margin-bottom: 24px; }
+      .apple-section { padding: 56px 24px; }
+      .apple-section-headline { font-size: 30px; letter-spacing: -1px; }
+      #cs-novartis-finplan .apple-section-headline { font-size: 28px; }
+      .apple-feature { flex-direction: column !important; gap: 32px; }
+      .apple-meta-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+      #cs-novartis-finplan #fp-scale .apple-meta-grid { grid-template-columns: repeat(3, 1fr); }
+      .apple-stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .apple-quote { font-size: 20px; }
+      #cs-novartis-market-model .cs-sidebar,
+      #cs-novartis-finplan .cs-sidebar { padding: 0 16px; }
+    }
+    @media (max-width: 480px) {
+      .apple-hero-title { font-size: 32px; }
+      .apple-feature-title { font-size: 26px; }
+      .apple-stats-grid { grid-template-columns: 1fr; }
+      .apple-meta-grid { grid-template-columns: 1fr; }
+      #cs-novartis-finplan #fp-scale .apple-meta-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     /* Placeholder toast */
@@ -1850,11 +3197,16 @@
       .app-frame {
         width: 96vw;
         height: 92vh;
-        border-radius: 10px;
+        border-radius: 12px;
       }
       .finder-sidebar { display: none; }
       .project-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
       .finder-main { padding: 16px; }
+      .project-card { border-radius: 14px; }
+      .project-card-body { padding: 12px 14px 14px; }
+    }
+    @media (max-width: 480px) {
+      .project-grid { grid-template-columns: 1fr; gap: 14px; }
     }
 
     /* ===== Logo Rail / Marquee ===== */
@@ -1930,20 +3282,20 @@
       <!-- ===== PROFILE ===== -->
       <div class="cell-profile card">
         <div id="profile-banner-vanta" class="profile-banner"></div>
-        <div style="padding: 0 20px 20px;">
+        <div style="padding: 0 22px 22px;">
           <div class="profile-avatar">
             <img src="./assets/logos/ShivanshuMathur.png" alt="Shivanshu Mathur">
             <div class="avatar-dot"></div>
           </div>
-          <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
-            <h1 style="font-size: 16px; font-weight: 700; color: var(--text-primary);">Shivanshu Mathur</h1>
+          <div style="display: flex; align-items: center; gap: 8px; margin-top: 12px;">
+            <h1 style="font-size: 18px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.3px;">Shivanshu Mathur</h1>
             <span class="profile-badge">UX</span>
           </div>
-          <p style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">AI &amp; UX Strategist</p>
-          <p style="font-size: 11.5px; color: var(--text-tertiary); line-height: 1.55; margin-top: 12px;">
+          <p style="font-size: 13px; color: var(--text-secondary); margin-top: 3px; font-weight: 500;">AI &amp; UX Strategist</p>
+          <p style="font-size: 12px; color: var(--text-tertiary); line-height: 1.6; margin-top: 14px;">
             Blending AI thinking, product strategy, and user-centered design to craft experiences that actually move the needle for businesses.
           </p>
-          <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px; font-size: 11px; color: var(--text-muted);">
+          <div style="display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 11px; color: var(--text-muted);">
             <span style="display: flex; align-items: center; gap: 4px;">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
               India
@@ -1954,7 +3306,7 @@
               Novartis
             </span>
           </div>
-          <div style="display: flex; align-items: center; gap: 8px; margin-top: 16px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-top: 18px;">
             <a href="mailto:hello@shivanshmathur.com" class="btn-chat">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
               Let's chat
@@ -1985,32 +3337,32 @@
       </div>
 
       <!-- ===== WORK (Primary App tile) ===== -->
-      <button type="button" class="cell-work card" id="open-work-folio" style="padding: 14px; display: flex; flex-direction: column; text-decoration: none; text-align: left; cursor: pointer; font-family: inherit;">
+      <button type="button" class="cell-work card" id="open-work-folio" style="padding: 16px; display: flex; flex-direction: column; text-decoration: none; text-align: left; cursor: pointer; font-family: inherit;">
         <div class="section-label">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
           Work
         </div>
-        <div style="flex: 1; display: flex; flex-direction: row; align-items: center; gap: 14px;">
+        <div style="flex: 1; display: flex; flex-direction: row; align-items: center; gap: 16px;">
           <!-- Card graphics -->
           <div class="folio-stack" style="height: 70px; width: 90px; flex-shrink: 0;">
-            <div style="position: absolute; width: 38px; height: 48px; border-radius: 5px; background: linear-gradient(135deg, #3b82f6, #06b6d4); transform: rotate(-12deg); left: 2px; top: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);"></div>
-            <div style="position: absolute; width: 38px; height: 48px; border-radius: 5px; background: linear-gradient(135deg, #8b5cf6, #ec4899); transform: rotate(3deg); left: 22px; top: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);"></div>
-            <div style="position: absolute; width: 38px; height: 48px; border-radius: 5px; background: linear-gradient(135deg, #f59e0b, #ef4444); transform: rotate(-4deg); left: 42px; top: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);"></div>
+            <div style="position: absolute; width: 40px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #3b82f6, #06b6d4); transform: rotate(-12deg); left: 2px; top: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
+            <div style="position: absolute; width: 40px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #8b5cf6, #ec4899); transform: rotate(3deg); left: 22px; top: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
+            <div style="position: absolute; width: 40px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #f59e0b, #ef4444); transform: rotate(-4deg); left: 42px; top: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
           </div>
           <!-- Stats 50-50 -->
           <div style="flex: 1; display: flex; flex-direction: row; align-items: center;">
             <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid var(--border); padding: 4px 0;">
-              <span style="font-size: 24px; font-weight: 700; color: var(--text-primary); line-height: 1;">5</span>
-              <span style="font-size: 9px; color: var(--text-muted); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px;">Companies</span>
+              <span style="font-size: 28px; font-weight: 700; color: var(--text-primary); line-height: 1; letter-spacing: -1px;">5</span>
+              <span style="font-size: 9px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500;">Companies</span>
             </div>
             <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px 0;">
-              <span style="font-size: 24px; font-weight: 700; color: var(--text-primary); line-height: 1;">17+</span>
-              <span style="font-size: 9px; color: var(--text-muted); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px;">Projects</span>
+              <span style="font-size: 28px; font-weight: 700; color: var(--text-primary); line-height: 1; letter-spacing: -1px;">17+</span>
+              <span style="font-size: 9px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500;">Projects</span>
             </div>
           </div>
         </div>
-        <div style="display: flex; justify-content: flex-end; margin-top: 4px;">
-          <span style="font-size: 11px; font-weight: 500; color: rgba(59,130,246,0.8); display: flex; align-items: center; gap: 3px; transition: color 0.2s;">
+        <div style="display: flex; justify-content: flex-end; margin-top: 6px;">
+          <span style="font-size: 11px; font-weight: 600; color: var(--accent, #3b82f6); display: flex; align-items: center; gap: 4px; transition: gap 0.3s;">
             View all
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
           </span>
@@ -2020,18 +3372,18 @@
 
 
       <!-- ===== MUSIC (Passive widget) ===== -->
-      <div class="cell-listen card" style="padding: 14px; display: flex; flex-direction: column; justify-content: space-between;">
+      <div class="cell-listen card" style="padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
         <div class="section-label">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"/></svg>
           Listening
         </div>
-        <div style="margin-top: auto; display: flex; align-items: center; gap: 8px;">
-          <div style="width: 32px; height: 32px; border-radius: 6px; background: var(--bg-card-hover); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--text-secondary);">
+        <div style="margin-top: auto; display: flex; align-items: center; gap: 10px;">
+          <div style="width: 36px; height: 36px; border-radius: 10px; background: var(--bg-card-hover); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--text-secondary);">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
           </div>
           <div style="flex: 1; min-width: 0;">
-            <p style="font-size: 11px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Lo-fi Focus</p>
-            <p style="font-size: 10px; color: var(--text-muted);">Chill Beats</p>
+            <p style="font-size: 12px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.1px;">Lo-fi Focus</p>
+            <p style="font-size: 10px; color: var(--text-muted); margin-top: 1px;">Chill Beats</p>
           </div>
           <div style="display: flex; align-items: flex-end; gap: 2px; height: 16px;">
             <div class="eq-bar"></div>
@@ -2043,7 +3395,7 @@
 
 
       <!-- ===== LOCAL TIME (Passive widget) ===== -->
-      <div class="cell-clock card" style="padding: 14px; display: flex; flex-direction: column;">
+      <div class="cell-clock card" style="padding: 16px; display: flex; flex-direction: column;">
         <div class="section-label">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           Local Time
@@ -2061,18 +3413,18 @@
       </div>
 
       <!-- ===== QUOTE / PERSONALITY (Passive widget) ===== -->
-      <div class="cell-quote card" style="padding: 14px; display: flex; flex-direction: column; justify-content: space-between;">
+      <div class="cell-quote card" style="padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
         <div class="section-label">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg>
           Quote
         </div>
-        <div style="margin-top: auto; display: flex; align-items: center; gap: 10px;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink: 0; opacity: 0.12;"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10H0z"/></svg>
+        <div style="margin-top: auto; display: flex; align-items: flex-start; gap: 10px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink: 0; opacity: 0.10; margin-top: 2px;"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10H0z"/></svg>
           <div style="flex: 1; min-width: 0;">
-            <p style="font-size: 11px; color: var(--text-tertiary); line-height: 1.5; font-style: italic;">
+            <p style="font-size: 11.5px; color: var(--text-tertiary); line-height: 1.55; font-style: italic;">
               "Design is not just what it looks like. Design is how it works."
             </p>
-            <p style="font-size: 10px; color: var(--text-muted); margin-top: 4px; font-weight: 500;">— Steve Jobs</p>
+            <p style="font-size: 10px; color: var(--text-muted); margin-top: 5px; font-weight: 600;">— Steve Jobs</p>
           </div>
         </div>
       </div>
@@ -2132,6 +3484,10 @@
           <button class="sidebar-item active" data-filter="all">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
             All Projects
+          </button>
+          <button class="sidebar-item" id="sidebar-hot-work" data-filter="__hot__">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 6.51 6.51 0 009 11.5a3 3 0 105.476-1.717 6.012 6.012 0 00.886-4.569z"/></svg>
+            Selected Projects
           </button>
           <button class="sidebar-item" data-filter="featured">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
@@ -2221,7 +3577,20 @@
               </div>
             </button>
 
-            <!-- 5. Forge — Atlassian -->
+            <!-- 5. Financial Planning Platform — Novartis -->
+            <button class="project-card" data-project="novartis-finplan" data-category="ai enterprise platform featured" data-company="novartis">
+              <div class="project-card-thumb" style="background: linear-gradient(135deg, #d97706 0%, #fbbf24 50%, #0e0e0e 100%);"></div>
+              <div class="project-card-body">
+                <div class="project-card-name">Financial Planning Platform</div>
+                <div class="project-card-desc">Enterprise platform replacing 150+ Excel workflows with scalable cost management, forecasting, and AI-driven support</div>
+                <div class="project-card-meta">
+                  <span class="project-card-badge badge-live">Live</span>
+                  <span class="project-card-company">Novartis · Platform</span>
+                </div>
+              </div>
+            </button>
+
+            <!-- 6. Forge — Atlassian -->
             <button class="project-card" data-project="atlassian-forge" data-category="platform enterprise featured" data-company="atlassian">
               <div class="project-card-thumb" style="background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 50%, #0e0e0e 100%);"></div>
               <div class="project-card-body">
@@ -2397,117 +3766,670 @@
 
         </div><!-- end finder-main -->
 
+        <!-- ===== HOT WORK FOLDER VIEW ===== -->
+        <div class="hot-folder-view" id="hot-folder-view">
+
+          <!-- Hero -->
+          <div class="hot-hero">
+            <div class="hot-hero-eyebrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 6.51 6.51 0 009 11.5a3 3 0 105.476-1.717 6.012 6.012 0 00.886-4.569z"/></svg>
+              Curated Collection
+            </div>
+            <h2 class="hot-hero-title">Selected Projects</h2>
+            <p class="hot-hero-subtitle">Three projects that best represent the range and depth of my craft — from enterprise strategy to consumer growth.</p>
+          </div>
+
+          <!-- Showcase cards -->
+          <div class="hot-grid">
+
+            <!-- 1. Enterprise Financial Planning & Forecasting — Featured (full-width) -->
+            <button class="hot-card hot-card-featured" data-project="novartis-finplan">
+              <div class="hot-card-thumb" style="background: linear-gradient(135deg, #d97706 0%, #fbbf24 50%, #0e0e0e 100%);"></div>
+              <div class="hot-card-body">
+                <div class="hot-card-company">Novartis · Jul 2024 – Present</div>
+                <div class="hot-card-name">Enterprise Financial Planning & Forecasting</div>
+                <p class="hot-card-desc">Led the end-to-end transition from fragmented Excel-based financial planning to a scalable, trusted enterprise platform.</p>
+                <span class="hot-card-cta">
+                  Read case study
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                </span>
+              </div>
+            </button>
+
+            <!-- 2. Forge — Atlassian -->
+            <button class="hot-card" data-project="atlassian-forge">
+              <div class="hot-card-thumb" style="background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 40%, #0a1628 100%);"></div>
+              <div class="hot-card-body">
+                <div class="hot-card-company">Atlassian · 12 months</div>
+                <div class="hot-card-name">Forge</div>
+                <p class="hot-card-desc">Redesigning developer experience, documentation, and knowledge architecture for Atlassian's cloud app platform.</p>
+                <span class="hot-card-cta">
+                  Read case study
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                </span>
+              </div>
+            </button>
+
+            <!-- 3. Payment Gateway — Simplilearn -->
+            <button class="hot-card" data-project="simplilearn-payment">
+              <div class="hot-card-thumb" style="background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 40%, #0a1628 100%);"></div>
+              <div class="hot-card-body">
+                <div class="hot-card-company">Simplilearn · 3 weeks</div>
+                <div class="hot-card-name">Payment Gateway</div>
+                <p class="hot-card-desc">Redesigning checkout from a multi-step high-ticket flow to a one-tap microtransaction experience that boosted conversion.</p>
+                <span class="hot-card-cta">
+                  Read case study
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                </span>
+              </div>
+            </button>
+
+          </div><!-- end hot-grid -->
+        </div><!-- end hot-folder-view -->
+
         <!-- ===== CASE STUDY VIEWS ===== -->
 
-        <!-- ── Market Model ── -->
+        <!-- ── Market Model — Apple-style ── -->
         <div class="case-study-view" id="cs-novartis-market-model">
-          <!-- Hero -->
-          <div id="mm-overview" class="cs-hero">
-              <div class="cs-hero-bg" style="background: linear-gradient(135deg, #0082FF 0%, #00c6ff 40%, #0e0e0e 100%);"></div>
-              <div class="cs-hero-content">
-                <div class="cs-badge">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                  Live · Novartis
-                </div>
-                <h1 class="cs-title">Market Model</h1>
-                <p class="cs-subtitle">A strategic forecasting platform that replaced fragmented Excel models with a unified view of market dynamics — integrating epidemiology, pricing, and market share to support smarter planning decisions.</p>
-                <div class="cs-meta-row">
-                  <div class="cs-meta-item">
-                    <span class="cs-meta-label">Role</span>
-                    <span class="cs-meta-value">Senior UX Designer</span>
-                  </div>
-                  <div class="cs-meta-item">
-                    <span class="cs-meta-label">Duration</span>
-                    <span class="cs-meta-value">17 months</span>
-                  </div>
-                  <div class="cs-meta-item">
-                    <span class="cs-meta-label">Domain</span>
-                    <span class="cs-meta-value">Enterprise · Digital Finance</span>
-                  </div>
-                  <div class="cs-meta-item">
-                    <span class="cs-meta-label">Status</span>
-                    <span class="cs-meta-value">Live</span>
-                  </div>
-                </div>
+
+          <!-- ──── Hero ──── -->
+          <div class="apple-hero" id="mm-overview">
+            <div class="apple-hero-bg" style="background: radial-gradient(ellipse at 50% 0%, rgba(0,130,255,0.22) 0%, transparent 70%);"></div>
+            <div class="apple-hero-content">
+              <div class="apple-hero-eyebrow">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                Live · Novartis
               </div>
+              <h1 class="apple-hero-title">Market Model</h1>
+              <p class="apple-hero-subtitle">One platform to replace dozens of spreadsheets — unifying epidemiology, pricing, and market share into a single strategic view.</p>
             </div>
-          <!-- Body wrap: sidebar + content -->
+          </div>
+
+          <!-- ──── Sticky horizontal nav ──── -->
           <div class="cs-body-wrap">
             <nav class="cs-sidebar" aria-label="Case study sections">
-              <div class="cs-nav-title">On this page</div>
+              <div class="cs-nav-title">Market Model</div>
               <button class="cs-nav-item active" data-section="mm-overview">Overview</button>
-              <button class="cs-nav-item" data-section="mm-role">Role & Ownership</button>
-              <button class="cs-nav-item" data-section="mm-problem">Core Problem</button>
-              <button class="cs-nav-item" data-section="mm-decisions">Key Decisions</button>
-              <button class="cs-nav-item" data-section="mm-outcome">Outcome & Impact</button>
-              <button class="cs-nav-item" data-section="mm-learning">Key Learning</button>
+              <button class="cs-nav-item" data-section="mm-role">Role</button>
+              <button class="cs-nav-item" data-section="mm-problem">Challenge</button>
+              <button class="cs-nav-item" data-section="mm-decisions">Features</button>
+              <button class="cs-nav-item" data-section="mm-outcome">Impact</button>
+              <button class="cs-nav-item" data-section="mm-learning">Reflection</button>
             </nav>
+
             <div class="cs-body">
 
-              <div class="cs-section" id="mm-role">
-                <div class="cs-section-title">Role & Ownership</div>
-                <p class="cs-text">
-                  Sole UX designer on a 48-member cross-functional team (India, Spain, Switzerland). I owned the end-to-end design — from initial discovery with the Product Owner to information architecture, data visualization frameworks, interaction design, and usability validation across 4 regions. This was a ground-up build; there was no existing product. Excel was the product.
-                </p>
-              </div>
-
-              <div class="cs-section" id="mm-problem">
-                <div class="cs-section-title">Core Problem</div>
-                <p class="cs-text">
-                  Strategic planning teams across Novartis were forecasting demand, pricing, and market share using <strong>dozens of disconnected Excel files</strong> — each owned by different individuals, with no version control, no audit trail, and no single source of truth. Manual reconciliation between global and local numbers took days. Knowledge lived in people, not systems. Scaling this globally was increasing risk and inconsistency with every planning cycle.
-                </p>
-              </div>
-
-              <div class="cs-section" id="mm-decisions">
-                <div class="cs-section-title">Key Decisions</div>
-                <div class="cs-decision-list">
-                  <div class="cs-decision-item">
-                    <strong>One model, many lenses</strong>
-                    <span>Instead of separate tools for demand forecasting, pricing, and competitive analysis, I designed a single unified model with switchable views — so users change context without switching tools.</span>
+              <!-- ──── Overview ──── -->
+              <div class="apple-section" id="mm-role">
+                <div class="apple-reveal">
+                  <div class="apple-section-eyebrow">Overview</div>
+                  <div class="apple-section-headline">Designed from the ground up.<br>No legacy. No template.</div>
+                  <p class="apple-section-body">
+                    Sole UX designer on a 48-member cross-functional team spanning India, Spain, and Switzerland. I owned the entire design surface — from discovery with the Product Owner to information architecture, data visualization frameworks, interaction patterns, and usability validation across 4 regions.
+                  </p>
+                </div>
+                <div class="apple-meta-grid apple-reveal">
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Role</span>
+                    <span class="apple-meta-value">Senior UX Designer</span>
                   </div>
-                  <div class="cs-decision-item">
-                    <strong>Standardization without rigidity</strong>
-                    <span>Every geography believed their process was unique. I designed a configurable template system that enforces a shared structure underneath while allowing local flexibility in data inputs and assumptions.</span>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Duration</span>
+                    <span class="apple-meta-value">17 months</span>
                   </div>
-                  <div class="cs-decision-item">
-                    <strong>Data confidence scoring</strong>
-                    <span>Not all inputs are equally reliable. I introduced confidence indicators on each data source so planners know whether they're building on solid ground or estimates — which became unexpectedly central to adoption.</span>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Domain</span>
+                    <span class="apple-meta-value">Digital Finance</span>
+                  </div>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Status</span>
+                    <span class="apple-meta-value">Live</span>
                   </div>
                 </div>
               </div>
 
-              <div class="cs-section" id="mm-outcome">
-                <div class="cs-section-title">Outcome & Impact</div>
-                <div class="cs-outcomes">
-                  <div class="cs-outcome-card">
-                    <div class="cs-outcome-stat">1 source</div>
-                    <div class="cs-outcome-label">Single source of truth replacing fragmented Excel models across geographies</div>
+              <!-- ──── The Challenge ──── -->
+              <div class="apple-section apple-section--dark" id="mm-problem">
+                <div class="apple-reveal">
+                  <div class="apple-section-eyebrow" style="color: #5ac8fa;">The Challenge</div>
+                  <div class="apple-section-headline" style="max-width: 620px;">
+                    Dozens of spreadsheets.<br>
+                    Zero source of truth.
                   </div>
-                  <div class="cs-outcome-card">
-                    <div class="cs-outcome-stat">Real-time</div>
-                    <div class="cs-outcome-label">Interactive scenario modeling replaced static Excel outputs</div>
+                  <p class="apple-section-body" style="max-width: 580px;">
+                    Strategic planning teams across Novartis forecasted demand, pricing, and market share using <strong style="color:#fff;">disconnected Excel files</strong> — each owned by different individuals, with no version control, no audit trail. Manual reconciliation between global and local numbers took days. Knowledge lived in people, not systems. Every planning cycle increased risk and inconsistency.
+                  </p>
+                </div>
+                <div class="apple-img-full apple-reveal" style="max-width: 760px;">
+                  <span>Product screenshot — challenge overview</span>
+                </div>
+              </div>
+
+              <!-- ──── Feature 1: One Model, Many Lenses ──── -->
+              <div class="apple-section" id="mm-decisions">
+                <div class="apple-feature apple-reveal">
+                  <div class="apple-feature-text">
+                    <div class="apple-feature-eyebrow">Design Decision 01</div>
+                    <div class="apple-feature-title">One model.<br>Many lenses.</div>
+                    <p class="apple-feature-desc">Instead of separate tools for demand forecasting, pricing, and competitive analysis, I designed a single unified model with switchable views — so users change context without switching tools. One mental model, infinite perspectives.</p>
                   </div>
-                  <div class="cs-outcome-card">
-                    <div class="cs-outcome-stat">Standard</div>
-                    <div class="cs-outcome-label">Consistent models across regions with local flexibility preserved</div>
-                  </div>
-                  <div class="cs-outcome-card">
-                    <div class="cs-outcome-stat">Trusted</div>
-                    <div class="cs-outcome-label">Confidence scoring improved data trust and accelerated adoption</div>
+                  <div class="apple-feature-img">
+                    <span>Switchable views UI</span>
                   </div>
                 </div>
               </div>
 
-              <div class="cs-section" id="mm-learning">
-                <div class="cs-section-title">Key Learning</div>
-                <div class="cs-learning">
-                  <p>Forecasting tools aren't about numbers — they're about confidence. Users needed to trust the model before they'd trust the output. Standardization was politically harder than technically; the key was designing a system flexible enough to accommodate local needs while quietly enforcing a shared structure underneath.</p>
+              <!-- ──── Feature 2: Data Confidence Scoring ──── -->
+              <div class="apple-section apple-section--alt">
+                <div class="apple-feature apple-feature--reverse apple-reveal">
+                  <div class="apple-feature-text">
+                    <div class="apple-feature-eyebrow">Design Decision 02</div>
+                    <div class="apple-feature-title">Built for<br>confidence.</div>
+                    <p class="apple-feature-desc">Not all inputs are equally reliable. I introduced confidence indicators on each data source so planners know whether they're building on solid ground or estimates — a feature that became unexpectedly central to adoption.</p>
+                  </div>
+                  <div class="apple-feature-img">
+                    <span>Confidence scoring interface</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ──── Feature 3: Standardization Without Rigidity ──── -->
+              <div class="apple-section">
+                <div class="apple-feature apple-reveal">
+                  <div class="apple-feature-text">
+                    <div class="apple-feature-eyebrow">Design Decision 03</div>
+                    <div class="apple-feature-title">Standard structure.<br>Local freedom.</div>
+                    <p class="apple-feature-desc">Every geography believed their process was unique. I designed a configurable template system that enforces a shared structure underneath while allowing local flexibility in data inputs and assumptions — standardization without rigidity.</p>
+                  </div>
+                  <div class="apple-feature-img">
+                    <span>Template configuration UI</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ──── Impact ──── -->
+              <div class="apple-section apple-section--dark" id="mm-outcome">
+                <div class="apple-reveal">
+                  <div class="apple-section-eyebrow" style="color: #5ac8fa;">Impact</div>
+                  <div class="apple-section-headline">The numbers<br>speak clearly.</div>
+                </div>
+                <div class="apple-stats-grid apple-reveal">
+                  <div class="apple-stat-card">
+                    <div class="apple-stat-value">1</div>
+                    <div class="apple-stat-label">Single source of truth across all geographies</div>
+                  </div>
+                  <div class="apple-stat-card">
+                    <div class="apple-stat-value">Real‑time</div>
+                    <div class="apple-stat-label">Interactive scenario modeling replaced static Excel outputs</div>
+                  </div>
+                  <div class="apple-stat-card">
+                    <div class="apple-stat-value">4</div>
+                    <div class="apple-stat-label">Regions with consistent models and local flexibility</div>
+                  </div>
+                  <div class="apple-stat-card">
+                    <div class="apple-stat-value">Trusted</div>
+                    <div class="apple-stat-label">Confidence scoring accelerated adoption across teams</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ──── Reflection ──── -->
+              <div class="apple-section" id="mm-learning" style="padding-top: 100px; padding-bottom: 100px;">
+                <div class="apple-reveal">
+                  <div class="apple-section-eyebrow">Reflection</div>
+                  <p class="apple-quote">
+                    Forecasting tools aren't about numbers — they're about confidence. Users needed to trust the model before they'd trust the output. Standardization was politically harder than technically; the key was designing a system flexible enough to accommodate local needs while quietly enforcing a shared structure underneath.
+                  </p>
                 </div>
               </div>
 
             </div><!-- end cs-body -->
           </div><!-- end cs-body-wrap -->
         </div><!-- end case-study-view -->
+
+        <!-- ── Enterprise Financial Planning — Apple-style ── -->
+        <div class="case-study-view" id="cs-novartis-finplan">
+
+          <!-- ════════════════════════════════════════════ -->
+          <!-- 1. HERO + PROJECT META                      -->
+          <!-- ════════════════════════════════════════════ -->
+          <div class="apple-hero" id="fp-overview">
+            <div class="apple-hero-bg"></div>
+            <div class="apple-hero-content">
+              <img src="./assets/logos/NOVARTIS-filled.svg" alt="Novartis" class="apple-hero-logo">
+              <h1 class="apple-hero-title">Enterprise Financial<br>Planning & Forecasting</h1>
+              <p class="apple-hero-subtitle">Led the end-to-end transition from fragmented Excel-based financial planning to a scalable, trusted enterprise platform.</p>
+
+              <!-- Project meta -->
+              <div class="apple-meta-grid apple-reveal" style="grid-template-columns: repeat(4, 1fr); max-width: 800px; margin-top: 40px; gap: 24px;">
+                <div class="apple-meta-item">
+                  <span class="apple-meta-label">Role</span>
+                  <span class="apple-meta-value">Sr. UX Strategist</span>
+                </div>
+                <div class="apple-meta-item">
+                  <span class="apple-meta-label">Department</span>
+                  <span class="apple-meta-value" style="font-size: 13px;">GF Data, Analytics<br>& DS&AI</span>
+                </div>
+                <div class="apple-meta-item">
+                  <span class="apple-meta-label">Duration</span>
+                  <span class="apple-meta-value">Jul 2024 – Present</span>
+                </div>
+                <div class="apple-meta-item">
+                  <span class="apple-meta-label">Team Size</span>
+                  <span class="apple-meta-value">~48</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════════════════════════════════════════ -->
+          <!-- STICKY HORIZONTAL NAV                        -->
+          <!-- ════════════════════════════════════════════ -->
+          <div class="cs-body-wrap">
+            <nav class="cs-sidebar" aria-label="Case study sections">
+              <button class="cs-nav-item active" data-section="fp-mandate">Mandate</button>
+              <button class="cs-nav-item" data-section="fp-scale">Scale</button>
+              <button class="cs-nav-item" data-section="fp-problem">Problem</button>
+              <button class="cs-nav-item" data-section="fp-insight">Insight</button>
+              <button class="cs-nav-item" data-section="fp-strategy">Strategy</button>
+              <button class="cs-nav-item" data-section="fp-role">Leadership</button>
+              <button class="cs-nav-item" data-section="fp-platform">Platform</button>
+              <button class="cs-nav-item" data-section="fp-decisions">Decisions</button>
+              <button class="cs-nav-item" data-section="fp-outcome">Impact</button>
+              <button class="cs-nav-item" data-section="fp-learning">Reflection</button>
+            </nav>
+
+            <div class="cs-body">
+
+              <!-- ════════════════════════════════════════ -->
+              <!-- 2. MANDATE                               -->
+              <!-- ════════════════════════════════════════ -->
+              <div class="apple-section" id="fp-mandate">
+                <div class="apple-feature apple-reveal">
+                  <div class="apple-feature-text">
+                    <div class="apple-section-eyebrow">Mandate</div>
+                    <div class="apple-section-headline" style="font-size: 36px; letter-spacing: -1.2px; max-width: 100%; margin-bottom: 24px;">Moving financial planning<br>beyond Excel</div>
+                    <p class="apple-section-body" style="margin-bottom: 16px;">
+                      Excel was the primary tool for financial planning at Novartis, but at global scale it became slow, inconsistent, and difficult to govern.
+                    </p>
+                    <p class="apple-section-body" style="margin-bottom: 16px;">
+                      Finance teams relied on fragmented models for cost management, planning, and forecasting, creating operational risk and heavy dependency on manual reconciliation.
+                    </p>
+                    <p class="apple-section-body">
+                      I led the transition from Excel-based planning to a scalable platform, structuring fragmented workflows into a system designed to support global teams and build trust at scale.
+                    </p>
+                  </div>
+                  <div class="apple-feature-img">
+                    <img src="./assets/case-studies/Financial Planning Platform/Mandate-Novartis.jpeg" alt="Novartis Financial Planning Mandate" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                  </div>
+                </div>
+              </div>
+
+              <!-- ════════════════════════════════════════ -->
+              <!-- 3. SCALE & COMPLEXITY                    -->
+              <!-- ════════════════════════════════════════ -->
+              <div class="apple-section apple-section--alt" id="fp-scale">
+                <div class="apple-reveal">
+                  <div class="apple-section-eyebrow">Scale & Complexity</div>
+                  <div class="apple-section-headline" style="max-width: 580px;">The numbers<br>behind the problem.</div>
+                </div>
+                <div class="apple-meta-grid apple-reveal" style="grid-template-columns: repeat(6, 1fr); max-width: 100%; margin-top: 48px; gap: 24px;">
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Countries</span>
+                    <span class="apple-meta-value">10+</span>
+                  </div>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Finance Teams</span>
+                    <span class="apple-meta-value">13+</span>
+                  </div>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Excel Sheets</span>
+                    <span class="apple-meta-value">150+</span>
+                  </div>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Time Lost</span>
+                    <span class="apple-meta-value">30–40%</span>
+                  </div>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Repetitive Queries</span>
+                    <span class="apple-meta-value">60%+</span>
+                  </div>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Self-Service</span>
+                    <span class="apple-meta-value">Negligible</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ════════════════════════════════════════ -->
+              <!-- 4. THE REAL PROBLEM                      -->
+              <!-- ════════════════════════════════════════ -->
+              <div class="apple-section" id="fp-problem">
+                <div class="apple-feature apple-feature--reverse apple-reveal">
+                  <div class="apple-feature-img">
+                    <img src="./assets/case-studies/Financial Planning Platform/Excel.png" alt="Excel Spreadsheets" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                  </div>
+                  <div class="apple-feature-text">
+                    <div class="apple-section-eyebrow">The Real Problem</div>
+                    <div class="apple-section-headline" style="max-width: 100%; margin-bottom: 24px;">Not a UI problem.<br>A systems problem.</div>
+                    <p class="apple-section-body" style="margin-bottom: 16px;">
+                      This wasn't a cosmetic issue; it was a systemic breakdown. Planning, pricing, and forecasting lived in silos owned by different people with zero version control or audit trails.
+                    </p>
+                    <p class="apple-section-body" style="margin-bottom: 16px;">
+                      Every cycle, teams lost days just trying to get global and local numbers to agree. Because there was no way for users to help themselves, our subject-matter experts became human bottlenecks.
+                    </p>
+                    <p class="apple-section-body">
+                      Knowledge was trapped in people's heads rather than integrated into the system, making high-stakes scenario planning nearly impossible.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ════════════════════════════════════════ -->
+              <!-- 5. HOW THE PROBLEM WAS FRAMED             -->
+              <!-- ════════════════════════════════════════ -->
+              <div class="apple-section apple-section--alt" id="fp-insight">
+                <div class="apple-reveal">
+                  <div class="apple-section-eyebrow">Key Insight</div>
+                  <div class="apple-section-headline" style="max-width: 100%;">Excel wasn't the enemy; it was the benchmark.</div>
+                  <p class="apple-section-body" style="margin-top: 24px; max-width: 100%;">
+                    Discovery revealed that teams didn't use Excel because it was efficient—they used it because it was flexible and trusted. To drive adoption, we couldn't just "digitize" spreadsheets; we had to replicate that flexibility while solving for what Excel lacks: Global Governance, Scalability, and Predictive Intelligence.
+                  </p>
+                  <p class="apple-section-body" style="margin-top: 24px; max-width: 100%;">
+                    <strong>Next Steps:</strong> I architected a three-layered roadmap to transition users responsibly:
+                  </p>
+                  <div class="apple-meta-grid apple-reveal" style="grid-template-columns: repeat(3, 1fr); max-width: 100%; margin-top: 24px; gap: 24px;">
+                    <div class="apple-meta-item">
+                      <span class="apple-meta-label">Step 1</span>
+                      <span class="apple-meta-value" style="font-size: 15px; line-height: 1.4;">Standardize the Foundation<br>(Governance)</span>
+                    </div>
+                    <div class="apple-meta-item">
+                      <span class="apple-meta-label">Step 2</span>
+                      <span class="apple-meta-value" style="font-size: 15px; line-height: 1.4;">Sync the Workflows<br>(Global Consistency)</span>
+                    </div>
+                    <div class="apple-meta-item">
+                      <span class="apple-meta-label">Step 3</span>
+                      <span class="apple-meta-value" style="font-size: 15px; line-height: 1.4;">Layer the Intelligence<br>(AI-driven Forecasting)</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="apple-img-full apple-reveal" style="max-width: 100%; margin-top: 48px;">
+                  <img src="./assets/case-studies/Financial Planning Platform/Strategy.png" alt="Strategy Design Plan" style="width: 100%; height: auto; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                </div>
+                <p class="apple-section-body apple-reveal" style="margin-top: 16px; text-align: center; color: var(--text-muted); font-size: 14px; max-width: 100%;">
+                  Design plan shared with PO for next steps
+                </p>
+              </div>
+
+              <!-- ════════════════════════════════════════ -->
+              <!-- 6. STRATEGY                              -->
+              <!-- ════════════════════════════════════════ -->
+              <div class="apple-section" id="fp-strategy">
+                <div class="apple-feature apple-reveal">
+                  <div class="apple-feature-text">
+                    <div class="apple-section-eyebrow">Strategy</div>
+                    <div class="apple-section-headline" style="max-width: 100%; margin-bottom: 24px;">Treat it as a platform,<br>not a tool.</div>
+                    <p class="apple-section-body" style="margin-bottom: 16px;">
+                      Instead of designing a single solution, I led the work as a <strong>platform initiative</strong>, sequencing capabilities to reduce risk and drive adoption incrementally.
+                    </p>
+                    <p class="apple-section-body">
+                      We mapped legacy Excel workflows end-to-end to understand where trust broke, where manual effort accumulated, and where decisions actually happened. This led to a <strong>layered platform strategy</strong> — rather than a monolithic product.
+                    </p>
+                  </div>
+                  <div class="apple-feature-img">
+                    <img src="./assets/case-studies/Financial Planning Platform/User Journey.png" alt="User Journey" class="strategy-journey-img">
+                  </div>
+                </div>
+              </div>
+
+              <!-- ════════════════════════════════════════ -->
+              <!-- 7. ROLE & LEADERSHIP OWNERSHIP            -->
+              <!-- ════════════════════════════════════════ -->
+              <div class="apple-section apple-section--alt" id="fp-role">
+                <div class="apple-reveal">
+                  <div class="apple-section-eyebrow">Leadership</div>
+                  <div class="apple-section-headline" style="max-width: 600px;">Ownership across<br>the full initiative.</div>
+                  <p class="apple-section-body" style="max-width: 560px;">
+                    I led this initiative end-to-end — across discovery, strategy, and experience definition. This was leadership through structure, decisions, and alignment — not just execution.
+                  </p>
+                </div>
+
+                <div class="apple-role-grid apple-reveal">
+                  <div class="apple-role-card">
+                    <div class="apple-role-card-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>
+                    </div>
+                    <div class="apple-role-card-title">Problem Framing</div>
+                    <div class="apple-role-card-desc">Framed the problem with senior finance and product stakeholders — moving from "fix Excel" to "build a trusted system"</div>
+                  </div>
+                  <div class="apple-role-card">
+                    <div class="apple-role-card-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z"/></svg>
+                    </div>
+                    <div class="apple-role-card-title">Platform Strategy & Sequencing</div>
+                    <div class="apple-role-card-desc">Defined the layered platform strategy and delivery sequencing — governance first, then planning, then intelligence</div>
+                  </div>
+                  <div class="apple-role-card">
+                    <div class="apple-role-card-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+                    </div>
+                    <div class="apple-role-card-title">Persona Development</div>
+                    <div class="apple-role-card-desc">Led persona development for planning and forecasting users across multiple regions and organizational layers</div>
+                  </div>
+                  <div class="apple-role-card">
+                    <div class="apple-role-card-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+                    </div>
+                    <div class="apple-role-card-title">KPI Mapping & Standardization</div>
+                    <div class="apple-role-card-desc">Drove KPI mapping and standardization across brands and countries — resolving inconsistencies in terminology, frequency, and ownership</div>
+                  </div>
+                  <div class="apple-role-card">
+                    <div class="apple-role-card-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
+                    </div>
+                    <div class="apple-role-card-title">Experience Design in SAC</div>
+                    <div class="apple-role-card-desc">Shaped interaction models within SAP Analytics Cloud constraints — balancing platform limitations with user expectations</div>
+                  </div>
+                  <div class="apple-role-card">
+                    <div class="apple-role-card-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg>
+                    </div>
+                    <div class="apple-role-card-title">Cross-functional Alignment</div>
+                    <div class="apple-role-card-desc">Aligned Product, Engineering, AI, and Finance teams across India, Spain, and Switzerland throughout the initiative</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ════════════════════════════════════════ -->
+              <!-- 8. THE PLATFORM THAT EMERGED              -->
+              <!-- ════════════════════════════════════════ -->
+              <div class="apple-section apple-section--alt" id="fp-platform">
+                <div class="apple-reveal">
+                  <div class="apple-section-eyebrow">The Platform</div>
+                  <div class="apple-section-headline" style="max-width: 100%;">Four layers.<br>One connected system.</div>
+                </div>
+
+                <!-- Platform layers grid -->
+                <div class="platform-layers-grid apple-reveal">
+                  <!-- CF / CC -->
+                  <div class="platform-layer-card">
+                    <div class="platform-layer-header">
+                      <img src="./assets/case-studies/Financial Planning Platform/CFCC.svg" alt="CF/CC" class="platform-layer-logo">
+                      <div class="platform-layer-title">CF / CC</div>
+                    </div>
+                    <p class="platform-layer-desc">Standardized cost data to build trust and governance.</p>
+                    <ul class="platform-layer-features">
+                      <li>Centralized costs</li>
+                      <li>Consistent structures</li>
+                      <li>Reliable reporting</li>
+                    </ul>
+                  </div>
+
+                  <!-- Market Model -->
+                  <div class="platform-layer-card">
+                    <div class="platform-layer-header">
+                      <img src="./assets/case-studies/Financial Planning Platform/MarketModel_Logo.svg" alt="Market Model" class="platform-layer-logo">
+                      <div class="platform-layer-title">Market Model</div>
+                    </div>
+                    <p class="platform-layer-desc">Forward-looking planning and forecasting capabilities.</p>
+                    <ul class="platform-layer-features">
+                      <li>Demand scenarios</li>
+                      <li>Revenue impact</li>
+                      <li>Strategic planning</li>
+                    </ul>
+                  </div>
+
+                  <!-- Cost Insights -->
+                  <div class="platform-layer-card">
+                    <div class="platform-layer-header">
+                      <img src="./assets/case-studies/Financial Planning Platform/CostInsights_Logo.svg" alt="Cost Insights" class="platform-layer-logo">
+                      <div class="platform-layer-title">Cost Insights</div>
+                    </div>
+                    <p class="platform-layer-desc">Intelligence and optimization for cost management.</p>
+                    <ul class="platform-layer-features">
+                      <li>Granular views</li>
+                      <li>Optimization</li>
+                      <li>Predictive signals</li>
+                    </ul>
+                  </div>
+
+                  <!-- DOST -->
+                  <div class="platform-layer-card">
+                    <div class="platform-layer-header">
+                      <img src="./assets/case-studies/Financial Planning Platform/Dost_Logo.svg" alt="DOST" class="platform-layer-logo">
+                      <div class="platform-layer-title">DOST</div>
+                    </div>
+                    <p class="platform-layer-desc">RAG-based chatbot reducing support dependency.</p>
+                    <ul class="platform-layer-features">
+                      <li>Answers queries</li>
+                      <li>Contextual guidance</li>
+                      <li>Reduced expert reliance</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ════════════════════════════════════════ -->
+              <!-- 9. KEY DECISIONS                         -->
+              <!-- ════════════════════════════════════════ -->
+              <div class="apple-section" id="fp-decisions">
+                <div class="apple-reveal">
+                  <div class="apple-section-eyebrow">Key Decisions</div>
+                  <div class="apple-section-headline" style="max-width: 600px;">Three decisions that<br>shaped the outcome.</div>
+                </div>
+
+                <div class="apple-stats-grid apple-reveal" style="grid-template-columns: repeat(3, 1fr); max-width: 840px;">
+                  <div class="apple-stat-card" style="padding: 32px 24px; text-align: left;">
+                    <div class="apple-stat-value" style="font-size: 18px; letter-spacing: -0.3px; margin-bottom: 14px;">Standardize KPIs before building dashboards</div>
+                    <div class="apple-stat-label" style="font-size: 13px; line-height: 1.6;">KPI mapping exposed inconsistencies in terminology, frequency, and ownership across regions. Alignment came first — to avoid rework, misinterpretation, and eroded trust.</div>
+                  </div>
+                  <div class="apple-stat-card" style="padding: 32px 24px; text-align: left;">
+                    <div class="apple-stat-value" style="font-size: 18px; letter-spacing: -0.3px; margin-bottom: 14px;">Design for flexibility before automation</div>
+                    <div class="apple-stat-label" style="font-size: 13px; line-height: 1.6;">Automation without trust would have failed adoption. Users needed to feel in control before the system could start doing things for them. Credibility had to be earned first.</div>
+                  </div>
+                  <div class="apple-stat-card" style="padding: 32px 24px; text-align: left;">
+                    <div class="apple-stat-value" style="font-size: 18px; letter-spacing: -0.3px; margin-bottom: 14px;">Sequence delivery to build confidence</div>
+                    <div class="apple-stat-label" style="font-size: 13px; line-height: 1.6;">Governance → Planning → Intelligence. Not the other way around. Each layer earned organizational trust before the next was introduced. This reduced risk and drove adoption.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ════════════════════════════════════════ -->
+              <!-- 10. OUTCOMES & BUSINESS IMPACT            -->
+              <!-- ════════════════════════════════════════ -->
+              <div class="apple-section apple-section--dark" id="fp-outcome">
+                <div class="apple-reveal">
+                  <div class="apple-section-eyebrow" style="color: #fbbf24;">Outcomes</div>
+                  <div class="apple-section-headline" style="max-width: 580px;">Before vs. After.</div>
+                  <p class="apple-section-body" style="color: rgba(255,255,255,0.55); max-width: 520px; margin-bottom: 8px;">The platform replaced fragmented Excel workflows with a collaborative, real-time planning system.</p>
+                </div>
+
+                <!-- Before / After table -->
+                <div class="apple-comparison apple-reveal" style="max-width: 760px; border-color: rgba(255,255,255,0.1);">
+                  <div class="apple-comparison-row apple-comparison-header" style="background: rgba(255,255,255,0.04);">
+                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border: none;">Metric</div>
+                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.08);">Before (Excel)</div>
+                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.08);">After (Platform)</div>
+                  </div>
+                  <div class="apple-comparison-row" style="border-color: rgba(255,255,255,0.06);">
+                    <div class="apple-comparison-cell" style="color: #fff; border: none;">Manual consolidation</div>
+                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.06);">~1680 hrs / quarter</div>
+                    <div class="apple-comparison-cell" style="color: #fbbf24; border-color: rgba(255,255,255,0.06);">Reduced by ~80%</div>
+                  </div>
+                  <div class="apple-comparison-row" style="border-color: rgba(255,255,255,0.06);">
+                    <div class="apple-comparison-cell" style="color: #fff; border: none;">Working weeks lost</div>
+                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.06);">~10 weeks / quarter</div>
+                    <div class="apple-comparison-cell" style="color: #fbbf24; border-color: rgba(255,255,255,0.06);">Reduced to ~2 weeks</div>
+                  </div>
+                  <div class="apple-comparison-row" style="border-color: rgba(255,255,255,0.06);">
+                    <div class="apple-comparison-cell" style="color: #fff; border: none;">Collaboration</div>
+                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.06);">Fragmented & delayed</div>
+                    <div class="apple-comparison-cell" style="color: #fbbf24; border-color: rgba(255,255,255,0.06);">Real-time on SAC</div>
+                  </div>
+                  <div class="apple-comparison-row" style="border-color: rgba(255,255,255,0.06);">
+                    <div class="apple-comparison-cell" style="color: #fff; border: none;">Reporting formats</div>
+                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.06);">Inconsistent</div>
+                    <div class="apple-comparison-cell" style="color: #fbbf24; border-color: rgba(255,255,255,0.06);">Standardized globally</div>
+                  </div>
+                  <div class="apple-comparison-row" style="border: none;">
+                    <div class="apple-comparison-cell" style="color: #fff; border: none;">Forecast updates</div>
+                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.06);">Delayed</div>
+                    <div class="apple-comparison-cell" style="color: #fbbf24; border-color: rgba(255,255,255,0.06);">Dynamic, scenario-based</div>
+                  </div>
+                </div>
+
+                <p class="apple-section-body apple-reveal" style="margin-top: 40px; color: rgba(255,255,255,0.5); font-size: 14px; max-width: 520px;">
+                  User retention increased significantly post-revamp. Teams shifted from reconciliation to analysis and decision-making.
+                </p>
+
+                <!-- 11. STATUS -->
+                <p class="apple-section-body apple-reveal" style="margin-top: 32px; color: #fbbf24; font-weight: 600; font-size: 14px; letter-spacing: 0.5px; text-transform: uppercase;">
+                  Live and actively used across regions.
+                </p>
+              </div>
+
+              <!-- ════════════════════════════════════════ -->
+              <!-- 12. KEY LEARNING                         -->
+              <!-- ════════════════════════════════════════ -->
+              <div class="apple-section" id="fp-learning" style="padding-top: 100px; padding-bottom: 60px;">
+                <div class="apple-reveal">
+                  <div class="apple-section-eyebrow">Reflection</div>
+                  <p class="apple-quote">
+                    Replacing Excel isn't a UX problem — it's a trust, ownership, and system-design problem.
+                  </p>
+                  <p class="apple-section-body" style="margin-top: 32px;">
+                    Flexibility must be designed deliberately, not removed. Large-scale transformation succeeds only when governance, intelligence, and experience evolve together. This learning continues to shape how I approach platform and AI-driven products.
+                  </p>
+                </div>
+              </div>
+
+              <!-- ════════════════════════════════════════ -->
+              <!-- 13. DEEP DIVE (COLLAPSIBLE)              -->
+              <!-- ════════════════════════════════════════ -->
+              <div class="apple-section" style="padding-top: 0; padding-bottom: 100px;">
+                <div class="apple-deep-dive apple-reveal" id="fp-deep-dive">
+                  <button class="apple-deep-dive-toggle" onclick="this.parentElement.classList.toggle('open');">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                    Deep Dive — Discovery, Research & Design Artifacts
+                  </button>
+                  <div class="apple-deep-dive-content">
+                    <ul style="padding: 0; margin: 0;">
+                      <li>Discovery interviews & workflow mapping across 10+ countries</li>
+                      <li>Persona development for planning and forecasting users</li>
+                      <li>KPI harmonization framework across brands and regions</li>
+                      <li>Research methods & surveys (34 respondents across regions)</li>
+                      <li>Card sorting & information architecture definition</li>
+                      <li>SAP Analytics Cloud (SAC) design constraints & system decisions</li>
+                      <li>AI enablement strategy & RAG implementation details (DOST)</li>
+                      <li>UI screens & interaction patterns within SAC</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- end cs-body -->
+          </div><!-- end cs-body-wrap -->
+        </div><!-- end case-study-view: finplan -->
 
         <!-- ── CF/CC Portal ── -->
         <div class="case-study-view" id="cs-novartis-cfcc">
@@ -4294,32 +6216,33 @@
           <div class="settings-pane-content active" id="pane-appearance">
             <div class="settings-section">
               <div class="settings-section-title">Appearance</div>
-              <p class="settings-section-subtitle">Choose how the dashboard looks and feels.</p>
+              <p class="settings-section-subtitle">Choose how the interface looks. Select Light, Dark, or Auto to match your system.</p>
             </div>
             <div class="settings-section">
-              <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 14px;">
+              <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 18px;">
                 <div class="settings-row-label">Theme Mode</div>
                 <div class="theme-row">
                   <button class="theme-btn active" data-theme="light">
                     <div class="theme-icon light">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.4)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
                     </div>
                     <span>Light</span>
                   </button>
                   <button class="theme-btn" data-theme="dark">
                     <div class="theme-icon dark">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
                     </div>
                     <span>Dark</span>
                   </button>
                   <button class="theme-btn" data-theme="auto">
                     <div class="theme-icon auto">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(120,120,120,0.6)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
                     </div>
                     <span>Auto</span>
                   </button>
                 </div>
               </div>
+              <p class="settings-helper">Auto mode will match your system's appearance preference.</p>
             </div>
           </div>
 
@@ -4327,29 +6250,32 @@
           <div class="settings-pane-content" id="pane-accent">
             <div class="settings-section">
               <div class="settings-section-title">Accent Color</div>
-              <p class="settings-section-subtitle">Pick a color that appears throughout the interface.</p>
+              <p class="settings-section-subtitle">Pick a highlight color that appears on buttons, links, and interactive elements.</p>
             </div>
             <div class="settings-section">
-              <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 14px;">
-                <div class="settings-row-label">Quick Pick</div>
-                <div class="accent-dots" id="accent-dots">
-                  <button class="accent-dot" data-hue="0" style="background: hsl(0,80%,55%);"></button>
-                  <button class="accent-dot" data-hue="25" style="background: hsl(25,80%,55%);"></button>
-                  <button class="accent-dot" data-hue="45" style="background: hsl(45,80%,55%);"></button>
-                  <button class="accent-dot" data-hue="120" style="background: hsl(120,80%,55%);"></button>
-                  <button class="accent-dot" data-hue="180" style="background: hsl(180,80%,55%);"></button>
-                  <button class="accent-dot active" data-hue="210" style="background: hsl(210,80%,55%);"></button>
-                  <button class="accent-dot" data-hue="260" style="background: hsl(260,80%,55%);"></button>
-                  <button class="accent-dot" data-hue="300" style="background: hsl(300,80%,55%);"></button>
-                  <button class="accent-dot" data-hue="330" style="background: hsl(330,80%,55%);"></button>
+              <div class="settings-group">
+                <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 16px;">
+                  <div class="settings-row-label">Presets</div>
+                  <div class="accent-dots" id="accent-dots">
+                    <button class="accent-dot" data-hue="0" style="background: hsl(0,80%,55%); color: hsl(0,80%,55%);"></button>
+                    <button class="accent-dot" data-hue="25" style="background: hsl(25,80%,55%); color: hsl(25,80%,55%);"></button>
+                    <button class="accent-dot" data-hue="45" style="background: hsl(45,80%,55%); color: hsl(45,80%,55%);"></button>
+                    <button class="accent-dot" data-hue="120" style="background: hsl(120,80%,55%); color: hsl(120,80%,55%);"></button>
+                    <button class="accent-dot" data-hue="180" style="background: hsl(180,80%,55%); color: hsl(180,80%,55%);"></button>
+                    <button class="accent-dot active" data-hue="210" style="background: hsl(210,80%,55%); color: hsl(210,80%,55%);"></button>
+                    <button class="accent-dot" data-hue="260" style="background: hsl(260,80%,55%); color: hsl(260,80%,55%);"></button>
+                    <button class="accent-dot" data-hue="300" style="background: hsl(300,80%,55%); color: hsl(300,80%,55%);"></button>
+                    <button class="accent-dot" data-hue="330" style="background: hsl(330,80%,55%); color: hsl(330,80%,55%);"></button>
+                  </div>
+                </div>
+                <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 12px;">
+                  <div class="settings-row-label">Custom Hue</div>
+                  <div class="accent-track" style="width: 100%;">
+                    <input type="range" min="0" max="360" value="210" class="accent-slider" id="accent-slider">
+                  </div>
                 </div>
               </div>
-              <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 10px;">
-                <div class="settings-row-label">Custom</div>
-                <div class="accent-track" style="width: 100%;">
-                  <input type="range" min="0" max="360" value="210" class="accent-slider" id="accent-slider">
-                </div>
-              </div>
+              <p class="settings-helper">Choose a preset or drag the slider to pick any hue across the spectrum.</p>
             </div>
           </div>
 
@@ -4357,19 +6283,25 @@
           <div class="settings-pane-content" id="pane-typography">
             <div class="settings-section">
               <div class="settings-section-title">Typography</div>
-              <p class="settings-section-subtitle">Choose a typeface for the interface.</p>
+              <p class="settings-section-subtitle">Choose a typeface that's used across the entire interface.</p>
             </div>
             <div class="settings-section">
-              <div class="settings-row">
-                <div>
-                  <div class="settings-row-label">Font Family</div>
-                  <div class="settings-row-sublabel">Applied across all interface text</div>
+              <div class="settings-group">
+                <div class="settings-row">
+                  <div>
+                    <div class="settings-row-label">Font Family</div>
+                    <div class="settings-row-sublabel">Applied to all headings, body text, and UI elements</div>
+                  </div>
+                  <div class="font-btns">
+                    <button class="font-btn active" data-font="sans">Aa</button>
+                    <button class="font-btn" data-font="serif">Aa</button>
+                    <button class="font-btn" data-font="mono">Aa</button>
+                  </div>
                 </div>
-                <div class="font-btns">
-                  <button class="font-btn active" data-font="sans">Aa</button>
-                  <button class="font-btn" data-font="serif">Aa</button>
-                  <button class="font-btn" data-font="mono">Aa</button>
-                </div>
+              </div>
+              <div class="font-preview" id="font-preview">
+                <div class="font-preview-text">The quick brown fox jumps over the lazy dog.</div>
+                <div class="font-preview-caption">Preview — current font family</div>
               </div>
             </div>
           </div>
@@ -4378,24 +6310,33 @@
           <div class="settings-pane-content" id="pane-textsize">
             <div class="settings-section">
               <div class="settings-section-title">Text Size</div>
-              <p class="settings-section-subtitle">Adjust the base text size of the interface.</p>
+              <p class="settings-section-subtitle">Make text larger or smaller across the interface to suit your preference.</p>
             </div>
             <div class="settings-section">
-              <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 14px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                  <div class="settings-row-label">Size</div>
-                  <span style="font-size: 13px; font-weight: 600; color: var(--text-secondary);" id="size-label">Normal (1x)</span>
-                </div>
-                <div class="size-slider-wrap">
-                  <input type="range" min="0" max="3" value="1" step="1" class="size-slider" id="size-slider">
-                </div>
-                <div class="size-labels">
-                  <span data-step="0">Compact</span>
-                  <span data-step="1" class="active">Normal</span>
-                  <span data-step="2">Comfortable</span>
-                  <span data-step="3">Large</span>
+              <div class="settings-group">
+                <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 16px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                    <div class="settings-row-label">Text Scale</div>
+                    <span style="font-size: 13px; font-weight: 600; color: var(--accent, #0082FF); background: rgba(0,130,255,0.08); padding: 3px 10px; border-radius: 6px;" id="size-label">Normal (1x)</span>
+                  </div>
+                  <div class="size-slider-wrap">
+                    <input type="range" min="0" max="3" value="1" step="1" class="size-slider" id="size-slider">
+                  </div>
+                  <div class="size-labels">
+                    <span data-step="0">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align: -1px; margin-right: 2px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"/></svg>
+                      Compact
+                    </span>
+                    <span data-step="1" class="active">Normal</span>
+                    <span data-step="2">Comfortable</span>
+                    <span data-step="3">
+                      Large
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align: -1px; margin-left: 2px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"/></svg>
+                    </span>
+                  </div>
                 </div>
               </div>
+              <p class="settings-helper">Drag the slider or click a label below to set the preferred reading size.</p>
             </div>
           </div>
 
@@ -4403,7 +6344,7 @@
           <div class="settings-pane-content" id="pane-wallpaper">
             <div class="settings-section">
               <div class="settings-section-title">Wallpaper</div>
-              <p class="settings-section-subtitle">Choose a wallpaper for your desktop.</p>
+              <p class="settings-section-subtitle">Set a desktop wallpaper. The selected image appears behind all content.</p>
             </div>
             <div class="settings-section">
               <div class="wallpaper-grid" id="wallpaper-grid">
@@ -4413,17 +6354,18 @@
                 </button>
                 <button class="wallpaper-option" data-wallpaper="1">
                   <div class="wallpaper-thumb wp-1"></div>
-                  <span class="wallpaper-label">Wallpaper 1</span>
+                  <span class="wallpaper-label">Sequoia</span>
                 </button>
                 <button class="wallpaper-option" data-wallpaper="9">
                   <div class="wallpaper-thumb wp-9"></div>
-                  <span class="wallpaper-label">Wallpaper 9</span>
+                  <span class="wallpaper-label">Nebula</span>
                 </button>
                 <button class="wallpaper-option" data-wallpaper="11">
                   <div class="wallpaper-thumb wp-11"></div>
-                  <span class="wallpaper-label">Wallpaper 11</span>
+                  <span class="wallpaper-label">Horizon</span>
                 </button>
               </div>
+              <p class="settings-helper">Click a wallpaper to apply it instantly. The active one is marked with a checkmark.</p>
             </div>
           </div>
 
@@ -4434,18 +6376,25 @@
             </div>
             <div class="settings-section">
               <div class="about-card">
-                <div style="width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #0082FF, #06b6d4); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px;">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
+                <div class="about-icon" style="background: linear-gradient(135deg, #0082FF, #06b6d4);">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
                 </div>
                 <h3>Personal OS</h3>
-                <p style="margin-top: 4px;">Version 1.0</p>
-                <div style="width: 100%; height: 1px; background: var(--border); margin: 16px 0;"></div>
-                <p>Designed &amp; built by Shivanshu Mathur</p>
-                <p style="margin-top: 4px;">A personal dashboard inspired by modern OS interfaces.</p>
+                <p class="about-version">Version 1.0</p>
+                <div class="about-divider"></div>
+                <p>Designed &amp; built by <strong>Shivanshu Mathur</strong></p>
+                <p class="about-detail" style="margin-top: 6px;">A personal dashboard inspired by the elegance of modern OS interfaces, crafted with care for every pixel.</p>
               </div>
-              <div class="settings-row" style="margin-top: 14px;">
-                <div class="settings-row-label">Reset All Settings</div>
-                <button id="settings-reset" style="background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.2); color: rgba(239,68,68,0.8); padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit;">Reset</button>
+            </div>
+            <div class="settings-section">
+              <div class="settings-group">
+                <div class="settings-row">
+                  <div>
+                    <div class="settings-row-label">Reset All Settings</div>
+                    <div class="settings-row-sublabel">Restore all preferences to their defaults</div>
+                  </div>
+                  <button id="settings-reset" style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.18); color: #ef4444; padding: 7px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s;">Reset</button>
+                </div>
               </div>
             </div>
           </div>
@@ -4623,7 +6572,19 @@
       }
 
       function applyFont(key) {
-        body.style.fontFamily = FONT_MAP[key] || FONT_MAP.sans;
+        var family = FONT_MAP[key] || FONT_MAP.sans;
+        body.style.fontFamily = family;
+        /* Update font preview card */
+        var previewText = document.querySelector('#font-preview .font-preview-text');
+        var previewCap  = document.querySelector('#font-preview .font-preview-caption');
+        if (previewText) {
+          previewText.style.fontFamily = family;
+          previewCap.textContent = 'Preview — ' + (key === 'sans' ? 'Sans-Serif' : key === 'serif' ? 'Serif' : 'Monospace');
+        }
+        /* Update font button active state */
+        fontBtns.forEach(function (btn) {
+          btn.classList.toggle('active', btn.getAttribute('data-font') === key);
+        });
       }
 
       function applySize(step) {
@@ -4929,6 +6890,11 @@
       var toast = document.getElementById('file-toast');
       var toastTimer = null;
 
+      // HOT folder view state (declared early for use in closeWork)
+      var hotFolderView = document.getElementById('hot-folder-view');
+      var hotFolderActive = false;
+      var cameFromHot = false;
+
       // All triggers that open the Work app
       var triggers = [
         document.getElementById('open-work-folio'),
@@ -4967,6 +6933,20 @@
           if (tt) tt.textContent = 'Portfolio';
           var scr = openCS.querySelector('.case-study-scroll');
           if (scr) scr.scrollTop = 0;
+        }
+        // If HOT folder is open, close it
+        var hfv = document.getElementById('hot-folder-view');
+        if (hfv) {
+          hfv.classList.remove('active');
+          hotFolderActive = false;
+          cameFromHot = false;
+          var fm2 = overlay.querySelector('.finder-main');
+          if (fm2) fm2.style.display = '';
+          // Reset sidebar
+          var si = overlay.querySelectorAll('.sidebar-item');
+          si.forEach(function(i){ i.classList.remove('active'); });
+          var allBtn = overlay.querySelector('.sidebar-item[data-filter="all"]');
+          if (allBtn) allBtn.classList.add('active');
         }
         // Remove fullscreen if active
         frame.classList.remove('fullscreen');
@@ -5043,7 +7023,41 @@
       var allCards = overlay.querySelectorAll('.project-card');
       var countEl = document.getElementById('project-count');
 
+      function showHotFolder() {
+        // Close any open case study first
+        if (activeCaseStudy) closeCaseStudy();
+        finderMain.style.display = 'none';
+        hotFolderView.classList.add('active');
+        hotFolderActive = true;
+        breadcrumb.textContent = '/Portfolio / Selected Projects';
+        titlebarTitle.textContent = 'Selected Projects';
+        navBackBtn.classList.remove('disabled');
+        navUpBtn.classList.remove('disabled');
+      }
+
+      function closeHotFolder() {
+        hotFolderView.classList.remove('active');
+        hotFolderActive = false;
+        cameFromHot = false;
+        finderMain.style.display = '';
+        breadcrumb.textContent = '/Portfolio';
+        titlebarTitle.textContent = 'Portfolio';
+        navBackBtn.classList.add('disabled');
+        navUpBtn.classList.add('disabled');
+        // Reset sidebar active to 'All Projects'
+        sidebarItems.forEach(function (i) { i.classList.remove('active'); });
+        var allBtn = overlay.querySelector('.sidebar-item[data-filter="all"]');
+        if (allBtn) allBtn.classList.add('active');
+      }
+
       function filterProjects(filterVal) {
+        // If we were in the hot folder, close it first
+        if (hotFolderActive) {
+          hotFolderView.classList.remove('active');
+          hotFolderActive = false;
+          cameFromHot = false;
+          finderMain.style.display = '';
+        }
         var visible = 0;
         allCards.forEach(function (card) {
           var cats = (card.getAttribute('data-category') || '').split(' ');
@@ -5052,13 +7066,22 @@
           if (show) visible++;
         });
         countEl.textContent = visible + ' project' + (visible !== 1 ? 's' : '');
+        breadcrumb.textContent = '/Portfolio';
+        titlebarTitle.textContent = 'Portfolio';
+        navBackBtn.classList.add('disabled');
+        navUpBtn.classList.add('disabled');
       }
 
       sidebarItems.forEach(function (item) {
         item.addEventListener('click', function () {
           sidebarItems.forEach(function (i) { i.classList.remove('active'); });
           this.classList.add('active');
-          filterProjects(this.getAttribute('data-filter'));
+          var filterVal = this.getAttribute('data-filter');
+          if (filterVal === '__hot__') {
+            showHotFolder();
+          } else {
+            filterProjects(filterVal);
+          }
         });
       });
 
@@ -5081,6 +7104,7 @@
       // Map of project IDs to case study element IDs and display names
       var CS_MAP = {
         'novartis-market-model':  { el: 'cs-novartis-market-model', name: 'Market Model' },
+        'novartis-finplan':       { el: 'cs-novartis-finplan',      name: 'Financial Planning Platform' },
         'novartis-cfcc':          { el: 'cs-novartis-cfcc',         name: 'CF/CC Portal' },
         'novartis-dost':          { el: 'cs-novartis-dost',         name: 'Dost' },
         'novartis-onepsp':        { el: 'cs-novartis-onepsp',       name: 'OnePSP' },
@@ -5107,6 +7131,13 @@
         var csEl = document.getElementById(cs.el);
         if (!csEl) return false;
 
+        // If opening from HOT folder, hide it and remember
+        if (hotFolderActive) {
+          hotFolderView.classList.remove('active');
+          cameFromHot = true;
+          hotFolderActive = false;
+        }
+
         // Hide project grid, show case study (sidebar stays visible)
         finderMain.style.display = 'none';
         csEl.classList.add('active');
@@ -5115,6 +7146,11 @@
         // Update breadcrumb and title
         breadcrumb.textContent = '/Portfolio / ' + cs.name;
         titlebarTitle.textContent = cs.name;
+
+        // Scroll to top to show hero section (use setTimeout to ensure DOM is ready)
+        setTimeout(function() {
+          csEl.scrollTop = 0;
+        }, 10);
 
         // Enable Back and Up buttons
         navBackBtn.classList.remove('disabled');
@@ -5164,6 +7200,32 @@
           activeScrollSpy = { el: scrollContainer, fn: onScrollSpy };
         }
 
+        // --- Scroll-reveal for Apple-style sections ---
+        var reveals = csEl.querySelectorAll('.apple-reveal');
+        if (reveals.length) {
+          // Reveal elements that are already in view
+          function checkReveal() {
+            var containerRect = csEl.getBoundingClientRect();
+            reveals.forEach(function (el) {
+              var elRect = el.getBoundingClientRect();
+              // Trigger when element's top is within 85% of container height
+              if (elRect.top < containerRect.bottom - 40) {
+                el.classList.add('revealed');
+              }
+            });
+          }
+          // Run once immediately and on scroll
+          setTimeout(checkReveal, 80);
+          csEl.addEventListener('scroll', checkReveal);
+          // Store ref for cleanup
+          if (!csEl._revealCleanup) {
+            csEl._revealCleanup = function () {
+              csEl.removeEventListener('scroll', checkReveal);
+              reveals.forEach(function (el) { el.classList.remove('revealed'); });
+            };
+          }
+        }
+
         return true;
       }
 
@@ -5176,11 +7238,28 @@
           activeScrollSpy = null;
         }
 
+        // Clean up scroll-reveal listeners
+        if (activeCaseStudy._revealCleanup) {
+          activeCaseStudy._revealCleanup();
+          delete activeCaseStudy._revealCleanup;
+        }
+
         // Hide active case study
         activeCaseStudy.classList.remove('active');
         // Scroll back to top for next open
         activeCaseStudy.scrollTop = 0;
         activeCaseStudy = null;
+
+        // Return to HOT folder if that's where we came from
+        if (cameFromHot) {
+          cameFromHot = false;
+          showHotFolder();
+          // Re-activate sidebar item
+          sidebarItems.forEach(function (i) { i.classList.remove('active'); });
+          var hotBtn = document.getElementById('sidebar-hot-work');
+          if (hotBtn) hotBtn.classList.add('active');
+          return;
+        }
 
         // Show project grid
         finderMain.style.display = '';
@@ -5194,12 +7273,14 @@
         navUpBtn.classList.add('disabled');
       }
 
-      // Back button closes case study
+      // Back / Up buttons — close case study first, then HOT folder
       navBackBtn.addEventListener('click', function () {
         if (activeCaseStudy) closeCaseStudy();
+        else if (hotFolderActive) closeHotFolder();
       });
       navUpBtn.addEventListener('click', function () {
         if (activeCaseStudy) closeCaseStudy();
+        else if (hotFolderActive) closeHotFolder();
       });
 
       // Project card click handler
@@ -5207,6 +7288,21 @@
         card.addEventListener('click', function () {
           var projectId = card.getAttribute('data-project');
           // Try to open a case study; if none exists, show toast
+          if (!openCaseStudy(projectId)) {
+            if (toastTimer) clearTimeout(toastTimer);
+            toast.classList.add('show');
+            toastTimer = setTimeout(function () {
+              toast.classList.remove('show');
+            }, 2200);
+          }
+        });
+      });
+
+      // HOT folder card click handlers
+      var hotCards = hotFolderView.querySelectorAll('.hot-card');
+      hotCards.forEach(function (card) {
+        card.addEventListener('click', function () {
+          var projectId = card.getAttribute('data-project');
           if (!openCaseStudy(projectId)) {
             if (toastTimer) clearTimeout(toastTimer);
             toast.classList.add('show');
