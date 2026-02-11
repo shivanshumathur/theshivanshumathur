@@ -347,15 +347,205 @@
     .cell-listen,
     .cell-quote {
       aspect-ratio: 1 / 1;
+      position: relative;
+      overflow: visible;
+      padding: 0;
+    }
+    .cell-quote.card {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+    .cell-quote.card:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     }
     /* Disable lift on 1×1 tiles — subtle border glow instead */
     .cell-clock:hover,
-    .cell-listen:hover,
-    .cell-quote:hover {
+    .cell-listen:hover {
       transform: translateY(-2px) scale(1);
     }
-
-    .analog-clock {
+    
+    /* Sticky note style for quote card */
+    .quote-sticky-note {
+      background: #ffeb3b;
+      border: none;
+      border-radius: 4px;
+      padding: 14px 16px 16px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), 
+                  0 0 0 1px rgba(0, 0, 0, 0.05);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      cursor: text;
+    }
+    /* Folded corner effect */
+    .quote-sticky-note::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(225deg, #ffeb3b 0%, #ffeb3b 50%, #f9a825 50%, #f9a825 100%);
+      border-radius: 0 4px 0 20px;
+      box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 2;
+    }
+    .quote-textarea {
+      width: 100%;
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      resize: none;
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: #8b6914;
+      font-style: italic;
+      font-family: inherit;
+      padding: 0;
+      margin-top: 4px;
+      min-height: 60px;
+      overflow-y: auto;
+    }
+    .quote-textarea::placeholder {
+      color: #b8860b;
+      opacity: 0.6;
+    }
+    .quote-textarea:focus {
+      outline: none;
+    }
+    .quote-author-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 10px;
+      color: #8b6914;
+      font-weight: 600;
+      font-family: inherit;
+      padding: 0;
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(139, 105, 20, 0.15);
+    }
+    .quote-author-input::placeholder {
+      color: #b8860b;
+      opacity: 0.5;
+    }
+    .quote-author-input:focus {
+      outline: none;
+    }
+    /* Ruled lines background */
+    .quote-lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent 19px,
+        rgba(139, 105, 20, 0.08) 19px,
+        rgba(139, 105, 20, 0.08) 20px
+      );
+      border-radius: 4px;
+      padding: 14px 16px 16px;
+      z-index: 0;
+    }
+     .quote-content {
+       position: relative;
+       z-index: 1;
+       height: 100%;
+       display: flex;
+       flex-direction: column;
+     }
+     /* Survey sticky notes */
+     .survey-sticky-note {
+       background: #ffeb3b;
+       border: none;
+       border-radius: 4px;
+       padding: 14px 16px 16px;
+       position: relative;
+       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), 
+                   0 0 0 1px rgba(0, 0, 0, 0.05);
+       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       min-height: 100px;
+     }
+     .survey-sticky-note--trend {
+       background: #ffeb3b;
+     }
+     .survey-sticky-note--pain {
+       background: #ffccbc;
+     }
+     .survey-sticky-note::before {
+       content: '';
+       position: absolute;
+       top: 0;
+       right: 0;
+       width: 20px;
+       height: 20px;
+       background: linear-gradient(225deg, #ffeb3b 0%, #ffeb3b 50%, #f9a825 50%, #f9a825 100%);
+       border-radius: 0 4px 0 20px;
+       box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
+       z-index: 2;
+     }
+     .survey-sticky-note--pain::before {
+       background: linear-gradient(225deg, #ffccbc 0%, #ffccbc 50%, #ff8a65 50%, #ff8a65 100%);
+     }
+     .survey-sticky-note-lines {
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       pointer-events: none;
+       background-image: repeating-linear-gradient(
+         transparent,
+         transparent 19px,
+         rgba(139, 105, 20, 0.08) 19px,
+         rgba(139, 105, 20, 0.08) 20px
+       );
+       border-radius: 4px;
+       padding: 14px 16px 16px;
+       z-index: 0;
+     }
+     .survey-sticky-note--pain .survey-sticky-note-lines {
+       background-image: repeating-linear-gradient(
+         transparent,
+         transparent 19px,
+         rgba(191, 54, 12, 0.1) 19px,
+         rgba(191, 54, 12, 0.1) 20px
+       );
+     }
+     .survey-sticky-note-content {
+       position: relative;
+       z-index: 1;
+     }
+     .survey-sticky-note-title {
+       font-size: 13px;
+       font-weight: 600;
+       color: #8b6914;
+       margin-bottom: 6px;
+       letter-spacing: -0.1px;
+     }
+     .survey-sticky-note--pain .survey-sticky-note-title {
+       color: #bf360c;
+     }
+     .survey-sticky-note-text {
+       font-size: 12px;
+       line-height: 1.5;
+       color: #8b6914;
+     }
+     .survey-sticky-note--pain .survey-sticky-note-text {
+       color: #bf360c;
+     }
+  
+      .analog-clock {
       width: 90px;
       height: 90px;
       border-radius: 50%;
@@ -3014,10 +3204,13 @@
       text-align: left;
     }
     .apple-role-card {
-      padding: 24px;
+      padding: 20px;
       background: var(--bg-hover);
       border: 1px solid var(--border-subtle);
       border-radius: 16px;
+    }
+    .apple-role-grid-scroll .apple-role-card {
+      padding: 18px;
     }
     .apple-role-card-icon {
       width: 36px;
@@ -3030,6 +3223,11 @@
       margin-bottom: 14px;
       color: var(--accent, #0082FF);
     }
+    .apple-role-grid-scroll .apple-role-card-icon {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 10px;
+    }
     .apple-role-card-title {
       font-size: 14px;
       font-weight: 600;
@@ -3037,13 +3235,294 @@
       margin-bottom: 6px;
       letter-spacing: -0.1px;
     }
+    .apple-role-grid-scroll .apple-role-card-title {
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
     .apple-role-card-desc {
       font-size: 13px;
       line-height: 1.55;
       color: var(--text-tertiary);
     }
+    .apple-role-grid-scroll .apple-role-card-desc {
+      font-size: 12px;
+      line-height: 1.5;
+    }
     .apple-section--alt .apple-role-card {
       background: var(--bg-card);
+    }
+    /* Leadership section horizontal scroll - Apple style */
+    .role-scroll-wrapper {
+      position: relative;
+      margin-top: 40px;
+      max-width: 100%;
+      margin-left: 0;
+      padding-left: 0;
+    }
+    #cs-novartis-finplan #fp-role .role-scroll-wrapper {
+      margin-left: 0;
+      padding-left: 0;
+      width: 100%;
+    }
+    #cs-novartis-finplan #fp-role .apple-reveal {
+      width: 100%;
+      max-width: 100%;
+      margin-left: 0;
+    }
+    .apple-role-grid-scroll {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      gap: 12px;
+      padding: 0 50px 0 0;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    #cs-novartis-finplan #fp-role .apple-role-grid-scroll {
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: 0;
+      width: 100%;
+      max-width: 100%;
+    }
+    /* Ensure heading and cards align - both start at section's left padding */
+    #cs-novartis-finplan #fp-role .apple-section-headline {
+      margin-left: 0;
+      margin-right: auto;
+    }
+    #cs-novartis-finplan #fp-role .apple-section-body {
+      margin-left: 0;
+      margin-right: auto;
+      max-width: 100%;
+    }
+    /* Make cards container match description width - expand to where description ends */
+    #cs-novartis-finplan #fp-role .role-scroll-wrapper {
+      max-width: 100%;
+      width: 100%;
+    }
+    .apple-role-grid-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .apple-role-grid-scroll .apple-role-card {
+      flex: 0 0 auto;
+      width: 260px;
+      min-width: 260px;
+    }
+    .apple-role-card-image {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-subtle);
+    }
+    .role-scroll-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+    body.dashboard-body.light-mode .role-scroll-arrow {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .role-scroll-arrow:hover {
+      background: rgba(255, 255, 255, 0.95);
+      transform: translateY(-50%) scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+    .role-scroll-arrow:active {
+      transform: translateY(-50%) scale(0.98);
+    }
+    .role-scroll-arrow-left {
+      left: 8px;
+    }
+    .role-scroll-arrow-right {
+      right: 8px;
+    }
+    #cs-novartis-finplan #fp-role .role-scroll-arrow-right {
+      right: 8px;
+    }
+    .role-scroll-arrow svg {
+      color: var(--text-primary);
+      width: 20px;
+      height: 20px;
+    }
+    /* Platform expandable sections */
+    .platform-expandable-wrapper {
+      display: flex;
+      gap: 60px;
+      margin-top: 60px;
+      align-items: flex-start;
+      max-width: 100%;
+    }
+    .platform-expandable-list {
+      flex: 0 0 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .platform-expandable-item {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .platform-expandable-item:last-child {
+      border-bottom: none;
+    }
+    .platform-expandable-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 20px 0;
+      background: none;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+    .platform-expandable-header:hover {
+      opacity: 0.7;
+    }
+    .platform-expandable-title-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .platform-expandable-icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
+    .platform-expandable-title {
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: var(--text-primary);
+    }
+    .platform-expandable-caret {
+      flex-shrink: 0;
+      color: var(--text-primary);
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.2s ease;
+      margin-left: auto;
+      width: 24px;
+      height: 24px;
+      opacity: 0.5;
+    }
+    .platform-expandable-header:hover .platform-expandable-caret {
+      opacity: 0.8;
+    }
+    .platform-expandable-item.active .platform-expandable-caret {
+      transform: rotate(180deg);
+      opacity: 0.7;
+    }
+    .platform-expandable-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
+      opacity: 0;
+      padding: 0 0 20px 0;
+    }
+    .platform-expandable-item.active .platform-expandable-content {
+      max-height: 200px;
+      opacity: 1;
+    }
+    .platform-expandable-content p {
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin: 0 0 20px 0;
+    }
+    .platform-expandable-image-mobile {
+      display: none;
+      margin-top: 24px;
+    }
+    .platform-expandable-image-mobile img {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      display: block;
+    }
+    .platform-device-container {
+      flex: 1;
+      position: relative;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .platform-device-image {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .platform-device-image.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .platform-device-image img {
+      max-width: 100%;
+      max-height: 600px;
+      object-fit: contain;
+    }
+    /* Responsive for platform expandable */
+    @media (max-width: 1024px) {
+      .platform-expandable-wrapper {
+        flex-direction: column;
+        gap: 40px;
+      }
+      .platform-expandable-list {
+        flex: 1;
+        width: 100%;
+      }
+      .platform-device-container {
+        display: none;
+      }
+      .platform-expandable-image-mobile {
+        display: block;
+      }
+      .platform-expandable-item.active .platform-expandable-content {
+        max-height: 800px;
+      }
+    }
+    @media (max-width: 768px) {
+      .platform-expandable-wrapper {
+        gap: 32px;
+      }
+      .platform-expandable-title {
+        font-size: 17px;
+      }
+      .platform-expandable-icon {
+        width: 28px;
+        height: 28px;
+      }
+      .platform-expandable-content p {
+        font-size: 15px;
+      }
+      .platform-expandable-item.active .platform-expandable-content {
+        max-height: 1000px;
+      }
     }
 
     /* ---------- Deep-dive collapsible ---------- */
@@ -3147,6 +3626,11 @@
       .apple-feature { flex-direction: column !important; gap: 32px; }
       .apple-meta-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
       #cs-novartis-finplan #fp-scale .apple-meta-grid { grid-template-columns: repeat(3, 1fr); }
+      /* Survey section responsive - stack columns on mobile */
+      #cs-novartis-finplan #fp-survey .apple-reveal[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+      }
       .apple-stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
       .apple-quote { font-size: 20px; }
       #cs-novartis-finplan .cs-sidebar { padding: 0 16px; }
@@ -3403,19 +3887,24 @@
         </div>
       </div>
 
-      <!-- ===== QUOTE / PERSONALITY (Passive widget) ===== -->
-      <div class="cell-quote card" style="padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
-        <div class="section-label">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg>
-          Quote
-        </div>
-        <div style="margin-top: auto; display: flex; align-items: flex-start; gap: 10px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink: 0; opacity: 0.10; margin-top: 2px;"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10H0z"/></svg>
-          <div style="flex: 1; min-width: 0;">
-            <p style="font-size: 11.5px; color: var(--text-tertiary); line-height: 1.55; font-style: italic;">
-              "Design is not just what it looks like. Design is how it works."
-            </p>
-            <p style="font-size: 10px; color: var(--text-muted); margin-top: 5px; font-weight: 600;">— Steve Jobs</p>
+      <!-- ===== QUOTE / PERSONALITY (Interactive sticky note) ===== -->
+      <div class="cell-quote card">
+        <div class="quote-sticky-note">
+          <div class="quote-lines"></div>
+          <div class="quote-content">
+            <textarea 
+              id="quote-text" 
+              class="quote-textarea" 
+              placeholder="Write a note..."
+              rows="4"
+            >Design is not just what it looks like. Design is how it works.</textarea>
+            <input 
+              type="text" 
+              id="quote-author" 
+              class="quote-author-input" 
+              placeholder="— Author"
+              value="— Steve Jobs"
+            />
           </div>
         </div>
       </div>
@@ -3479,7 +3968,7 @@
         </nav>
 
         <!-- Main content: project grid -->
-        <div class="finder-main">
+        <div class="finder-main" style="display: none;">
           <div class="project-grid" id="project-grid">
 
             <!-- 1. Financial Planning Platform — Novartis -->
@@ -3551,14 +4040,10 @@
               <p class="apple-hero-subtitle">Led the end-to-end transition from fragmented Excel-based financial planning to a scalable, trusted enterprise platform.</p>
 
               <!-- Project meta -->
-              <div class="apple-meta-grid apple-reveal" style="grid-template-columns: repeat(4, 1fr); max-width: 800px; margin-top: 40px; gap: 24px;">
+              <div class="apple-meta-grid apple-reveal" style="grid-template-columns: repeat(3, 1fr); max-width: 800px; margin-top: 40px; gap: 24px;">
                 <div class="apple-meta-item">
                   <span class="apple-meta-label">Role</span>
                   <span class="apple-meta-value">Sr. UX Strategist</span>
-                </div>
-                <div class="apple-meta-item">
-                  <span class="apple-meta-label">Department</span>
-                  <span class="apple-meta-value" style="font-size: 13px;">GF Data, Analytics<br>& DS&AI</span>
                 </div>
                 <div class="apple-meta-item">
                   <span class="apple-meta-label">Duration</span>
@@ -3584,6 +4069,7 @@
               <button class="cs-nav-item" data-section="fp-strategy">Strategy</button>
               <button class="cs-nav-item" data-section="fp-role">Leadership</button>
               <button class="cs-nav-item" data-section="fp-platform">Platform</button>
+              <button class="cs-nav-item" data-section="fp-survey">Survey</button>
               <button class="cs-nav-item" data-section="fp-decisions">Decisions</button>
               <button class="cs-nav-item" data-section="fp-outcome">Impact</button>
               <button class="cs-nav-item" data-section="fp-learning">Reflection</button>
@@ -3738,129 +4224,335 @@
               <div class="apple-section apple-section--alt" id="fp-role">
                 <div class="apple-reveal">
                   <div class="apple-section-eyebrow">Leadership</div>
-                  <div class="apple-section-headline" style="max-width: 600px;">Ownership across<br>the full initiative.</div>
-                  <p class="apple-section-body" style="max-width: 560px;">
+                  <div class="apple-section-headline" style="max-width: 100%;">Ownership across<br>the full initiative.</div>
+                  <p class="apple-section-body" style="max-width: 100%;">
                     I led this initiative end-to-end — across discovery, strategy, and experience definition. This was leadership through structure, decisions, and alignment — not just execution.
                   </p>
                 </div>
 
-                <div class="apple-role-grid apple-reveal">
+                <div class="role-scroll-wrapper apple-reveal">
+                  <button class="role-scroll-arrow role-scroll-arrow-left" aria-label="Scroll left">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+                  </button>
+                  <div class="apple-role-grid apple-role-grid-scroll" id="role-scroll-container">
                   <div class="apple-role-card">
                     <div class="apple-role-card-icon">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>
                     </div>
                     <div class="apple-role-card-title">Problem Framing</div>
-                    <div class="apple-role-card-desc">Framed the problem with senior finance and product stakeholders — moving from "fix Excel" to "build a trusted system"</div>
+                    <img src="./assets/case-studies/Financial Planning Platform/Problem Framing.png" alt="Problem Framing" class="apple-role-card-image">
+                    <div class="apple-role-card-desc">Worked with finance and product leaders to reframe the challenge — shifting from "fix Excel" to "build a trusted system" that teams actually want to use.</div>
                   </div>
                   <div class="apple-role-card">
                     <div class="apple-role-card-icon">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z"/></svg>
                     </div>
                     <div class="apple-role-card-title">Platform Strategy & Sequencing</div>
-                    <div class="apple-role-card-desc">Defined the layered platform strategy and delivery sequencing — governance first, then planning, then intelligence</div>
+                    <img src="./assets/case-studies/Financial Planning Platform/Platform Strategy & Sequencing.png" alt="Platform Strategy & Sequencing" class="apple-role-card-image">
+                    <div class="apple-role-card-desc">Designed a layered approach that built trust incrementally — starting with governance, then planning, then intelligence. This sequencing reduced risk and drove adoption.</div>
                   </div>
                   <div class="apple-role-card">
                     <div class="apple-role-card-icon">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
                     </div>
                     <div class="apple-role-card-title">Persona Development</div>
-                    <div class="apple-role-card-desc">Led persona development for planning and forecasting users across multiple regions and organizational layers</div>
+                    <img src="./assets/case-studies/Financial Planning Platform/Persona.png" alt="Persona Development" class="apple-role-card-image">
+                    <div class="apple-role-card-desc">Built detailed personas for planning and forecasting users across different regions and organizational levels to guide design decisions.</div>
                   </div>
                   <div class="apple-role-card">
                     <div class="apple-role-card-icon">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
                     </div>
                     <div class="apple-role-card-title">KPI Mapping & Standardization</div>
-                    <div class="apple-role-card-desc">Drove KPI mapping and standardization across brands and countries — resolving inconsistencies in terminology, frequency, and ownership</div>
+                    <img src="./assets/case-studies/Financial Planning Platform/KPI Mapping.png" alt="KPI Mapping & Standardization" class="apple-role-card-image">
+                    <div class="apple-role-card-desc">Mapped and standardized KPIs across brands and countries, resolving inconsistencies in how teams defined, measured, and owned metrics.</div>
+                  </div>
+                    <div class="apple-role-card">
+                      <div class="apple-role-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
+                      </div>
+                      <div class="apple-role-card-title">Tool Integration & Architecture</div>
+                      <img src="./assets/case-studies/Financial Planning Platform/Tool Integration.png" alt="Tool Integration & Architecture" class="apple-role-card-image">
+                      <div class="apple-role-card-desc">Defined how Market Model connects with existing data sources like 1DL, Sofia, and Cost Insights. Mapped its role in the broader digital finance workflow with both business and technical teams.</div>
+                    </div>
+                    <div class="apple-role-card">
+                      <div class="apple-role-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                      </div>
+                      <div class="apple-role-card-title">Card Sorting</div>
+                      <img src="./assets/case-studies/Financial Planning Platform/Card Sorting.png" alt="Card Sorting" class="apple-role-card-image">
+                      <div class="apple-role-card-desc">When subcategories lacked clear KPI definitions, I ran closed card sorting to improve navigation. This helped users discover and understand KPIs within each category more easily.</div>
+                    </div>
+                    <div class="apple-role-card">
+                      <div class="apple-role-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+                      </div>
+                      <div class="apple-role-card-title">User Flow Design</div>
+                      <img src="./assets/case-studies/Financial Planning Platform/User Flow.png" alt="User Flow Design" class="apple-role-card-image">
+                      <div class="apple-role-card-desc">Created user flows for targets and scope to clarify processes and improve decision-making. This made the experience more intuitive and efficient for users.</div>
+                    </div>
+                    <div class="apple-role-card">
+                      <div class="apple-role-card-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h11.25c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/></svg>
+                      </div>
+                      <div class="apple-role-card-title">Wireframing & Dot Voting</div>
+                      <img src="./assets/case-studies/Financial Planning Platform/Wireframing.png" alt="Wireframing & Dot Voting" class="apple-role-card-image">
+                      <div class="apple-role-card-desc">Started with dot voting sessions to prioritize graph layouts. Used a complex KPI as the foundation, then scaled the approach to 10 additional KPIs.</div>
+                    </div>
+                  <div class="apple-role-card">
+                    <div class="apple-role-card-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0c0 1.649-.625 3.149-1.65 4.243C2.625 17.351 4.125 18 5.75 18s3.125-.649 4.15-1.757A7.5 7.5 0 014.5 12zm15 0c0 1.649-.625 3.149-1.65 4.243C17.625 17.351 19.125 18 20.75 18s3.125-.649 4.15-1.757A7.5 7.5 0 0019.5 12z"/></svg>
+                    </div>
+                    <div class="apple-role-card-title">Design System</div>
+                    <img src="./assets/case-studies/Financial Planning Platform/Design System.png" alt="Design System" class="apple-role-card-image">
+                    <div class="apple-role-card-desc">Adopted SAP Analytics Cloud's native design system to ensure consistency. This streamlined handoffs, improved scalability, and kept us focused on solving user problems rather than building components.</div>
                   </div>
                   <div class="apple-role-card">
                     <div class="apple-role-card-icon">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
                     </div>
-                    <div class="apple-role-card-title">Experience Design in SAC</div>
-                    <div class="apple-role-card-desc">Shaped interaction models within SAP Analytics Cloud constraints — balancing platform limitations with user expectations</div>
+                    <div class="apple-role-card-title">Design and Prototyping</div>
+                    <img src="./assets/case-studies/Financial Planning Platform/Experience Design.png" alt="Design and Prototyping" class="apple-role-card-image">
+                    <div class="apple-role-card-desc">Designed in Figma based on SAP's limitations and technical feasibility. This ensured our designs could be implemented within the platform's constraints while maintaining a great user experience.</div>
                   </div>
                   <div class="apple-role-card">
                     <div class="apple-role-card-icon">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg>
                     </div>
                     <div class="apple-role-card-title">Cross-functional Alignment</div>
-                    <div class="apple-role-card-desc">Aligned Product, Engineering, AI, and Finance teams across India, Spain, and Switzerland throughout the initiative</div>
+                    <img src="./assets/case-studies/Financial Planning Platform/Crose Functional.png" alt="Cross-functional Alignment" class="apple-role-card-image">
+                    <div class="apple-role-card-desc">Aligned Product, Engineering, AI, and Finance teams across India, Spain, and Switzerland throughout the initiative. This cross-functional collaboration was essential for success.</div>
                   </div>
+                  </div>
+                  <button class="role-scroll-arrow role-scroll-arrow-right" aria-label="Scroll right">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                  </button>
                 </div>
               </div>
 
               <!-- ════════════════════════════════════════ -->
               <!-- 8. THE PLATFORM THAT EMERGED              -->
               <!-- ════════════════════════════════════════ -->
-              <div class="apple-section apple-section--alt" id="fp-platform">
+              <div class="apple-section" id="fp-platform">
                 <div class="apple-reveal">
                   <div class="apple-section-eyebrow">The Platform</div>
                   <div class="apple-section-headline" style="max-width: 100%;">Four layers.<br>One connected system.</div>
                 </div>
 
-                <!-- Platform layers grid -->
-                <div class="platform-layers-grid apple-reveal">
+                <div class="platform-expandable-wrapper apple-reveal">
+                  <div class="platform-expandable-list">
                   <!-- CF / CC -->
-                  <div class="platform-layer-card">
-                    <div class="platform-layer-header">
-                      <img src="./assets/case-studies/Financial Planning Platform/CFCC.svg" alt="CF/CC" class="platform-layer-logo">
-                      <div class="platform-layer-title">CF / CC</div>
+                    <div class="platform-expandable-item active" data-platform="cfcc">
+                      <button class="platform-expandable-header">
+                        <div class="platform-expandable-title-wrapper">
+                          <img src="./assets/case-studies/Financial Planning Platform/CFCC.svg" alt="CF/CC" class="platform-expandable-icon">
+                          <span class="platform-expandable-title">CF / CC</span>
                     </div>
-                    <p class="platform-layer-desc">Standardized cost data to build trust and governance.</p>
-                    <ul class="platform-layer-features">
-                      <li>Centralized costs</li>
-                      <li>Consistent structures</li>
-                      <li>Reliable reporting</li>
-                    </ul>
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M6 9L12 15L18 9"/>
+                        </svg>
+                      </button>
+                      <div class="platform-expandable-content">
+                        <p>Standardized cost data to build trust and governance. Centralized corporate and central costs with consistent structures and reliable reporting.</p>
+                        <div class="platform-expandable-image-mobile">
+                          <img src="./assets/case-studies/Financial Planning Platform/CFCC_Dashboard.png" alt="CF/CC Dashboard">
+                        </div>
+                      </div>
                   </div>
 
                   <!-- Market Model -->
-                  <div class="platform-layer-card">
-                    <div class="platform-layer-header">
-                      <img src="./assets/case-studies/Financial Planning Platform/MarketModel_Logo.svg" alt="Market Model" class="platform-layer-logo">
-                      <div class="platform-layer-title">Market Model</div>
+                    <div class="platform-expandable-item" data-platform="marketmodel">
+                      <button class="platform-expandable-header">
+                        <div class="platform-expandable-title-wrapper">
+                          <img src="./assets/case-studies/Financial Planning Platform/MarketModel_Logo.svg" alt="Market Model" class="platform-expandable-icon">
+                          <span class="platform-expandable-title">Market Model</span>
                     </div>
-                    <p class="platform-layer-desc">Forward-looking planning and forecasting capabilities.</p>
-                    <ul class="platform-layer-features">
-                      <li>Demand scenarios</li>
-                      <li>Revenue impact</li>
-                      <li>Strategic planning</li>
-                    </ul>
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M6 9L12 15L18 9"/>
+                        </svg>
+                      </button>
+                      <div class="platform-expandable-content">
+                        <p>Forward-looking planning and forecasting capabilities. Demand and pricing scenarios with revenue impact modeling and strategic planning.</p>
+                        <div class="platform-expandable-image-mobile">
+                          <img src="./assets/case-studies/Financial Planning Platform/MarketModel_Dashboard.png" alt="Market Model Dashboard">
+                        </div>
+                      </div>
                   </div>
 
                   <!-- Cost Insights -->
-                  <div class="platform-layer-card">
-                    <div class="platform-layer-header">
-                      <img src="./assets/case-studies/Financial Planning Platform/CostInsights_Logo.svg" alt="Cost Insights" class="platform-layer-logo">
-                      <div class="platform-layer-title">Cost Insights</div>
+                    <div class="platform-expandable-item" data-platform="costinsights">
+                      <button class="platform-expandable-header">
+                        <div class="platform-expandable-title-wrapper">
+                          <img src="./assets/case-studies/Financial Planning Platform/CostInsights_Logo.svg" alt="Cost Insights" class="platform-expandable-icon">
+                          <span class="platform-expandable-title">Cost Insights</span>
                     </div>
-                    <p class="platform-layer-desc">Intelligence and optimization for cost management.</p>
-                    <ul class="platform-layer-features">
-                      <li>Granular views</li>
-                      <li>Optimization</li>
-                      <li>Predictive signals</li>
-                    </ul>
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M6 9L12 15L18 9"/>
+                        </svg>
+                      </button>
+                      <div class="platform-expandable-content">
+                        <p>Intelligence and optimization for cost management. Granular cost views with optimization opportunities and predictive signals.</p>
+                        <div class="platform-expandable-image-mobile">
+                          <img src="./assets/case-studies/Financial Planning Platform/CostInsight_Dashboard.png" alt="Cost Insights Dashboard">
+                        </div>
+                      </div>
                   </div>
 
                   <!-- DOST -->
-                  <div class="platform-layer-card">
-                    <div class="platform-layer-header">
-                      <img src="./assets/case-studies/Financial Planning Platform/Dost_Logo.svg" alt="DOST" class="platform-layer-logo">
-                      <div class="platform-layer-title">DOST</div>
+                    <div class="platform-expandable-item" data-platform="dost">
+                      <button class="platform-expandable-header">
+                        <div class="platform-expandable-title-wrapper">
+                          <img src="./assets/case-studies/Financial Planning Platform/Dost_Logo.svg" alt="DOST" class="platform-expandable-icon">
+                          <span class="platform-expandable-title">DOST</span>
                     </div>
-                    <p class="platform-layer-desc">RAG-based chatbot reducing support dependency.</p>
-                    <ul class="platform-layer-features">
-                      <li>Answers queries</li>
-                      <li>Contextual guidance</li>
-                      <li>Reduced expert reliance</li>
-                    </ul>
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M6 9L12 15L18 9"/>
+                        </svg>
+                      </button>
+                      <div class="platform-expandable-content">
+                        <p>RAG-based chatbot reducing support dependency. Answers repetitive finance and tool-related queries with contextual guidance using documentation, dashboards, and definitions.</p>
+                        <div class="platform-expandable-image-mobile">
+                          <img src="./assets/case-studies/Financial Planning Platform/Dost_Dashboard.png" alt="DOST Dashboard">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="platform-device-container">
+                    <div class="platform-device-image active" data-platform="cfcc">
+                      <img src="./assets/case-studies/Financial Planning Platform/CFCC_Dashboard.png" alt="CF/CC Dashboard">
+                    </div>
+                    <div class="platform-device-image" data-platform="marketmodel">
+                      <img src="./assets/case-studies/Financial Planning Platform/MarketModel_Dashboard.png" alt="Market Model Dashboard">
+                    </div>
+                    <div class="platform-device-image" data-platform="costinsights">
+                      <img src="./assets/case-studies/Financial Planning Platform/CostInsight_Dashboard.png" alt="Cost Insights Dashboard">
+                    </div>
+                    <div class="platform-device-image" data-platform="dost">
+                      <img src="./assets/case-studies/Financial Planning Platform/Dost_Dashboard.png" alt="DOST Dashboard">
+                    </div>
                   </div>
                 </div>
               </div>
 
               <!-- ════════════════════════════════════════ -->
-              <!-- 9. KEY DECISIONS                         -->
+              <!-- 9. SURVEY & USER FEEDBACK                 -->
+              <!-- ════════════════════════════════════════ -->
+              <div class="apple-section apple-section--alt" id="fp-survey">
+                <div class="apple-reveal">
+                  <div class="apple-section-eyebrow">Survey & User Feedback</div>
+                  <div class="apple-section-headline" style="max-width: 100%;">Understanding adoption<br>after Phase 1 launch.</div>
+                  <p class="apple-section-body" style="max-width: 100%; margin-top: 24px;">
+                    After launching Phase 1 of the platform, we conducted a survey to understand how users were adopting the Market Model application. The survey was distributed to 50 users via Microsoft Forms.
+                  </p>
+                </div>
+
+                <!-- Response Metrics -->
+                <div class="apple-meta-grid apple-reveal" style="grid-template-columns: repeat(3, 1fr); max-width: 100%; margin-top: 48px; gap: 32px;">
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Total Respondents</span>
+                    <span class="apple-meta-value" style="font-size: 32px; font-weight: 700;">34</span>
+                  </div>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">By Geography</span>
+                    <span class="apple-meta-value" style="font-size: 15px; line-height: 1.5;">25 from Country<br>9 from Region</span>
+                  </div>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">By Function</span>
+                    <span class="apple-meta-value" style="font-size: 15px; line-height: 1.5;">27 Finance<br>5 BE&E<br>2 TAs</span>
+                  </div>
+                </div>
+
+                <!-- Top Trends and Pain Points - Side by Side -->
+                <div class="apple-reveal" style="margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; max-width: 100%;">
+                  <!-- Top Trends -->
+                  <div>
+                    <div class="apple-section-headline" style="font-size: 24px; letter-spacing: -0.6px; margin-bottom: 24px;">Top Trends</div>
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                      <div class="survey-sticky-note survey-sticky-note--trend">
+                        <div class="survey-sticky-note-lines"></div>
+                        <div class="survey-sticky-note-content">
+                          <div class="survey-sticky-note-title">Excel Dependency</div>
+                          <div class="survey-sticky-note-text">Over 70% of respondents still rely on Excel for scenario modelling and presentations, despite improvements in the online tool.</div>
+                        </div>
+                      </div>
+                      <div class="survey-sticky-note survey-sticky-note--trend">
+                        <div class="survey-sticky-note-lines"></div>
+                        <div class="survey-sticky-note-content">
+                          <div class="survey-sticky-note-title">Satisfaction Scores</div>
+                          <div class="survey-sticky-note-text">Average satisfaction score is 3.4 (on a 1-5 scale), with higher scores linked to better onboarding and support.</div>
+                        </div>
+                      </div>
+                      <div class="survey-sticky-note survey-sticky-note--trend">
+                        <div class="survey-sticky-note-lines"></div>
+                        <div class="survey-sticky-note-content">
+                          <div class="survey-sticky-note-title">Harmonisation Needs</div>
+                          <div class="survey-sticky-note-text">There is a strong call for standardisation of input files, calculation logic, and field names across brands and regions.</div>
+                        </div>
+                      </div>
+                      <div class="survey-sticky-note survey-sticky-note--trend">
+                        <div class="survey-sticky-note-lines"></div>
+                        <div class="survey-sticky-note-content">
+                          <div class="survey-sticky-note-title">Desire for Automation</div>
+                          <div class="survey-sticky-note-text">Users consistently request improvements in tool speed, calculation automation, and reporting capabilities.</div>
+                        </div>
+                      </div>
+                      <div class="survey-sticky-note survey-sticky-note--trend">
+                        <div class="survey-sticky-note-lines"></div>
+                        <div class="survey-sticky-note-content">
+                          <div class="survey-sticky-note-title">Ownership Clarity</div>
+                          <div class="survey-sticky-note-text">Many respondents seek clearer communication and ownership, especially between Finance and BE&E.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Pain Points -->
+                  <div>
+                    <div class="apple-section-headline" style="font-size: 24px; letter-spacing: -0.6px; margin-bottom: 24px;">Pain Points</div>
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                      <div class="survey-sticky-note survey-sticky-note--pain">
+                        <div class="survey-sticky-note-lines"></div>
+                        <div class="survey-sticky-note-content">
+                          <div class="survey-sticky-note-title">Tool Performance</div>
+                          <div class="survey-sticky-note-text">Slow calculations, manual processes, and lack of automation.</div>
+                        </div>
+                      </div>
+                      <div class="survey-sticky-note survey-sticky-note--pain">
+                        <div class="survey-sticky-note-lines"></div>
+                        <div class="survey-sticky-note-content">
+                          <div class="survey-sticky-note-title">Data Quality</div>
+                          <div class="survey-sticky-note-text">Inconsistent actuals, unclear scaling, and harmonisation issues.</div>
+                        </div>
+                      </div>
+                      <div class="survey-sticky-note survey-sticky-note--pain">
+                        <div class="survey-sticky-note-lines"></div>
+                        <div class="survey-sticky-note-content">
+                          <div class="survey-sticky-note-title">Process Clarity</div>
+                          <div class="survey-sticky-note-text">Unclear roles and responsibilities, especially between Finance and BE&E.</div>
+                        </div>
+                      </div>
+                      <div class="survey-sticky-note survey-sticky-note--pain">
+                        <div class="survey-sticky-note-lines"></div>
+                        <div class="survey-sticky-note-content">
+                          <div class="survey-sticky-note-title">Reporting Limitations</div>
+                          <div class="survey-sticky-note-text">Limited visualisation options and export capabilities.</div>
+                        </div>
+                      </div>
+                      <div class="survey-sticky-note survey-sticky-note--pain">
+                        <div class="survey-sticky-note-lines"></div>
+                        <div class="survey-sticky-note-content">
+                          <div class="survey-sticky-note-title">Training & Communication</div>
+                          <div class="survey-sticky-note-text">Insufficient training and unclear communication of deadlines and expectations.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ════════════════════════════════════════ -->
+              <!-- 10. KEY DECISIONS                         -->
               <!-- ════════════════════════════════════════ -->
               <div class="apple-section" id="fp-decisions">
                 <div class="apple-reveal">
@@ -4765,7 +5457,14 @@
           overlay.classList.remove('minimizing');
           overlay.classList.add('open');
         }
-        setTimeout(function () { closeBtn.focus(); }, 120);
+        // Automatically maximize to fullscreen when opening
+        frame.classList.add('fullscreen');
+        overlay.classList.add('fullscreen-active');
+        // Show Selected Projects folder immediately (skip portfolio page)
+        setTimeout(function () {
+          showHotFolder();
+          closeBtn.focus();
+        }, 120);
       }
 
       function closeWork() {
@@ -5057,6 +5756,69 @@
           }
         }
 
+        // --- Leadership section horizontal scroll with arrows ---
+        var roleScrollContainer = csEl.querySelector('#role-scroll-container');
+        var roleScrollLeft = csEl.querySelector('.role-scroll-arrow-left');
+        var roleScrollRight = csEl.querySelector('.role-scroll-arrow-right');
+        if (roleScrollContainer && roleScrollLeft && roleScrollRight) {
+          function updateRoleScrollArrows() {
+            var scrollLeft = roleScrollContainer.scrollLeft;
+            var scrollWidth = roleScrollContainer.scrollWidth;
+            var clientWidth = roleScrollContainer.clientWidth;
+            roleScrollLeft.style.opacity = scrollLeft > 0 ? '1' : '0.3';
+            roleScrollRight.style.opacity = scrollLeft < scrollWidth - clientWidth - 10 ? '1' : '0.3';
+          }
+          roleScrollLeft.addEventListener('click', function () {
+            roleScrollContainer.scrollBy({ left: -320, behavior: 'smooth' });
+          });
+          roleScrollRight.addEventListener('click', function () {
+            roleScrollContainer.scrollBy({ left: 320, behavior: 'smooth' });
+          });
+          roleScrollContainer.addEventListener('scroll', updateRoleScrollArrows);
+          updateRoleScrollArrows();
+        }
+
+        // --- Platform expandable sections ---
+        var platformExpandableItems = csEl.querySelectorAll('.platform-expandable-item');
+        var platformDeviceImages = csEl.querySelectorAll('.platform-device-image');
+        if (platformExpandableItems.length) {
+          platformExpandableItems.forEach(function (item) {
+            var header = item.querySelector('.platform-expandable-header');
+            var platform = item.getAttribute('data-platform');
+            if (header) {
+              header.addEventListener('click', function () {
+                // Close all other items
+                platformExpandableItems.forEach(function (other) {
+                  if (other !== item) {
+                    other.classList.remove('active');
+                  }
+                });
+                // Toggle current item
+                item.classList.toggle('active');
+                // Update device images
+                platformDeviceImages.forEach(function (img) {
+                  if (img.getAttribute('data-platform') === platform && item.classList.contains('active')) {
+                    img.classList.add('active');
+                  } else {
+                    img.classList.remove('active');
+                  }
+                });
+              });
+            }
+          });
+          // Set first item as active by default
+          if (platformExpandableItems.length > 0) {
+            var firstItem = platformExpandableItems[0];
+            var firstPlatform = firstItem.getAttribute('data-platform');
+            firstItem.classList.add('active');
+            platformDeviceImages.forEach(function (img) {
+              if (img.getAttribute('data-platform') === firstPlatform) {
+                img.classList.add('active');
+              }
+            });
+          }
+        }
+
         return true;
       }
 
@@ -5144,6 +5906,47 @@
         });
       });
 
+    })();
+  </script>
+
+  <!-- Quote sticky note persistence -->
+  <script>
+    (function() {
+      var quoteText = document.getElementById('quote-text');
+      var quoteAuthor = document.getElementById('quote-author');
+      
+      if (!quoteText || !quoteAuthor) return;
+      
+      // Load saved quote from localStorage
+      var savedQuote = localStorage.getItem('dashboard-quote-text');
+      var savedAuthor = localStorage.getItem('dashboard-quote-author');
+      
+      if (savedQuote) {
+        quoteText.value = savedQuote;
+      }
+      if (savedAuthor) {
+        quoteAuthor.value = savedAuthor;
+      }
+      
+      // Save quote text on input
+      quoteText.addEventListener('input', function() {
+        localStorage.setItem('dashboard-quote-text', this.value);
+      });
+      
+      // Save author on input
+      quoteAuthor.addEventListener('input', function() {
+        localStorage.setItem('dashboard-quote-author', this.value);
+      });
+      
+      // Auto-resize textarea
+      quoteText.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 'px';
+      });
+      
+      // Set initial height
+      quoteText.style.height = 'auto';
+      quoteText.style.height = quoteText.scrollHeight + 'px';
     })();
   </script>
 </body>
