@@ -13,10 +13,24 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    @media (max-width: 960px) {
+      html, body {
+        height: auto;
+        min-height: 100vh;
+        overflow: auto;
+      }
+    }
+
     body.dashboard-body {
-      min-height: 100vh;
+      height: 100vh;
       font-family: 'Poppins', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       overflow-x: hidden;
+      overflow-y: hidden;
 
       /* ===== Theme tokens (Dark — default) ===== */
       --bg: #000;
@@ -44,6 +58,14 @@
 
       color: var(--text-primary);
       background: var(--bg);
+    }
+
+    @media (max-width: 960px) {
+      body.dashboard-body {
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+      }
     }
 
     /* ===== Light mode overrides ===== */
@@ -96,19 +118,19 @@
     .status-bar {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 12px 24px;
+      justify-content: flex-end;
+      padding: 1px 24px;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 100;
-      background: var(--bg);
+      background: #000;
       transition: background 0.4s ease;
     }
-    /* Transparent status bar when wallpaper is active */
+    /* Solid black status bar even when wallpaper is active */
     body.wp-has-wallpaper .status-bar {
-      background: transparent;
+      background: #000;
     }
     .status-bar-right {
       display: flex;
@@ -122,15 +144,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--icon-color);
+      color: #fff;
       cursor: pointer;
-      transition: color 0.2s;
     }
-    .status-icon:hover { color: var(--icon-hover); }
     .status-datetime {
       font-size: 13px;
       font-weight: 500;
-      color: var(--text-secondary);
+      color: #fff;
       letter-spacing: 0.3px;
     }
 
@@ -155,14 +175,15 @@
     .bento {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: auto auto auto;
+      grid-template-rows: auto auto auto auto;
       gap: 14px;
       width: 100%;
       max-width: 700px;
     }
 
-    .cell-profile  { grid-column: 1 / 3; grid-row: 1 / 3; }
-    .cell-work     { grid-column: 3 / 5; grid-row: 1 / 2; position: relative; overflow: visible; border: none; }
+    .cell-profile  { grid-column: 1 / 4; grid-row: 1 / 3; }
+    .cell-quote    { grid-column: 4 / 5; grid-row: 1 / 2; }
+    .cell-work     { grid-column: 1 / 2; grid-row: 3 / 4; position: relative; overflow: visible; border: none; aspect-ratio: 1 / 1; }
     .cell-work::before {
       content: '';
       position: absolute;
@@ -207,15 +228,21 @@
       initial-value: 0deg;
       inherits: false;
     }
-    .cell-clock    { grid-column: 3 / 4; grid-row: 2 / 3; }
-    .cell-listen   { grid-column: 1 / 2; grid-row: 3 / 4; }
-    .cell-quote    { grid-column: 2 / 3; grid-row: 3 / 4; }
+    .cell-listen   { grid-column: 2 / 3; grid-row: 3 / 4; }
 
     /* ===== Left-half wrapper ===== */
     .left-half {
       width: 55%;
       min-width: 480px;
       padding: 56px 24px 120px 28px;
+      height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .left-half::-webkit-scrollbar {
+      display: none;
     }
 
     @media (max-width: 960px) {
@@ -223,6 +250,8 @@
         width: 100%;
         min-width: 0;
         padding: 56px 16px 120px;
+        height: auto;
+        overflow-y: visible;
       }
       .dock-wrap {
         left: 50% !important;
@@ -275,23 +304,26 @@
       border: 3px solid var(--bg-card);
       position: relative;
       margin-top: -32px;
-      overflow: hidden;
+      overflow: visible;
       box-shadow: 0 4px 12px var(--shadow);
     }
     .profile-avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      border-radius: 50%;
     }
     .avatar-dot {
-      width: 12px;
-      height: 12px;
+      width: 16px;
+      height: 16px;
       background: #22c55e;
       border-radius: 50%;
-      border: 2.5px solid var(--bg-card);
+      border: 3px solid var(--bg-card);
       position: absolute;
-      bottom: 1px;
-      right: 1px;
+      bottom: -2px;
+      right: -2px;
+      z-index: 10;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
     .profile-badge {
       display: inline-flex;
@@ -344,6 +376,7 @@
     .clock-mono { font-family: 'Share Tech Mono', monospace; }
 
     .cell-clock,
+    .cell-work,
     .cell-listen,
     .cell-quote {
       aspect-ratio: 1 / 1;
@@ -687,53 +720,52 @@
       box-shadow: 0 6px 20px var(--shadow);
     }
 
-    /* ===== Bottom dock (Apple-like glassmorphism) ===== */
+    /* ===== Bottom dock (Apple-like, matching tiles) ===== */
     .dock-bar {
-      background: rgba(255,255,255,0.15); /* Lighter, more transparent */
-      border: 1px solid rgba(255,255,255,0.2); /* Subtle border */
+      background: var(--bg-card);
+      border: 1px solid var(--border);
       border-radius: 22px;
       padding: 8px 16px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.2), /* Main shadow */
-                  inset 0 0 0 0.5px rgba(255,255,255,0.1); /* Inset highlight */
-      backdrop-filter: blur(20px) saturate(180%); /* Glassmorphism */
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      box-shadow: 0 1px 2px var(--shadow), 0 0 0 0 transparent;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  border-color 0.3s, background 0.3s;
     }
     body.light-mode .dock-bar {
-      background: rgba(255,255,255,0.65);
-      border-color: rgba(0,0,0,0.08);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.1),
-                  inset 0 0 0 0.5px rgba(255,255,255,0.4);
+      background: var(--bg-card);
+      border-color: var(--border);
+      box-shadow: 0 1px 2px var(--shadow), 0 0 0 0 transparent;
     }
     body.wp-has-wallpaper .dock-bar {
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: var(--bg-card);
+      border-color: var(--border);
     }
     body.light-mode.wp-has-wallpaper .dock-bar {
-      background: rgba(255,255,255,0.65);
+      background: var(--bg-card);
+      border-color: var(--border);
     }
     .dock-btn {
-      width: 44px; /* Slightly larger */
+      width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: transparent; /* Transparent by default */
+      background: transparent;
       border: none;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      color: var(--text-secondary);
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      color: var(--icon-color);
       position: relative;
     }
     .dock-btn:hover {
-      background: rgba(255,255,255,0.15); /* Subtle hover background */
-      transform: scale(1.15) translateY(-6px); /* More pronounced lift */
-      box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+      background: var(--bg-hover);
+      transform: translateY(-2px);
+      color: var(--icon-hover);
     }
     body.light-mode .dock-btn:hover {
-      background: rgba(0,0,0,0.05);
+      background: var(--bg-hover);
+      color: var(--icon-hover);
     }
     /* macOS-style tooltip */
     .dock-btn::after {
@@ -3791,16 +3823,10 @@
 
   <!-- ========== STATUS BAR ========== -->
   <div class="status-bar">
-    <a href="#" onclick="window.scrollTo(0,0);return false;" class="status-icon" style="color: var(--text-secondary);">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-    </a>
     <div class="status-bar-right">
-      <div class="status-icon">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.992 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182"/></svg>
-      </div>
-      <div class="status-icon">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/></svg>
-      </div>
+      <button type="button" class="status-icon" id="open-settings" title="Settings" style="background:none;border:none;cursor:pointer;font-family:inherit;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </button>
       <button type="button" class="status-icon" id="theme-toggle" title="Toggle theme" style="background:none;border:none;cursor:pointer;font-family:inherit;">
         <!-- Sun icon (shown in dark mode — click to go light) -->
         <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
@@ -3821,11 +3847,9 @@
         <div style="padding: 0 22px 22px;">
           <div class="profile-avatar">
             <img src="./assets/logos/ShivanshuMathur.png" alt="Shivanshu Mathur">
-            <div class="avatar-dot"></div>
           </div>
           <div style="display: flex; align-items: center; gap: 8px; margin-top: 12px;">
             <h1 style="font-size: 18px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.3px;">Shivanshu Mathur</h1>
-            <span class="profile-badge">UX</span>
           </div>
           <p style="font-size: 13px; color: var(--text-secondary); margin-top: 3px; font-weight: 500;">AI &amp; UX Strategist</p>
           <p style="font-size: 12px; color: var(--text-tertiary); line-height: 1.6; margin-top: 14px;">
@@ -3836,21 +3860,6 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
               India
             </span>
-            <span style="color: var(--text-faint);">·</span>
-            <span style="display: flex; align-items: center; gap: 4px;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
-              Novartis
-            </span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 10px; margin-top: 18px;">
-            <a href="mailto:hello@shivanshmathur.com" class="btn-chat">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
-              Let's chat
-            </a>
-            <a href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer" class="btn-linkedin">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-              LinkedIn
-            </a>
           </div>
 
           <!-- Logo Rail -->
@@ -3869,6 +3878,17 @@
               <img src="./assets/logos/NEC-white.svg" alt="NEC" class="logo-rail-item">
             </div>
           </div>
+
+          <div style="display: flex; align-items: center; gap: 10px; margin-top: 18px;">
+            <a href="mailto:hello@shivanshmathur.com" class="btn-chat">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+              Let's chat
+            </a>
+            <a href="https://linkedin.com/in/" target="_blank" rel="noopener noreferrer" class="btn-linkedin">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+          </div>
         </div>
       </div>
 
@@ -3878,23 +3898,12 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
           Work
         </div>
-        <div style="flex: 1; display: flex; flex-direction: row; align-items: center; gap: 16px;">
+        <div style="flex: 1; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 16px;">
           <!-- Card graphics -->
           <div class="folio-stack" style="height: 70px; width: 90px; flex-shrink: 0;">
             <div style="position: absolute; width: 40px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #3b82f6, #06b6d4); transform: rotate(-12deg); left: 2px; top: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
             <div style="position: absolute; width: 40px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #8b5cf6, #ec4899); transform: rotate(3deg); left: 22px; top: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
             <div style="position: absolute; width: 40px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #f59e0b, #ef4444); transform: rotate(-4deg); left: 42px; top: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
-          </div>
-          <!-- Stats 50-50 -->
-          <div style="flex: 1; display: flex; flex-direction: row; align-items: center;">
-            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid var(--border); padding: 4px 0;">
-              <span style="font-size: 28px; font-weight: 700; color: var(--text-primary); line-height: 1; letter-spacing: -1px;">5</span>
-              <span style="font-size: 9px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500;">Companies</span>
-            </div>
-            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px 0;">
-              <span style="font-size: 28px; font-weight: 700; color: var(--text-primary); line-height: 1; letter-spacing: -1px;">17+</span>
-              <span style="font-size: 9px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500;">Projects</span>
-            </div>
           </div>
         </div>
         <div style="display: flex; justify-content: flex-end; margin-top: 6px;">
@@ -3930,24 +3939,6 @@
       </div>
 
 
-      <!-- ===== LOCAL TIME (Passive widget) ===== -->
-      <div class="cell-clock card" style="padding: 16px; display: flex; flex-direction: column;">
-        <div class="section-label">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Local Time
-        </div>
-        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;">
-          <div class="analog-clock" id="analog-clock">
-            <!-- Tick marks generated by JS -->
-            <div class="clock-center-dot"></div>
-            <div class="clock-hand clock-hand-hour" id="hand-hour"></div>
-            <div class="clock-hand clock-hand-minute" id="hand-minute"></div>
-            <div class="clock-hand clock-hand-second" id="hand-second"></div>
-          </div>
-          <p class="clock-city">India</p>
-        </div>
-      </div>
-
       <!-- ===== QUOTE / PERSONALITY (Interactive sticky note) ===== -->
       <div class="cell-quote card">
         <div class="quote-sticky-note">
@@ -3972,15 +3963,6 @@
 
     </div>
 
-    <!-- ===== APP ICONS ===== -->
-    <div style="margin: 16px 0 0; display: flex; align-items: flex-start; gap: 16px; padding: 0 2px;">
-      <button id="open-settings" style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; background: none; border: none; cursor: pointer; padding: 0; font-family: inherit;">
-        <div class="app-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        </div>
-        <span style="font-size: 10px; color: var(--text-tertiary); font-weight: 500;">Settings</span>
-      </button>
-    </div>
   </main>
 
   <!-- ========== WORK APP OVERLAY ========== -->
@@ -5448,49 +5430,6 @@
     })();
   </script>
 
-  <!-- Analog clock widget -->
-  <script>
-    (function () {
-      // Generate tick marks
-      var clockFace = document.getElementById('analog-clock');
-      for (var i = 0; i < 12; i++) {
-        var tick = document.createElement('div');
-        tick.className = 'clock-tick major';
-        tick.style.transform = 'translateX(-50%) rotate(' + (i * 30) + 'deg)';
-        clockFace.appendChild(tick);
-      }
-      for (var i = 0; i < 60; i++) {
-        if (i % 5 !== 0) {
-          var tick = document.createElement('div');
-          tick.className = 'clock-tick';
-          tick.style.transform = 'translateX(-50%) rotate(' + (i * 6) + 'deg)';
-          clockFace.appendChild(tick);
-        }
-      }
-
-      var hourHand = document.getElementById('hand-hour');
-      var minuteHand = document.getElementById('hand-minute');
-      var secondHand = document.getElementById('hand-second');
-
-      function updateAnalogClock() {
-        var now = new Date();
-        var h = now.getHours() % 12;
-        var m = now.getMinutes();
-        var s = now.getSeconds();
-
-        var hourDeg = (h * 30) + (m * 0.5);
-        var minDeg = (m * 6) + (s * 0.1);
-        var secDeg = s * 6;
-
-        hourHand.style.transform = 'translateX(-50%) rotate(' + hourDeg + 'deg)';
-        minuteHand.style.transform = 'translateX(-50%) rotate(' + minDeg + 'deg)';
-        secondHand.style.transform = 'translateX(-50%) rotate(' + secDeg + 'deg)';
-      }
-
-      updateAnalogClock();
-      setInterval(updateAnalogClock, 1000);
-    })();
-  </script>
 
   <!-- ========== WORK APP LOGIC ========== -->
   <script>
