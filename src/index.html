@@ -183,51 +183,7 @@
 
     .cell-profile  { grid-column: 1 / 4; grid-row: 1 / 3; }
     .cell-quote    { grid-column: 4 / 5; grid-row: 1 / 2; }
-    .cell-work     { grid-column: 1 / 2; grid-row: 3 / 4; position: relative; overflow: visible; border: none; aspect-ratio: 1 / 1; }
-    .cell-work::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      border-radius: 23px;
-      padding: 1px;
-      background: conic-gradient(
-        from var(--laser-angle, 0deg),
-        transparent 0%,
-        transparent 70%,
-        #0082FF 78%,
-        #00c6ff 84%,
-        #0082FF 90%,
-        transparent 100%
-      );
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      animation: laser-spin 3s linear infinite;
-      z-index: 1;
-      pointer-events: none;
-    }
-    .cell-work::after {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      border-radius: 23px;
-      background: var(--bg-card);
-      z-index: 0;
-    }
-    .cell-work > * {
-      position: relative;
-      z-index: 2;
-    }
-    @keyframes laser-spin {
-      0%   { --laser-angle: 0deg; }
-      100% { --laser-angle: 360deg; }
-    }
-    @property --laser-angle {
-      syntax: '<angle>';
-      initial-value: 0deg;
-      inherits: false;
-    }
+    .cell-work     { grid-column: 1 / 2; grid-row: 3 / 4; position: relative; overflow: visible; aspect-ratio: 1 / 1; }
     .cell-listen   { grid-column: 2 / 3; grid-row: 3 / 4; }
 
     /* ===== Left-half wrapper ===== */
@@ -3893,24 +3849,20 @@
       </div>
 
       <!-- ===== WORK (Primary App tile) ===== -->
-      <button type="button" class="cell-work card" id="open-work-folio" style="padding: 16px; display: flex; flex-direction: column; text-decoration: none; text-align: left; cursor: pointer; font-family: inherit;">
-        <div class="section-label">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
-          Work
-        </div>
-        <div style="flex: 1; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 16px;">
+      <button type="button" class="cell-work card" id="open-work-folio" style="padding: 20px; display: flex; flex-direction: column; text-decoration: none; text-align: center; cursor: pointer; font-family: inherit; align-items: center; justify-content: space-between;">
+        <div style="flex: 1; display: flex; align-items: center; justify-content: center; width: 100%;">
           <!-- Card graphics -->
-          <div class="folio-stack" style="height: 70px; width: 90px; flex-shrink: 0;">
-            <div style="position: absolute; width: 40px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #3b82f6, #06b6d4); transform: rotate(-12deg); left: 2px; top: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
-            <div style="position: absolute; width: 40px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #8b5cf6, #ec4899); transform: rotate(3deg); left: 22px; top: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
-            <div style="position: absolute; width: 40px; height: 50px; border-radius: 8px; background: linear-gradient(135deg, #f59e0b, #ef4444); transform: rotate(-4deg); left: 42px; top: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
+          <div class="folio-stack" style="height: 80px; width: 100px; flex-shrink: 0; position: relative;">
+            <div style="position: absolute; width: 45px; height: 55px; border-radius: 10px; background: linear-gradient(135deg, #3b82f6, #06b6d4); transform: rotate(-12deg); left: 2px; top: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
+            <div style="position: absolute; width: 45px; height: 55px; border-radius: 10px; background: linear-gradient(135deg, #8b5cf6, #ec4899); transform: rotate(3deg); left: 22px; top: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
+            <div style="position: absolute; width: 45px; height: 55px; border-radius: 10px; background: linear-gradient(135deg, #f59e0b, #ef4444); transform: rotate(-4deg); left: 42px; top: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
           </div>
         </div>
-        <div style="display: flex; justify-content: flex-end; margin-top: 6px;">
-          <span style="font-size: 11px; font-weight: 600; color: var(--accent, #3b82f6); display: flex; align-items: center; gap: 4px; transition: gap 0.3s;">
-            View all
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
-          </span>
+        <div style="display: flex; justify-content: center; margin-top: 16px; width: 100%;">
+          <a href="#" class="btn-linkedin" style="text-decoration: none; padding: 6px 14px;">
+            View Portfolio
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+          </a>
         </div>
       </button>
 
