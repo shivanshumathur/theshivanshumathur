@@ -469,28 +469,34 @@
        background: #ffeb3b;
        border: none;
        border-radius: 4px;
-       padding: 14px 16px 16px;
+       padding: 8px;
        position: relative;
        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), 
                    0 0 0 1px rgba(0, 0, 0, 0.05);
        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-       min-height: 100px;
+       display: flex;
+       flex-direction: column;
+       overflow: visible;
      }
      .survey-sticky-note--trend {
        background: #ffeb3b;
+       aspect-ratio: auto;
+       min-height: 100px;
      }
      .survey-sticky-note--pain {
        background: #ffccbc;
+       aspect-ratio: auto;
+       min-height: 100px;
      }
      .survey-sticky-note::before {
        content: '';
        position: absolute;
        top: 0;
        right: 0;
-       width: 20px;
-       height: 20px;
+       width: 16px;
+       height: 16px;
        background: linear-gradient(225deg, #ffeb3b 0%, #ffeb3b 50%, #f9a825 50%, #f9a825 100%);
-       border-radius: 0 4px 0 20px;
+       border-radius: 0 4px 0 16px;
        box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
        z-index: 2;
      }
@@ -506,46 +512,52 @@
        pointer-events: none;
        background-image: repeating-linear-gradient(
          transparent,
-         transparent 19px,
-         rgba(139, 105, 20, 0.08) 19px,
-         rgba(139, 105, 20, 0.08) 20px
+         transparent 15px,
+         rgba(139, 105, 20, 0.08) 15px,
+         rgba(139, 105, 20, 0.08) 16px
        );
        border-radius: 4px;
-       padding: 14px 16px 16px;
+       padding: 8px;
        z-index: 0;
      }
      .survey-sticky-note--pain .survey-sticky-note-lines {
        background-image: repeating-linear-gradient(
          transparent,
-         transparent 19px,
-         rgba(191, 54, 12, 0.1) 19px,
-         rgba(191, 54, 12, 0.1) 20px
+         transparent 15px,
+         rgba(191, 54, 12, 0.1) 15px,
+         rgba(191, 54, 12, 0.1) 16px
        );
      }
      .survey-sticky-note-content {
        position: relative;
        z-index: 1;
+       display: flex;
+       flex-direction: column;
+       flex: 1;
      }
      .survey-sticky-note-title {
-       font-size: 13px;
+       font-size: 12px;
        font-weight: 600;
        color: #8b6914;
-       margin-bottom: 6px;
+       margin-bottom: 4px;
        letter-spacing: -0.1px;
+       line-height: 1.3;
      }
      .survey-sticky-note--pain .survey-sticky-note-title {
        color: #bf360c;
      }
      .survey-sticky-note-text {
-       font-size: 12px;
-       line-height: 1.5;
+       font-size: 11px;
+       line-height: 1.4;
        color: #8b6914;
+       flex: 1;
+       overflow: hidden;
      }
      .survey-sticky-note--pain .survey-sticky-note-text {
        color: #bf360c;
-     }
-  
-      .analog-clock {
+    }
+
+    .analog-clock {
       width: 90px;
       height: 90px;
       border-radius: 50%;
@@ -3626,10 +3638,23 @@
       .apple-feature { flex-direction: column !important; gap: 32px; }
       .apple-meta-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
       #cs-novartis-finplan #fp-scale .apple-meta-grid { grid-template-columns: repeat(3, 1fr); }
-      /* Survey section responsive - stack columns on mobile */
-      #cs-novartis-finplan #fp-survey .apple-reveal[style*="grid-template-columns"] {
+      /* Survey & Decisions section responsive - stack columns on mobile */
+      #cs-novartis-finplan #fp-survey [style*="grid-template-columns: 1fr 1fr"] {
         grid-template-columns: 1fr !important;
         gap: 40px !important;
+      }
+      /* Next Steps responsive */
+      #cs-novartis-finplan #fp-survey .apple-stats-grid[style*="grid-template-columns: repeat(2, 1fr)"] {
+        grid-template-columns: 1fr !important;
+      }
+      /* Survey sticky notes responsive - stack on mobile */
+      #cs-novartis-finplan #fp-survey [style*="grid-template-columns: repeat(5, 1fr)"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+      @media (max-width: 768px) {
+        #cs-novartis-finplan #fp-survey [style*="grid-template-columns: repeat(5, 1fr)"] {
+          grid-template-columns: 1fr !important;
+        }
       }
       .apple-stats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
       .apple-quote { font-size: 20px; }
@@ -3934,7 +3959,7 @@
           <span style="background:#febc2e;" id="work-minimize" title="Minimize" tabindex="0"></span>
           <span style="background:#28c840;" id="work-maximize" title="Maximize" tabindex="0"></span>
         </div>
-        <div class="finder-titlebar-title">Portfolio</div>
+        <div class="finder-titlebar-title">Selected Projects</div>
         <div class="finder-titlebar-spacer"></div>
       </div>
 
@@ -3952,7 +3977,7 @@
         <button class="finder-nav-btn disabled" title="Up">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>
         </button>
-        <span class="finder-breadcrumb">/Portfolio</span>
+        <span class="finder-breadcrumb">/Selected Projects</span>
       </div>
 
       <!-- Finder Body: Sidebar + Main -->
@@ -4069,8 +4094,8 @@
               <button class="cs-nav-item" data-section="fp-strategy">Strategy</button>
               <button class="cs-nav-item" data-section="fp-role">Leadership</button>
               <button class="cs-nav-item" data-section="fp-platform">Platform</button>
-              <button class="cs-nav-item" data-section="fp-survey">Survey</button>
-              <button class="cs-nav-item" data-section="fp-decisions">Decisions</button>
+              <button class="cs-nav-item" data-section="fp-survey">Survey Insights</button>
+              <button class="cs-nav-item" data-section="fp-revamp">Revamp</button>
               <button class="cs-nav-item" data-section="fp-outcome">Impact</button>
               <button class="cs-nav-item" data-section="fp-learning">Reflection</button>
             </nav>
@@ -4436,114 +4461,114 @@
               </div>
 
               <!-- ════════════════════════════════════════ -->
-              <!-- 9. SURVEY & USER FEEDBACK                 -->
+              <!-- 9. SURVEY & KEY DECISIONS (Combined)     -->
               <!-- ════════════════════════════════════════ -->
               <div class="apple-section apple-section--alt" id="fp-survey">
                 <div class="apple-reveal">
                   <div class="apple-section-eyebrow">Survey & User Feedback</div>
-                  <div class="apple-section-headline" style="max-width: 100%;">Understanding adoption<br>after Phase 1 launch.</div>
-                  <p class="apple-section-body" style="max-width: 100%; margin-top: 24px;">
+                  <div class="apple-section-headline" style="max-width: 100%; margin-bottom: 24px;">Understanding adoption<br>after Phase 1 launch.</div>
+                  <p class="apple-section-body" style="max-width: 100%; margin-bottom: 48px;">
                     After launching Phase 1 of the platform, we conducted a survey to understand how users were adopting the Market Model application. The survey was distributed to 50 users via Microsoft Forms.
                   </p>
-                </div>
 
-                <!-- Response Metrics -->
-                <div class="apple-meta-grid apple-reveal" style="grid-template-columns: repeat(3, 1fr); max-width: 100%; margin-top: 48px; gap: 32px;">
-                  <div class="apple-meta-item">
-                    <span class="apple-meta-label">Total Respondents</span>
-                    <span class="apple-meta-value" style="font-size: 32px; font-weight: 700;">34</span>
-                  </div>
-                  <div class="apple-meta-item">
-                    <span class="apple-meta-label">By Geography</span>
-                    <span class="apple-meta-value" style="font-size: 15px; line-height: 1.5;">25 from Country<br>9 from Region</span>
-                  </div>
-                  <div class="apple-meta-item">
-                    <span class="apple-meta-label">By Function</span>
-                    <span class="apple-meta-value" style="font-size: 15px; line-height: 1.5;">27 Finance<br>5 BE&E<br>2 TAs</span>
-                  </div>
-                </div>
-
-                <!-- Top Trends and Pain Points - Side by Side -->
-                <div class="apple-reveal" style="margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; max-width: 100%;">
-                  <!-- Top Trends -->
-                  <div>
-                    <div class="apple-section-headline" style="font-size: 24px; letter-spacing: -0.6px; margin-bottom: 24px;">Top Trends</div>
-                    <div style="display: flex; flex-direction: column; gap: 16px;">
-                      <div class="survey-sticky-note survey-sticky-note--trend">
-                        <div class="survey-sticky-note-lines"></div>
-                        <div class="survey-sticky-note-content">
-                          <div class="survey-sticky-note-title">Excel Dependency</div>
-                          <div class="survey-sticky-note-text">Over 70% of respondents still rely on Excel for scenario modelling and presentations, despite improvements in the online tool.</div>
-                        </div>
-                      </div>
-                      <div class="survey-sticky-note survey-sticky-note--trend">
-                        <div class="survey-sticky-note-lines"></div>
-                        <div class="survey-sticky-note-content">
-                          <div class="survey-sticky-note-title">Satisfaction Scores</div>
-                          <div class="survey-sticky-note-text">Average satisfaction score is 3.4 (on a 1-5 scale), with higher scores linked to better onboarding and support.</div>
-                        </div>
-                      </div>
-                      <div class="survey-sticky-note survey-sticky-note--trend">
-                        <div class="survey-sticky-note-lines"></div>
-                        <div class="survey-sticky-note-content">
-                          <div class="survey-sticky-note-title">Harmonisation Needs</div>
-                          <div class="survey-sticky-note-text">There is a strong call for standardisation of input files, calculation logic, and field names across brands and regions.</div>
-                        </div>
-                      </div>
-                      <div class="survey-sticky-note survey-sticky-note--trend">
-                        <div class="survey-sticky-note-lines"></div>
-                        <div class="survey-sticky-note-content">
-                          <div class="survey-sticky-note-title">Desire for Automation</div>
-                          <div class="survey-sticky-note-text">Users consistently request improvements in tool speed, calculation automation, and reporting capabilities.</div>
-                        </div>
-                      </div>
-                      <div class="survey-sticky-note survey-sticky-note--trend">
-                        <div class="survey-sticky-note-lines"></div>
-                        <div class="survey-sticky-note-content">
-                          <div class="survey-sticky-note-title">Ownership Clarity</div>
-                          <div class="survey-sticky-note-text">Many respondents seek clearer communication and ownership, especially between Finance and BE&E.</div>
-                        </div>
-                      </div>
+                  <!-- Response Metrics -->
+                  <div class="apple-meta-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 100%; margin-bottom: 64px; gap: 24px;">
+                    <div class="apple-meta-item">
+                      <span class="apple-meta-label">Total Respondents</span>
+                      <span class="apple-meta-value" style="font-size: 15px; line-height: 1.5;">34</span>
+                    </div>
+                    <div class="apple-meta-item">
+                      <span class="apple-meta-label">By Geography</span>
+                      <span class="apple-meta-value" style="font-size: 15px; line-height: 1.5;">25 from Country<br>9 from Region</span>
+                    </div>
+                    <div class="apple-meta-item">
+                      <span class="apple-meta-label">By Function</span>
+                      <span class="apple-meta-value" style="font-size: 15px; line-height: 1.5;">27 Finance, 5 BE&E<br>2 TAs</span>
                     </div>
                   </div>
 
-                  <!-- Pain Points -->
-                  <div>
-                    <div class="apple-section-headline" style="font-size: 24px; letter-spacing: -0.6px; margin-bottom: 24px;">Pain Points</div>
-                    <div style="display: flex; flex-direction: column; gap: 16px;">
-                      <div class="survey-sticky-note survey-sticky-note--pain">
-                        <div class="survey-sticky-note-lines"></div>
-                        <div class="survey-sticky-note-content">
-                          <div class="survey-sticky-note-title">Tool Performance</div>
-                          <div class="survey-sticky-note-text">Slow calculations, manual processes, and lack of automation.</div>
+                  <!-- Top Trends and Pain Points - Side by Side -->
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 64px;">
+                    <!-- Top Trends -->
+                    <div>
+                      <div class="apple-section-headline" style="font-size: 20px; letter-spacing: -0.4px; margin-bottom: 20px;">Top Trends</div>
+                      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+                        <div class="survey-sticky-note survey-sticky-note--trend">
+                          <div class="survey-sticky-note-lines"></div>
+                          <div class="survey-sticky-note-content">
+                            <div class="survey-sticky-note-title">Excel Dependency</div>
+                            <div class="survey-sticky-note-text">Over 70% of respondents still rely on Excel for scenario modelling and presentations, despite improvements in the online tool.</div>
+                          </div>
+                        </div>
+                        <div class="survey-sticky-note survey-sticky-note--trend">
+                          <div class="survey-sticky-note-lines"></div>
+                          <div class="survey-sticky-note-content">
+                            <div class="survey-sticky-note-title">Satisfaction Scores</div>
+                            <div class="survey-sticky-note-text">Average satisfaction score is 3.4 (on a 1-5 scale), with higher scores linked to better onboarding and support.</div>
+                          </div>
+                        </div>
+                        <div class="survey-sticky-note survey-sticky-note--trend">
+                          <div class="survey-sticky-note-lines"></div>
+                          <div class="survey-sticky-note-content">
+                            <div class="survey-sticky-note-title">Harmonisation Needs</div>
+                            <div class="survey-sticky-note-text">There is a strong call for standardisation of input files, calculation logic, and field names across brands and regions.</div>
+                          </div>
+                        </div>
+                        <div class="survey-sticky-note survey-sticky-note--trend">
+                          <div class="survey-sticky-note-lines"></div>
+                          <div class="survey-sticky-note-content">
+                            <div class="survey-sticky-note-title">Desire for Automation</div>
+                            <div class="survey-sticky-note-text">Users consistently request improvements in tool speed, calculation automation, and reporting capabilities.</div>
+                          </div>
+                        </div>
+                        <div class="survey-sticky-note survey-sticky-note--trend">
+                          <div class="survey-sticky-note-lines"></div>
+                          <div class="survey-sticky-note-content">
+                            <div class="survey-sticky-note-title">Ownership Clarity</div>
+                            <div class="survey-sticky-note-text">Many respondents seek clearer communication and ownership, especially between Finance and BE&E.</div>
+                          </div>
                         </div>
                       </div>
-                      <div class="survey-sticky-note survey-sticky-note--pain">
-                        <div class="survey-sticky-note-lines"></div>
-                        <div class="survey-sticky-note-content">
-                          <div class="survey-sticky-note-title">Data Quality</div>
-                          <div class="survey-sticky-note-text">Inconsistent actuals, unclear scaling, and harmonisation issues.</div>
+                    </div>
+
+                    <!-- Pain Points -->
+                    <div>
+                      <div class="apple-section-headline" style="font-size: 20px; letter-spacing: -0.4px; margin-bottom: 20px;">Pain Points</div>
+                      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+                        <div class="survey-sticky-note survey-sticky-note--pain">
+                          <div class="survey-sticky-note-lines"></div>
+                          <div class="survey-sticky-note-content">
+                            <div class="survey-sticky-note-title">Tool Performance</div>
+                            <div class="survey-sticky-note-text">Slow calculations, manual processes, and lack of automation.</div>
+                          </div>
                         </div>
-                      </div>
-                      <div class="survey-sticky-note survey-sticky-note--pain">
-                        <div class="survey-sticky-note-lines"></div>
-                        <div class="survey-sticky-note-content">
-                          <div class="survey-sticky-note-title">Process Clarity</div>
-                          <div class="survey-sticky-note-text">Unclear roles and responsibilities, especially between Finance and BE&E.</div>
+                        <div class="survey-sticky-note survey-sticky-note--pain">
+                          <div class="survey-sticky-note-lines"></div>
+                          <div class="survey-sticky-note-content">
+                            <div class="survey-sticky-note-title">Data Quality</div>
+                            <div class="survey-sticky-note-text">Inconsistent actuals, unclear scaling, and harmonisation issues.</div>
+                          </div>
                         </div>
-                      </div>
-                      <div class="survey-sticky-note survey-sticky-note--pain">
-                        <div class="survey-sticky-note-lines"></div>
-                        <div class="survey-sticky-note-content">
-                          <div class="survey-sticky-note-title">Reporting Limitations</div>
-                          <div class="survey-sticky-note-text">Limited visualisation options and export capabilities.</div>
+                        <div class="survey-sticky-note survey-sticky-note--pain">
+                          <div class="survey-sticky-note-lines"></div>
+                          <div class="survey-sticky-note-content">
+                            <div class="survey-sticky-note-title">Process Clarity</div>
+                            <div class="survey-sticky-note-text">Unclear roles and responsibilities, especially between Finance and BE&E.</div>
+                          </div>
                         </div>
-                      </div>
-                      <div class="survey-sticky-note survey-sticky-note--pain">
-                        <div class="survey-sticky-note-lines"></div>
-                        <div class="survey-sticky-note-content">
-                          <div class="survey-sticky-note-title">Training & Communication</div>
-                          <div class="survey-sticky-note-text">Insufficient training and unclear communication of deadlines and expectations.</div>
+                        <div class="survey-sticky-note survey-sticky-note--pain">
+                          <div class="survey-sticky-note-lines"></div>
+                          <div class="survey-sticky-note-content">
+                            <div class="survey-sticky-note-title">Reporting Limitations</div>
+                            <div class="survey-sticky-note-text">Limited visualisation options and export capabilities.</div>
+                          </div>
+                        </div>
+                        <div class="survey-sticky-note survey-sticky-note--pain">
+                          <div class="survey-sticky-note-lines"></div>
+                          <div class="survey-sticky-note-content">
+                            <div class="survey-sticky-note-title">Training & Communication</div>
+                            <div class="survey-sticky-note-text">Insufficient training and unclear communication of deadlines and expectations.</div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -4552,32 +4577,23 @@
               </div>
 
               <!-- ════════════════════════════════════════ -->
-              <!-- 10. KEY DECISIONS                         -->
+              <!-- 10. PROJECT REVAMP                        -->
               <!-- ════════════════════════════════════════ -->
-              <div class="apple-section" id="fp-decisions">
+              <div class="apple-section" id="fp-revamp">
                 <div class="apple-reveal">
-                  <div class="apple-section-eyebrow">Key Decisions</div>
-                  <div class="apple-section-headline" style="max-width: 600px;">Three decisions that<br>shaped the outcome.</div>
-                </div>
-
-                <div class="apple-stats-grid apple-reveal" style="grid-template-columns: repeat(3, 1fr); max-width: 840px;">
-                  <div class="apple-stat-card" style="padding: 32px 24px; text-align: left;">
-                    <div class="apple-stat-value" style="font-size: 18px; letter-spacing: -0.3px; margin-bottom: 14px;">Standardize KPIs before building dashboards</div>
-                    <div class="apple-stat-label" style="font-size: 13px; line-height: 1.6;">KPI mapping exposed inconsistencies in terminology, frequency, and ownership across regions. Alignment came first — to avoid rework, misinterpretation, and eroded trust.</div>
-                  </div>
-                  <div class="apple-stat-card" style="padding: 32px 24px; text-align: left;">
-                    <div class="apple-stat-value" style="font-size: 18px; letter-spacing: -0.3px; margin-bottom: 14px;">Design for flexibility before automation</div>
-                    <div class="apple-stat-label" style="font-size: 13px; line-height: 1.6;">Automation without trust would have failed adoption. Users needed to feel in control before the system could start doing things for them. Credibility had to be earned first.</div>
-                  </div>
-                  <div class="apple-stat-card" style="padding: 32px 24px; text-align: left;">
-                    <div class="apple-stat-value" style="font-size: 18px; letter-spacing: -0.3px; margin-bottom: 14px;">Sequence delivery to build confidence</div>
-                    <div class="apple-stat-label" style="font-size: 13px; line-height: 1.6;">Governance → Planning → Intelligence. Not the other way around. Each layer earned organizational trust before the next was introduced. This reduced risk and drove adoption.</div>
+                  <div class="apple-section-eyebrow">Project Revamp</div>
+                  <div class="apple-section-headline" style="max-width: 100%;">A new direction.</div>
+                  <p class="apple-section-body" style="max-width: 100%; margin-top: 24px;">
+                    The survey responses made it clear we needed to rethink our approach. Then, in Phase 2, Novartis shared new brand guidelines. This gave us the opportunity to revamp the project—addressing what users actually needed while aligning with the updated design system.
+                  </p>
+                  <div style="text-align: center; margin-top: 48px;">
+                    <img src="./assets/case-studies/Financial Planning Platform/MarketModel2.0_Dashboard.png" alt="Market Model 2.0 Dashboard">
                   </div>
                 </div>
               </div>
 
               <!-- ════════════════════════════════════════ -->
-              <!-- 10. OUTCOMES & BUSINESS IMPACT            -->
+              <!-- 11. OUTCOMES & BUSINESS IMPACT            -->
               <!-- ════════════════════════════════════════ -->
               <div class="apple-section apple-section--dark" id="fp-outcome">
                 <div class="apple-reveal">
@@ -5476,19 +5492,18 @@
           if (fm) fm.style.display = '';
           var bc = overlay.querySelector('.finder-breadcrumb');
           var tt = overlay.querySelector('.finder-titlebar-title');
-          if (bc) bc.textContent = '/Portfolio';
-          if (tt) tt.textContent = 'Portfolio';
+          if (bc) bc.textContent = '/Selected Projects';
+          if (tt) tt.textContent = 'Selected Projects';
           var scr = openCS.querySelector('.case-study-scroll');
           if (scr) scr.scrollTop = 0;
         }
-        // If HOT folder is open, close it
+        // If HOT folder is open, keep it open (Selected Projects is the default)
+        // Don't show portfolio - just reset state
         var hfv = document.getElementById('hot-folder-view');
         if (hfv) {
-          hfv.classList.remove('active');
-          hotFolderActive = false;
+          // Keep Selected Projects open - it's the default view
+          hotFolderActive = true;
           cameFromHot = false;
-          var fm2 = overlay.querySelector('.finder-main');
-          if (fm2) fm2.style.display = '';
           // Reset sidebar
           var si = overlay.querySelectorAll('.sidebar-item');
           si.forEach(function(i){ i.classList.remove('active'); });
@@ -5576,25 +5591,17 @@
         finderMain.style.display = 'none';
         hotFolderView.classList.add('active');
         hotFolderActive = true;
-        breadcrumb.textContent = '/Portfolio / Selected Projects';
+        breadcrumb.textContent = '/Selected Projects';
         titlebarTitle.textContent = 'Selected Projects';
-        navBackBtn.classList.remove('disabled');
-        navUpBtn.classList.remove('disabled');
+        // Keep back/up buttons disabled since Selected Projects is the default view
+        navBackBtn.classList.add('disabled');
+        navUpBtn.classList.add('disabled');
       }
 
       function closeHotFolder() {
-        hotFolderView.classList.remove('active');
-        hotFolderActive = false;
-        cameFromHot = false;
-        finderMain.style.display = '';
-        breadcrumb.textContent = '/Portfolio';
-        titlebarTitle.textContent = 'Portfolio';
-        navBackBtn.classList.add('disabled');
-        navUpBtn.classList.add('disabled');
-        // Reset sidebar active to 'Selected Projects'
-        sidebarItems.forEach(function (i) { i.classList.remove('active'); });
-        var hotBtn = overlay.querySelector('.sidebar-item[data-filter="__hot__"]');
-        if (hotBtn) hotBtn.classList.add('active');
+        // Don't close - Selected Projects is the default view
+        // This function is kept for compatibility but does nothing
+        // since we don't want to show the portfolio page
       }
 
       function filterProjects(filterVal) {
@@ -5613,8 +5620,10 @@
           if (show) visible++;
         });
         countEl.textContent = visible + ' project' + (visible !== 1 ? 's' : '');
-        breadcrumb.textContent = '/Portfolio';
-        titlebarTitle.textContent = 'Portfolio';
+        // Note: filterProjects shouldn't be called since we only have Selected Projects
+        // But if called, show Selected Projects instead of Portfolio
+        breadcrumb.textContent = '/Selected Projects';
+        titlebarTitle.textContent = 'Selected Projects';
         navBackBtn.classList.add('disabled');
         navUpBtn.classList.add('disabled');
       }
@@ -5674,7 +5683,7 @@
         activeCaseStudy = csEl;
 
         // Update breadcrumb and title
-        breadcrumb.textContent = '/Portfolio / ' + cs.name;
+        breadcrumb.textContent = '/Selected Projects / ' + cs.name;
         titlebarTitle.textContent = cs.name;
 
         // Scroll to top to show hero section (use setTimeout to ensure DOM is ready)
@@ -5854,26 +5863,18 @@
           return;
         }
 
-        // Show project grid
-        finderMain.style.display = '';
-
-        // Restore breadcrumb and title
-        breadcrumb.textContent = '/Portfolio';
-        titlebarTitle.textContent = 'Portfolio';
-
-        // Disable Back and Up buttons
-        navBackBtn.classList.add('disabled');
-        navUpBtn.classList.add('disabled');
+        // Return to Selected Projects (not portfolio)
+        showHotFolder();
       }
 
-      // Back / Up buttons — close case study first, then HOT folder
+      // Back / Up buttons — close case study only (Selected Projects is default, no going back)
       navBackBtn.addEventListener('click', function () {
         if (activeCaseStudy) closeCaseStudy();
-        else if (hotFolderActive) closeHotFolder();
+        // Don't close Selected Projects - it's the default view
       });
       navUpBtn.addEventListener('click', function () {
         if (activeCaseStudy) closeCaseStudy();
-        else if (hotFolderActive) closeHotFolder();
+        // Don't close Selected Projects - it's the default view
       });
 
       // Project card click handler
