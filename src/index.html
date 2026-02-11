@@ -687,80 +687,102 @@
       box-shadow: 0 6px 20px var(--shadow);
     }
 
-    /* ===== Bottom dock ===== */
+    /* ===== Bottom dock (Apple-like glassmorphism) ===== */
     .dock-bar {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.15); /* Lighter, more transparent */
+      border: 1px solid rgba(255,255,255,0.2); /* Subtle border */
       border-radius: 22px;
       padding: 8px 16px;
-      box-shadow: 0 8px 32px var(--shadow);
-      transition: background 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2), /* Main shadow */
+                  inset 0 0 0 0.5px rgba(255,255,255,0.1); /* Inset highlight */
+      backdrop-filter: blur(20px) saturate(180%); /* Glassmorphism */
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    body.light-mode .dock-bar {
+      background: rgba(255,255,255,0.65);
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1),
+                  inset 0 0 0 0.5px rgba(255,255,255,0.4);
     }
     body.wp-has-wallpaper .dock-bar {
-      background: rgba(22,22,22,0.55);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
     }
     body.light-mode.wp-has-wallpaper .dock-bar {
       background: rgba(255,255,255,0.65);
     }
     .dock-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 11px;
-      background: var(--bg-hover);
-      border: 1px solid var(--border);
+      width: 44px; /* Slightly larger */
+      height: 44px;
+      border-radius: 12px;
+      background: transparent; /* Transparent by default */
+      border: none;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s;
-    }
-    .dock-btn {
+      transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      color: var(--text-secondary);
       position: relative;
     }
     .dock-btn:hover {
-      background: var(--bg-active);
-      transform: scale(1.12) translateY(-4px);
-      box-shadow: 0 8px 24px var(--shadow);
+      background: rgba(255,255,255,0.15); /* Subtle hover background */
+      transform: scale(1.15) translateY(-6px); /* More pronounced lift */
+      box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+    }
+    body.light-mode .dock-btn:hover {
+      background: rgba(0,0,0,0.05);
     }
     /* macOS-style tooltip */
     .dock-btn::after {
       content: attr(data-label);
       position: absolute;
-      bottom: calc(100% + 12px);
-      left: 50%;
-      transform: translateX(-50%) scale(0.9);
-      background: var(--tooltip-bg);
+      background: rgba(22,22,22,0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border-hover);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 8px;
-      padding: 5px 12px;
+      padding: 6px 14px;
       font-size: 12px;
       font-weight: 500;
-      color: var(--text-primary);
+      color: #fff;
       white-space: nowrap;
       pointer-events: none;
       opacity: 0;
-      transition: opacity 0.15s, transform 0.15s;
+      bottom: calc(100% + 14px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.95);
+      transition: opacity 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                  transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    body.light-mode .dock-btn::after {
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(0,0,0,0.1);
+      color: var(--text-primary);
     }
     /* Tooltip arrow */
     .dock-btn::before {
       content: '';
       position: absolute;
-      bottom: calc(100% + 6px);
-      left: 50%;
-      transform: translateX(-50%) scale(0.9);
       width: 10px;
       height: 10px;
-      background: var(--tooltip-bg);
-      border-right: 1px solid var(--border-hover);
-      border-bottom: 1px solid var(--border-hover);
-      rotate: 45deg;
+      background: rgba(22,22,22,0.85);
+      border-right: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-radius: 0 0 0 2px;
       pointer-events: none;
       opacity: 0;
-      transition: opacity 0.15s, transform 0.15s;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.95) rotate(45deg);
+      transition: opacity 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                  transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    body.light-mode .dock-btn::before {
+      background: rgba(255,255,255,0.9);
+      border-color: rgba(0,0,0,0.1);
     }
     .dock-btn:hover::after {
       opacity: 1;
@@ -768,7 +790,7 @@
     }
     .dock-btn:hover::before {
       opacity: 1;
-      transform: translateX(-50%) scale(1);
+      transform: translateX(-50%) scale(1) rotate(45deg);
     }
 
     /* ===== Section label ===== */
@@ -3666,6 +3688,20 @@
       .apple-stats-grid { grid-template-columns: 1fr; }
       .apple-meta-grid { grid-template-columns: 1fr; }
       #cs-novartis-finplan #fp-scale .apple-meta-grid { grid-template-columns: repeat(2, 1fr); }
+      /* Outcomes section - 6 cards responsive */
+      #cs-novartis-finplan #fp-outcome .apple-meta-grid[style*="repeat(6, 1fr)"] {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+    }
+    @media (max-width: 480px) {
+      #cs-novartis-finplan #fp-outcome .apple-meta-grid[style*="repeat(6, 1fr)"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    @media (max-width: 360px) {
+      #cs-novartis-finplan #fp-outcome .apple-meta-grid[style*="repeat(6, 1fr)"] {
+        grid-template-columns: 1fr !important;
+      }
     }
 
     /* Placeholder toast */
@@ -4587,7 +4623,7 @@
                     The survey responses made it clear we needed to rethink our approach. Then, in Phase 2, Novartis shared new brand guidelines. This gave us the opportunity to revamp the project—addressing what users actually needed while aligning with the updated design system.
                   </p>
                   <div style="text-align: center; margin-top: 48px;">
-                    <img src="./assets/case-studies/Financial Planning Platform/MarketModel2.0_Dashboard.png" alt="Market Model 2.0 Dashboard">
+                    <img src="./assets/case-studies/Financial Planning Platform/MarketModel2.0_Dashboard.png" alt="Market Model 2.0 Dashboard" style="max-width: 70%; height: auto; display: block; margin: 0 auto;">
                   </div>
                 </div>
               </div>
@@ -4595,55 +4631,85 @@
               <!-- ════════════════════════════════════════ -->
               <!-- 11. OUTCOMES & BUSINESS IMPACT            -->
               <!-- ════════════════════════════════════════ -->
-              <div class="apple-section apple-section--dark" id="fp-outcome">
+              <div class="apple-section apple-section--alt" id="fp-outcome">
                 <div class="apple-reveal">
-                  <div class="apple-section-eyebrow" style="color: #fbbf24;">Outcomes</div>
-                  <div class="apple-section-headline" style="max-width: 580px;">Before vs. After.</div>
-                  <p class="apple-section-body" style="color: rgba(255,255,255,0.55); max-width: 520px; margin-bottom: 8px;">The platform replaced fragmented Excel workflows with a collaborative, real-time planning system.</p>
+                  <div class="apple-section-eyebrow">Outcomes</div>
+                  <div class="apple-section-headline" style="max-width: 100%;">Before vs. After.</div>
+                  <p class="apple-section-body" style="max-width: 100%; margin-bottom: 48px;">
+                    The platform replaced fragmented Excel workflows with a collaborative, real-time planning system.
+                  </p>
+
+                  <!-- Impact Metrics Grid -->
+                  <div class="apple-meta-grid" style="grid-template-columns: repeat(6, 1fr); max-width: 100%; margin-bottom: 64px; gap: 0; overflow: visible;">
+                    <!-- Metric 1 - Tilt Right -->
+                    <div class="apple-meta-item" style="text-align: left; background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); padding: 32px 24px; border-radius: 16px; border: none; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3); height: 200px; display: flex; flex-direction: column; transform: rotate(3deg);">
+                      <span class="apple-meta-label" style="color: rgba(0,0,0,0.7); font-weight: 600;">Time lost on reconciliation</span>
+                      <div style="margin-top: 16px; flex: 1;">
+                        <div style="font-size: 12px; color: rgba(0,0,0,0.6); margin-bottom: 8px;">Before: <span style="color: rgba(0,0,0,0.8); font-weight: 600;">30–40%</span></div>
+                        <div style="font-size: 28px; font-weight: 700; color: #000; letter-spacing: -0.5px; line-height: 1.1;">8–12%</div>
+                        <div style="font-size: 12px; color: rgba(0,0,0,0.6); margin-top: 4px;">per planning cycle</div>
+                      </div>
+                    </div>
+
+                    <!-- Metric 2 - Tilt Left -->
+                    <div class="apple-meta-item" style="text-align: left; background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%); padding: 32px 24px; border-radius: 16px; border: none; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3); height: 200px; display: flex; flex-direction: column; transform: rotate(-3deg);">
+                      <span class="apple-meta-label" style="color: rgba(255,255,255,0.9); font-weight: 600;">Days lost per cycle</span>
+                      <div style="margin-top: 16px; flex: 1;">
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 8px;">Before: <span style="color: #fff; font-weight: 600;">3–5 days</span></div>
+                        <div style="font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.5px; line-height: 1.1;">Real-time</div>
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 4px;">alignment</div>
+                      </div>
+                    </div>
+
+                    <!-- Metric 3 - Tilt Right -->
+                    <div class="apple-meta-item" style="text-align: left; background: linear-gradient(135deg, #10b981 0%, #34d399 100%); padding: 32px 24px; border-radius: 16px; border: none; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3); height: 200px; display: flex; flex-direction: column; transform: rotate(3deg);">
+                      <span class="apple-meta-label" style="color: rgba(0,0,0,0.7); font-weight: 600;">Repetitive queries to SMEs</span>
+                      <div style="margin-top: 16px; flex: 1;">
+                        <div style="font-size: 12px; color: rgba(0,0,0,0.6); margin-bottom: 8px;">Before: <span style="color: rgba(0,0,0,0.8); font-weight: 600;">60%+</span></div>
+                        <div style="font-size: 28px; font-weight: 700; color: #000; letter-spacing: -0.5px; line-height: 1.1;">Handled</div>
+                        <div style="font-size: 12px; color: rgba(0,0,0,0.6); margin-top: 4px;">by DOST chatbot</div>
+                      </div>
+                    </div>
+
+                    <!-- Metric 4 - Tilt Left -->
+                    <div class="apple-meta-item" style="text-align: left; background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%); padding: 32px 24px; border-radius: 16px; border: none; box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3); height: 200px; display: flex; flex-direction: column; transform: rotate(-3deg);">
+                      <span class="apple-meta-label" style="color: rgba(255,255,255,0.9); font-weight: 600;">Data sources & sheets</span>
+                      <div style="margin-top: 16px; flex: 1;">
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 8px;">Before: <span style="color: #fff; font-weight: 600;">150+ sheets</span></div>
+                        <div style="font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.5px; line-height: 1.1;">4 layers</div>
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 4px;">integrated platform</div>
+                      </div>
+                    </div>
+
+                    <!-- Metric 5 - Tilt Right -->
+                    <div class="apple-meta-item" style="text-align: left; background: linear-gradient(135deg, #ef4444 0%, #f87171 100%); padding: 32px 24px; border-radius: 16px; border: none; box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3); height: 200px; display: flex; flex-direction: column; transform: rotate(3deg);">
+                      <span class="apple-meta-label" style="color: rgba(255,255,255,0.9); font-weight: 600;">Version control & audit trails</span>
+                      <div style="margin-top: 16px; flex: 1;">
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 8px;">Before: <span style="color: #fff; font-weight: 600;">Zero visibility</span></div>
+                        <div style="font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.5px; line-height: 1.1;">Full audit</div>
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 4px;">trail on SAC</div>
+                      </div>
+                    </div>
+
+                    <!-- Metric 6 - Tilt Left -->
+                    <div class="apple-meta-item" style="text-align: left; background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%); padding: 32px 24px; border-radius: 16px; border: none; box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3); height: 200px; display: flex; flex-direction: column; transform: rotate(-3deg);">
+                      <span class="apple-meta-label" style="color: rgba(0,0,0,0.7); font-weight: 600;">Self-service capability</span>
+                      <div style="margin-top: 16px; flex: 1;">
+                        <div style="font-size: 12px; color: rgba(0,0,0,0.6); margin-bottom: 8px;">Before: <span style="color: rgba(0,0,0,0.8); font-weight: 600;">Negligible</span></div>
+                        <div style="font-size: 28px; font-weight: 700; color: #000; letter-spacing: -0.5px; line-height: 1.1;">Standardized</div>
+                        <div style="font-size: 12px; color: rgba(0,0,0,0.6); margin-top: 4px;">workflows & DOST</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p class="apple-section-body apple-reveal" style="max-width: 100%; margin-top: 40px;">
+                    The platform eliminated days of manual reconciliation work. Teams shifted from getting numbers to agree to using those numbers for analysis and strategic decision-making. Subject-matter experts are no longer bottlenecks, and knowledge is now embedded in the system rather than trapped in people's heads.
+                  </p>
+
+                  <p class="apple-section-body apple-reveal" style="margin-top: 32px; color: var(--accent, #0082FF); font-weight: 600; font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase;">
+                    Live and actively used across regions.
+                  </p>
                 </div>
-
-                <!-- Before / After table -->
-                <div class="apple-comparison apple-reveal" style="max-width: 760px; border-color: rgba(255,255,255,0.1);">
-                  <div class="apple-comparison-row apple-comparison-header" style="background: rgba(255,255,255,0.04);">
-                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border: none;">Metric</div>
-                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.08);">Before (Excel)</div>
-                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.08);">After (Platform)</div>
-                  </div>
-                  <div class="apple-comparison-row" style="border-color: rgba(255,255,255,0.06);">
-                    <div class="apple-comparison-cell" style="color: #fff; border: none;">Manual consolidation</div>
-                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.06);">~1680 hrs / quarter</div>
-                    <div class="apple-comparison-cell" style="color: #fbbf24; border-color: rgba(255,255,255,0.06);">Reduced by ~80%</div>
-                  </div>
-                  <div class="apple-comparison-row" style="border-color: rgba(255,255,255,0.06);">
-                    <div class="apple-comparison-cell" style="color: #fff; border: none;">Working weeks lost</div>
-                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.06);">~10 weeks / quarter</div>
-                    <div class="apple-comparison-cell" style="color: #fbbf24; border-color: rgba(255,255,255,0.06);">Reduced to ~2 weeks</div>
-                  </div>
-                  <div class="apple-comparison-row" style="border-color: rgba(255,255,255,0.06);">
-                    <div class="apple-comparison-cell" style="color: #fff; border: none;">Collaboration</div>
-                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.06);">Fragmented & delayed</div>
-                    <div class="apple-comparison-cell" style="color: #fbbf24; border-color: rgba(255,255,255,0.06);">Real-time on SAC</div>
-                  </div>
-                  <div class="apple-comparison-row" style="border-color: rgba(255,255,255,0.06);">
-                    <div class="apple-comparison-cell" style="color: #fff; border: none;">Reporting formats</div>
-                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.06);">Inconsistent</div>
-                    <div class="apple-comparison-cell" style="color: #fbbf24; border-color: rgba(255,255,255,0.06);">Standardized globally</div>
-                  </div>
-                  <div class="apple-comparison-row" style="border: none;">
-                    <div class="apple-comparison-cell" style="color: #fff; border: none;">Forecast updates</div>
-                    <div class="apple-comparison-cell" style="color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.06);">Delayed</div>
-                    <div class="apple-comparison-cell" style="color: #fbbf24; border-color: rgba(255,255,255,0.06);">Dynamic, scenario-based</div>
-                  </div>
-                </div>
-
-                <p class="apple-section-body apple-reveal" style="margin-top: 40px; color: rgba(255,255,255,0.5); font-size: 14px; max-width: 520px;">
-                  User retention increased significantly post-revamp. Teams shifted from reconciliation to analysis and decision-making.
-                </p>
-
-                <!-- 11. STATUS -->
-                <p class="apple-section-body apple-reveal" style="margin-top: 32px; color: #fbbf24; font-weight: 600; font-size: 14px; letter-spacing: 0.5px; text-transform: uppercase;">
-                  Live and actively used across regions.
-                </p>
               </div>
 
               <!-- ════════════════════════════════════════ -->
