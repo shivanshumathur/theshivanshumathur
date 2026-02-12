@@ -3887,30 +3887,6 @@
           </button>
         </nav>
 
-        <!-- Main content: project grid -->
-        <div class="finder-main" style="display: none;">
-          <div class="project-grid" id="project-grid">
-
-            <!-- 1. Financial Planning Platform — Novartis -->
-            <button class="project-card" data-project="novartis-finplan" data-category="ai enterprise platform featured" data-company="novartis">
-              <div class="project-card-thumb" style="background: linear-gradient(135deg, #d97706 0%, #fbbf24 50%, #0e0e0e 100%);"></div>
-              <div class="project-card-body">
-                <div class="project-card-name">Financial Planning Platform</div>
-                <div class="project-card-desc">Enterprise platform replacing 150+ Excel workflows with scalable cost management, forecasting, and AI-driven support</div>
-                <div class="project-card-meta">
-                  <span class="project-card-badge badge-live">Live</span>
-                  <span class="project-card-company">Novartis · Platform</span>
-                </div>
-              </div>
-            </button>
-
-          </div><!-- end project-grid -->
-
-          <!-- Footer -->
-          <div class="finder-footer" id="project-count">10 projects</div>
-
-        </div><!-- end finder-main -->
-
         <!-- ===== HOT WORK FOLDER VIEW ===== -->
         <div class="hot-folder-view" id="hot-folder-view">
 
@@ -3938,6 +3914,16 @@
                   Read case study
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </span>
+              </div>
+            </button>
+
+            <!-- 2. Atlassian Forge -->
+            <button class="hot-card" style="cursor: default;">
+              <div class="hot-card-thumb" style="background: linear-gradient(135deg, #0052CC 0%, #2684FF 50%, #0e0e0e 100%);"></div>
+              <div class="hot-card-body">
+                <div class="hot-card-company">Atlassian · Platform</div>
+                <div class="hot-card-name">Atlassian Forge</div>
+                <p class="hot-card-desc">Platform development and integration solutions built on Atlassian's cloud development platform.</p>
               </div>
             </button>
 
@@ -5356,8 +5342,6 @@
         var openCS = overlay.querySelector('.case-study-view.active');
         if (openCS) {
           openCS.classList.remove('active');
-          var fm = overlay.querySelector('.finder-main');
-          if (fm) fm.style.display = '';
           var bc = overlay.querySelector('.finder-breadcrumb');
           var tt = overlay.querySelector('.finder-titlebar-title');
           if (bc) bc.textContent = '/Selected Projects';
@@ -5450,13 +5434,10 @@
 
       // === Sidebar filtering ===
       var sidebarItems = overlay.querySelectorAll('.sidebar-item');
-      var allCards = overlay.querySelectorAll('.project-card');
-      var countEl = document.getElementById('project-count');
 
       function showHotFolder() {
         // Close any open case study first
         if (activeCaseStudy) closeCaseStudy();
-        finderMain.style.display = 'none';
         hotFolderView.classList.add('active');
         hotFolderActive = true;
         breadcrumb.textContent = '/Selected Projects';
@@ -5473,23 +5454,8 @@
       }
 
       function filterProjects(filterVal) {
-        // If we were in the hot folder, close it first
-        if (hotFolderActive) {
-          hotFolderView.classList.remove('active');
-          hotFolderActive = false;
-          cameFromHot = false;
-          finderMain.style.display = '';
-        }
-        var visible = 0;
-        allCards.forEach(function (card) {
-          var cats = (card.getAttribute('data-category') || '').split(' ');
-          var show = (filterVal === 'all') || cats.indexOf(filterVal) !== -1;
-          card.style.display = show ? '' : 'none';
-          if (show) visible++;
-        });
-        countEl.textContent = visible + ' project' + (visible !== 1 ? 's' : '');
-        // Note: filterProjects shouldn't be called since we only have Selected Projects
-        // But if called, show Selected Projects instead of Portfolio
+        // Filtering is not needed since we only have the hot folder view
+        // This function is kept for compatibility but does nothing
         breadcrumb.textContent = '/Selected Projects';
         titlebarTitle.textContent = 'Selected Projects';
         navBackBtn.classList.add('disabled');
@@ -5518,7 +5484,6 @@
 
       // === Case study view logic ===
       var allCaseStudyViews = overlay.querySelectorAll('.case-study-view');
-      var finderMain = overlay.querySelector('.finder-main');
       var breadcrumb = overlay.querySelector('.finder-breadcrumb');
       var titlebarTitle = overlay.querySelector('.finder-titlebar-title');
       var navBackBtn = overlay.querySelectorAll('.finder-nav-btn')[1]; // Back button
@@ -5545,8 +5510,7 @@
           hotFolderActive = false;
         }
 
-        // Hide project grid, show case study (sidebar stays visible)
-        finderMain.style.display = 'none';
+        // Show case study (sidebar stays visible)
         csEl.classList.add('active');
         activeCaseStudy = csEl;
 
@@ -5745,20 +5709,7 @@
         // Don't close Selected Projects - it's the default view
       });
 
-      // Project card click handler
-      allCards.forEach(function (card) {
-        card.addEventListener('click', function () {
-          var projectId = card.getAttribute('data-project');
-          // Try to open a case study; if none exists, show toast
-          if (!openCaseStudy(projectId)) {
-            if (toastTimer) clearTimeout(toastTimer);
-            toast.classList.add('show');
-            toastTimer = setTimeout(function () {
-              toast.classList.remove('show');
-            }, 2200);
-          }
-        });
-      });
+      // Project card click handler removed - no project cards in finder-main
 
       // HOT folder card click handlers
       var hotCards = hotFolderView.querySelectorAll('.hot-card');
