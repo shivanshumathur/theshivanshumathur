@@ -1589,6 +1589,7 @@
     /* Wallpaper thumbnail definitions */
     .wp-default   { background: var(--bg); }
     .wp-1  { background: url('assets/wallpapers/wallpaper-1.png') center/cover no-repeat; }
+    .wp-2  { background: url('assets/wallpapers/Wallpaper-2.png') center/cover no-repeat; }
     .wp-9  { background: url('assets/wallpapers/wallpaper-9.png') center/cover no-repeat; }
     .wp-11 { background: url('assets/wallpapers/wallpaper-11.png') center/cover no-repeat; }
 
@@ -1605,6 +1606,7 @@
       pointer-events: none;
     }
     body.dashboard-body.wp-active-1::before  { background: url('assets/wallpapers/wallpaper-1.png') center/cover no-repeat; opacity: 1; }
+    body.dashboard-body.wp-active-2::before  { background: url('assets/wallpapers/Wallpaper-2.png') center/cover no-repeat; opacity: 1; }
     body.dashboard-body.wp-active-9::before  { background: url('assets/wallpapers/wallpaper-9.png') center/cover no-repeat; opacity: 1; }
     body.dashboard-body.wp-active-11::before { background: url('assets/wallpapers/wallpaper-11.png') center/cover no-repeat; opacity: 1; }
 
@@ -5090,13 +5092,17 @@
             </div>
             <div class="settings-section">
               <div class="wallpaper-grid" id="wallpaper-grid">
-                <button class="wallpaper-option active" data-wallpaper="default">
+                <button class="wallpaper-option" data-wallpaper="default">
                   <div class="wallpaper-thumb wp-default"></div>
                   <span class="wallpaper-label">Default</span>
                 </button>
                 <button class="wallpaper-option" data-wallpaper="1">
                   <div class="wallpaper-thumb wp-1"></div>
                   <span class="wallpaper-label">Sequoia</span>
+                </button>
+                <button class="wallpaper-option active" data-wallpaper="2">
+                  <div class="wallpaper-thumb wp-2"></div>
+                  <span class="wallpaper-label">Ambient</span>
                 </button>
                 <button class="wallpaper-option" data-wallpaper="9">
                   <div class="wallpaper-thumb wp-9"></div>
@@ -5286,7 +5292,7 @@
       var themeBtns = document.querySelectorAll('.theme-btn');
 
       /* ---------- Defaults ---------- */
-      var DEFAULTS = { hue: 210, font: 'sans', size: 1, theme: 'light', wallpaper: 'default' };
+      var DEFAULTS = { hue: 210, font: 'sans', size: 1, theme: 'light', wallpaper: '2' };
 
       /* Load saved settings from localStorage, falling back to defaults */
       function loadState() {
@@ -5302,6 +5308,13 @@
 
       var saved = loadState();
       var state = saved || { hue: DEFAULTS.hue, font: DEFAULTS.font, size: DEFAULTS.size, theme: DEFAULTS.theme, wallpaper: DEFAULTS.wallpaper };
+      
+      // Apply default wallpaper on initial load if no saved state
+      if (!saved) {
+        setTimeout(function() {
+          applyWallpaper(DEFAULTS.wallpaper);
+        }, 100);
+      }
 
       /* ---------- Helpers ---------- */
       function hslColor(h) {
@@ -5562,18 +5575,18 @@
         state.font = DEFAULTS.font;
         state.size = DEFAULTS.size;
         state.theme = DEFAULTS.theme;
-        state.wallpaper = 'default';
+        state.wallpaper = '2';
         applyAll();
-        applyWallpaper('default');
+        applyWallpaper('2');
         saveState();
       });
 
       /* ---------- Wallpaper ---------- */
       var wpGrid = document.getElementById('wallpaper-grid');
       var wpOptions = wpGrid ? wpGrid.querySelectorAll('.wallpaper-option') : [];
-      var ALL_WP_CLASSES = ['wp-active-1', 'wp-active-9', 'wp-active-11'];
+      var ALL_WP_CLASSES = ['wp-active-1', 'wp-active-2', 'wp-active-9', 'wp-active-11'];
 
-      state.wallpaper = state.wallpaper || 'default';
+      state.wallpaper = state.wallpaper || '2';
 
       function applyWallpaper(name) {
         var body = document.body;
