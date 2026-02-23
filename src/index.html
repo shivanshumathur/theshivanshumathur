@@ -3860,6 +3860,42 @@
         grid-template-columns: 1fr !important;
       }
     }
+    /* Testimonials carousel animation */
+    @keyframes scroll-testimonials {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-380px * 5 - 24px * 5));
+      }
+    }
+    .testimonials-carousel {
+      will-change: transform;
+    }
+    .testimonials-carousel:hover {
+      animation-play-state: paused;
+    }
+    /* Testimonials section responsive */
+    @media (max-width: 768px) {
+      #cs-novartis-finplan #fp-testimonials .testimonials-carousel > div[style*="flex: 0 0 380px"] {
+        flex: 0 0 320px !important;
+        min-width: 320px !important;
+      }
+      #cs-novartis-finplan #fp-testimonials [style*="padding: 32px"] {
+        padding: 24px !important;
+      }
+      #cs-novartis-finplan #fp-testimonials .testimonials-carousel {
+        animation: scroll-testimonials-mobile 50s linear infinite;
+      }
+    }
+    @keyframes scroll-testimonials-mobile {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-320px * 5 - 24px * 5));
+      }
+    }
 
     /* Placeholder toast */
     .file-toast {
@@ -4263,6 +4299,7 @@
               <button class="cs-nav-item" data-section="fp-survey">Survey Insights</button>
               <button class="cs-nav-item" data-section="fp-revamp">Revamp</button>
               <button class="cs-nav-item" data-section="fp-outcome">Impact</button>
+              <button class="cs-nav-item" data-section="fp-testimonials">Testimonials</button>
               <button class="cs-nav-item" data-section="fp-learning">Reflection</button>
             </nav>
 
@@ -4835,7 +4872,208 @@
               </div>
 
               <!-- ════════════════════════════════════════ -->
-              <!-- 12. KEY LEARNING                         -->
+              <!-- 12. TESTIMONIALS                         -->
+              <!-- ════════════════════════════════════════ -->
+              <div class="apple-section" id="fp-testimonials" style="padding-top: 100px; padding-bottom: 60px;">
+                <div class="apple-reveal">
+                  <div class="apple-section-eyebrow">Testimonials</div>
+                  <div class="apple-section-headline" style="max-width: 100%;">What stakeholders say.</div>
+                  <p class="apple-section-body" style="max-width: 100%; margin-top: 24px; margin-bottom: 48px;">
+                    Feedback from key stakeholders who worked closely on the project.
+                  </p>
+
+                  <!-- Testimonials Carousel -->
+                  <div style="overflow: hidden; width: 100%; position: relative; margin: 0 -24px; padding: 0 24px;">
+                    <div class="testimonials-carousel" style="display: flex; gap: 24px; animation: scroll-testimonials 50s linear infinite;">
+                      
+                      <!-- Testimonial Card 1 - Sameer Ganeshe -->
+                      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease; position: relative; overflow: hidden; flex: 0 0 380px; min-width: 380px;">
+                        <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1)); border-radius: 0 0 0 80px;"></div>
+                        <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
+                        <p class="apple-section-body" style="font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px; position: relative; font-style: italic;">
+                          Shivanshu demonstrated strong UX leadership on the Market Model project, balancing design execution with strategic alignment to business objectives. His proactive communication and structured planning ensured seamless cross-team collaboration and protected project timelines.<br><br>He consistently aligned UX decisions with broader business goals, clarified complex requirements early, and delivered ahead of schedule. His professionalism and foresight significantly contributed to maintaining both quality and execution velocity.
+                        </p>
+                        <div style="display: flex; align-items: center; gap: 16px; position: relative;">
+                          <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #a855f7); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 18px; flex-shrink: 0;">
+                            SG
+                          </div>
+                          <div>
+                            <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Sameer Ganeshe</div>
+                            <div style="font-size: 13px; color: var(--text-tertiary);">IT Project Manager – Market Model</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Testimonial Card 2 - Sujoy Das -->
+                      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease; position: relative; overflow: hidden; flex: 0 0 380px; min-width: 380px;">
+                        <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(59, 130, 246, 0.1)); border-radius: 0 0 0 80px;"></div>
+                        <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
+                        <p class="apple-section-body" style="font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px; position: relative; font-style: italic;">
+                          Shivanshu plays a key role in elevating the design thinking process within the team. He adapts quickly to evolving priorities while maintaining clarity and consistency in the product experience.<br><br>He deeply understands business priorities, asks sharp, relevant questions, and brings structured recommendations backed by best practices. His collaborative approach and strategic input make him a strong UX leader within the product team.
+                        </p>
+                        <div style="display: flex; align-items: center; gap: 16px; position: relative;">
+                          <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #2563eb, #3b82f6); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 18px; flex-shrink: 0;">
+                            SD
+                          </div>
+                          <div>
+                            <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Sujoy Das</div>
+                            <div style="font-size: 13px; color: var(--text-tertiary);">Product Owner – Dost</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Testimonial Card 3 - Iulian Niculescu -->
+                      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease; position: relative; overflow: hidden; flex: 0 0 380px; min-width: 380px;">
+                        <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(5, 150, 105, 0.1), rgba(16, 185, 129, 0.1)); border-radius: 0 0 0 80px;"></div>
+                        <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
+                        <p class="apple-section-body" style="font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px; position: relative; font-style: italic;">
+                          Shivanshu consistently performs at a top-tier level. He demonstrates a clear understanding of requirements and translates them into structured UX solutions efficiently.<br><br>Beyond execution, he proactively identifies opportunities for improvement and contributes suggestions that strengthen overall product quality and technical alignment.
+                        </p>
+                        <div style="display: flex; align-items: center; gap: 16px; position: relative;">
+                          <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #059669, #10b981); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 18px; flex-shrink: 0;">
+                            IN
+                          </div>
+                          <div>
+                            <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Iulian Niculescu</div>
+                            <div style="font-size: 13px; color: var(--text-tertiary);">Tech Lead – Market Model</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Testimonial Card 4 - Lois Ravel -->
+                      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease; position: relative; overflow: hidden; flex: 0 0 380px; min-width: 380px;">
+                        <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(217, 119, 6, 0.1), rgba(245, 158, 11, 0.1)); border-radius: 0 0 0 80px;"></div>
+                        <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
+                        <p class="apple-section-body" style="font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px; position: relative; font-style: italic;">
+                          Shivanshu has been instrumental in driving the success of Market Models this year. His flexibility in managing shifting priorities, combined with his strong curiosity and user-focused mindset, elevated the overall product direction.<br><br>He brings creative, forward-thinking ideas and proactively standardizes UX practices across planning tools. His focus on technical feasibility, QA best practices, and cross-functional alignment has strengthened collaboration between business and technology. His drive to continuously push the product to the next level reflects true ownership and leadership.
+                        </p>
+                        <div style="display: flex; align-items: center; gap: 16px; position: relative;">
+                          <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #d97706, #f59e0b); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 18px; flex-shrink: 0;">
+                            LR
+                          </div>
+                          <div>
+                            <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Lois Ravel</div>
+                            <div style="font-size: 13px; color: var(--text-tertiary);">Business Owner – Market Model</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Testimonial Card 5 - Jorge Lourenço de Sousa -->
+                      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease; position: relative; overflow: hidden; flex: 0 0 380px; min-width: 380px;">
+                        <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(139, 92, 246, 0.1)); border-radius: 0 0 0 80px;"></div>
+                        <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
+                        <p class="apple-section-body" style="font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px; position: relative; font-style: italic;">
+                          Shivanshu delivers high-quality UI solutions efficiently and demonstrates strong expertise in implementation standards. He communicates with clarity and professionalism, while consistently providing improvement suggestions that enhance delivery outcomes.<br><br>His execution reliability and solution-oriented mindset make him a dependable contributor in complex product environments.
+                        </p>
+                        <div style="display: flex; align-items: center; gap: 16px; position: relative;">
+                          <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #7c3aed, #8b5cf6); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 18px; flex-shrink: 0;">
+                            JS
+                          </div>
+                          <div>
+                            <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Jorge Lourenço de Sousa</div>
+                            <div style="font-size: 13px; color: var(--text-tertiary);">Tech Lead</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Duplicate cards for seamless loop -->
+                      <!-- Testimonial Card 1 - Sameer Ganeshe (Duplicate) -->
+                      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease; position: relative; overflow: hidden; flex: 0 0 380px; min-width: 380px;">
+                        <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1)); border-radius: 0 0 0 80px;"></div>
+                        <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
+                        <p class="apple-section-body" style="font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px; position: relative; font-style: italic;">
+                          Shivanshu demonstrated strong UX leadership on the Market Model project, balancing design execution with strategic alignment to business objectives. His proactive communication and structured planning ensured seamless cross-team collaboration and protected project timelines.<br><br>He consistently aligned UX decisions with broader business goals, clarified complex requirements early, and delivered ahead of schedule. His professionalism and foresight significantly contributed to maintaining both quality and execution velocity.
+                        </p>
+                        <div style="display: flex; align-items: center; gap: 16px; position: relative;">
+                          <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #a855f7); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 18px; flex-shrink: 0;">
+                            SG
+                          </div>
+                          <div>
+                            <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Sameer Ganeshe</div>
+                            <div style="font-size: 13px; color: var(--text-tertiary);">IT Project Manager – Market Model</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Testimonial Card 2 - Sujoy Das (Duplicate) -->
+                      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease; position: relative; overflow: hidden; flex: 0 0 380px; min-width: 380px;">
+                        <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(59, 130, 246, 0.1)); border-radius: 0 0 0 80px;"></div>
+                        <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
+                        <p class="apple-section-body" style="font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px; position: relative; font-style: italic;">
+                          Shivanshu plays a key role in elevating the design thinking process within the team. He adapts quickly to evolving priorities while maintaining clarity and consistency in the product experience.<br><br>He deeply understands business priorities, asks sharp, relevant questions, and brings structured recommendations backed by best practices. His collaborative approach and strategic input make him a strong UX leader within the product team.
+                        </p>
+                        <div style="display: flex; align-items: center; gap: 16px; position: relative;">
+                          <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #2563eb, #3b82f6); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 18px; flex-shrink: 0;">
+                            SD
+                          </div>
+                          <div>
+                            <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Sujoy Das</div>
+                            <div style="font-size: 13px; color: var(--text-tertiary);">Product Owner – Dost</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Testimonial Card 3 - Iulian Niculescu (Duplicate) -->
+                      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease; position: relative; overflow: hidden; flex: 0 0 380px; min-width: 380px;">
+                        <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(5, 150, 105, 0.1), rgba(16, 185, 129, 0.1)); border-radius: 0 0 0 80px;"></div>
+                        <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
+                        <p class="apple-section-body" style="font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px; position: relative; font-style: italic;">
+                          Shivanshu consistently performs at a top-tier level. He demonstrates a clear understanding of requirements and translates them into structured UX solutions efficiently.<br><br>Beyond execution, he proactively identifies opportunities for improvement and contributes suggestions that strengthen overall product quality and technical alignment.
+                        </p>
+                        <div style="display: flex; align-items: center; gap: 16px; position: relative;">
+                          <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #059669, #10b981); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 18px; flex-shrink: 0;">
+                            IN
+                          </div>
+                          <div>
+                            <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Iulian Niculescu</div>
+                            <div style="font-size: 13px; color: var(--text-tertiary);">Tech Lead – Market Model</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Testimonial Card 4 - Lois Ravel (Duplicate) -->
+                      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease; position: relative; overflow: hidden; flex: 0 0 380px; min-width: 380px;">
+                        <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(217, 119, 6, 0.1), rgba(245, 158, 11, 0.1)); border-radius: 0 0 0 80px;"></div>
+                        <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
+                        <p class="apple-section-body" style="font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px; position: relative; font-style: italic;">
+                          Shivanshu has been instrumental in driving the success of Market Models this year. His flexibility in managing shifting priorities, combined with his strong curiosity and user-focused mindset, elevated the overall product direction.<br><br>He brings creative, forward-thinking ideas and proactively standardizes UX practices across planning tools. His focus on technical feasibility, QA best practices, and cross-functional alignment has strengthened collaboration between business and technology. His drive to continuously push the product to the next level reflects true ownership and leadership.
+                        </p>
+                        <div style="display: flex; align-items: center; gap: 16px; position: relative;">
+                          <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #d97706, #f59e0b); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 18px; flex-shrink: 0;">
+                            LR
+                          </div>
+                          <div>
+                            <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Lois Ravel</div>
+                            <div style="font-size: 13px; color: var(--text-tertiary);">Business Owner – Market Model</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Testimonial Card 5 - Jorge Lourenço de Sousa (Duplicate) -->
+                      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease; position: relative; overflow: hidden; flex: 0 0 380px; min-width: 380px;">
+                        <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(139, 92, 246, 0.1)); border-radius: 0 0 0 80px;"></div>
+                        <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
+                        <p class="apple-section-body" style="font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 24px; position: relative; font-style: italic;">
+                          Shivanshu delivers high-quality UI solutions efficiently and demonstrates strong expertise in implementation standards. He communicates with clarity and professionalism, while consistently providing improvement suggestions that enhance delivery outcomes.<br><br>His execution reliability and solution-oriented mindset make him a dependable contributor in complex product environments.
+                        </p>
+                        <div style="display: flex; align-items: center; gap: 16px; position: relative;">
+                          <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #7c3aed, #8b5cf6); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 600; font-size: 18px; flex-shrink: 0;">
+                            JS
+                          </div>
+                          <div>
+                            <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Jorge Lourenço de Sousa</div>
+                            <div style="font-size: 13px; color: var(--text-tertiary);">Tech Lead</div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ════════════════════════════════════════ -->
+              <!-- 13. REFLECTION                           -->
               <!-- ════════════════════════════════════════ -->
               <div class="apple-section" id="fp-learning" style="padding-top: 100px; padding-bottom: 60px;">
                 <div class="apple-reveal">
@@ -4846,30 +5084,6 @@
                   <p class="apple-section-body" style="margin-top: 32px;">
                     Flexibility must be designed deliberately, not removed. Large-scale transformation succeeds only when governance, intelligence, and experience evolve together. This learning continues to shape how I approach platform and AI-driven products.
                   </p>
-                </div>
-              </div>
-
-              <!-- ════════════════════════════════════════ -->
-              <!-- 13. DEEP DIVE (COLLAPSIBLE)              -->
-              <!-- ════════════════════════════════════════ -->
-              <div class="apple-section" style="padding-top: 0; padding-bottom: 100px;">
-                <div class="apple-deep-dive apple-reveal" id="fp-deep-dive">
-                  <button class="apple-deep-dive-toggle" onclick="this.parentElement.classList.toggle('open');">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
-                    Deep Dive — Discovery, Research & Design Artifacts
-                  </button>
-                  <div class="apple-deep-dive-content">
-                    <ul style="padding: 0; margin: 0;">
-                      <li>Discovery interviews & workflow mapping across 10+ countries</li>
-                      <li>Persona development for planning and forecasting users</li>
-                      <li>KPI harmonization framework across brands and regions</li>
-                      <li>Research methods & surveys (34 respondents across regions)</li>
-                      <li>Card sorting & information architecture definition</li>
-                      <li>SAP Analytics Cloud (SAC) design constraints & system decisions</li>
-                      <li>AI enablement strategy & RAG implementation details (DOST)</li>
-                      <li>UI screens & interaction patterns within SAC</li>
-                    </ul>
-                  </div>
                 </div>
               </div>
 
