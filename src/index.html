@@ -1698,10 +1698,10 @@
 
     /* Wallpaper thumbnail definitions */
     .wp-default   { background: var(--bg); }
-    .wp-1  { background: url('assets/wallpapers/wallpaper-1.png') center/cover no-repeat; }
-    .wp-2  { background: url('assets/wallpapers/Wallpaper-2.png') center/cover no-repeat; }
-    .wp-9  { background: url('assets/wallpapers/wallpaper-9.png') center/cover no-repeat; }
-    .wp-11 { background: url('assets/wallpapers/wallpaper-11.png') center/cover no-repeat; }
+    .wp-1  { background: url('assets/wallpapers/wallpaper-1.jpg') center/cover no-repeat; }
+    .wp-2  { background: url('assets/wallpapers/Wallpaper-2.jpg') center/cover no-repeat; }
+    .wp-9  { background: url('assets/wallpapers/wallpaper-9.jpg') center/cover no-repeat; }
+    .wp-11 { background: url('assets/wallpapers/wallpaper-11.jpg') center/cover no-repeat; }
 
     /* Page background wallpaper layer */
     body.dashboard-body::before {
@@ -1715,10 +1715,10 @@
       transition: opacity 0.5s ease;
       pointer-events: none;
     }
-    body.dashboard-body.wp-active-1::before  { background: url('assets/wallpapers/wallpaper-1.png') center/cover no-repeat; opacity: 1; }
-    body.dashboard-body.wp-active-2::before  { background: url('assets/wallpapers/Wallpaper-2.png') center/cover no-repeat; opacity: 1; }
-    body.dashboard-body.wp-active-9::before  { background: url('assets/wallpapers/wallpaper-9.png') center/cover no-repeat; opacity: 1; }
-    body.dashboard-body.wp-active-11::before { background: url('assets/wallpapers/wallpaper-11.png') center/cover no-repeat; opacity: 1; }
+    body.dashboard-body.wp-active-1::before  { background: url('assets/wallpapers/wallpaper-1.jpg') center/cover no-repeat; opacity: 1; }
+    body.dashboard-body.wp-active-2::before  { background: url('assets/wallpapers/Wallpaper-2.jpg') center/cover no-repeat; opacity: 1; }
+    body.dashboard-body.wp-active-9::before  { background: url('assets/wallpapers/wallpaper-9.jpg') center/cover no-repeat; opacity: 1; }
+    body.dashboard-body.wp-active-11::before { background: url('assets/wallpapers/wallpaper-11.jpg') center/cover no-repeat; opacity: 1; }
 
     /* ===== Work App Overlay ===== */
     .app-overlay {
@@ -4442,7 +4442,7 @@
         <div id="profile-banner-vanta" class="profile-banner"></div>
         <div style="padding: 0 22px 22px;">
           <div class="profile-avatar">
-            <img src="./assets/logos/ShivanshuMathur.png" alt="Shivanshu Mathur">
+            <img src="./assets/logos/ShivanshuMathur.jpg" alt="Shivanshu Mathur">
           </div>
           <div style="display: flex; align-items: center; gap: 8px; margin-top: 12px;">
             <h1 style="font-size: 18px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.3px;">Shivanshu Mathur</h1>
@@ -4609,9 +4609,6 @@
         <button class="finder-nav-btn disabled" title="Forward">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
         </button>
-        <button class="finder-nav-btn disabled" title="Up">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>
-        </button>
         <span class="finder-breadcrumb">/Selected Projects</span>
       </div>
 
@@ -4646,7 +4643,7 @@
             <!-- 1. Enterprise Financial Planning & Forecasting -->
             <button class="hot-card" data-project="novartis-finplan">
               <div class="hot-card-thumb">
-                <img src="./assets/projects/DigitalFinance.png" alt="Enterprise Financial Planning & Forecasting">
+                <img src="./assets/projects/DigitalFinance.jpg" alt="Enterprise Financial Planning & Forecasting" loading="lazy">
               </div>
               <div class="hot-card-body">
                 <img src="./assets/logos/NOVARTIS-filled.svg" alt="Novartis" style="height: 18px; width: auto; margin-bottom: 16px; display: block; align-self: flex-start;">
@@ -4672,7 +4669,7 @@
             <!-- 2. Atlassian Forge -->
             <button class="hot-card" style="cursor: default;">
               <div class="hot-card-thumb">
-                <img src="./assets/projects/Forge.png" alt="Atlassian Forge">
+                <img src="./assets/projects/Forge.jpg" alt="Atlassian Forge" loading="lazy">
               </div>
               <div class="hot-card-body">
                 <img src="./assets/logos/ATLASSIAN-filled.svg" alt="Atlassian" style="height: 18px; width: auto; margin-bottom: 16px; display: block; align-self: flex-start;">
@@ -4785,7 +4782,7 @@
                     </p>
                   </div>
                   <div class="apple-feature-img">
-                    <img src="./assets/case-studies/Financial Planning Platform/Mandate-novartis.jpeg" alt="Novartis Financial Planning Mandate" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                    <img src="./assets/case-studies/Financial Planning Platform/Mandate-Novartis.jpeg" alt="Novartis Financial Planning Mandate" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" loading="lazy">
                   </div>
                 </div>
               </div>
@@ -4832,7 +4829,7 @@
               <div class="apple-section" id="fp-problem">
                 <div class="apple-feature apple-feature--reverse apple-reveal">
                   <div class="apple-feature-img">
-                    <img src="./assets/case-studies/Financial Planning Platform/Excel.png" alt="Excel Spreadsheets" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                    <img src="./assets/case-studies/Financial Planning Platform/Excel.png" alt="Excel Spreadsheets" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);" loading="lazy">
                   </div>
                   <div class="apple-feature-text">
                     <div class="apple-section-eyebrow">The Real Problem</div>
@@ -4879,7 +4876,7 @@
                   </div>
                 </div>
                 <div class="apple-img-full apple-reveal" style="max-width: 100%; margin-top: 48px;">
-                  <img src="./assets/case-studies/Financial Planning Platform/Strategy.png" alt="Strategy Design Plan" style="width: 100%; height: auto;">
+                  <img src="./assets/case-studies/Financial Planning Platform/Strategy.png" alt="Strategy Design Plan" style="width: 100%; height: auto;" loading="lazy">
                 </div>
                 <p class="apple-section-body apple-reveal" style="margin-top: 16px; text-align: center; color: var(--text-muted); font-size: 14px; max-width: 100%;">
                   Design plan shared with PO for next steps
@@ -4902,7 +4899,7 @@
                     </p>
                   </div>
                   <div class="apple-feature-img">
-                    <img src="./assets/case-studies/Financial Planning Platform/User Journey.png" alt="User Journey" class="strategy-journey-img">
+                    <img src="./assets/case-studies/Financial Planning Platform/User Journey.png" alt="User Journey" class="strategy-journey-img" loading="lazy">
                   </div>
                 </div>
               </div>
@@ -4929,7 +4926,7 @@
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>
                     </div>
                     <div class="apple-role-card-title">Problem Framing</div>
-                    <img src="./assets/case-studies/Financial Planning Platform/Problem Framing.png" alt="Problem Framing" class="apple-role-card-image">
+                    <img src="./assets/case-studies/Financial Planning Platform/Problem Framing.png" alt="Problem Framing" class="apple-role-card-image" loading="lazy">
                     <div class="apple-role-card-desc">Worked with finance and product leaders to reframe the challenge — shifting from "fix Excel" to "build a trusted system" that teams actually want to use.</div>
                   </div>
                   <div class="apple-role-card">
@@ -4937,7 +4934,7 @@
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z"/></svg>
                     </div>
                     <div class="apple-role-card-title">Platform Strategy & Sequencing</div>
-                    <img src="./assets/case-studies/Financial Planning Platform/Platform Strategy & Sequencing.png" alt="Platform Strategy & Sequencing" class="apple-role-card-image">
+                    <img src="./assets/case-studies/Financial Planning Platform/Platform Strategy & Sequencing.png" alt="Platform Strategy & Sequencing" class="apple-role-card-image" loading="lazy">
                     <div class="apple-role-card-desc">Designed a layered approach that built trust incrementally — starting with governance, then planning, then intelligence. This sequencing reduced risk and drove adoption.</div>
                   </div>
                   <div class="apple-role-card">
@@ -4945,7 +4942,7 @@
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
                     </div>
                     <div class="apple-role-card-title">Persona Development</div>
-                    <img src="./assets/case-studies/Financial Planning Platform/Persona.png" alt="Persona Development" class="apple-role-card-image">
+                    <img src="./assets/case-studies/Financial Planning Platform/Persona.png" alt="Persona Development" class="apple-role-card-image" loading="lazy">
                     <div class="apple-role-card-desc">Built detailed personas for planning and forecasting users across different regions and organizational levels to guide design decisions.</div>
                   </div>
                   <div class="apple-role-card">
@@ -4953,7 +4950,7 @@
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
                     </div>
                     <div class="apple-role-card-title">KPI Mapping & Standardization</div>
-                    <img src="./assets/case-studies/Financial Planning Platform/KPI Mapping.png" alt="KPI Mapping & Standardization" class="apple-role-card-image">
+                    <img src="./assets/case-studies/Financial Planning Platform/KPI Mapping.png" alt="KPI Mapping & Standardization" class="apple-role-card-image" loading="lazy">
                     <div class="apple-role-card-desc">Mapped and standardized KPIs across brands and countries, resolving inconsistencies in how teams defined, measured, and owned metrics.</div>
                   </div>
                     <div class="apple-role-card">
@@ -4961,7 +4958,7 @@
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
                       </div>
                       <div class="apple-role-card-title">Tool Integration & Architecture</div>
-                      <img src="./assets/case-studies/Financial Planning Platform/Tool Integration.png" alt="Tool Integration & Architecture" class="apple-role-card-image">
+                      <img src="./assets/case-studies/Financial Planning Platform/Tool Integration.png" alt="Tool Integration & Architecture" class="apple-role-card-image" loading="lazy">
                       <div class="apple-role-card-desc">Defined how Market Model connects with existing data sources like 1DL, Sofia, and Cost Insights. Mapped its role in the broader digital finance workflow with both business and technical teams.</div>
                     </div>
                     <div class="apple-role-card">
@@ -4969,7 +4966,7 @@
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
                       </div>
                       <div class="apple-role-card-title">Card Sorting</div>
-                      <img src="./assets/case-studies/Financial Planning Platform/Card Sorting.png" alt="Card Sorting" class="apple-role-card-image">
+                      <img src="./assets/case-studies/Financial Planning Platform/Card Sorting.png" alt="Card Sorting" class="apple-role-card-image" loading="lazy">
                       <div class="apple-role-card-desc">When subcategories lacked clear KPI definitions, I ran closed card sorting to improve navigation. This helped users discover and understand KPIs within each category more easily.</div>
                     </div>
                     <div class="apple-role-card">
@@ -4977,7 +4974,7 @@
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
                       </div>
                       <div class="apple-role-card-title">User Flow Design</div>
-                      <img src="./assets/case-studies/Financial Planning Platform/User Flow.png" alt="User Flow Design" class="apple-role-card-image">
+                      <img src="./assets/case-studies/Financial Planning Platform/User Flow.png" alt="User Flow Design" class="apple-role-card-image" loading="lazy">
                       <div class="apple-role-card-desc">Created user flows for targets and scope to clarify processes and improve decision-making. This made the experience more intuitive and efficient for users.</div>
                     </div>
                     <div class="apple-role-card">
@@ -4985,7 +4982,7 @@
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h11.25c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/></svg>
                       </div>
                       <div class="apple-role-card-title">Wireframing & Dot Voting</div>
-                      <img src="./assets/case-studies/Financial Planning Platform/Wireframing.png" alt="Wireframing & Dot Voting" class="apple-role-card-image">
+                      <img src="./assets/case-studies/Financial Planning Platform/Wireframing.png" alt="Wireframing & Dot Voting" class="apple-role-card-image" loading="lazy">
                       <div class="apple-role-card-desc">Started with dot voting sessions to prioritize graph layouts. Used a complex KPI as the foundation, then scaled the approach to 10 additional KPIs.</div>
                     </div>
                   <div class="apple-role-card">
@@ -4993,7 +4990,7 @@
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0c0 1.649-.625 3.149-1.65 4.243C2.625 17.351 4.125 18 5.75 18s3.125-.649 4.15-1.757A7.5 7.5 0 014.5 12zm15 0c0 1.649-.625 3.149-1.65 4.243C17.625 17.351 19.125 18 20.75 18s3.125-.649 4.15-1.757A7.5 7.5 0 0019.5 12z"/></svg>
                     </div>
                     <div class="apple-role-card-title">Design System</div>
-                    <img src="./assets/case-studies/Financial Planning Platform/Design System.png" alt="Design System" class="apple-role-card-image">
+                    <img src="./assets/case-studies/Financial Planning Platform/Design System.png" alt="Design System" class="apple-role-card-image" loading="lazy">
                     <div class="apple-role-card-desc">Adopted SAP Analytics Cloud's native design system to ensure consistency. This streamlined handoffs, improved scalability, and kept us focused on solving user problems rather than building components.</div>
                   </div>
                   <div class="apple-role-card">
@@ -5001,7 +4998,7 @@
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
                     </div>
                     <div class="apple-role-card-title">Design and Prototyping</div>
-                    <img src="./assets/case-studies/Financial Planning Platform/Experience Design.png" alt="Design and Prototyping" class="apple-role-card-image">
+                    <img src="./assets/case-studies/Financial Planning Platform/Experience Design.png" alt="Design and Prototyping" class="apple-role-card-image" loading="lazy">
                     <div class="apple-role-card-desc">Designed in Figma based on SAP's limitations and technical feasibility. This ensured our designs could be implemented within the platform's constraints while maintaining a great user experience.</div>
                   </div>
                   <div class="apple-role-card">
@@ -5009,7 +5006,7 @@
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg>
                     </div>
                     <div class="apple-role-card-title">Cross-functional Alignment</div>
-                    <img src="./assets/case-studies/Financial Planning Platform/Crose Functional.png" alt="Cross-functional Alignment" class="apple-role-card-image">
+                    <img src="./assets/case-studies/Financial Planning Platform/Crose Functional.png" alt="Cross-functional Alignment" class="apple-role-card-image" loading="lazy">
                     <div class="apple-role-card-desc">Aligned Product, Engineering, AI, and Finance teams across India, Spain, and Switzerland throughout the initiative. This cross-functional collaboration was essential for success.</div>
                   </div>
                   </div>
@@ -5034,7 +5031,7 @@
                     <div class="platform-expandable-item active" data-platform="cfcc">
                       <button class="platform-expandable-header">
                         <div class="platform-expandable-title-wrapper">
-                          <img src="./assets/case-studies/Financial Planning Platform/CFCC.svg" alt="CF/CC" class="platform-expandable-icon">
+                          <img src="./assets/case-studies/Financial Planning Platform/CFCC.svg" alt="CF/CC" class="platform-expandable-icon" loading="lazy">
                           <span class="platform-expandable-title">CF / CC</span>
                     </div>
                         <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -5044,7 +5041,7 @@
                       <div class="platform-expandable-content">
                         <p>Standardized cost data to build trust and governance. Centralized corporate and central costs with consistent structures and reliable reporting.</p>
                         <div class="platform-expandable-image-mobile">
-                          <img src="./assets/case-studies/Financial Planning Platform/CFCC_Dashboard.png" alt="CF/CC Dashboard">
+                          <img src="./assets/case-studies/Financial Planning Platform/CFCC_Dashboard.png" alt="CF/CC Dashboard" loading="lazy">
                         </div>
                       </div>
                   </div>
@@ -5053,7 +5050,7 @@
                     <div class="platform-expandable-item" data-platform="marketmodel">
                       <button class="platform-expandable-header">
                         <div class="platform-expandable-title-wrapper">
-                          <img src="./assets/case-studies/Financial Planning Platform/MarketModel_Logo.svg" alt="Market Model" class="platform-expandable-icon">
+                          <img src="./assets/case-studies/Financial Planning Platform/MarketModel_Logo.svg" alt="Market Model" class="platform-expandable-icon" loading="lazy">
                           <span class="platform-expandable-title">Market Model</span>
                     </div>
                         <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -5063,7 +5060,7 @@
                       <div class="platform-expandable-content">
                         <p>Forward-looking planning and forecasting capabilities. Demand and pricing scenarios with revenue impact modeling and strategic planning.</p>
                         <div class="platform-expandable-image-mobile">
-                          <img src="./assets/case-studies/Financial Planning Platform/MarketModel_Dashboard.png" alt="Market Model Dashboard">
+                          <img src="./assets/case-studies/Financial Planning Platform/MarketModel_Dashboard.png" alt="Market Model Dashboard" loading="lazy">
                         </div>
                       </div>
                   </div>
@@ -5072,7 +5069,7 @@
                     <div class="platform-expandable-item" data-platform="costinsights">
                       <button class="platform-expandable-header">
                         <div class="platform-expandable-title-wrapper">
-                          <img src="./assets/case-studies/Financial Planning Platform/CostInsights_Logo.svg" alt="Cost Insights" class="platform-expandable-icon">
+                          <img src="./assets/case-studies/Financial Planning Platform/CostInsights_Logo.svg" alt="Cost Insights" class="platform-expandable-icon" loading="lazy">
                           <span class="platform-expandable-title">Cost Insights</span>
                     </div>
                         <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -5082,7 +5079,7 @@
                       <div class="platform-expandable-content">
                         <p>Intelligence and optimization for cost management. Granular cost views with optimization opportunities and predictive signals.</p>
                         <div class="platform-expandable-image-mobile">
-                          <img src="./assets/case-studies/Financial Planning Platform/CostInsight_Dashboard.png" alt="Cost Insights Dashboard">
+                          <img src="./assets/case-studies/Financial Planning Platform/CostInsight_Dashboard.png" alt="Cost Insights Dashboard" loading="lazy">
                         </div>
                       </div>
                   </div>
@@ -5091,7 +5088,7 @@
                     <div class="platform-expandable-item" data-platform="dost">
                       <button class="platform-expandable-header">
                         <div class="platform-expandable-title-wrapper">
-                          <img src="./assets/case-studies/Financial Planning Platform/Dost_Logo.svg" alt="DOST" class="platform-expandable-icon">
+                          <img src="./assets/case-studies/Financial Planning Platform/Dost_Logo.svg" alt="DOST" class="platform-expandable-icon" loading="lazy">
                           <span class="platform-expandable-title">DOST</span>
                     </div>
                         <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -5101,7 +5098,7 @@
                       <div class="platform-expandable-content">
                         <p>RAG-based chatbot reducing support dependency. Answers repetitive finance and tool-related queries with contextual guidance using documentation, dashboards, and definitions.</p>
                         <div class="platform-expandable-image-mobile">
-                          <img src="./assets/case-studies/Financial Planning Platform/Dost_Dashboard.png" alt="DOST Dashboard">
+                          <img src="./assets/case-studies/Financial Planning Platform/Dost_Dashboard.png" alt="DOST Dashboard" loading="lazy">
                         </div>
                       </div>
                     </div>
@@ -5109,16 +5106,16 @@
 
                   <div class="platform-device-container">
                     <div class="platform-device-image active" data-platform="cfcc">
-                      <img src="./assets/case-studies/Financial Planning Platform/CFCC_Dashboard.png" alt="CF/CC Dashboard">
+                      <img src="./assets/case-studies/Financial Planning Platform/CFCC_Dashboard.png" alt="CF/CC Dashboard" loading="lazy">
                     </div>
                     <div class="platform-device-image" data-platform="marketmodel">
-                      <img src="./assets/case-studies/Financial Planning Platform/MarketModel_Dashboard.png" alt="Market Model Dashboard">
+                      <img src="./assets/case-studies/Financial Planning Platform/MarketModel_Dashboard.png" alt="Market Model Dashboard" loading="lazy">
                     </div>
                     <div class="platform-device-image" data-platform="costinsights">
-                      <img src="./assets/case-studies/Financial Planning Platform/CostInsight_Dashboard.png" alt="Cost Insights Dashboard">
+                      <img src="./assets/case-studies/Financial Planning Platform/CostInsight_Dashboard.png" alt="Cost Insights Dashboard" loading="lazy">
                     </div>
                     <div class="platform-device-image" data-platform="dost">
-                      <img src="./assets/case-studies/Financial Planning Platform/Dost_Dashboard.png" alt="DOST Dashboard">
+                      <img src="./assets/case-studies/Financial Planning Platform/Dost_Dashboard.png" alt="DOST Dashboard" loading="lazy">
                     </div>
                   </div>
                 </div>
@@ -5251,7 +5248,7 @@
                     The survey responses made it clear we needed to rethink our approach. Then, in Phase 2, Novartis shared new brand guidelines. This gave us the opportunity to revamp the project—addressing what users actually needed while aligning with the updated design system.
                   </p>
                   <div style="text-align: center; margin-top: 48px;">
-                    <img src="./assets/case-studies/Financial Planning Platform/MarketModel2.0_Dashboard.png" alt="Market Model 2.0 Dashboard" style="max-width: 70%; height: auto; display: block; margin: 0 auto;">
+                    <img src="./assets/case-studies/Financial Planning Platform/MarketModel2.0_Dashboard.png" alt="Market Model 2.0 Dashboard" style="max-width: 70%; height: auto; display: block; margin: 0 auto;" loading="lazy">
                   </div>
                 </div>
               </div>
@@ -5400,7 +5397,7 @@
                         <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1)); border-radius: 0 0 0 80px;"></div>
                         <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
                         <div style="display: flex; align-items: center; gap: 16px; position: relative; margin-bottom: 24px;">
-                          <img src="./assets/testimonial-images/Sameer-Novartis.png" alt="Sameer Ganeshe" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;">
+                          <img src="./assets/testimonial-images/Sameer-Novartis.png" alt="Sameer Ganeshe" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;" loading="lazy">
                           <div>
                             <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Sameer Ganeshe</div>
                             <div style="font-size: 13px; color: var(--text-tertiary);">Sr. Manager, Market Model</div>
@@ -5452,7 +5449,7 @@
                         <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(217, 119, 6, 0.1), rgba(245, 158, 11, 0.1)); border-radius: 0 0 0 80px;"></div>
                         <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
                         <div style="display: flex; align-items: center; gap: 16px; position: relative; margin-bottom: 24px;">
-                          <img src="./assets/testimonial-images/Lois-Novartis.png" alt="Lois Ravel" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;">
+                          <img src="./assets/testimonial-images/Lois-Novartis.png" alt="Lois Ravel" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;" loading="lazy">
                           <div>
                             <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Lois Ravel</div>
                             <div style="font-size: 13px; color: var(--text-tertiary);">Sr. Product Manager, Market Model</div>
@@ -5486,7 +5483,7 @@
                         <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1)); border-radius: 0 0 0 80px;"></div>
                         <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
                         <div style="display: flex; align-items: center; gap: 16px; position: relative; margin-bottom: 24px;">
-                          <img src="./assets/testimonial-images/Sameer-Novartis.png" alt="Sameer Ganeshe" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;">
+                          <img src="./assets/testimonial-images/Sameer-Novartis.png" alt="Sameer Ganeshe" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;" loading="lazy">
                           <div>
                             <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Sameer Ganeshe</div>
                             <div style="font-size: 13px; color: var(--text-tertiary);">Sr. Manager, Market Model</div>
@@ -5535,7 +5532,7 @@
                         <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: linear-gradient(135deg, rgba(217, 119, 6, 0.1), rgba(245, 158, 11, 0.1)); border-radius: 0 0 0 80px;"></div>
                         <div style="font-size: 48px; line-height: 1; color: var(--text-muted); margin-bottom: 20px; position: relative;">"</div>
                         <div style="display: flex; align-items: center; gap: 16px; position: relative; margin-bottom: 24px;">
-                          <img src="./assets/testimonial-images/Lois-Novartis.png" alt="Lois Ravel" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;">
+                          <img src="./assets/testimonial-images/Lois-Novartis.png" alt="Lois Ravel" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;" loading="lazy">
                           <div>
                             <div style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Lois Ravel</div>
                             <div style="font-size: 13px; color: var(--text-tertiary);">Sr. Product Manager, Market Model</div>
@@ -6886,9 +6883,8 @@
         hotFolderActive = true;
         breadcrumb.textContent = '/Selected Projects';
         titlebarTitle.textContent = 'Selected Projects';
-        // Keep back/up buttons disabled since Selected Projects is the default view
+        // Keep back button disabled since Selected Projects is the default view
         navBackBtn.classList.add('disabled');
-        navUpBtn.classList.add('disabled');
       }
 
       function closeHotFolder() {
@@ -6903,7 +6899,6 @@
         breadcrumb.textContent = '/Selected Projects';
         titlebarTitle.textContent = 'Selected Projects';
         navBackBtn.classList.add('disabled');
-        navUpBtn.classList.add('disabled');
       }
 
       sidebarItems.forEach(function (item) {
@@ -6931,7 +6926,6 @@
       var breadcrumb = overlay.querySelector('.finder-breadcrumb');
       var titlebarTitle = overlay.querySelector('.finder-titlebar-title');
       var navBackBtn = overlay.querySelectorAll('.finder-nav-btn')[1]; // Back button
-      var navUpBtn = overlay.querySelectorAll('.finder-nav-btn')[3]; // Up button
       var activeCaseStudy = null;
 
       // Map of project IDs to case study element IDs and display names
@@ -6967,9 +6961,8 @@
           csEl.scrollTop = 0;
         }, 10);
 
-        // Enable Back and Up buttons
+        // Enable Back button
         navBackBtn.classList.remove('disabled');
-        navUpBtn.classList.remove('disabled');
 
         // --- Set up sidebar nav click-to-scroll + scroll spy ---
         var csSidebar = csEl.querySelector('.cs-sidebar');
@@ -7145,10 +7138,6 @@
 
       // Back / Up buttons — close case study only (Selected Projects is default, no going back)
       navBackBtn.addEventListener('click', function () {
-        if (activeCaseStudy) closeCaseStudy();
-        // Don't close Selected Projects - it's the default view
-      });
-      navUpBtn.addEventListener('click', function () {
         if (activeCaseStudy) closeCaseStudy();
         // Don't close Selected Projects - it's the default view
       });
