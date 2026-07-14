@@ -4495,19 +4495,33 @@
       }
     }
 
-    /* DX funnel-leak diagram (Real Problem) */
-    #cs-forge-volt #fv-problem .apple-feature-img {
-      flex: 0 0 auto;
-      width: 46%;
-      max-width: 480px;
-      aspect-ratio: auto;
-      background: transparent;
-      border: none;
-      border-radius: 0;
-      display: block;
-      align-self: center;
+    /* Problem: full-width copy, then chart + archetypes ~1:1 */
+    #cs-forge-volt #fv-problem .fv-problem-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: stretch;
+      margin-top: 36px;
+      width: 100%;
     }
-    .fv-funnel { display: flex; flex-direction: column; width: 100%; }
+    #cs-forge-volt #fv-problem .fv-funnel-wrap {
+      margin-top: 0;
+      width: 100%;
+      min-width: 0;
+      display: flex;
+    }
+    .fv-funnel {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 18px;
+      box-sizing: border-box;
+      justify-content: space-between;
+    }
     .fv-funnel-head {
       display: flex;
       justify-content: space-between;
@@ -4518,9 +4532,9 @@
     .fv-funnel-name { font-size: 13px; color: var(--text-secondary); }
     .fv-funnel-pct { font-size: 14px; font-weight: 700; color: var(--text-primary); }
     .fv-funnel-track {
-      height: 30px;
+      height: 26px;
       border-radius: 8px;
-      background: var(--bg-active);
+      background: #F4F5F7;
       overflow: hidden;
     }
     .fv-funnel-fill {
@@ -4537,7 +4551,7 @@
       align-items: center;
       gap: 8px;
       margin-left: 8px;
-      padding: 9px 0 13px 14px;
+      padding: 7px 0 10px 14px;
       border-left: 2px dashed var(--border-hover);
       font-size: 12px;
       color: var(--text-tertiary);
@@ -4546,80 +4560,143 @@
     .fv-funnel-leak strong { color: #C9372C; font-weight: 700; }
     .fv-funnel-leak svg { color: #C9372C; opacity: 0.85; flex-shrink: 0; }
     .fv-funnel-foot {
-      margin-top: 16px;
-      padding-top: 14px;
+      margin-top: 12px;
+      padding-top: 12px;
       border-top: 1px solid var(--border-subtle);
       font-size: 12px;
       color: var(--text-tertiary);
       line-height: 1.5;
     }
-    @media (max-width: 768px) {
-      #cs-forge-volt #fv-problem .apple-feature-img { width: 100%; max-width: 100%; }
-    }
 
-    /* Archetypes: data-first, text-only, left-aligned cards */
-    #cs-forge-volt .fv-arch-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 48px;
-    }
-    .fv-arch-card {
+    /* Archetypes: one compact row-card each, matching funnel height */
+    #cs-forge-volt #fv-problem .fv-arch-block {
+      margin-top: 0;
+      min-width: 0;
       display: flex;
       flex-direction: column;
-      padding: 24px;
+      height: 100%;
+    }
+    #cs-forge-volt #fv-problem .fv-arch-subhead {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+    #cs-forge-volt .fv-arch-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 0;
+      flex: 1;
+    }
+    .fv-arch-card {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 14px;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 14px;
       text-align: left;
+      min-height: 0;
     }
     .fv-arch-figure {
-      width: 100%;
-      height: 176px;
-      border-radius: 12px;
-      background: var(--bg-active);
-      border: 1px solid var(--border-subtle);
+      width: 72px;
+      background: transparent;
+      border: none;
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      overflow: hidden;
-      margin-bottom: 20px;
+      overflow: visible;
+      margin: 0;
+      height: auto;
     }
-    .fv-arch-figure img { height: 94%; width: auto; display: block; }
+    .fv-arch-figure img {
+      width: 100%;
+      height: auto;
+      max-height: 72px;
+      object-fit: contain;
+      display: block;
+    }
+    .fv-arch-body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .fv-arch-identity {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 10px;
+      min-width: 0;
+    }
     .fv-arch-share {
-      align-self: flex-start;
       font-size: 12px;
       font-weight: 700;
       color: #2684FF;
       background: rgba(38, 132, 255, 0.12);
-      padding: 4px 11px;
+      padding: 3px 9px;
       border-radius: 999px;
-      margin-bottom: 12px;
+      margin: 0;
+      line-height: 1.3;
     }
     .fv-arch-name {
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--text-primary);
       letter-spacing: -0.3px;
-      margin-bottom: 12px;
+      margin: 0;
+      line-height: 1.25;
     }
     .fv-arch-behavior {
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: 13px;
+      line-height: 1.45;
       color: var(--text-secondary);
-      margin-bottom: 18px;
+      margin: 0;
     }
     .fv-arch-blocked {
-      margin-top: auto;
-      padding-top: 16px;
-      border-top: 1px solid var(--border-subtle);
-      font-size: 13px;
-      line-height: 1.6;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+    .fv-arch-blocked-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
       color: var(--text-tertiary);
     }
-    .fv-arch-blocked strong { color: var(--text-secondary); font-weight: 600; }
+    .fv-arch-tag {
+      font-size: 12px;
+      font-weight: 600;
+      color: #BF2600;
+      background: #FFEBE6;
+      border: 1px solid rgba(191, 38, 0, 0.18);
+      padding: 3px 9px;
+      border-radius: 999px;
+      line-height: 1.3;
+    }
+    @media (max-width: 900px) {
+      #cs-forge-volt #fv-problem .fv-problem-split {
+        grid-template-columns: 1fr;
+      }
+    }
     @media (max-width: 768px) {
-      #cs-forge-volt .fv-arch-grid { grid-template-columns: 1fr; }
+      .fv-arch-card {
+        grid-template-columns: 56px 1fr;
+        gap: 12px;
+      }
+      .fv-arch-figure { width: 56px; }
+      .fv-arch-figure img { max-height: 56px; }
     }
 
     /* Approach: full-width research process diagram */
@@ -4627,8 +4704,8 @@
       max-width: 100%;
       aspect-ratio: auto;
       margin-top: 44px;
-      overflow: hidden;
-      background: #ffffff;
+      overflow: visible;
+      background: transparent;
       border: none;
       border-radius: 0;
     }
@@ -4636,6 +4713,10 @@
       width: 100%;
       height: auto;
       display: block;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      box-sizing: border-box;
     }
     #cs-forge-volt #fv-approach .forge-img-caption {
       margin-top: 16px;
@@ -7129,7 +7210,6 @@
               <button class="cs-nav-item" data-section="fv-approach">Approach</button>
               <button class="cs-nav-item" data-section="fv-scale">Scale</button>
               <button class="cs-nav-item" data-section="fv-problem">Problem</button>
-              <button class="cs-nav-item" data-section="fv-archetypes">Archetypes</button>
               <button class="cs-nav-item" data-section="fv-objectives">Objectives</button>
               <button class="cs-nav-item" data-section="fv-interviews">Interviews</button>
               <button class="cs-nav-item" data-section="fv-synthesis">Synthesis</button>
@@ -7153,13 +7233,10 @@
                     <div class="apple-section-eyebrow">Mandate</div>
                     <div class="apple-section-headline" style="font-size: 36px; letter-spacing: -1.2px; max-width: 100%; margin-bottom: 24px;">A platform nobody<br>was choosing</div>
                     <p class="apple-section-body" style="margin-bottom: 16px;">
-                      I was brought in to help shape a public-facing developer site for Forge, something polished and credible enough to take live externally. Before designing anything, I asked a simpler question: <strong>how is it being used internally today?</strong>
-                    </p>
-                    <p class="apple-section-body" style="margin-bottom: 16px;">
-                      Digging into usage data and talking to the platform's own founding team gave an answer nobody expected. <strong>Internal adoption was effectively zero.</strong> Even engineers on adjacent teams weren't aware Forge existed, let alone using it.
+                      I was given the task to shape a public developer site for Forge. Before designing anything, <strong>I asked how it was used inside Atlassian today.</strong>
                     </p>
                     <p class="apple-section-body">
-                      That changed the brief entirely. Building a polished public website for a platform nobody inside the company trusted yet would only make the gap more visible. I was brought in to answer a more precise question first: is this an awareness problem, an education problem or a product problem, and where exactly does the funnel break?
+                      Usage data and talks with the founding team showed the same thing: <strong>internal adoption was effectively zero.</strong> Even engineers on adjacent teams didn't know Forge existed. So the brief changed. Before building a public site, we needed to know: is this an awareness, education, or product problem, and where does the funnel break?
                     </p>
                   </div>
                   <div class="apple-feature-img">
@@ -7231,114 +7308,124 @@
               <!-- 4. THE REAL PROBLEM                      -->
               <!-- ════════════════════════════════════════ -->
               <div class="apple-section apple-section--alt" id="fv-problem">
-                <div class="apple-feature apple-reveal">
-                  <div class="apple-feature-text">
-                    <div class="apple-section-eyebrow">The Real Problem</div>
-                    <div class="apple-section-headline" style="font-size: 30px; letter-spacing: -1px; max-width: 100%; margin-bottom: 24px;">Not a doc problem.<br>Three problems wearing one name.</div>
-                    <p class="apple-section-body" style="margin-bottom: 16px;">
-                      The instinct was to treat this as a content gap, better docs, problem solved. The data said otherwise. Teams split into three distinct groups: <strong>54%</strong> had never heard of Forge, <strong>31%</strong> knew it existed but couldn't say what it gave them, and <strong>15%</strong> had tried it and hit a wall with no way to get unstuck.
-                    </p>
-                    <p class="apple-section-body" style="margin-bottom: 16px;">
-                      Those aren't variations of one problem, they're three different funnels needing three different fixes. Better documentation only helps the 15% who already tried. It does nothing for the 54% who never knew Forge was an option.
-                    </p>
-                    <p class="apple-section-body">
-                      Underneath all three sat a quieter issue: documentation lived across <strong>six scattered sources</strong>, with no single trusted front door. Even developers who knew Forge existed had nowhere reliable to look.
-                    </p>
-                  </div>
-                  <div class="apple-feature-img">
-                    <div class="fv-funnel" role="img" aria-label="Developer adoption funnel showing where teams leaked out. 100 percent of frontend engineers entered. 54 percent never heard Forge existed. 46 percent were aware of it. 31 percent could not articulate its value. 15 percent understood enough to try. 14 percent hit a blocker with no way to get unstuck. About 1 percent were actively using Forge.">
-                      <div class="fv-funnel-stage">
-                        <div class="fv-funnel-head">
-                          <span class="fv-funnel-name">All frontend engineers</span>
-                          <span class="fv-funnel-pct">100%</span>
-                        </div>
-                        <div class="fv-funnel-track"><div class="fv-funnel-fill" style="width:100%;"></div></div>
-                        <div class="fv-funnel-leak">
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5v9a3 3 0 003 3h12m0 0l-4.5-4.5m4.5 4.5L15 21"/></svg>
-                          <span><strong>54%</strong> never heard Forge existed</span>
-                        </div>
-                      </div>
-                      <div class="fv-funnel-stage">
-                        <div class="fv-funnel-head">
-                          <span class="fv-funnel-name">Aware Forge exists</span>
-                          <span class="fv-funnel-pct">46%</span>
-                        </div>
-                        <div class="fv-funnel-track"><div class="fv-funnel-fill" style="width:46%;"></div></div>
-                        <div class="fv-funnel-leak">
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5v9a3 3 0 003 3h12m0 0l-4.5-4.5m4.5 4.5L15 21"/></svg>
-                          <span><strong>31%</strong> couldn't articulate its value</span>
-                        </div>
-                      </div>
-                      <div class="fv-funnel-stage">
-                        <div class="fv-funnel-head">
-                          <span class="fv-funnel-name">Understood enough to try</span>
-                          <span class="fv-funnel-pct">15%</span>
-                        </div>
-                        <div class="fv-funnel-track"><div class="fv-funnel-fill" style="width:15%;"></div></div>
-                        <div class="fv-funnel-leak">
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5v9a3 3 0 003 3h12m0 0l-4.5-4.5m4.5 4.5L15 21"/></svg>
-                          <span><strong>14%</strong> hit a blocker, no way to get unstuck</span>
-                        </div>
-                      </div>
-                      <div class="fv-funnel-stage">
-                        <div class="fv-funnel-head">
-                          <span class="fv-funnel-name" style="color: var(--text-primary); font-weight: 600;">Actively using Forge</span>
-                          <span class="fv-funnel-pct" style="color: #36B37E;">≈1%</span>
-                        </div>
-                        <div class="fv-funnel-track"><div class="fv-funnel-fill fv-funnel-fill--win" style="width:1%;"></div></div>
-                      </div>
-                      <p class="fv-funnel-foot">Underneath every stage: <strong style="color: var(--text-secondary);">6 scattered doc sources</strong>, no trusted front door.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- ════════════════════════════════════════ -->
-              <!-- 4b. ARCHETYPES                            -->
-              <!-- ════════════════════════════════════════ -->
-              <div class="apple-section" id="fv-archetypes">
                 <div class="apple-reveal">
-                  <div class="apple-section-eyebrow">Archetypes</div>
-                  <div class="apple-section-headline" style="max-width: 100%;">Who's actually<br>behind the split.</div>
-                  <p class="apple-section-body" style="max-width: 100%; margin-top: 24px;">
-                    We compared survey answers with real usage and repo data, then checked the patterns statistically. That gave us three clear archetypes, each needing a different fix.
+                  <div class="apple-section-eyebrow">The Real Problem</div>
+                  <div class="apple-section-headline" style="font-size: 30px; letter-spacing: -1px; max-width: 100%; margin-bottom: 24px;">Not a doc problem.<br>Three problems wearing one name.</div>
+                  <p class="apple-section-body" style="margin-bottom: 16px; max-width: 100%;">
+                    The instinct was to fix the docs. The data said otherwise: <strong>54%</strong> never heard of Forge, <strong>31%</strong> knew it but not why, and <strong>15%</strong> tried and got stuck. Those are three different problems. Better docs only help the last group.
+                  </p>
+                  <p class="apple-section-body" style="max-width: 100%;">
+                    Underneath all three: docs lived across <strong>six scattered sources</strong>, with no single front door.
                   </p>
                 </div>
-                <div class="fv-arch-grid apple-reveal">
-                  <div class="fv-arch-card">
-                    <div class="fv-arch-figure">
-                      <img src="assets/case-studies/forge/Archetype-1.svg" alt="Illustration of The Unaware Builder archetype" />
+
+                <div class="fv-problem-split apple-reveal">
+                <div class="fv-funnel-wrap">
+                  <div class="fv-funnel" role="img" aria-label="Developer adoption funnel showing where teams dropped out. 100 percent of frontend engineers entered. 54 percent never heard Forge existed. 46 percent were aware of it. 31 percent could not articulate its value. 15 percent understood enough to try. 14 percent hit a blocker with no way to get unstuck. About 1 percent were actively using Forge.">
+                    <div class="fv-funnel-stage">
+                      <div class="fv-funnel-head">
+                        <span class="fv-funnel-name">All frontend engineers</span>
+                        <span class="fv-funnel-pct">100%</span>
+                      </div>
+                      <div class="fv-funnel-track"><div class="fv-funnel-fill" style="width:100%;"></div></div>
+                      <div class="fv-funnel-leak">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5v9a3 3 0 003 3h12m0 0l-4.5-4.5m4.5 4.5L15 21"/></svg>
+                        <span><strong>54%</strong> never heard Forge existed</span>
+                      </div>
                     </div>
-                    <span class="fv-arch-share">~54%</span>
-                    <div class="fv-arch-name">The Unaware Builder</div>
-                    <p class="fv-arch-behavior">Has never heard of Forge, or confuses it with an older, deprecated internal tool. Defaults to whatever the team used last time.</p>
-                    <div class="fv-arch-blocked"><strong>Blocked by:</strong> Discovery, not ability. No documentation fix reaches this group, they don't know there's anything to read.</div>
-                  </div>
-                  <div class="fv-arch-card">
-                    <div class="fv-arch-figure">
-                      <img src="assets/case-studies/forge/Archetype-2.svg" alt="Illustration of The Curious-but-Unconvinced archetype" />
+                    <div class="fv-funnel-stage">
+                      <div class="fv-funnel-head">
+                        <span class="fv-funnel-name">Aware Forge exists</span>
+                        <span class="fv-funnel-pct">46%</span>
+                      </div>
+                      <div class="fv-funnel-track"><div class="fv-funnel-fill" style="width:46%;"></div></div>
+                      <div class="fv-funnel-leak">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5v9a3 3 0 003 3h12m0 0l-4.5-4.5m4.5 4.5L15 21"/></svg>
+                        <span><strong>31%</strong> couldn't articulate its value</span>
+                      </div>
                     </div>
-                    <span class="fv-arch-share">~31%</span>
-                    <div class="fv-arch-name">The Curious-but-Unconvinced</div>
-                    <p class="fv-arch-behavior">Knows Forge exists. Has skimmed a doc or watched a recording once, but can't articulate what it gives them that they don't already have.</p>
-                    <div class="fv-arch-blocked"><strong>Blocked by:</strong> Value clarity, not access. More documentation makes this worse unless it leads with the why.</div>
-                  </div>
-                  <div class="fv-arch-card">
-                    <div class="fv-arch-figure">
-                      <img src="assets/case-studies/forge/Archetype-3.svg" alt="Illustration of The Tried-and-Bounced archetype" />
+                    <div class="fv-funnel-stage">
+                      <div class="fv-funnel-head">
+                        <span class="fv-funnel-name">Understood enough to try</span>
+                        <span class="fv-funnel-pct">15%</span>
+                      </div>
+                      <div class="fv-funnel-track"><div class="fv-funnel-fill" style="width:15%;"></div></div>
+                      <div class="fv-funnel-leak">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5v9a3 3 0 003 3h12m0 0l-4.5-4.5m4.5 4.5L15 21"/></svg>
+                        <span><strong>14%</strong> hit a blocker, no way to get unstuck</span>
+                      </div>
                     </div>
-                    <span class="fv-arch-share">~15%</span>
-                    <div class="fv-arch-name">The Tried-and-Bounced</div>
-                    <p class="fv-arch-behavior">Actually started a project on Forge. Hit a specific wall, most often custom routing or styling overrides, with no reliable way to get unblocked.</p>
-                    <div class="fv-arch-blocked"><strong>Blocked by:</strong> Support, not the product. Smallest group, but the loudest, easy to mistake for the whole problem.</div>
+                    <div class="fv-funnel-stage">
+                      <div class="fv-funnel-head">
+                        <span class="fv-funnel-name" style="color: var(--text-primary); font-weight: 600;">Actively using Forge</span>
+                        <span class="fv-funnel-pct" style="color: #36B37E;">≈1%</span>
+                      </div>
+                      <div class="fv-funnel-track"><div class="fv-funnel-fill fv-funnel-fill--win" style="width:1%;"></div></div>
+                    </div>
+                    <p class="fv-funnel-foot">Underneath every stage: <strong style="color: var(--text-secondary);">6 scattered doc sources</strong>, no trusted front door.</p>
                   </div>
+                </div>
+
+                <div class="fv-arch-block">
+                  <div class="fv-arch-subhead">Who's behind the split</div>
+                  <div class="fv-arch-grid">
+                    <div class="fv-arch-card">
+                      <div class="fv-arch-figure">
+                        <img src="assets/case-studies/forge/Archetype-1.svg" alt="Illustration of The Unaware Builder archetype" />
+                      </div>
+                      <div class="fv-arch-body">
+                        <div class="fv-arch-identity">
+                          <div class="fv-arch-name">The Unaware Builder</div>
+                          <span class="fv-arch-share">~54%</span>
+                        </div>
+                        <p class="fv-arch-behavior">Never heard of Forge, so they stick with whatever the team used last time.</p>
+                        <div class="fv-arch-blocked">
+                          <span class="fv-arch-blocked-label">Blocked by</span>
+                          <span class="fv-arch-tag">Discovery</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fv-arch-card">
+                      <div class="fv-arch-figure">
+                        <img src="assets/case-studies/forge/Archetype-2.svg" alt="Illustration of The Curious-but-Unconvinced archetype" />
+                      </div>
+                      <div class="fv-arch-body">
+                        <div class="fv-arch-identity">
+                          <div class="fv-arch-name">The Curious-but-Unconvinced</div>
+                          <span class="fv-arch-share">~31%</span>
+                        </div>
+                        <p class="fv-arch-behavior">Knows Forge exists, but can't say what value it actually adds.</p>
+                        <div class="fv-arch-blocked">
+                          <span class="fv-arch-blocked-label">Blocked by</span>
+                          <span class="fv-arch-tag">Value clarity</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fv-arch-card">
+                      <div class="fv-arch-figure">
+                        <img src="assets/case-studies/forge/Archetype-3.svg" alt="Illustration of The Tried-and-Bounced archetype" />
+                      </div>
+                      <div class="fv-arch-body">
+                        <div class="fv-arch-identity">
+                          <div class="fv-arch-name">The Tried-and-Bounced</div>
+                          <span class="fv-arch-share">~15%</span>
+                        </div>
+                        <p class="fv-arch-behavior">Started a project, then hit a wall with no way to get unstuck.</p>
+                        <div class="fv-arch-blocked">
+                          <span class="fv-arch-blocked-label">Blocked by</span>
+                          <span class="fv-arch-tag">Support</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 </div>
               </div>
 
               <!-- ════════════════════════════════════════ -->
               <!-- 5. RESEARCH OBJECTIVES                    -->
               <!-- ════════════════════════════════════════ -->
-              <div class="apple-section apple-section--alt" id="fv-objectives">
+              <div class="apple-section" id="fv-objectives">
                 <div class="apple-reveal">
                   <div class="apple-section-eyebrow">Research Objectives</div>
                   <div class="apple-section-headline" style="max-width: 100%;">Knowing who isn't<br>the same as knowing why.</div>
@@ -7374,7 +7461,7 @@
               <!-- ════════════════════════════════════════ -->
               <!-- 8. USER INTERVIEWS                       -->
               <!-- ════════════════════════════════════════ -->
-              <div class="apple-section" id="fv-interviews">
+              <div class="apple-section apple-section--alt" id="fv-interviews">
                 <div class="apple-reveal">
                   <div class="apple-section-eyebrow">User Interviews</div>
                   <div class="apple-section-headline" style="max-width: 100%;">17 conversations,<br>one question each.</div>
@@ -7497,7 +7584,7 @@
               <!-- ════════════════════════════════════════ -->
               <!-- 9. SYNTHESIS                             -->
               <!-- ════════════════════════════════════════ -->
-              <div class="apple-section apple-section--alt" id="fv-synthesis">
+              <div class="apple-section" id="fv-synthesis">
                 <div class="apple-reveal">
                   <div class="apple-section-eyebrow">Synthesis</div>
                   <div class="apple-section-headline" style="max-width: 100%;">Turning nine stages of<br>friction into one plan.</div>
@@ -7601,7 +7688,7 @@
               <!-- ════════════════════════════════════════ -->
               <!-- 10. INFORMATION ARCHITECTURE             -->
               <!-- ════════════════════════════════════════ -->
-              <div class="apple-section" id="fv-ia">
+              <div class="apple-section apple-section--alt" id="fv-ia">
                 <div class="apple-reveal">
                   <div class="apple-section-eyebrow">Information Architecture</div>
                   <div class="apple-section-headline" style="max-width: 100%;">Mapping 200+ pages,<br>one working session at a time.</div>
@@ -7640,7 +7727,7 @@
               <!-- ════════════════════════════════════════ -->
               <!-- 10b. TREE TEST                           -->
               <!-- ════════════════════════════════════════ -->
-              <div class="apple-section apple-section--alt" id="fv-treetest">
+              <div class="apple-section" id="fv-treetest">
                 <div class="apple-reveal">
                   <div class="apple-section-eyebrow">Tree Test</div>
                   <div class="apple-section-headline" style="max-width: 100%;">Proving the structure<br>before spending on it.</div>
@@ -7789,7 +7876,7 @@
               <!-- ════════════════════════════════════════ -->
               <!-- 11. THE SOLUTION                         -->
               <!-- ════════════════════════════════════════ -->
-              <div class="apple-section" id="fv-solution">
+              <div class="apple-section apple-section--alt" id="fv-solution">
                 <div class="apple-reveal">
                   <div class="apple-section-eyebrow">The Solution</div>
                   <div class="apple-section-headline" style="max-width: 100%; font-size: 32px; letter-spacing: -1px;">One front door<br>for Forge.</div>
@@ -7854,7 +7941,7 @@
               <!-- ════════════════════════════════════════ -->
               <!-- 11. OUTCOME: WHAT CHANGED                -->
               <!-- ════════════════════════════════════════ -->
-              <div class="apple-section apple-section--alt" id="fv-outcome">
+              <div class="apple-section" id="fv-outcome">
                 <div class="apple-reveal">
                   <div class="apple-section-eyebrow">Outcome</div>
                   <div class="apple-section-headline" style="max-width: 100%;">What changed.</div>
@@ -7922,7 +8009,7 @@
               <!-- ════════════════════════════════════════ -->
               <!-- 12. IMPACT                               -->
               <!-- ════════════════════════════════════════ -->
-              <div class="apple-section" id="fv-impact">
+              <div class="apple-section apple-section--alt" id="fv-impact">
                 <div class="apple-reveal">
                   <div class="apple-section-eyebrow">Impact</div>
                   <div class="apple-section-headline" style="max-width: 100%;">Relaunched as<br>Atlassian Forge.</div>
@@ -7971,7 +8058,7 @@
               <!-- ════════════════════════════════════════ -->
               <!-- 13. REFLECTION                           -->
               <!-- ════════════════════════════════════════ -->
-              <div class="apple-section apple-section--alt" id="fv-reflection" style="padding-top: 100px; padding-bottom: 60px;">
+              <div class="apple-section" id="fv-reflection" style="padding-top: 100px; padding-bottom: 60px;">
                 <div class="apple-reveal">
                   <div class="apple-section-eyebrow">Reflection</div>
                   <p class="apple-quote">
@@ -7992,7 +8079,7 @@
               <!-- ════════════════════════════════════════ -->
               <!-- 14. GET IN TOUCH                         -->
               <!-- ════════════════════════════════════════ -->
-              <div class="apple-section" id="fv-contact" style="padding-top: 80px; padding-bottom: 100px;">
+              <div class="apple-section apple-section--alt" id="fv-contact" style="padding-top: 80px; padding-bottom: 100px;">
                 <div class="apple-reveal apple-cta-block">
                   <div class="apple-section-eyebrow">Get in touch</div>
                   <div class="apple-section-headline" style="max-width: 100%;">Let's build something like this together.</div>
