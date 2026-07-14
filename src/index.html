@@ -4415,11 +4415,13 @@
     }
     #cs-forge-volt .apple-hero-bg {
       background: linear-gradient(135deg,
-        rgba(0, 82, 204, 0.20) 0%,
-        rgba(38, 132, 255, 0.14) 25%,
-        rgba(101, 84, 192, 0.12) 50%,
-        rgba(0, 82, 204, 0.20) 75%,
-        rgba(38, 132, 255, 0.14) 100%);
+        rgba(0, 82, 204, 0.18) 0%,
+        rgba(125, 211, 252, 0.14) 20%,
+        rgba(192, 132, 252, 0.16) 40%,
+        rgba(236, 72, 153, 0.12) 55%,
+        rgba(101, 84, 192, 0.14) 70%,
+        rgba(56, 189, 248, 0.12) 85%,
+        rgba(0, 82, 204, 0.16) 100%);
       background-size: 200% 200%;
       animation: gradientShift 15s ease infinite;
       opacity: 1;
@@ -4889,24 +4891,21 @@
       min-height: 2.8em;
     }
 
-    /* Research objectives + Tree Test process: 3-up list, no card chrome */
-    #cs-forge-volt #fv-objectives .fv-obj-list,
-    #cs-forge-volt #fv-treetest .fv-obj-list {
+    /* Research objectives: 3-up list, no card chrome */
+    #cs-forge-volt #fv-objectives .fv-obj-list {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 28px;
       margin-top: 40px;
       max-width: 100%;
     }
-    #cs-forge-volt #fv-objectives .fv-obj-item,
-    #cs-forge-volt #fv-treetest .fv-obj-item {
+    #cs-forge-volt #fv-objectives .fv-obj-item {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 12px;
     }
-    #cs-forge-volt #fv-objectives .fv-obj-icon,
-    #cs-forge-volt #fv-treetest .fv-obj-icon {
+    #cs-forge-volt #fv-objectives .fv-obj-icon {
       width: 32px;
       height: 32px;
       flex-shrink: 0;
@@ -4914,34 +4913,29 @@
       object-fit: contain;
       display: block;
     }
-    #cs-forge-volt #fv-objectives .fv-obj-copy,
-    #cs-forge-volt #fv-treetest .fv-obj-copy {
+    #cs-forge-volt #fv-objectives .fv-obj-copy {
       min-width: 0;
       width: 100%;
     }
-    #cs-forge-volt #fv-objectives .fv-obj-title,
-    #cs-forge-volt #fv-treetest .fv-obj-title {
+    #cs-forge-volt #fv-objectives .fv-obj-title {
       font-size: 17px;
       font-weight: 600;
       color: var(--text-primary);
       letter-spacing: -0.3px;
       margin-bottom: 8px;
     }
-    #cs-forge-volt #fv-objectives .fv-obj-desc,
-    #cs-forge-volt #fv-treetest .fv-obj-desc {
+    #cs-forge-volt #fv-objectives .fv-obj-desc {
       font-size: 15px;
       line-height: 1.55;
       color: var(--text-secondary);
       margin: 0;
     }
-    #cs-forge-volt #fv-objectives .fv-obj-desc strong,
-    #cs-forge-volt #fv-treetest .fv-obj-desc strong {
+    #cs-forge-volt #fv-objectives .fv-obj-desc strong {
       color: var(--text-secondary);
       font-weight: 600;
     }
     @media (max-width: 768px) {
-      #cs-forge-volt #fv-objectives .fv-obj-list,
-      #cs-forge-volt #fv-treetest .fv-obj-list {
+      #cs-forge-volt #fv-objectives .fv-obj-list {
         grid-template-columns: 1fr;
       }
     }
@@ -5354,13 +5348,56 @@
       font-weight: 500;
     }
 
-    /* Tree Test: grouped bars + deltas */
-    #cs-forge-volt #fv-treetest .fv-tt-results {
+    /* Tree Test: process column + chart, metrics row below */
+    #cs-forge-volt #fv-treetest .fv-tt-main {
       display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 28px;
+      grid-template-columns: minmax(240px, 0.9fr) minmax(0, 1.6fr);
+      gap: 36px;
       align-items: stretch;
       margin-top: 48px;
+    }
+    #cs-forge-volt #fv-treetest .fv-obj-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 28px;
+      margin-top: 0;
+      max-width: 100%;
+      height: 100%;
+    }
+    #cs-forge-volt #fv-treetest .fv-obj-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    #cs-forge-volt #fv-treetest .fv-obj-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      object-fit: contain;
+      display: block;
+    }
+    #cs-forge-volt #fv-treetest .fv-obj-copy {
+      min-width: 0;
+      width: 100%;
+    }
+    #cs-forge-volt #fv-treetest .fv-obj-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+      margin-bottom: 6px;
+    }
+    #cs-forge-volt #fv-treetest .fv-obj-desc {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    #cs-forge-volt #fv-treetest .fv-obj-desc strong {
+      color: var(--text-primary);
+      font-weight: 700;
     }
     #cs-forge-volt #fv-treetest .fv-tt-chart {
       margin-top: 0;
@@ -5370,21 +5407,26 @@
       padding: 24px 24px 20px;
       height: 100%;
       box-sizing: border-box;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
     }
     #cs-forge-volt #fv-treetest .fv-tt-chart-title {
       font-size: 15px;
       font-weight: 600;
       color: var(--text-primary);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       letter-spacing: -0.2px;
+      flex-shrink: 0;
     }
     #cs-forge-volt #fv-treetest .fv-tt-legend {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
-      margin-bottom: 22px;
+      gap: 14px 16px;
+      margin: 14px 0 0;
       font-size: 12.5px;
       color: var(--text-secondary);
+      flex-shrink: 0;
     }
     #cs-forge-volt #fv-treetest .fv-tt-legend-item {
       display: inline-flex;
@@ -5392,9 +5434,9 @@
       gap: 8px;
     }
     #cs-forge-volt #fv-treetest .fv-tt-swatch {
-      width: 14px;
+      width: 10px;
       height: 10px;
-      border-radius: 3px;
+      border-radius: 50%;
       flex-shrink: 0;
     }
     #cs-forge-volt #fv-treetest .fv-tt-swatch--old { background: #A5ADBA; }
@@ -5402,11 +5444,14 @@
     #cs-forge-volt #fv-treetest .fv-tt-rows {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      justify-content: space-between;
+      flex: 1;
+      gap: 12px;
+      min-height: 0;
     }
     #cs-forge-volt #fv-treetest .fv-tt-row {
       display: grid;
-      grid-template-columns: 180px 1fr;
+      grid-template-columns: minmax(120px, 160px) 1fr;
       gap: 14px;
       align-items: center;
     }
@@ -5416,44 +5461,92 @@
       color: var(--text-primary);
       line-height: 1.35;
     }
-    #cs-forge-volt #fv-treetest .fv-tt-pair {
+    #cs-forge-volt #fv-treetest .fv-tt-dumbbell {
+      position: relative;
+      height: 28px;
       display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    #cs-forge-volt #fv-treetest .fv-tt-bar-row {
-      display: grid;
-      grid-template-columns: 1fr 44px;
-      gap: 10px;
       align-items: center;
     }
-    #cs-forge-volt #fv-treetest .fv-tt-track {
-      height: 12px;
-      border-radius: 6px;
-      background: #F4F5F7;
-      overflow: hidden;
+    #cs-forge-volt #fv-treetest .fv-tt-db-track {
+      position: relative;
+      width: 100%;
+      height: 2px;
+      background: #EEF0F3;
+      border-radius: 1px;
     }
-    #cs-forge-volt #fv-treetest .fv-tt-fill {
-      height: 100%;
-      border-radius: 6px;
-      transform-origin: left center;
-      animation: fvBarGrow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    #cs-forge-volt #fv-treetest .fv-tt-db-range {
+      position: absolute;
+      top: 50%;
+      height: 2px;
+      background: #C1C7D0;
+      border-radius: 1px;
+      transform: translateY(-50%);
+      pointer-events: none;
     }
-    #cs-forge-volt #fv-treetest .fv-tt-fill--old { background: #A5ADBA; }
-    #cs-forge-volt #fv-treetest .fv-tt-fill--new { background: #2684FF; }
-    #cs-forge-volt #fv-treetest .fv-tt-val {
-      font-size: 12.5px;
+    #cs-forge-volt #fv-treetest .fv-tt-db-dot {
+      position: absolute;
+      top: 50%;
+      width: 14px;
+      height: 14px;
+      margin: 0;
+      padding: 0;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      box-shadow: 0 0 0 1px rgba(9, 30, 66, 0.08);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      z-index: 1;
+    }
+    #cs-forge-volt #fv-treetest .fv-tt-db-dot--old { background: #A5ADBA; }
+    #cs-forge-volt #fv-treetest .fv-tt-db-dot--new { background: #2684FF; }
+    #cs-forge-volt #fv-treetest .fv-tt-db-dot:hover,
+    #cs-forge-volt #fv-treetest .fv-tt-db-dot:focus-visible {
+      transform: translate(-50%, -50%) scale(1.25);
+      box-shadow: 0 0 0 1px rgba(9, 30, 66, 0.1), 0 2px 8px rgba(9, 30, 66, 0.18);
+      z-index: 2;
+      outline: none;
+    }
+    #cs-forge-volt #fv-treetest .fv-tt-db-tip {
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 8px);
+      transform: translateX(-50%);
+      background: #172B4D;
+      color: #fff;
+      font-size: 12px;
       font-weight: 600;
-      color: var(--text-primary);
-      text-align: right;
+      line-height: 1;
+      padding: 5px 7px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.12s ease, visibility 0.12s ease;
+    }
+    #cs-forge-volt #fv-treetest .fv-tt-db-tip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #172B4D;
+    }
+    #cs-forge-volt #fv-treetest .fv-tt-db-dot:hover .fv-tt-db-tip,
+    #cs-forge-volt #fv-treetest .fv-tt-db-dot:focus-visible .fv-tt-db-tip {
+      opacity: 1;
+      visibility: visible;
     }
     #cs-forge-volt #fv-treetest .fv-tt-axis {
       display: grid;
-      grid-template-columns: 180px 1fr;
+      grid-template-columns: minmax(120px, 160px) 1fr;
       gap: 14px;
-      margin-top: 14px;
+      margin-top: 12px;
       padding-top: 10px;
       border-top: 1px solid var(--border-subtle);
+      flex-shrink: 0;
     }
     #cs-forge-volt #fv-treetest .fv-tt-axis-scale {
       display: flex;
@@ -5462,37 +5555,42 @@
       color: var(--text-tertiary);
     }
     #cs-forge-volt #fv-treetest .fv-tt-deltas {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 0;
-      margin-top: 0;
-      border: none;
-      border-radius: 0;
+      margin-top: 40px;
+      border-top: none;
+      padding-top: 0;
       background: transparent;
-      padding: 8px 0;
-      justify-content: center;
     }
     #cs-forge-volt #fv-treetest .fv-tt-delta {
-      border-top: 1px solid var(--border-subtle);
-      padding: 18px 0;
+      border-top: none;
+      border-left: 1px solid var(--border-subtle);
+      padding: 20px 16px 4px;
+      min-width: 0;
     }
     #cs-forge-volt #fv-treetest .fv-tt-delta:first-child {
-      border-top: none;
+      border-left: none;
+      padding-left: 0;
+    }
+    #cs-forge-volt #fv-treetest .fv-tt-delta:last-child {
+      padding-right: 0;
     }
     #cs-forge-volt #fv-treetest .fv-tt-delta-label {
       font-size: 12px;
       color: var(--text-tertiary);
       margin-bottom: 8px;
       line-height: 1.4;
+      min-height: 2.8em;
     }
     #cs-forge-volt #fv-treetest .fv-tt-delta-line {
       display: flex;
       align-items: baseline;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
     #cs-forge-volt #fv-treetest .fv-tt-delta-before {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 600;
       color: var(--text-muted);
       text-decoration: line-through;
@@ -5500,72 +5598,108 @@
     }
     #cs-forge-volt #fv-treetest .fv-tt-delta-arrow {
       color: var(--text-tertiary);
-      font-size: 16px;
+      font-size: 14px;
     }
     #cs-forge-volt #fv-treetest .fv-tt-delta-after {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 700;
       color: #2684FF;
       letter-spacing: -0.4px;
     }
+    @media (max-width: 1100px) {
+      #cs-forge-volt #fv-treetest .fv-tt-deltas {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      #cs-forge-volt #fv-treetest .fv-tt-delta:nth-child(3n + 1) {
+        border-left: none;
+        padding-left: 0;
+      }
+      #cs-forge-volt #fv-treetest .fv-tt-delta:nth-child(n + 4) {
+        border-top: 1px solid var(--border-subtle);
+      }
+    }
     @media (max-width: 900px) {
-      #cs-forge-volt #fv-treetest .fv-tt-results {
+      #cs-forge-volt #fv-treetest .fv-tt-main {
         grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      #cs-forge-volt #fv-treetest .fv-obj-list {
+        height: auto;
+        justify-content: flex-start;
+      }
+      #cs-forge-volt #fv-treetest .fv-tt-rows {
+        flex: none;
+        justify-content: flex-start;
+        gap: 18px;
       }
       #cs-forge-volt #fv-treetest .fv-tt-row {
         grid-template-columns: 1fr;
         gap: 8px;
       }
+      #cs-forge-volt #fv-treetest .fv-tt-dumbbell {
+        height: 32px;
+      }
       #cs-forge-volt #fv-treetest .fv-tt-axis { display: none; }
+      #cs-forge-volt #fv-treetest .fv-tt-deltas {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      #cs-forge-volt #fv-treetest .fv-tt-delta {
+        border-left: none;
+        border-top: 1px solid var(--border-subtle);
+        padding: 16px 12px 16px 0;
+      }
+      #cs-forge-volt #fv-treetest .fv-tt-delta:first-child,
+      #cs-forge-volt #fv-treetest .fv-tt-delta:nth-child(2) {
+        border-top: none;
+      }
+      #cs-forge-volt #fv-treetest .fv-tt-delta:nth-child(3n + 1) {
+        padding-left: 0;
+      }
+    }
+    @media (max-width: 560px) {
+      #cs-forge-volt #fv-treetest .fv-tt-deltas {
+        grid-template-columns: 1fr;
+      }
+      #cs-forge-volt #fv-treetest .fv-tt-delta:nth-child(2) {
+        border-top: 1px solid var(--border-subtle);
+      }
     }
 
-    /* Solution list with research traceability */
-    #cs-forge-volt #fv-solution .fv-solution-list {
-      list-style: none;
-      padding: 0;
-      margin: 36px 0 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border-top: 1px solid var(--border-subtle);
+    /* Solution: full-width annotated landing page */
+    #cs-forge-volt #fv-solution .fv-solution-img {
+      max-width: 100%;
+      margin-top: 44px;
+      overflow: visible;
     }
-    #cs-forge-volt #fv-solution .fv-solution-list li {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-      gap: 24px;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--border-subtle);
-      align-items: start;
+    #cs-forge-volt #fv-solution .fv-solution-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      box-sizing: border-box;
     }
-    #cs-forge-volt #fv-solution .fv-solution-item-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: -0.2px;
-      margin-bottom: 4px;
+
+    /* Outcome: Platform-style expandables; allow longer copy + tall preview */
+    #cs-forge-volt #fv-outcome .platform-expandable-item.active .platform-expandable-content {
+      max-height: 420px;
     }
-    #cs-forge-volt #fv-solution .fv-solution-item-desc {
-      font-size: 14px;
-      line-height: 1.55;
-      color: var(--text-secondary);
+    #cs-forge-volt #fv-outcome .platform-device-image img {
+      max-height: 640px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      box-sizing: border-box;
     }
-    #cs-forge-volt #fv-solution .fv-solution-trace {
-      font-size: 13px;
-      line-height: 1.45;
-      color: var(--text-tertiary);
-      padding-top: 2px;
-    }
-    #cs-forge-volt #fv-solution .fv-solution-trace strong {
-      color: var(--text-secondary);
-      font-weight: 600;
+    @media (max-width: 1024px) {
+      #cs-forge-volt #fv-outcome .platform-expandable-item.active .platform-expandable-content {
+        max-height: 800px;
+      }
     }
     @media (max-width: 900px) {
       #cs-forge-volt #fv-synthesis .fv-synth-split {
         grid-template-columns: 1fr;
-      }
-      #cs-forge-volt #fv-solution .fv-solution-list li {
-        grid-template-columns: 1fr;
-        gap: 8px;
       }
     }
 
@@ -7155,7 +7289,7 @@
                 </div>
                 <div class="apple-meta-item" style="text-align: left;">
                   <span class="apple-meta-label">Duration</span>
-                  <span class="apple-meta-value">Jan – Jun 2026</span>
+                  <span class="apple-meta-value">Jan – Jun 2024</span>
                 </div>
                 <div class="apple-meta-item" style="text-align: left;">
                   <span class="apple-meta-label">Team Size</span>
@@ -7681,100 +7815,101 @@
                   </p>
                 </div>
 
-                <div class="fv-obj-list apple-reveal">
+                <div class="fv-tt-main apple-reveal">
+                <div class="fv-obj-list">
                   <div class="fv-obj-item">
                     <img class="fv-obj-icon" src="./assets/case-studies/forge/generic_icon forge.webp" alt="" width="28" height="28" loading="lazy">
                     <div class="fv-obj-copy">
                       <div class="fv-obj-title">Methodology</div>
-                      <p class="fv-obj-desc">There was no IA to compare against, only six scattered sources. 34 developers ran five tasks in Bitbucket, Confluence, wiki, or GitHub Pages. Then they ran the same tasks on the proposed tree.</p>
+                      <p class="fv-obj-desc">No baseline IA, only six scattered sources. <strong>34 developers</strong> ran the same five tasks on the old sources, then on the proposed tree.</p>
                     </div>
                   </div>
                   <div class="fv-obj-item">
                     <img class="fv-obj-icon" src="./assets/case-studies/forge/generic_icon forge.webp" alt="" width="28" height="28" loading="lazy">
                     <div class="fv-obj-copy">
                       <div class="fv-obj-title">Process</div>
-                      <p class="fv-obj-desc">Engineering set a hard gate: no build until the IA hit a success target. The first pass failed. Two tasks scored under 50% because of unclear labels. We renamed them and tested again.</p>
+                      <p class="fv-obj-desc">Engineering blocked the build until success hit a target. Round one failed; two tasks scored under 50% from unclear labels. Renamed and retested.</p>
                     </div>
                   </div>
                   <div class="fv-obj-item">
                     <img class="fv-obj-icon" src="./assets/case-studies/forge/generic_icon forge.webp" alt="" width="28" height="28" loading="lazy">
                     <div class="fv-obj-copy">
                       <div class="fv-obj-title">Outcome</div>
-                      <p class="fv-obj-desc">The new IA hit 84% average success, up from 46% on scattered docs. Gave-up rate fell from 21% to 4%. That result unlocked the build budget.</p>
+                      <p class="fv-obj-desc">Average success rose from 46% to 84%. Gave-up rate fell from 21% to 4%. That unlocked the build budget.</p>
                     </div>
                   </div>
                 </div>
 
-                <div class="fv-tt-results apple-reveal">
                 <div class="fv-tt-chart">
                   <div class="fv-tt-chart-title">Task success rate by condition</div>
-                  <div class="fv-tt-legend" aria-hidden="true">
-                    <span class="fv-tt-legend-item"><span class="fv-tt-swatch fv-tt-swatch--old"></span>Scattered docs (Bitbucket, Confluence, wiki, GitHub Pages)</span>
-                    <span class="fv-tt-legend-item"><span class="fv-tt-swatch fv-tt-swatch--new"></span>Proposed IA</span>
-                  </div>
-                  <div class="fv-tt-rows" role="img" aria-label="Grouped bar chart of tree-test success rates. Build a hello world app: 58 percent scattered, 96 percent proposed. Migrate a Connect app: 27 percent, 85 percent. Find where to get help: 22 percent, 88 percent. Find app architecture overview: 35 percent, 80 percent. Find platform limits: 44 percent, 79 percent.">
-                    <div class="fv-tt-row">
+                  <div class="fv-tt-rows" role="list" aria-label="Dumbbell chart of tree-test success rates. Build a hello world app: 58 percent scattered, 96 percent proposed. Migrate a Connect app: 27 percent, 85 percent. Find where to get help: 22 percent, 88 percent. Find app architecture overview: 35 percent, 80 percent. Find platform limits: 44 percent, 79 percent.">
+                    <div class="fv-tt-row" role="listitem">
                       <div class="fv-tt-task">Build a hello world app</div>
-                      <div class="fv-tt-pair">
-                        <div class="fv-tt-bar-row">
-                          <div class="fv-tt-track"><div class="fv-tt-fill fv-tt-fill--old" style="width:58%;"></div></div>
-                          <div class="fv-tt-val">58%</div>
-                        </div>
-                        <div class="fv-tt-bar-row">
-                          <div class="fv-tt-track"><div class="fv-tt-fill fv-tt-fill--new" style="width:96%;"></div></div>
-                          <div class="fv-tt-val">96%</div>
+                      <div class="fv-tt-dumbbell">
+                        <div class="fv-tt-db-track">
+                          <div class="fv-tt-db-range" style="left:58%; width:38%;"></div>
+                          <button type="button" class="fv-tt-db-dot fv-tt-db-dot--old" style="left:58%;" aria-label="Scattered docs: 58%">
+                            <span class="fv-tt-db-tip">58%</span>
+                          </button>
+                          <button type="button" class="fv-tt-db-dot fv-tt-db-dot--new" style="left:96%;" aria-label="Proposed IA: 96%">
+                            <span class="fv-tt-db-tip">96%</span>
+                          </button>
                         </div>
                       </div>
                     </div>
-                    <div class="fv-tt-row">
+                    <div class="fv-tt-row" role="listitem">
                       <div class="fv-tt-task">Migrate a Connect app</div>
-                      <div class="fv-tt-pair">
-                        <div class="fv-tt-bar-row">
-                          <div class="fv-tt-track"><div class="fv-tt-fill fv-tt-fill--old" style="width:27%;"></div></div>
-                          <div class="fv-tt-val">27%</div>
-                        </div>
-                        <div class="fv-tt-bar-row">
-                          <div class="fv-tt-track"><div class="fv-tt-fill fv-tt-fill--new" style="width:85%;"></div></div>
-                          <div class="fv-tt-val">85%</div>
+                      <div class="fv-tt-dumbbell">
+                        <div class="fv-tt-db-track">
+                          <div class="fv-tt-db-range" style="left:27%; width:58%;"></div>
+                          <button type="button" class="fv-tt-db-dot fv-tt-db-dot--old" style="left:27%;" aria-label="Scattered docs: 27%">
+                            <span class="fv-tt-db-tip">27%</span>
+                          </button>
+                          <button type="button" class="fv-tt-db-dot fv-tt-db-dot--new" style="left:85%;" aria-label="Proposed IA: 85%">
+                            <span class="fv-tt-db-tip">85%</span>
+                          </button>
                         </div>
                       </div>
                     </div>
-                    <div class="fv-tt-row">
+                    <div class="fv-tt-row" role="listitem">
                       <div class="fv-tt-task">Find where to get help</div>
-                      <div class="fv-tt-pair">
-                        <div class="fv-tt-bar-row">
-                          <div class="fv-tt-track"><div class="fv-tt-fill fv-tt-fill--old" style="width:22%;"></div></div>
-                          <div class="fv-tt-val">22%</div>
-                        </div>
-                        <div class="fv-tt-bar-row">
-                          <div class="fv-tt-track"><div class="fv-tt-fill fv-tt-fill--new" style="width:88%;"></div></div>
-                          <div class="fv-tt-val">88%</div>
+                      <div class="fv-tt-dumbbell">
+                        <div class="fv-tt-db-track">
+                          <div class="fv-tt-db-range" style="left:22%; width:66%;"></div>
+                          <button type="button" class="fv-tt-db-dot fv-tt-db-dot--old" style="left:22%;" aria-label="Scattered docs: 22%">
+                            <span class="fv-tt-db-tip">22%</span>
+                          </button>
+                          <button type="button" class="fv-tt-db-dot fv-tt-db-dot--new" style="left:88%;" aria-label="Proposed IA: 88%">
+                            <span class="fv-tt-db-tip">88%</span>
+                          </button>
                         </div>
                       </div>
                     </div>
-                    <div class="fv-tt-row">
+                    <div class="fv-tt-row" role="listitem">
                       <div class="fv-tt-task">Find app architecture overview</div>
-                      <div class="fv-tt-pair">
-                        <div class="fv-tt-bar-row">
-                          <div class="fv-tt-track"><div class="fv-tt-fill fv-tt-fill--old" style="width:35%;"></div></div>
-                          <div class="fv-tt-val">35%</div>
-                        </div>
-                        <div class="fv-tt-bar-row">
-                          <div class="fv-tt-track"><div class="fv-tt-fill fv-tt-fill--new" style="width:80%;"></div></div>
-                          <div class="fv-tt-val">80%</div>
+                      <div class="fv-tt-dumbbell">
+                        <div class="fv-tt-db-track">
+                          <div class="fv-tt-db-range" style="left:35%; width:45%;"></div>
+                          <button type="button" class="fv-tt-db-dot fv-tt-db-dot--old" style="left:35%;" aria-label="Scattered docs: 35%">
+                            <span class="fv-tt-db-tip">35%</span>
+                          </button>
+                          <button type="button" class="fv-tt-db-dot fv-tt-db-dot--new" style="left:80%;" aria-label="Proposed IA: 80%">
+                            <span class="fv-tt-db-tip">80%</span>
+                          </button>
                         </div>
                       </div>
                     </div>
-                    <div class="fv-tt-row">
+                    <div class="fv-tt-row" role="listitem">
                       <div class="fv-tt-task">Find platform limits</div>
-                      <div class="fv-tt-pair">
-                        <div class="fv-tt-bar-row">
-                          <div class="fv-tt-track"><div class="fv-tt-fill fv-tt-fill--old" style="width:44%;"></div></div>
-                          <div class="fv-tt-val">44%</div>
-                        </div>
-                        <div class="fv-tt-bar-row">
-                          <div class="fv-tt-track"><div class="fv-tt-fill fv-tt-fill--new" style="width:79%;"></div></div>
-                          <div class="fv-tt-val">79%</div>
+                      <div class="fv-tt-dumbbell">
+                        <div class="fv-tt-db-track">
+                          <div class="fv-tt-db-range" style="left:44%; width:35%;"></div>
+                          <button type="button" class="fv-tt-db-dot fv-tt-db-dot--old" style="left:44%;" aria-label="Scattered docs: 44%">
+                            <span class="fv-tt-db-tip">44%</span>
+                          </button>
+                          <button type="button" class="fv-tt-db-dot fv-tt-db-dot--new" style="left:79%;" aria-label="Proposed IA: 79%">
+                            <span class="fv-tt-db-tip">79%</span>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -7785,9 +7920,14 @@
                       <span>0%</span><span>20%</span><span>40%</span><span>60%</span><span>80%</span><span>100%</span>
                     </div>
                   </div>
+                  <div class="fv-tt-legend" aria-hidden="true">
+                    <span class="fv-tt-legend-item"><span class="fv-tt-swatch fv-tt-swatch--old"></span>Scattered docs (Bitbucket, Confluence, wiki, GitHub Pages)</span>
+                    <span class="fv-tt-legend-item"><span class="fv-tt-swatch fv-tt-swatch--new"></span>Proposed IA</span>
+                  </div>
+                </div>
                 </div>
 
-                <div class="fv-tt-deltas">
+                <div class="fv-tt-deltas apple-reveal">
                   <div class="fv-tt-delta">
                     <div class="fv-tt-delta-label">Average success rate</div>
                     <div class="fv-tt-delta-line">
@@ -7812,7 +7952,22 @@
                       <span class="fv-tt-delta-after">4%</span>
                     </div>
                   </div>
-                </div>
+                  <div class="fv-tt-delta">
+                    <div class="fv-tt-delta-label">Directness (no backtracking)</div>
+                    <div class="fv-tt-delta-line">
+                      <span class="fv-tt-delta-before">34%</span>
+                      <span class="fv-tt-delta-arrow">→</span>
+                      <span class="fv-tt-delta-after">77%</span>
+                    </div>
+                  </div>
+                  <div class="fv-tt-delta">
+                    <div class="fv-tt-delta-label">First-click accuracy</div>
+                    <div class="fv-tt-delta-line">
+                      <span class="fv-tt-delta-before">41%</span>
+                      <span class="fv-tt-delta-arrow">→</span>
+                      <span class="fv-tt-delta-after">89%</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -7826,58 +7981,10 @@
                   <p class="apple-section-body" style="max-width: 100%; margin-top: 20px;">
                     The session converged on one answer: build a single public-facing page for Forge, the front door that had never existed. Every section on that page traces back to something a team actually said.
                   </p>
+                </div>
 
-                  <ul class="fv-solution-list">
-                    <li>
-                      <div>
-                        <div class="fv-solution-item-title">What Forge is</div>
-                        <div class="fv-solution-item-desc">A plain-language explanation, not a spec sheet.</div>
-                      </div>
-                      <div class="fv-solution-trace"><strong>From research</strong> — Finding 1: no single place to go. The page itself is the missing front door.</div>
-                    </li>
-                    <li>
-                      <div>
-                        <div class="fv-solution-item-title">How to build with it</div>
-                        <div class="fv-solution-item-desc">The fastest possible path from zero to a running app.</div>
-                      </div>
-                      <div class="fv-solution-trace"><strong>From research</strong> — Finding 4: architecture was invisible. Builders needed a mental model, not more prose.</div>
-                    </li>
-                    <li>
-                      <div>
-                        <div class="fv-solution-item-title">Why use it</div>
-                        <div class="fv-solution-item-desc">The case for choosing it over rolling something custom.</div>
-                      </div>
-                      <div class="fv-solution-trace"><strong>From research</strong> — Finding 2: awareness lagged capability. Curious-but-Unconvinced teams needed the why first.</div>
-                    </li>
-                    <li>
-                      <div>
-                        <div class="fv-solution-item-title">Examples</div>
-                        <div class="fv-solution-item-desc">Real apps built on it, not hypothetical ones.</div>
-                      </div>
-                      <div class="fv-solution-trace"><strong>From research</strong> — Finding 5: docs existed for someone else's use case. Show work that looks like theirs.</div>
-                    </li>
-                    <li>
-                      <div>
-                        <div class="fv-solution-item-title">Marketplace apps</div>
-                        <div class="fv-solution-item-desc">What's already live, built by others.</div>
-                      </div>
-                      <div class="fv-solution-trace"><strong>From research</strong> — Finding 3: people, not docs, drove adoption. Proof beats pitch.</div>
-                    </li>
-                    <li>
-                      <div>
-                        <div class="fv-solution-item-title">Tutorial links</div>
-                        <div class="fv-solution-item-desc">Task-based, not module-based.</div>
-                      </div>
-                      <div class="fv-solution-trace"><strong>From research</strong> — Card sort / tree test: developers grouped by “what I’m trying to do,” not internal module names.</div>
-                    </li>
-                    <li>
-                      <div>
-                        <div class="fv-solution-item-title">Roadmap</div>
-                        <div class="fv-solution-item-desc">What's coming next, so teams aren't betting on something that looks abandoned.</div>
-                      </div>
-                      <div class="fv-solution-trace"><strong>From research</strong> — WAC: unclear ownership and maintenance. A visible roadmap answers “is this still alive?”</div>
-                    </li>
-                  </ul>
+                <div class="fv-solution-img apple-reveal">
+                  <img src="./assets/case-studies/forge/Forge-LandingPage.jpg" alt="Annotated Forge landing page: hero, what Forge is, why use it, examples, marketplace apps, tutorials, roadmap, and footer mapped to research findings" loading="lazy">
                 </div>
               </div>
 
@@ -7887,64 +7994,97 @@
               <div class="apple-section" id="fv-outcome">
                 <div class="apple-reveal">
                   <div class="apple-section-eyebrow">Outcome</div>
-                  <div class="apple-section-headline" style="max-width: 100%;">What changed.</div>
+                  <div class="apple-section-headline" style="max-width: 100%;">Four changes.<br>One working system.</div>
                 </div>
 
-                <div class="apple-role-grid apple-reveal" style="grid-template-columns: repeat(2, 1fr); margin-top: 40px;">
-                  <div class="apple-role-card">
-                    <div class="apple-role-card-title">Consolidated documentation</div>
-                    <div class="apple-role-card-desc">Collapsed 6 scattered sources into a single docs site, organized by the validated task-based IA, with an architecture-diagram library (the #4 most-requested item).</div>
-                  </div>
-                  <div class="apple-role-card">
-                    <div class="apple-role-card-title">A real support channel</div>
-                    <div class="apple-role-card-desc">Replaced the unstaffed Slack channel with a rotating on-call model (1 engineer/week) and a public SLA. Response-within-24h went from 56% to 93%.</div>
-                  </div>
-                  <div class="apple-role-card">
-                    <div class="apple-role-card-title">Task-oriented tutorials</div>
-                    <div class="apple-role-card-desc">Built around the specific blockers from interviews (auth scopes, custom routing, styling overrides), not generic "getting started" content.</div>
-                  </div>
-                  <div class="apple-role-card">
-                    <div class="apple-role-card-title">Onboarding redesign</div>
-                    <div class="apple-role-card-desc">A guided first-project flow, usability tested across 2 rounds with architecture diagrams at every major decision point.</div>
-                  </div>
-                </div>
+                <div class="platform-expandable-wrapper apple-reveal">
+                  <div class="platform-expandable-list">
+                    <div class="platform-expandable-item active" data-platform="docs">
+                      <button class="platform-expandable-header" type="button">
+                        <div class="platform-expandable-title-wrapper">
+                          <img src="./assets/case-studies/forge/generic_icon forge.webp" alt="" class="platform-expandable-icon" width="32" height="32" loading="lazy">
+                          <span class="platform-expandable-title">Consolidated documentation</span>
+                        </div>
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M6 9L12 15L18 9"/>
+                        </svg>
+                      </button>
+                      <div class="platform-expandable-content">
+                        <p>Collapsed 6 scattered sources into a single docs site, organized by the validated task-based IA, with an architecture-diagram library (the #4 most-requested item).</p>
+                        <div class="platform-expandable-image-mobile">
+                          <img src="./assets/case-studies/forge/Forge-LandingPage.jpg" alt="Annotated Forge landing page and docs front door" loading="lazy">
+                        </div>
+                      </div>
+                    </div>
 
-                <div class="apple-reveal">
-                  <p class="apple-section-body" style="max-width: 100%; margin-top: 48px; margin-bottom: 8px;">
-                    <strong>Onboarding usability</strong>, tested across two rounds:
-                  </p>
-                  <div class="forge-table">
-                    <div class="forge-table-row forge-table-row--head">
-                      <div class="forge-table-cell">Metric</div>
-                      <div class="forge-table-cell">Round 1</div>
-                      <div class="forge-table-cell">Round 2</div>
+                    <div class="platform-expandable-item" data-platform="support">
+                      <button class="platform-expandable-header" type="button">
+                        <div class="platform-expandable-title-wrapper">
+                          <img src="./assets/case-studies/forge/generic_icon forge.webp" alt="" class="platform-expandable-icon" width="32" height="32" loading="lazy">
+                          <span class="platform-expandable-title">A real support channel</span>
+                        </div>
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M6 9L12 15L18 9"/>
+                        </svg>
+                      </button>
+                      <div class="platform-expandable-content">
+                        <p>Replaced the unstaffed Slack channel with a rotating on-call model (1 engineer/week) and a public SLA. Response-within-24h went from 56% to 93%.</p>
+                        <div class="platform-expandable-image-mobile">
+                          <img src="./assets/case-studies/forge/User Interview Forge.jpg" alt="Interview recruitment and team coverage plan that informed the support model" loading="lazy">
+                        </div>
+                      </div>
                     </div>
-                    <div class="forge-table-row">
-                      <div class="forge-table-cell">SUS score</div>
-                      <div class="forge-table-cell">58</div>
-                      <div class="forge-table-cell forge-table-cell--after">79</div>
+
+                    <div class="platform-expandable-item" data-platform="tutorials">
+                      <button class="platform-expandable-header" type="button">
+                        <div class="platform-expandable-title-wrapper">
+                          <img src="./assets/case-studies/forge/generic_icon forge.webp" alt="" class="platform-expandable-icon" width="32" height="32" loading="lazy">
+                          <span class="platform-expandable-title">Task-oriented tutorials</span>
+                        </div>
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M6 9L12 15L18 9"/>
+                        </svg>
+                      </button>
+                      <div class="platform-expandable-content">
+                        <p>Built around the specific blockers from interviews (auth scopes, custom routing, styling overrides), not generic "getting started" content.</p>
+                        <div class="platform-expandable-image-mobile">
+                          <img src="./assets/case-studies/forge/Questionnaire Forge.jpg" alt="Interview questionnaire used to surface tutorial blockers" loading="lazy">
+                        </div>
+                      </div>
                     </div>
-                    <div class="forge-table-row">
-                      <div class="forge-table-cell">Deploy first app unaided</div>
-                      <div class="forge-table-cell">61%</div>
-                      <div class="forge-table-cell forge-table-cell--after">92%</div>
-                    </div>
-                    <div class="forge-table-row">
-                      <div class="forge-table-cell">Time to first successful deploy</div>
-                      <div class="forge-table-cell">3.8 days</div>
-                      <div class="forge-table-cell forge-table-cell--after">4.1 hours</div>
+
+                    <div class="platform-expandable-item" data-platform="onboarding">
+                      <button class="platform-expandable-header" type="button">
+                        <div class="platform-expandable-title-wrapper">
+                          <img src="./assets/case-studies/forge/generic_icon forge.webp" alt="" class="platform-expandable-icon" width="32" height="32" loading="lazy">
+                          <span class="platform-expandable-title">Onboarding redesign</span>
+                        </div>
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M6 9L12 15L18 9"/>
+                        </svg>
+                      </button>
+                      <div class="platform-expandable-content">
+                        <p>A guided first-project flow, usability tested across 2 rounds with architecture diagrams at every major decision point. SUS 58→79, unaided first deploy 61%→92%, time to first deploy 3.8 days→4.1 hours.</p>
+                        <div class="platform-expandable-image-mobile">
+                          <img src="./assets/case-studies/forge/Card Sorting.jpg" alt="Working session that shaped the onboarding and IA redesign" loading="lazy">
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="apple-img-full apple-reveal" style="max-width: 100%; margin-top: 40px;">
-                  <!-- ARTIFACT: new docs site + architecture diagram library -->
-                  <div class="forge-artifact forge-artifact--wide">
-                    <div class="forge-artifact-icon">
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
+                  <div class="platform-device-container">
+                    <div class="platform-device-image active" data-platform="docs">
+                      <img src="./assets/case-studies/forge/Forge-LandingPage.jpg" alt="Annotated Forge landing page and docs front door" loading="lazy">
                     </div>
-                    <div class="forge-artifact-label">Artifact image</div>
-                    <div class="forge-artifact-sub">New consolidated docs site + architecture-diagram library (before / after)</div>
+                    <div class="platform-device-image" data-platform="support">
+                      <img src="./assets/case-studies/forge/User Interview Forge.jpg" alt="Interview recruitment and team coverage plan that informed the support model" loading="lazy">
+                    </div>
+                    <div class="platform-device-image" data-platform="tutorials">
+                      <img src="./assets/case-studies/forge/Questionnaire Forge.jpg" alt="Interview questionnaire used to surface tutorial blockers" loading="lazy">
+                    </div>
+                    <div class="platform-device-image" data-platform="onboarding">
+                      <img src="./assets/case-studies/forge/Card Sorting.jpg" alt="Working session that shaped the onboarding and IA redesign" loading="lazy">
+                    </div>
                   </div>
                 </div>
               </div>
