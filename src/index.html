@@ -239,21 +239,20 @@
 
     /* ===== Apple-style Notification Panel - Siri-style compact ===== */
     .notification-panel {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      padding: 20px 24px;
-      backdrop-filter: saturate(180%) blur(40px);
-      -webkit-backdrop-filter: saturate(180%) blur(40px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 
-                  0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: 0 1px 2px var(--shadow), 0 0 0 0 transparent;
       width: 280px;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  border-color 0.3s, background 0.3s;
     }
-    body.dashboard-body.light-mode .notification-panel {
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 
-                  0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    .notification-panel:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-3px) scale(1.005);
+      box-shadow: 0 12px 40px var(--shadow), 0 2px 6px var(--shadow);
     }
     .notification-header {
       display: flex;
@@ -268,8 +267,8 @@
       letter-spacing: -0.1px;
     }
     .notification-badge {
-      background: #2563eb;
-      color: #fff;
+      background: var(--bg-hover);
+      color: var(--text-secondary);
       font-size: 9px;
       font-weight: 600;
       padding: 3px 7px;
@@ -277,23 +276,23 @@
       letter-spacing: 0.2px;
     }
     .notification-coming-soon {
-      text-align: center;
+      text-align: left;
       padding: 0;
       transition: transform 0.2s ease;
     }
     .notification-coming-soon:hover {
-      transform: scale(1.02);
+      transform: none;
     }
     .notification-coming-soon-icon {
-      width: 48px;
-      height: 48px;
+      width: 42px;
+      height: 42px;
       border-radius: 12px;
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+      background: var(--bg-card-hover);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 12px;
-      border: 1px solid rgba(99, 102, 241, 0.2);
+      margin: 0 0 12px;
+      border: 1px solid var(--border);
     }
     .notification-coming-soon-icon svg {
       width: 24px;
@@ -744,16 +743,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       flex: 0 0 auto;
     }
     .music-btn {
-      width: 30px;
-      height: 30px;
-      border: 1px solid var(--border);
-      background: var(--bg-hover);
+      width: 24px;
+      height: 24px;
+      border: 0;
+      background: transparent;
       color: var(--text-secondary);
-      border-radius: 999px;
       padding: 0;
       font: inherit;
       cursor: pointer;
@@ -763,12 +761,11 @@
       transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
     }
     .music-btn svg {
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
       display: block;
     }
     .music-btn:hover {
-      background: var(--bg-active);
       color: var(--text-primary);
       transform: translateY(-1px);
     }
@@ -6360,6 +6357,9 @@
           <span class="music-sr-label" id="music-title">Sapphire</span>
           <span class="music-sr-label" id="music-artist">Ed Sheeran</span>
           <div class="music-controls" aria-label="Listening controls">
+            <button type="button" class="music-btn" id="music-prev" aria-label="Previous track">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h3v14H6zm4 7 9 7V5z"/></svg>
+            </button>
             <button type="button" class="music-btn" id="music-toggle" aria-label="Play Sapphire">
               <svg class="music-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
               <svg class="music-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none;"><path d="M7 5h4v14H7zm6 0h4v14h-4z"/></svg>
@@ -10294,6 +10294,7 @@
       var tile = document.querySelector('.cell-listen');
       var playerMount = document.getElementById('youtube-music-player');
       var toggleBtn = document.getElementById('music-toggle');
+      var prevBtn = document.getElementById('music-prev');
       var nextBtn = document.getElementById('music-next');
       var shuffleBtn = document.getElementById('music-shuffle');
       var titleEl = document.getElementById('music-title');
@@ -10301,13 +10302,13 @@
       var bannerImg = document.getElementById('music-banner-img');
       var playIcon = toggleBtn ? toggleBtn.querySelector('.music-icon-play') : null;
       var pauseIcon = toggleBtn ? toggleBtn.querySelector('.music-icon-pause') : null;
-      if (!tile || !playerMount || !toggleBtn || !nextBtn || !shuffleBtn || !titleEl || !artistEl || !bannerImg) return;
+      if (!tile || !playerMount || !toggleBtn || !prevBtn || !nextBtn || !shuffleBtn || !titleEl || !artistEl || !bannerImg) return;
 
       var tracks = [
         { title: 'Sapphire', artist: 'Ed Sheeran', videoId: 'JgDNFQ2RaLQ', url: 'https://www.youtube.com/watch?v=JgDNFQ2RaLQ', thumbnail: 'https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg' },
-        { title: 'O Sanam', artist: 'Lucky Ali', videoId: 'dWqb-WqbGh8', url: 'https://www.youtube.com/watch?v=dWqb-WqbGh8', thumbnail: 'https://img.youtube.com/vi/dWqb-WqbGh8/hqdefault.jpg' },
-        { title: 'Old Town Road', artist: 'Lil Nas X', videoId: 'r7qovpFAGrQ', url: 'https://www.youtube.com/watch?v=r7qovpFAGrQ', thumbnail: 'https://img.youtube.com/vi/r7qovpFAGrQ/hqdefault.jpg' },
-        { title: 'YouTube Pick', artist: 'Shared link', videoId: 'LC4-MkqP0-Q', url: 'https://www.youtube.com/watch?v=LC4-MkqP0-Q&list=RDLC4-MkqP0-Q&start_radio=1', thumbnail: 'https://img.youtube.com/vi/LC4-MkqP0-Q/hqdefault.jpg' }
+        { title: 'YouTube Pick', artist: 'Shared link', videoId: 'LC4-MkqP0-Q', url: 'https://www.youtube.com/watch?v=LC4-MkqP0-Q&list=RDLC4-MkqP0-Q&start_radio=1', thumbnail: 'https://img.youtube.com/vi/LC4-MkqP0-Q/hqdefault.jpg' },
+        { title: 'The Lazy Song', artist: 'Bruno Mars', videoId: 'AoiLOuJATos', url: 'https://www.youtube.com/watch?v=AoiLOuJATos&list=RDAoiLOuJATos&start_radio=1', thumbnail: 'https://img.youtube.com/vi/AoiLOuJATos/hqdefault.jpg' },
+        { title: 'YouTube Pick 2', artist: 'Shared link', videoId: 'KjhZk8OScNQ', url: 'https://www.youtube.com/watch?v=KjhZk8OScNQ&list=RDKjhZk8OScNQ&start_radio=1', thumbnail: 'https://img.youtube.com/vi/KjhZk8OScNQ/hqdefault.jpg' }
       ];
 
       var currentIndex = 0;
@@ -10371,6 +10372,17 @@
         }
       }
 
+      function goToPrevTrack() {
+        currentIndex = (currentIndex - 1 + tracks.length) % tracks.length;
+        updateTrackLabel();
+
+        if (tile.classList.contains('is-playing')) {
+          playCurrentTrack();
+        } else {
+          cueCurrentTrack();
+        }
+      }
+
       toggleBtn.addEventListener('click', function () {
         if (!playerReady || !player) {
           playCurrentTrack();
@@ -10392,6 +10404,7 @@
         playCurrentTrack();
       });
 
+      prevBtn.addEventListener('click', goToPrevTrack);
       nextBtn.addEventListener('click', goToNextTrack);
 
       shuffleBtn.addEventListener('click', function () {
