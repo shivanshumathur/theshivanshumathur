@@ -4723,7 +4723,7 @@
       text-align: center;
     }
 
-    /* Interviews: sub-blocks + question cards */
+    /* Interviews: stats + 3-step process; Response Results styles unchanged below */
     #cs-forge-volt #fv-interviews .fv-subhead {
       font-size: 20px;
       font-weight: 600;
@@ -4731,77 +4731,57 @@
       color: var(--text-primary);
       margin: 0 0 12px;
     }
-    #cs-forge-volt #fv-interviews .apple-feature {
+    #cs-forge-volt #fv-interviews .fv-iv-meta {
       margin-top: 40px;
-      align-items: center;
-      gap: 40px;
+      align-items: start;
     }
-    #cs-forge-volt #fv-interviews .apple-feature-img {
-      flex: 0 0 auto;
-      width: 48%;
-      max-width: 520px;
-      aspect-ratio: auto;
-      background: #ffffff;
-      border: none;
-      border-radius: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 12px;
-    }
-    #cs-forge-volt #fv-interviews .apple-feature-img img {
-      width: 100%;
-      height: auto;
-      border-radius: 16px;
-      border: 1px solid var(--border);
+    #cs-forge-volt #fv-interviews .fv-iv-meta .apple-meta-label {
+      min-height: 2.8em;
       display: block;
-      background: #ffffff;
     }
-    #cs-forge-volt #fv-interviews .apple-feature-text {
-      flex: 1;
-      min-width: 0;
-    }
-    #cs-forge-volt #fv-interviews .forge-table {
-      margin-top: 0;
-    }
-    #cs-forge-volt #fv-interviews .fv-q-grid {
+    #cs-forge-volt #fv-interviews .fv-iv-process {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 20px;
+      gap: 24px;
+      margin-top: 40px;
     }
-    #cs-forge-volt #fv-interviews .fv-q-card {
+    #cs-forge-volt #fv-interviews .fv-iv-step {
       display: flex;
       flex-direction: column;
-      padding: 14px;
-      background: var(--bg-card);
+      align-items: flex-start;
+      min-width: 0;
+    }
+    #cs-forge-volt #fv-interviews .fv-iv-step-media {
+      width: 100%;
+      margin-bottom: 14px;
+      border-radius: 14px;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      text-align: left;
+      background: #ffffff;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    #cs-forge-volt #fv-interviews .fv-q-team {
-      font-size: 11px;
-      font-weight: 700;
-      color: #2684FF;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      margin-bottom: 4px;
+    #cs-forge-volt #fv-interviews .fv-iv-step-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
     }
-    #cs-forge-volt #fv-interviews .fv-q-lens {
-      font-size: 12px;
-      color: var(--text-tertiary);
-      margin-bottom: 10px;
-      line-height: 1.35;
-    }
-    #cs-forge-volt #fv-interviews .fv-q-quote {
-      font-size: 13px;
-      line-height: 1.45;
+    #cs-forge-volt #fv-interviews .fv-iv-step-title {
+      font-size: 17px;
+      font-weight: 600;
       color: var(--text-primary);
-      font-weight: 500;
-      margin-top: auto;
+      letter-spacing: -0.3px;
+      margin: 0 0 8px;
     }
-    #cs-forge-volt #fv-interviews .forge-table-row {
-      grid-template-columns: 1.2fr 1.6fr 0.7fr;
+    #cs-forge-volt #fv-interviews .fv-iv-step-desc {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      margin: 0;
     }
     /* Apple-style response result cards */
     #cs-forge-volt #fv-interviews .fv-result-scroll {
@@ -4841,8 +4821,8 @@
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      background: #111;
-      color: #fff;
+      background: #E8E8ED;
+      color: #6B6B76;
       font-size: 15px;
       font-weight: 700;
       letter-spacing: -0.3px;
@@ -4864,14 +4844,27 @@
       color: var(--text-secondary);
       margin-bottom: 0;
     }
-    @media (max-width: 768px) {
-      #cs-forge-volt #fv-interviews .fv-q-grid { grid-template-columns: 1fr; }
-      #cs-forge-volt #fv-interviews .apple-feature-img {
-        width: 100%;
-        max-width: 100%;
+    @media (max-width: 1100px) {
+      #cs-forge-volt #fv-interviews .fv-iv-meta {
+        grid-template-columns: repeat(4, 1fr) !important;
       }
+    }
+    @media (max-width: 900px) {
+      #cs-forge-volt #fv-interviews .fv-iv-process {
+        grid-template-columns: 1fr;
+      }
+      #cs-forge-volt #fv-interviews .fv-iv-meta {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+    }
+    @media (max-width: 768px) {
       #cs-forge-volt #fv-interviews .fv-result-scroll {
         grid-auto-columns: minmax(280px, 84vw);
+      }
+    }
+    @media (max-width: 560px) {
+      #cs-forge-volt #fv-interviews .fv-iv-meta {
+        grid-template-columns: repeat(2, 1fr) !important;
       }
     }
 
@@ -4882,15 +4875,75 @@
     }
     /* Scale / IA metrics: match Novartis number styling */
     #cs-forge-volt #fv-scale .apple-meta-value,
-    #cs-forge-volt #fv-ia .apple-meta-value {
+    #cs-forge-volt #fv-ia .apple-meta-value,
+    #cs-forge-volt #fv-interviews .fv-iv-meta .apple-meta-value {
       font-size: 24px;
       font-weight: 700;
+      white-space: nowrap;
     }
     #cs-forge-volt #fv-scale .apple-meta-label,
-    #cs-forge-volt #fv-ia .apple-meta-label {
+    #cs-forge-volt #fv-ia .apple-meta-label,
+    #cs-forge-volt #fv-interviews .fv-iv-meta .apple-meta-label {
       font-size: 12px;
       line-height: 1.4;
       min-height: 2.8em;
+    }
+
+    /* Research objectives + Tree Test process: 3-up list, no card chrome */
+    #cs-forge-volt #fv-objectives .fv-obj-list,
+    #cs-forge-volt #fv-treetest .fv-obj-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 40px;
+      max-width: 100%;
+    }
+    #cs-forge-volt #fv-objectives .fv-obj-item,
+    #cs-forge-volt #fv-treetest .fv-obj-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    #cs-forge-volt #fv-objectives .fv-obj-icon,
+    #cs-forge-volt #fv-treetest .fv-obj-icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      margin-top: 0;
+      object-fit: contain;
+      display: block;
+    }
+    #cs-forge-volt #fv-objectives .fv-obj-copy,
+    #cs-forge-volt #fv-treetest .fv-obj-copy {
+      min-width: 0;
+      width: 100%;
+    }
+    #cs-forge-volt #fv-objectives .fv-obj-title,
+    #cs-forge-volt #fv-treetest .fv-obj-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+      margin-bottom: 8px;
+    }
+    #cs-forge-volt #fv-objectives .fv-obj-desc,
+    #cs-forge-volt #fv-treetest .fv-obj-desc {
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    #cs-forge-volt #fv-objectives .fv-obj-desc strong,
+    #cs-forge-volt #fv-treetest .fv-obj-desc strong {
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+    @media (max-width: 768px) {
+      #cs-forge-volt #fv-objectives .fv-obj-list,
+      #cs-forge-volt #fv-treetest .fv-obj-list {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* Behavioral persona / challenge cards: static 3-up grid */
@@ -5028,81 +5081,59 @@
       color: var(--accent, #0052CC); font-weight: 600;
     }
 
-    /* Synthesis: friction chart + card sorting side by side */
+    /* Synthesis: media on top, heading + description below */
     #cs-forge-volt #fv-synthesis .fv-synth-split {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 24px;
       margin-top: 48px;
-      align-items: stretch;
+      align-items: start;
     }
-    #cs-forge-volt #fv-synthesis .fv-friction-card,
-    #cs-forge-volt #fv-synthesis .fv-synth-photo {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      background: #fff;
-      min-height: 0;
-      height: 100%;
-    }
-    #cs-forge-volt #fv-synthesis .fv-friction-card {
-      padding: 22px 16px 14px 20px;
+    #cs-forge-volt #fv-synthesis .fv-synth-card {
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
+      min-width: 0;
     }
-    #cs-forge-volt #fv-synthesis .fv-friction-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: -0.1px;
-      margin-bottom: 4px;
-    }
-    #cs-forge-volt #fv-synthesis .fv-friction-sub {
-      font-size: 12px;
-      color: var(--text-tertiary);
-      margin-bottom: 12px;
-      line-height: 1.4;
-    }
-    #cs-forge-volt #fv-synthesis .fv-friction-chart {
+    #cs-forge-volt #fv-synthesis .fv-synth-media {
       width: 100%;
-      flex: 1;
-      min-height: 240px;
+      margin-bottom: 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
       display: flex;
       align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 8px 10px;
     }
-    #cs-forge-volt #fv-synthesis .fv-friction-chart svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    #cs-forge-volt #fv-synthesis .fv-synth-photo {
-      display: flex;
-      flex-direction: column;
-    }
-    #cs-forge-volt #fv-synthesis .fv-synth-photo-media {
-      position: relative;
-      width: 100%;
-      flex: 1 1 auto;
-      min-height: 280px;
-      background: #f4f4f5;
-      overflow: hidden;
-    }
-    #cs-forge-volt #fv-synthesis .fv-synth-photo-media img {
-      position: absolute;
-      inset: 0;
+    #cs-forge-volt #fv-synthesis .fv-synth-media img,
+    #cs-forge-volt #fv-synthesis .fv-synth-media svg {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center;
       display: block;
     }
-    #cs-forge-volt #fv-synthesis .fv-synth-photo-caption {
-      font-size: 12px;
-      color: var(--text-tertiary);
-      padding: 12px 16px 14px;
-      border-top: 1px solid var(--border-subtle);
-      text-align: center;
-      flex-shrink: 0;
+    #cs-forge-volt #fv-synthesis .fv-synth-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+      margin: 0 0 8px;
+    }
+    #cs-forge-volt #fv-synthesis .fv-synth-desc {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    @media (max-width: 900px) {
+      #cs-forge-volt #fv-synthesis .fv-synth-split {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* Information Architecture — horizontal scrollable tree */
@@ -5323,53 +5354,7 @@
       font-weight: 500;
     }
 
-    /* Tree Test: process flow + grouped bars + deltas */
-    #cs-forge-volt #fv-treetest .fv-tt-flow {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr auto 1fr;
-      gap: 12px;
-      align-items: stretch;
-      margin-top: 48px;
-    }
-    #cs-forge-volt #fv-treetest .fv-tt-step {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: #fff;
-      padding: 22px 20px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    #cs-forge-volt #fv-treetest .fv-tt-step-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: #111;
-      color: #fff;
-      font-size: 13px;
-      font-weight: 700;
-    }
-    #cs-forge-volt #fv-treetest .fv-tt-step-title {
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-      color: var(--text-primary);
-    }
-    #cs-forge-volt #fv-treetest .fv-tt-step-body {
-      font-size: 13.5px;
-      line-height: 1.55;
-      color: var(--text-secondary);
-    }
-    #cs-forge-volt #fv-treetest .fv-tt-arrow {
-      display: flex;
-      align-items: center;
-      color: var(--text-muted);
-      font-size: 22px;
-      padding-top: 8px;
-    }
+    /* Tree Test: grouped bars + deltas */
     #cs-forge-volt #fv-treetest .fv-tt-results {
       display: grid;
       grid-template-columns: 2fr 1fr;
@@ -5524,14 +5509,6 @@
       letter-spacing: -0.4px;
     }
     @media (max-width: 900px) {
-      #cs-forge-volt #fv-treetest .fv-tt-flow {
-        grid-template-columns: 1fr;
-      }
-      #cs-forge-volt #fv-treetest .fv-tt-arrow {
-        justify-content: center;
-        transform: rotate(90deg);
-        padding: 0;
-      }
       #cs-forge-volt #fv-treetest .fv-tt-results {
         grid-template-columns: 1fr;
       }
@@ -7433,27 +7410,27 @@
                     The archetypes told us who was struggling and roughly how many. They didn't tell us why, in their own words, or where exactly things broke down. So before recruiting anyone, I turned that gap into three specific, testable questions, one per archetype, each tied to a decision it would inform.
                   </p>
                 </div>
-                <div class="apple-role-grid apple-reveal">
-                  <div class="apple-role-card">
-                    <div class="apple-role-card-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <div class="fv-obj-list apple-reveal">
+                  <div class="fv-obj-item">
+                    <img class="fv-obj-icon" src="./assets/case-studies/forge/generic_icon forge.webp" alt="" width="28" height="28" loading="lazy">
+                    <div class="fv-obj-copy">
+                      <div class="fv-obj-title">RQ1. Awareness</div>
+                      <p class="fv-obj-desc"><strong>Unaware Builder.</strong> At what point does a developer first learn Forge exists, and through what channel?</p>
                     </div>
-                    <div class="apple-role-card-title">RQ1 — Awareness</div>
-                    <div class="apple-role-card-desc"><strong style="color: var(--text-secondary);">Unaware Builder.</strong> At what point does a developer first learn Forge exists, and through what channel?</div>
                   </div>
-                  <div class="apple-role-card">
-                    <div class="apple-role-card-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/></svg>
+                  <div class="fv-obj-item">
+                    <img class="fv-obj-icon" src="./assets/case-studies/forge/generic_icon forge.webp" alt="" width="28" height="28" loading="lazy">
+                    <div class="fv-obj-copy">
+                      <div class="fv-obj-title">RQ2. Comprehension</div>
+                      <p class="fv-obj-desc"><strong>Curious-but-Unconvinced.</strong> Once aware, can developers correctly describe what Forge does, doesn't do, and where its limits are?</p>
                     </div>
-                    <div class="apple-role-card-title">RQ2 — Comprehension</div>
-                    <div class="apple-role-card-desc"><strong style="color: var(--text-secondary);">Curious-but-Unconvinced.</strong> Once aware, can developers correctly describe what Forge does, doesn't do, and where its limits are?</div>
                   </div>
-                  <div class="apple-role-card">
-                    <div class="apple-role-card-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/></svg>
+                  <div class="fv-obj-item">
+                    <img class="fv-obj-icon" src="./assets/case-studies/forge/generic_icon forge.webp" alt="" width="28" height="28" loading="lazy">
+                    <div class="fv-obj-copy">
+                      <div class="fv-obj-title">RQ3. Activation &amp; Abandonment</div>
+                      <p class="fv-obj-desc"><strong>Tried-and-Bounced.</strong> Where exactly in the build process do developers who try Forge abandon it, and why?</p>
                     </div>
-                    <div class="apple-role-card-title">RQ3 — Activation & Abandonment</div>
-                    <div class="apple-role-card-desc"><strong style="color: var(--text-secondary);">Tried-and-Bounced.</strong> Where exactly in the build process do developers who try Forge abandon it, and why?</div>
                   </div>
                 </div>
               </div>
@@ -7466,79 +7443,59 @@
                   <div class="apple-section-eyebrow">User Interviews</div>
                   <div class="apple-section-headline" style="max-width: 100%;">17 conversations,<br>one question each.</div>
                   <p class="apple-section-body" style="max-width: 100%; margin-top: 24px;">
-                    Recruiting followed the archetypes directly, not a fixed number per group, but enough from each to trust the pattern.
+                    Recruiting followed the archetypes directly, enough from each group to trust the pattern.
                   </p>
                 </div>
 
-                <div class="apple-feature apple-reveal">
-                  <div class="apple-feature-text">
-                    <div class="forge-table" role="table" aria-label="Interview recruitment by team">
-                      <div class="forge-table-row forge-table-row--head" role="row">
-                        <div class="forge-table-cell" role="columnheader">Team</div>
-                        <div class="forge-table-cell" role="columnheader">Archetype</div>
-                        <div class="forge-table-cell" role="columnheader">Interviews</div>
-                      </div>
-                      <div class="forge-table-row" role="row">
-                        <div class="forge-table-cell" role="cell">WAC Team</div>
-                        <div class="forge-table-cell" role="cell">Aware of the platform</div>
-                        <div class="forge-table-cell" role="cell">8</div>
-                      </div>
-                      <div class="forge-table-row" role="row">
-                        <div class="forge-table-cell" role="cell">Loom Team</div>
-                        <div class="forge-table-cell" role="cell">Knows it exists, unsure what it offers</div>
-                        <div class="forge-table-cell" role="cell">4</div>
-                      </div>
-                      <div class="forge-table-row" role="row">
-                        <div class="forge-table-cell" role="cell">JSM Help Center Team</div>
-                        <div class="forge-table-cell" role="cell">Knows it, lacks knowledge to use it well</div>
-                        <div class="forge-table-cell" role="cell">5</div>
-                      </div>
-                    </div>
+                <div class="apple-meta-grid apple-reveal fv-iv-meta" style="grid-template-columns: repeat(6, 1fr); max-width: 100%; margin-top: 40px; gap: 16px;">
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Interviews<br>Conducted</span>
+                    <span class="apple-meta-value">17</span>
                   </div>
-                  <div class="apple-feature-img">
-                    <img src="./assets/case-studies/forge/User Interview Forge.jpg" alt="Recruitment plan mapping interview counts to each team and archetype" loading="lazy">
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Team<br>Involved</span>
+                    <span class="apple-meta-value">3</span>
+                  </div>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Avg<br>Session</span>
+                    <span class="apple-meta-value">40 mins</span>
+                  </div>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">WAC<br>Aware of the platform</span>
+                    <span class="apple-meta-value">8</span>
+                  </div>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">Loom<br>Unsure what it offers</span>
+                    <span class="apple-meta-value">4</span>
+                  </div>
+                  <div class="apple-meta-item">
+                    <span class="apple-meta-label">JSM<br>Can't use it well</span>
+                    <span class="apple-meta-value">5</span>
                   </div>
                 </div>
 
-                <div class="apple-feature apple-reveal">
-                  <div class="apple-feature-img">
-                    <img src="./assets/case-studies/forge/TimeZoneMapping Forge.jpg" alt="Timezone mapping of interview availability across IST, AEST, PST, CST, and EST" loading="lazy">
-                  </div>
-                  <div class="apple-feature-text">
-                    <h3 class="fv-subhead">Scheduling Across Time Zones</h3>
-                    <p class="apple-section-body" style="max-width: 100%;">
-                      Every team sat in a different zone, IST, AEST, PST, CST, EST, with no single hour that worked for all five. Interviews were run in staggered blocks over several weeks, early mornings and late evenings depending on whose calendar was being worked around that day.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="apple-feature apple-reveal">
-                  <div class="apple-feature-text">
-                    <h3 class="fv-subhead">Preparing the Questionnaire</h3>
-                    <p class="apple-section-body" style="max-width: 100%;">
-                      Each team got a version of the same core guide, adjusted for what they could actually speak to, a team that had adopted the platform got asked about friction and gaps; a team that hadn't got asked about discovery and first impressions.
-                    </p>
-                    <div class="fv-q-grid">
-                      <div class="fv-q-card">
-                        <div class="fv-q-team">WAC</div>
-                        <div class="fv-q-lens">Adopted</div>
-                        <p class="fv-q-quote">Where does the current setup still fall short of what Next or Remix gave you?</p>
-                      </div>
-                      <div class="fv-q-card">
-                        <div class="fv-q-team">Loom</div>
-                        <div class="fv-q-lens">Aware, unconvinced</div>
-                        <p class="fv-q-quote">How did you first come to learn about the platform and its capabilities?</p>
-                      </div>
-                      <div class="fv-q-card">
-                        <div class="fv-q-team">JSM</div>
-                        <div class="fv-q-lens">Using, but limited</div>
-                        <p class="fv-q-quote">When you hit something the docs didn't cover, what did you do next?</p>
-                      </div>
+                <div class="fv-iv-process apple-reveal">
+                  <article class="fv-iv-step">
+                    <div class="fv-iv-step-media">
+                      <img src="./assets/case-studies/forge/Questionnaire Forge.jpg" alt="Questionnaire matrix mapping research questions to teams" loading="lazy">
                     </div>
-                  </div>
-                  <div class="apple-feature-img">
-                    <img src="./assets/case-studies/forge/Questionnaire Forge.jpg" alt="Questionnaire matrix mapping each research question to teams and interview counts" loading="lazy">
-                  </div>
+                    <h3 class="fv-iv-step-title">Prepare</h3>
+                    <p class="fv-iv-step-desc">One core guide, tuned per team: adopters on friction, others on discovery.</p>
+                  </article>
+                  <article class="fv-iv-step">
+                    <div class="fv-iv-step-media">
+                      <img src="./assets/case-studies/forge/TimeZoneMapping Forge.jpg" alt="Timezone mapping of interview availability across IST, AEST, PST, CST, and EST" loading="lazy">
+                    </div>
+                    <h3 class="fv-iv-step-title">Schedule</h3>
+                    <p class="fv-iv-step-desc">Teams sat across 5 zones. Ran staggered blocks over several weeks.</p>
+                  </article>
+                  <article class="fv-iv-step">
+                    <div class="fv-iv-step-media">
+                      <img src="./assets/case-studies/forge/User Interview Forge.jpg" alt="Interview recruitment plan by team and archetype" loading="lazy">
+                    </div>
+                    <h3 class="fv-iv-step-title">Conduct</h3>
+                    <p class="fv-iv-step-desc">17 interviews mapped to the three archetypes, enough to trust the pattern.</p>
+                  </article>
                 </div>
 
                 <div class="apple-reveal">
@@ -7594,10 +7551,8 @@
                 </div>
 
                 <div class="fv-synth-split apple-reveal">
-                  <div class="fv-friction-card">
-                    <div class="fv-friction-title">Friction level across the journey</div>
-                    <div class="fv-friction-sub">Emotion curve across nine stages — friction climbs from curiosity into a sustained anxious peak at Testing through Monitoring.</div>
-                    <div class="fv-friction-chart" role="img" aria-label="Friction level across the journey. Discovery at Curious, Doc review between Curious and Confused, Evaluation at Confused, Decision and Adoption at Doubt, Integration between Doubt and Anxious, Testing Deployment and Monitoring at Anxious peak.">
+                  <article class="fv-synth-card">
+                    <div class="fv-synth-media fv-synth-media--chart" role="img" aria-label="Friction level across the journey. Discovery at Curious, Doc review between Curious and Confused, Evaluation at Confused, Decision and Adoption at Doubt, Integration between Doubt and Anxious, Testing Deployment and Monitoring at Anxious peak.">
                       <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
                         <defs>
                           <linearGradient id="fvFrictionFill" x1="0" y1="0" x2="0" y2="1">
@@ -7605,7 +7560,6 @@
                             <stop offset="100%" stop-color="#2684FF" stop-opacity="0"/>
                           </linearGradient>
                         </defs>
-                        <!-- Y levels top→bottom: Frustrated 28, Anxious 56, Doubt 84, Confused 112, Curious 140 -->
                         <g stroke="#ececec" stroke-width="1">
                           <line x1="108" y1="28" x2="536" y2="28"/>
                           <line x1="108" y1="42" x2="536" y2="42"/>
@@ -7624,17 +7578,6 @@
                           <text x="100" y="116">Confused</text>
                           <text x="100" y="144">Curious</text>
                         </g>
-                        <!--
-                          Discovery 132,140 Curious
-                          Doc review 182,126 mid Curious–Confused
-                          Evaluation 232,112 Confused
-                          Decision 282,84 Doubt
-                          Adoption 332,84 Doubt
-                          Integration 382,70 mid Doubt–Anxious
-                          Testing 432,56 Anxious (peak)
-                          Deployment 482,56 Anxious
-                          Monitoring 532,56 Anxious
-                        -->
                         <path d="M132,140 C149,133 165,129 182,126 C199,123 215,116 232,112 C249,108 265,91 282,84 C299,77 315,84 332,84 C349,84 365,77 382,70 C399,63 415,56 432,56 C449,56 465,56 482,56 C499,56 515,56 532,56 L532,140 L132,140 Z" fill="url(#fvFrictionFill)"/>
                         <path d="M132,140 C149,133 165,129 182,126 C199,123 215,116 232,112 C249,108 265,91 282,84 C299,77 315,84 332,84 C349,84 365,77 382,70 C399,63 415,56 432,56 C449,56 465,56 482,56 C499,56 515,56 532,56" fill="none" stroke="#2684FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                         <g>
@@ -7648,7 +7591,6 @@
                           <circle cx="482" cy="56" r="4.5" fill="#fff" stroke="#C9372C" stroke-width="2"/>
                           <circle cx="532" cy="56" r="4.5" fill="#fff" stroke="#C9372C" stroke-width="2"/>
                         </g>
-                        <!-- peak callout at Testing -->
                         <text x="432" y="42" text-anchor="middle" fill="#C9372C" font-size="10" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">Peak</text>
                         <g stroke="#d0d0d0" stroke-width="1.5">
                           <line x1="132" y1="148" x2="132" y2="156"/>
@@ -7674,14 +7616,17 @@
                         </g>
                       </svg>
                     </div>
-                  </div>
+                    <h3 class="fv-synth-title">Friction level across the journey</h3>
+                    <p class="fv-synth-desc">Emotion curve across nine stages. Friction climbs from curiosity into a sustained anxious peak at Testing through Monitoring.</p>
+                  </article>
 
-                  <figure class="fv-synth-photo">
-                    <div class="fv-synth-photo-media">
+                  <article class="fv-synth-card">
+                    <div class="fv-synth-media">
                       <img src="./assets/case-studies/forge/Card Sorting.jpg" alt="Whiteboard synthesis session with sticky notes, impact-effort matrix, and solution mapping columns" loading="lazy">
                     </div>
-                    <figcaption class="fv-synth-photo-caption">Working session, raw findings sorted into an impact–effort matrix, then into a single plan</figcaption>
-                  </figure>
+                    <h3 class="fv-synth-title">Working session</h3>
+                    <p class="fv-synth-desc">Raw findings sorted into an impact-effort matrix, then into a single plan.</p>
+                  </article>
                 </div>
               </div>
 
@@ -7736,30 +7681,28 @@
                   </p>
                 </div>
 
-                <div class="fv-tt-flow apple-reveal">
-                  <article class="fv-tt-step">
-                    <span class="fv-tt-step-num">1</span>
-                    <div class="fv-tt-step-title">Methodology</div>
-                    <p class="fv-tt-step-body">
-                      There was no IA to compare against, only six scattered sources. 34 developers ran five tasks in Bitbucket, Confluence, wiki, or GitHub Pages. Then they ran the same tasks on the proposed tree.
-                    </p>
-                  </article>
-                  <div class="fv-tt-arrow" aria-hidden="true">→</div>
-                  <article class="fv-tt-step">
-                    <span class="fv-tt-step-num">2</span>
-                    <div class="fv-tt-step-title">Process</div>
-                    <p class="fv-tt-step-body">
-                      Engineering set a hard gate: no build until the IA hit a success target. The first pass failed. Two tasks scored under 50% because of unclear labels. We renamed them and tested again.
-                    </p>
-                  </article>
-                  <div class="fv-tt-arrow" aria-hidden="true">→</div>
-                  <article class="fv-tt-step">
-                    <span class="fv-tt-step-num">3</span>
-                    <div class="fv-tt-step-title">Outcome</div>
-                    <p class="fv-tt-step-body">
-                      The new IA hit 84% average success, up from 46% on scattered docs. Gave-up rate fell from 21% to 4%. That result unlocked the build budget.
-                    </p>
-                  </article>
+                <div class="fv-obj-list apple-reveal">
+                  <div class="fv-obj-item">
+                    <img class="fv-obj-icon" src="./assets/case-studies/forge/generic_icon forge.webp" alt="" width="28" height="28" loading="lazy">
+                    <div class="fv-obj-copy">
+                      <div class="fv-obj-title">Methodology</div>
+                      <p class="fv-obj-desc">There was no IA to compare against, only six scattered sources. 34 developers ran five tasks in Bitbucket, Confluence, wiki, or GitHub Pages. Then they ran the same tasks on the proposed tree.</p>
+                    </div>
+                  </div>
+                  <div class="fv-obj-item">
+                    <img class="fv-obj-icon" src="./assets/case-studies/forge/generic_icon forge.webp" alt="" width="28" height="28" loading="lazy">
+                    <div class="fv-obj-copy">
+                      <div class="fv-obj-title">Process</div>
+                      <p class="fv-obj-desc">Engineering set a hard gate: no build until the IA hit a success target. The first pass failed. Two tasks scored under 50% because of unclear labels. We renamed them and tested again.</p>
+                    </div>
+                  </div>
+                  <div class="fv-obj-item">
+                    <img class="fv-obj-icon" src="./assets/case-studies/forge/generic_icon forge.webp" alt="" width="28" height="28" loading="lazy">
+                    <div class="fv-obj-copy">
+                      <div class="fv-obj-title">Outcome</div>
+                      <p class="fv-obj-desc">The new IA hit 84% average success, up from 46% on scattered docs. Gave-up rate fell from 21% to 4%. That result unlocked the build budget.</p>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="fv-tt-results apple-reveal">
