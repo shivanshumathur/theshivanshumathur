@@ -203,7 +203,7 @@
 
     /* ===== Right-half wrapper - Siri-style compact ===== */
     .right-half {
-      display: none; /* Articles panel hidden for now */
+      display: block;
       position: fixed;
       right: 32px;
       top: 50%;
@@ -668,6 +668,134 @@
     .eq-bar:nth-child(2) { animation: eq2 0.6s ease-in-out infinite 0.1s; }
     .eq-bar:nth-child(3) { animation: eq3 0.7s ease-in-out infinite 0.2s; }
     .eq-bar:nth-child(4) { animation: eq1 0.9s ease-in-out infinite 0.15s; }
+    .music-player-shell {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      gap: 8px;
+      overflow: hidden;
+      justify-content: space-between;
+    }
+    .music-banner {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--bg-card-hover);
+      border: 1px solid var(--border);
+    }
+    .music-banner img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .music-banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.28));
+    }
+    .music-track-card {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;
+      min-width: 0;
+    }
+    .music-art {
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      background: var(--bg-card-hover);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--text-secondary);
+    }
+    .music-copy {
+      flex: 1;
+      min-width: 0;
+    }
+    .music-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: -0.1px;
+      margin: 0;
+    }
+    .music-artist {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .music-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+    .music-btn {
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--border);
+      background: var(--bg-hover);
+      color: var(--text-secondary);
+      border-radius: 999px;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+    .music-btn svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+    .music-btn:hover {
+      background: var(--bg-active);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+    .music-player-embed {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .cell-listen:not(.is-playing) .eq-bar {
+      animation-play-state: paused;
+      height: 8px;
+      opacity: 0.45;
+    }
+    .music-sr-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
     /* ===== Portfolio stacked images ===== */
     .folio-stack {
@@ -6220,23 +6348,31 @@
 
 
       <!-- ===== MUSIC (Passive widget) ===== -->
-      <div class="cell-listen card" style="padding: 16px; display: none; flex-direction: column; justify-content: space-between;">
-        <div class="section-label">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"/></svg>
-          Listening
-        </div>
-        <div style="margin-top: auto; display: flex; align-items: center; gap: 10px;">
-          <div style="width: 36px; height: 36px; border-radius: 10px; background: var(--bg-card-hover); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--text-secondary);">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      <div class="cell-listen card" style="padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div class="music-player-shell">
+          <div class="section-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"/></svg>
+            Listening
           </div>
-          <div style="flex: 1; min-width: 0;">
-            <p style="font-size: 12px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.1px;">Lo-fi Focus</p>
-            <p style="font-size: 10px; color: var(--text-muted); margin-top: 1px;">Chill Beats</p>
+          <div class="music-banner">
+            <img id="music-banner-img" src="https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg" alt="Sapphire video thumbnail">
           </div>
-          <div style="display: flex; align-items: flex-end; gap: 2px; height: 16px;">
-            <div class="eq-bar"></div>
-            <div class="eq-bar"></div>
-            <div class="eq-bar"></div>
+          <span class="music-sr-label" id="music-title">Sapphire</span>
+          <span class="music-sr-label" id="music-artist">Ed Sheeran</span>
+          <div class="music-controls" aria-label="Listening controls">
+            <button type="button" class="music-btn" id="music-toggle" aria-label="Play Sapphire">
+              <svg class="music-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              <svg class="music-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none;"><path d="M7 5h4v14H7zm6 0h4v14h-4z"/></svg>
+            </button>
+            <button type="button" class="music-btn" id="music-next" aria-label="Next track">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 5v14l9-7zm10 0h3v14h-3z"/></svg>
+            </button>
+            <button type="button" class="music-btn" id="music-shuffle" aria-label="Shuffle listening playlist">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16 3h5v5M4 17h2.2c2.1 0 3.2-.9 4.6-3.2l2.4-3.6C14.6 7.9 15.7 7 17.8 7H21M16 21h5v-5M4 7h2.2c1.6 0 2.6.5 3.7 1.8M13.9 15.2c1.1 1.3 2.1 1.8 3.9 1.8H21"/></svg>
+            </button>
+          </div>
+          <div class="music-player-embed" aria-hidden="true">
+            <div id="youtube-music-player"></div>
           </div>
         </div>
       </div>
@@ -10152,6 +10288,163 @@
       </div>
     </div>
   </div>
+
+  <script>
+    (function () {
+      var tile = document.querySelector('.cell-listen');
+      var playerMount = document.getElementById('youtube-music-player');
+      var toggleBtn = document.getElementById('music-toggle');
+      var nextBtn = document.getElementById('music-next');
+      var shuffleBtn = document.getElementById('music-shuffle');
+      var titleEl = document.getElementById('music-title');
+      var artistEl = document.getElementById('music-artist');
+      var bannerImg = document.getElementById('music-banner-img');
+      var playIcon = toggleBtn ? toggleBtn.querySelector('.music-icon-play') : null;
+      var pauseIcon = toggleBtn ? toggleBtn.querySelector('.music-icon-pause') : null;
+      if (!tile || !playerMount || !toggleBtn || !nextBtn || !shuffleBtn || !titleEl || !artistEl || !bannerImg) return;
+
+      var tracks = [
+        { title: 'Sapphire', artist: 'Ed Sheeran', videoId: 'JgDNFQ2RaLQ', url: 'https://www.youtube.com/watch?v=JgDNFQ2RaLQ', thumbnail: 'https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg' },
+        { title: 'O Sanam', artist: 'Lucky Ali', videoId: 'dWqb-WqbGh8', url: 'https://www.youtube.com/watch?v=dWqb-WqbGh8', thumbnail: 'https://img.youtube.com/vi/dWqb-WqbGh8/hqdefault.jpg' },
+        { title: 'Old Town Road', artist: 'Lil Nas X', videoId: 'r7qovpFAGrQ', url: 'https://www.youtube.com/watch?v=r7qovpFAGrQ', thumbnail: 'https://img.youtube.com/vi/r7qovpFAGrQ/hqdefault.jpg' },
+        { title: 'YouTube Pick', artist: 'Shared link', videoId: 'LC4-MkqP0-Q', url: 'https://www.youtube.com/watch?v=LC4-MkqP0-Q&list=RDLC4-MkqP0-Q&start_radio=1', thumbnail: 'https://img.youtube.com/vi/LC4-MkqP0-Q/hqdefault.jpg' }
+      ];
+
+      var currentIndex = 0;
+      var player = null;
+      var playerReady = false;
+      var pendingPlay = false;
+
+      function currentTrack() {
+        return tracks[currentIndex];
+      }
+
+      function updateTrackLabel() {
+        var track = currentTrack();
+        titleEl.textContent = track.title;
+        artistEl.textContent = track.artist;
+        bannerImg.src = track.thumbnail;
+        bannerImg.alt = track.title + ' video thumbnail';
+        toggleBtn.setAttribute('aria-label', 'Play ' + track.title);
+      }
+
+      function setPlaying(isPlaying) {
+        tile.classList.toggle('is-playing', isPlaying);
+        if (playIcon) playIcon.style.display = isPlaying ? 'none' : 'block';
+        if (pauseIcon) pauseIcon.style.display = isPlaying ? 'block' : 'none';
+        toggleBtn.setAttribute('aria-label', (isPlaying ? 'Pause ' : 'Play ') + currentTrack().title);
+      }
+
+      function cueCurrentTrack() {
+        if (!playerReady || !player || typeof player.cueVideoById !== 'function') return;
+        player.cueVideoById(currentTrack().videoId);
+      }
+
+      function playCurrentTrack() {
+        if (!playerReady || !player || typeof player.loadVideoById !== 'function') {
+          pendingPlay = true;
+          toggleBtn.setAttribute('aria-label', 'Loading ' + currentTrack().title);
+          return;
+        }
+        player.loadVideoById(currentTrack().videoId);
+        player.playVideo();
+        setPlaying(true);
+      }
+
+      function pickRandomTrack() {
+        if (tracks.length < 2) return currentIndex;
+        var nextIndex = currentIndex;
+        while (nextIndex === currentIndex) {
+          nextIndex = Math.floor(Math.random() * tracks.length);
+        }
+        return nextIndex;
+      }
+
+      function goToNextTrack() {
+        currentIndex = (currentIndex + 1) % tracks.length;
+        updateTrackLabel();
+
+        if (tile.classList.contains('is-playing')) {
+          playCurrentTrack();
+        } else {
+          cueCurrentTrack();
+        }
+      }
+
+      toggleBtn.addEventListener('click', function () {
+        if (!playerReady || !player) {
+          playCurrentTrack();
+          return;
+        }
+
+        var state = typeof player.getPlayerState === 'function' ? player.getPlayerState() : -1;
+        if (state === 1) {
+          player.pauseVideo();
+          setPlaying(false);
+          return;
+        }
+        if (state === 2 || state === 5) {
+          player.playVideo();
+          setPlaying(true);
+          return;
+        }
+
+        playCurrentTrack();
+      });
+
+      nextBtn.addEventListener('click', goToNextTrack);
+
+      shuffleBtn.addEventListener('click', function () {
+        currentIndex = pickRandomTrack();
+        updateTrackLabel();
+
+        if (tile.classList.contains('is-playing')) {
+          playCurrentTrack();
+        } else {
+          cueCurrentTrack();
+        }
+      });
+
+      window.onYouTubeIframeAPIReady = function () {
+        player = new YT.Player('youtube-music-player', {
+          height: '1',
+          width: '1',
+          videoId: currentTrack().videoId,
+          playerVars: {
+            playsinline: 1,
+            controls: 0,
+            disablekb: 1,
+            modestbranding: 1,
+            rel: 0
+          },
+          events: {
+            onReady: function () {
+              playerReady = true;
+              cueCurrentTrack();
+              if (pendingPlay) {
+                pendingPlay = false;
+                playCurrentTrack();
+              }
+            },
+            onStateChange: function (event) {
+              if (event.data === 1) setPlaying(true);
+              if (event.data === 2 || event.data === 0) setPlaying(false);
+            }
+          }
+        });
+      };
+
+      updateTrackLabel();
+
+      if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+        var script = document.createElement('script');
+        script.src = 'https://www.youtube.com/iframe_api';
+        document.body.appendChild(script);
+      } else if (window.YT && window.YT.Player) {
+        window.onYouTubeIframeAPIReady();
+      }
+    })();
+  </script>
 
   <script>
     (function () {
