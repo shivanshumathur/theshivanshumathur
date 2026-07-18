@@ -20,5 +20,5 @@ app.get("*", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Igloo local mirror at http://localhost:${PORT}/`);
+  console.log(`AI-Lab local at http://localhost:${PORT}/`);
 });

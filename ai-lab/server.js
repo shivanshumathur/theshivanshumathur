@@ -21,7 +21,7 @@ app.use(
 );
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`\nIgloo Inc. (exact copy) running at:`);
+  console.log(`\nAI-Lab proxy running at:`);
   console.log(`  http://localhost:${PORT}/\n`);
   console.log(`Proxying live site from ${TARGET}`);
 });

@@ -115,7 +115,7 @@ function patchFiles() {
   app = app.replace(/https:\/\/www\.igloo\.inc\//g, "/");
   fs.writeFileSync(appJs, app);
 
-  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon32-af94112f.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon16-9e4401be.png"><meta name="description" content="Our mission is to create the largest onchain community, driving the consumer crypto revolution."><title>Igloo Inc.</title><script type="module" crossorigin src="/assets/index-2eb69c09.js"></script></head><body></body></html>`;
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon32-af94112f.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon16-9e4401be.png"><meta name="description" content="AI-Lab — experiments in AI workflows, product strategy, and design systems."><title>AI-Lab</title><script type="module" crossorigin src="/assets/index-2eb69c09.js"></script></head><body></body></html>`;
   fs.writeFileSync(path.join(ROOT, "index.html"), html);
 }
 
