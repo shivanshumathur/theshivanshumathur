@@ -240,6 +240,12 @@
     }
 
     /* ===== Apple-style Notification Panel - Siri-style compact ===== */
+    a.notification-panel {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
     .notification-panel {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -6445,10 +6451,10 @@
 
   <!-- ========== RIGHT SIDE - AI LAB ========== -->
   <aside class="right-half">
-    <div class="notification-panel">
+    <a class="notification-panel" href="/ai-lab/" aria-label="Open AI Lab">
       <div class="notification-header">
         <div class="notification-title">AI Lab</div>
-        <div class="notification-badge">Coming Soon</div>
+        <div class="notification-badge">Enter →</div>
       </div>
       <div class="notification-coming-soon">
         <div class="notification-coming-soon-icon">
@@ -6459,10 +6465,10 @@
           </svg>
         </div>
         <div class="notification-coming-soon-text">
-          Experiments in AI workflows, product strategy, and design systems. Coming soon.
+          Experiments in AI workflows, product strategy, and design systems.
         </div>
       </div>
-    </div>
+    </a>
   </aside>
 
   <!-- ========== WORK APP OVERLAY ========== -->

@@ -1,0 +1,16 @@
+{
+  "name": "igloo-local",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "dev:static": "node static-server.js",
+    "dev:offline": "node static-server.js",
+    "mirror": "node mirror.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "http-proxy-middleware": "^3.0.3"
+  }
+}
