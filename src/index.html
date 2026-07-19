@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shivanshu Mathur</title>
-  <meta name="description" content="Personal dashboard — Shivanshu Mathur, AI & UX Strategist.">
+  <meta name="description" content="Personal dashboard — Shivanshu Mathur, AI Native Product Designer.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -76,7 +76,7 @@
     body.dashboard-body.light-mode .card-note {
       background: #f59e0b;
     }
-    body.dashboard-body.light-mode .folio-stack div {
+    body.dashboard-body.light-mode .folio-stack-card {
       box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
     }
     /* Invert white logos in light mode so they're visible */
@@ -156,7 +156,7 @@
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 22px;
+      border-radius: var(--tile-radius, 22px);
       overflow: hidden;
       box-shadow: 0 1px 2px var(--shadow), 0 0 0 0 transparent;
       transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
@@ -169,205 +169,212 @@
       box-shadow: 0 12px 40px var(--shadow), 0 2px 6px var(--shadow);
     }
 
-    /* ===== Bento grid — pinned to left 50% ===== */
+    /* ===== Bento grid ===== */
     .bento {
       --bento-gap: 14px;
       --tile-size: 128px;
-      --profile-height: 450px;
+      --tile-pad: 16px;
+      --tile-radius: 22px;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      grid-template-rows: var(--tile-size) calc(var(--profile-height) - var(--tile-size) - var(--bento-gap)) var(--tile-size);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-rows: var(--tile-size) auto var(--tile-size);
       gap: var(--bento-gap);
       width: 100%;
-      max-width: 700px;
+      max-width: 780px;
+      align-items: stretch;
     }
 
-    .cell-profile  { grid-column: 1 / 4; grid-row: 1 / 3; height: var(--profile-height); min-height: 0; }
-    .cell-quote    { grid-column: 1 / 2; grid-row: 3 / 4; }
-    .cell-work     { grid-column: 4 / 5; grid-row: 1 / 2; position: relative; overflow: visible; }
-    .cell-listen   { grid-column: 2 / 3; grid-row: 3 / 4; }
-
-    /* ===== Left-half wrapper ===== */
-    .left-half {
-      width: 55%;
-      min-width: 480px;
-      padding: 56px 24px 120px 28px;
-      height: 100vh;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-      position: relative;
-      z-index: 1;
-    }
-    .left-half::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* ===== Right-half wrapper - Siri-style compact ===== */
-    .right-half {
-      display: block;
-      position: fixed;
-      right: 32px;
-      top: 56px;
-      width: auto;
-      min-width: auto;
-      padding: 0;
+    .cell-profile  {
+      grid-column: 1 / 4;
+      grid-row: 1 / 3;
       height: auto;
-      z-index: 1;
-      max-width: 320px;
-    }
-
-    @media (max-width: 960px) {
-      .left-half {
-        width: 100%;
-        min-width: 0;
-        padding: 56px 16px 120px;
-        height: auto;
-        overflow-y: visible;
-      }
-      .right-half {
-        display: none;
-      }
-      .dock-wrap {
-        left: 50% !important;
-      }
-    }
-    @media (max-width: 768px) {
-      .right-half {
-        display: none !important;
-      }
-    }
-
-    /* ===== Apple-style Notification Panel - Siri-style compact ===== */
-    a.notification-panel {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      cursor: pointer;
-    }
-    .notification-panel {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 16px;
-      box-shadow: 0 1px 2px var(--shadow), 0 0 0 0 transparent;
-      width: 280px;
-      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  border-color 0.3s, background 0.3s;
-    }
-    .notification-panel:hover {
-      border-color: var(--border-hover);
-      transform: translateY(-3px) scale(1.005);
-      box-shadow: 0 12px 40px var(--shadow), 0 2px 6px var(--shadow);
-    }
-    .notification-header {
+      min-height: 0;
       display: flex;
+      flex-direction: column;
+    }
+    .cell-work     { grid-column: 4 / 5; grid-row: 1 / 2; }
+    .cell-ailab    { grid-column: 5 / 6; grid-row: 1 / 2; }
+    .cell-listen   { grid-column: 1 / 2; grid-row: 3 / 4; }
+
+    /* Notes — classic sticky note, pinned top-right on desktop */
+    aside.notes-panel {
+      position: fixed;
+      top: 56px;
+      right: 28px;
+      left: auto;
+      bottom: auto;
+      width: 168px;
+      height: 168px;
+      margin: 0;
+      padding: 0;
+      z-index: 40;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      overflow: visible;
+    }
+    aside.notes-panel .quote-sticky-note {
+      width: 100%;
+      height: 100%;
+      border-radius: 2px;
+      padding: 14px 14px 12px;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.06),
+        0 6px 16px rgba(0, 0, 0, 0.18),
+        0 12px 28px rgba(0, 0, 0, 0.1);
+    }
+    aside.notes-panel .quote-sticky-note::before {
+      width: 18px;
+      height: 18px;
+      border-radius: 0 2px 0 14px;
+    }
+    aside.notes-panel .quote-lines {
+      border-radius: 2px;
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent 17px,
+        rgba(139, 105, 20, 0.1) 17px,
+        rgba(139, 105, 20, 0.1) 18px
+      );
+      background-position: 0 14px;
+    }
+    aside.notes-panel .quote-content {
+      height: 100%;
+      gap: 0;
+      padding: 0;
+    }
+    aside.notes-panel .quote-textarea {
+      font-size: 12px;
+      line-height: 18px;
+      margin: 0;
+      padding: 0 2px;
+      min-height: 0;
+    }
+    aside.notes-panel .quote-author-input {
+      font-size: 10px;
+      margin-top: auto;
+      padding: 6px 2px 0;
+      border-top: 1px solid rgba(139, 105, 20, 0.18);
+    }
+
+    /* Shared tile shell — work, AI Lab */
+    .bento-tile {
+      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      aspect-ratio: 1 / 1;
+      padding: var(--tile-pad);
+      text-align: center;
+      font-family: inherit;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      box-sizing: border-box;
     }
-    .notification-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: -0.1px;
-    }
-    .notification-badge {
-      background: var(--bg-hover);
-      color: var(--text-secondary);
-      font-size: 9px;
-      font-weight: 600;
-      padding: 3px 7px;
-      border-radius: 8px;
-      letter-spacing: 0.2px;
-    }
-    .notification-coming-soon {
-      text-align: left;
-      padding: 0;
-      transition: transform 0.2s ease;
-    }
-    .notification-coming-soon:hover {
-      transform: none;
-    }
-    .notification-coming-soon-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: transparent;
+    .bento-tile-visual {
+      flex: 1 1 auto;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 0 14px;
-      border: none;
-      position: relative;
-      overflow: visible;
+      width: 100%;
+      min-height: 0;
+    }
+    .bento-tile-cta {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .bento-tile-cta .btn-linkedin {
+      padding: 6px 12px !important;
+      font-size: 11px;
+      gap: 4px;
+      pointer-events: none;
+    }
+    button.bento-tile {
+      appearance: none;
+      font: inherit;
+      -webkit-appearance: none;
+    }
+    a.bento-tile {
+      color: inherit;
     }
     /* Siri-style orb */
     .siri-orb {
-      width: 44px;
-      height: 44px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
       position: relative;
       overflow: hidden;
       isolation: isolate;
+      flex-shrink: 0;
       box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.08),
-        0 4px 16px rgba(80, 120, 255, 0.25),
-        0 0 28px rgba(180, 80, 255, 0.2);
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 4px 16px rgba(59, 130, 246, 0.35),
+        0 0 28px rgba(139, 92, 246, 0.3),
+        0 0 40px rgba(236, 72, 153, 0.22);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
     }
     .siri-orb::before {
       content: '';
       position: absolute;
-      inset: -35%;
+      inset: -40%;
       background:
-        radial-gradient(circle at 30% 30%, #5ac8fa 0%, transparent 42%),
-        radial-gradient(circle at 70% 25%, #bf5af2 0%, transparent 45%),
-        radial-gradient(circle at 75% 70%, #ff375f 0%, transparent 42%),
-        radial-gradient(circle at 25% 75%, #64d2ff 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, #0a84ff 0%, #5e5ce6 55%, #bf5af2 100%);
-      animation: siri-spin 8s linear infinite;
-      filter: blur(6px) saturate(1.25);
+        radial-gradient(circle at 28% 28%, #3b82f6 0%, transparent 42%),
+        radial-gradient(circle at 72% 22%, #8b5cf6 0%, transparent 44%),
+        radial-gradient(circle at 78% 72%, #ef4444 0%, transparent 42%),
+        radial-gradient(circle at 24% 76%, #06b6d4 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, #3b82f6 0%, #8b5cf6 45%, #ec4899 100%);
+      animation: siri-spin 7.5s linear infinite;
+      filter: blur(5px) saturate(1.35);
       will-change: transform;
     }
     .siri-orb::after {
       content: '';
       position: absolute;
-      inset: -20%;
+      inset: -22%;
       background:
-        radial-gradient(ellipse 55% 45% at 35% 40%, rgba(255, 255, 255, 0.55) 0%, transparent 55%),
-        radial-gradient(ellipse 40% 50% at 65% 65%, rgba(255, 100, 180, 0.45) 0%, transparent 50%),
-        radial-gradient(ellipse 50% 40% at 55% 30%, rgba(100, 210, 255, 0.4) 0%, transparent 50%);
-      animation: siri-morph 4.5s ease-in-out infinite alternate;
-      filter: blur(4px);
+        radial-gradient(ellipse 55% 45% at 34% 38%, rgba(255, 255, 255, 0.55) 0%, transparent 55%),
+        radial-gradient(ellipse 42% 50% at 68% 66%, rgba(236, 72, 153, 0.55) 0%, transparent 52%),
+        radial-gradient(ellipse 50% 40% at 56% 28%, rgba(6, 182, 212, 0.5) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 40% at 42% 72%, rgba(245, 158, 11, 0.45) 0%, transparent 50%);
+      animation: siri-morph 4.2s ease-in-out infinite alternate;
+      filter: blur(3.5px);
       mix-blend-mode: screen;
-      will-change: transform, border-radius;
+      will-change: transform;
     }
     .siri-orb-core {
       position: absolute;
       inset: 18%;
       border-radius: 50%;
       background: radial-gradient(circle at 40% 35%,
-        rgba(255, 255, 255, 0.35) 0%,
-        rgba(255, 255, 255, 0.06) 40%,
+        rgba(255, 255, 255, 0.45) 0%,
+        rgba(255, 255, 255, 0.08) 40%,
         transparent 70%);
       pointer-events: none;
       z-index: 1;
     }
     .siri-orb-wave {
       position: absolute;
-      inset: 8%;
+      inset: 6%;
       border-radius: 42% 58% 55% 45% / 48% 42% 58% 52%;
       background: linear-gradient(135deg,
-        rgba(90, 200, 250, 0.7),
-        rgba(191, 90, 242, 0.65),
-        rgba(255, 55, 95, 0.55),
-        rgba(10, 132, 255, 0.7));
-      animation: siri-blob 3.2s ease-in-out infinite;
-      filter: blur(3px);
+        rgba(59, 130, 246, 0.9),
+        rgba(6, 182, 212, 0.85),
+        rgba(139, 92, 246, 0.9),
+        rgba(236, 72, 153, 0.85),
+        rgba(245, 158, 11, 0.8),
+        rgba(239, 68, 68, 0.85));
+      animation: siri-blob 3.1s ease-in-out infinite;
+      filter: blur(2.5px) saturate(1.25);
       mix-blend-mode: soft-light;
-      opacity: 0.9;
+      opacity: 0.95;
       will-change: border-radius, transform;
     }
     @keyframes siri-spin {
@@ -396,16 +403,13 @@
         transform: rotate(120deg) scale(1);
       }
     }
-    .notification-panel:hover .siri-orb {
-      box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.12),
-        0 6px 22px rgba(80, 120, 255, 0.35),
-        0 0 36px rgba(180, 80, 255, 0.3);
+    .cell-ailab:hover .siri-orb {
       transform: scale(1.06);
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-    }
-    .siri-orb {
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.14),
+        0 6px 22px rgba(59, 130, 246, 0.45),
+        0 0 36px rgba(139, 92, 246, 0.4),
+        0 0 48px rgba(236, 72, 153, 0.3);
     }
     @media (prefers-reduced-motion: reduce) {
       .siri-orb::before,
@@ -414,56 +418,133 @@
         animation: none;
       }
     }
-    .notification-coming-soon-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-      letter-spacing: -0.2px;
+
+    /* ===== Left-half wrapper ===== */
+    .left-half {
+      width: 55%;
+      min-width: 480px;
+      padding: 56px 24px 120px 28px;
+      height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      position: relative;
+      z-index: 1;
     }
-    .notification-coming-soon-text {
-      font-size: 11px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-      margin: 0;
+    .left-half::-webkit-scrollbar {
+      display: none;
     }
-    .right-half .notification-panel {
-      width: 100%;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .right-half .notification-header {
-      margin-bottom: 12px;
-      gap: 8px;
-    }
-    .right-half .notification-coming-soon-icon {
-      margin-bottom: 12px;
-    }
-    .right-half .notification-coming-soon-text {
-      font-size: 10px;
-      line-height: 1.45;
-    }
-    @media (max-width: 1200px) {
-      .right-half {
-        right: 24px;
+
+    /* Tablet */
+    @media (max-width: 960px) {
+      .left-half {
+        width: 100%;
+        min-width: 0;
+        padding: 56px 20px 110px;
+        height: auto;
+        overflow-y: visible;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        align-items: stretch;
       }
-      .notification-panel {
-        width: 260px;
+      .dock-wrap {
+        left: 50% !important;
+      }
+      .bento {
+        display: contents;
+        max-width: 100%;
+      }
+      .cell-profile {
+        grid-column: 1 / 3;
+        grid-row: 1 / 3;
+        height: auto;
+        min-height: 0;
+      }
+      .cell-work {
+        grid-column: 3 / 4;
+        grid-row: 1 / 2;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+      }
+      .cell-ailab {
+        grid-column: 4 / 5;
+        grid-row: 1 / 2;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+      }
+      .cell-listen {
+        grid-column: 3 / 4;
+        grid-row: 2 / 3;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        min-height: 0;
+      }
+      aside.notes-panel {
+        position: static;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        grid-column: 4 / 5;
+        grid-row: 2 / 3;
+        z-index: 1;
+      }
+      aside.notes-panel .quote-sticky-note {
+        padding: 12px;
       }
     }
 
+    /* Mobile */
     @media (max-width: 600px) {
-      .bento {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: none;
+      .left-half {
+        padding: 52px 12px 100px;
         gap: 10px;
-        max-width: 100%;
+        grid-template-columns: 1fr 1fr;
       }
-      .cell-profile, .cell-work, .cell-listen, .cell-quote {
-        grid-column: 1 / 3;
+      .cell-profile {
+        grid-column: 1 / -1;
         grid-row: auto;
+        min-height: 0;
+        height: auto;
+        order: 1;
+      }
+      .cell-work {
+        grid-column: 1;
+        grid-row: auto;
+        order: 2;
+      }
+      .cell-ailab {
+        grid-column: 2;
+        grid-row: auto;
+        order: 3;
+      }
+      .cell-listen {
+        grid-column: 1;
+        grid-row: auto;
+        order: 4;
+      }
+      aside.notes-panel {
+        grid-column: 2;
+        grid-row: auto;
+        order: 5;
+        margin: 0;
+      }
+      aside.notes-panel .quote-sticky-note {
+        padding: 12px 10px 10px;
+      }
+      aside.notes-panel .quote-textarea {
+        font-size: 11px;
+        line-height: 16px;
+      }
+      .status-bar {
+        padding: 1px 12px;
+      }
+      .status-datetime {
+        font-size: 12px;
       }
     }
 
@@ -489,6 +570,14 @@
       background: var(--bg-elevated);
       position: relative;
       overflow: hidden;
+      flex-shrink: 0;
+    }
+    .profile-body {
+      padding: 0 var(--tile-pad) var(--tile-pad);
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      min-height: 0;
     }
     .profile-avatar {
       width: 64px;
@@ -499,12 +588,89 @@
       margin-top: -32px;
       overflow: visible;
       box-shadow: 0 4px 12px var(--shadow);
+      flex-shrink: 0;
     }
     .profile-avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
+    }
+    .profile-name-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .profile-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+      margin: 0;
+    }
+    .profile-role {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin: 3px 0 0;
+      font-weight: 500;
+    }
+    .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 14px;
+      text-align: left;
+    }
+    .profile-stat {
+      padding: 0 12px;
+      border-right: 1px solid var(--border-subtle);
+    }
+    .profile-stat:first-child {
+      padding-left: 0;
+    }
+    .profile-stat:last-child {
+      padding-right: 0;
+      border-right: none;
+    }
+    .profile-stat-value {
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 750;
+      letter-spacing: -0.8px;
+      color: var(--text-secondary);
+    }
+    .profile-stat-label {
+      font-size: 11px;
+      line-height: 1.35;
+      margin-top: 6px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .profile-bio {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      line-height: 1.6;
+      margin: 14px 0 0;
+    }
+    .profile-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .profile-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .profile-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
     }
     .avatar-dot {
       width: 16px;
@@ -566,62 +732,55 @@
       color: var(--text-primary);
       transform: scale(1.03);
     }
-    .cell-work .btn-linkedin {
-      padding: 6px 10px !important;
+    .cell-work .btn-linkedin,
+    .cell-ailab .btn-linkedin {
+      padding: 6px 12px !important;
       font-size: 11px;
       gap: 4px;
     }
 
-
     .cell-work,
-    .cell-listen,
-    .cell-quote {
+    .cell-ailab {
+      width: 100%;
+      height: var(--tile-size);
+      aspect-ratio: 1 / 1;
+      position: relative;
+      min-height: 0;
+    }
+
+    .cell-listen {
       width: 100%;
       height: 100%;
       aspect-ratio: auto;
       position: relative;
-      overflow: visible;
-      padding: 0;
+      min-height: 0;
+      padding: var(--tile-pad);
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
     }
-    .cell-quote.card {
-      background: transparent;
-      border: none;
-      box-shadow: none;
-    }
-    .cell-quote.card:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    }
-    /* Disable lift on 1×1 tiles — subtle border glow instead */
+
     .cell-listen:hover {
-      transform: translateY(-2px) scale(1);
-    }
-    @media (max-width: 600px) {
-      .cell-profile {
-        height: auto;
-      }
-      .cell-work,
-      .cell-listen,
-      .cell-quote {
-        height: auto;
-        aspect-ratio: 1 / 1;
-      }
+      transform: translateY(-3px) scale(1.005);
     }
     
     /* Sticky note style for quote card */
     .quote-sticky-note {
       background: #ffeb3b;
       border: none;
-      border-radius: 4px;
-      padding: 14px 16px 16px;
+      border-radius: 2px;
+      padding: 14px;
       height: 100%;
       display: flex;
       flex-direction: column;
       position: relative;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), 
-                  0 0 0 1px rgba(0, 0, 0, 0.05);
+      box-sizing: border-box;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.06),
+        0 6px 16px rgba(0, 0, 0, 0.18);
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       cursor: text;
+      overflow: hidden;
     }
     /* Folded corner effect */
     .quote-sticky-note::before {
@@ -629,11 +788,11 @@
       position: absolute;
       top: 0;
       right: 0;
-      width: 20px;
-      height: 20px;
-      background: linear-gradient(225deg, #ffeb3b 0%, #ffeb3b 50%, #f9a825 50%, #f9a825 100%);
-      border-radius: 0 4px 0 20px;
-      box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
+      width: 18px;
+      height: 18px;
+      background: linear-gradient(225deg, #fff59d 0%, #fff59d 50%, #f9a825 50%, #f9a825 100%);
+      border-radius: 0 2px 0 14px;
+      box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.12);
       z-index: 2;
     }
     .quote-textarea {
@@ -643,19 +802,19 @@
       border: none;
       outline: none;
       resize: none;
-      font-size: 11.5px;
-      line-height: 1.6;
-      color: #8b6914;
+      font-size: 12px;
+      line-height: 18px;
+      color: #5c4a0f;
       font-style: italic;
       font-family: inherit;
-      padding: 0;
-      margin-top: 4px;
-      min-height: 60px;
+      padding: 0 2px;
+      margin: 0;
+      min-height: 0;
       overflow-y: auto;
     }
     .quote-textarea::placeholder {
       color: #b8860b;
-      opacity: 0.6;
+      opacity: 0.55;
     }
     .quote-textarea:focus {
       outline: none;
@@ -666,13 +825,12 @@
       border: none;
       outline: none;
       font-size: 10px;
-      color: #8b6914;
+      color: #5c4a0f;
       font-weight: 600;
       font-family: inherit;
-      padding: 0;
-      margin-top: 8px;
-      padding-top: 6px;
-      border-top: 1px solid rgba(139, 105, 20, 0.15);
+      padding: 6px 2px 0;
+      margin-top: auto;
+      border-top: 1px solid rgba(139, 105, 20, 0.18);
     }
     .quote-author-input::placeholder {
       color: #b8860b;
@@ -691,21 +849,22 @@
       pointer-events: none;
       background-image: repeating-linear-gradient(
         transparent,
-        transparent 19px,
-        rgba(139, 105, 20, 0.08) 19px,
-        rgba(139, 105, 20, 0.08) 20px
+        transparent 17px,
+        rgba(139, 105, 20, 0.1) 17px,
+        rgba(139, 105, 20, 0.1) 18px
       );
-      border-radius: 4px;
-      padding: 14px 16px 16px;
+      background-position: 0 14px;
+      border-radius: 2px;
       z-index: 0;
     }
-     .quote-content {
-       position: relative;
-       z-index: 1;
-       height: 100%;
-       display: flex;
-       flex-direction: column;
-     }
+    .quote-content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
      /* Survey sticky notes */
      .survey-sticky-note {
        background: #ffeb3b;
@@ -826,9 +985,10 @@
       flex-direction: column;
       height: 100%;
       width: 100%;
-      gap: 8px;
+      gap: 10px;
       overflow: hidden;
       justify-content: space-between;
+      min-height: 0;
     }
     .music-banner {
       position: relative;
@@ -951,8 +1111,34 @@
     /* ===== Portfolio stacked images ===== */
     .folio-stack {
       position: relative;
-      width: 100%;
-      height: 130px;
+      width: 84px;
+      height: 68px;
+      flex-shrink: 0;
+    }
+    .folio-stack-card {
+      position: absolute;
+      width: 38px;
+      height: 48px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    .folio-stack-card:nth-child(1) {
+      background: linear-gradient(135deg, #3b82f6, #06b6d4);
+      transform: rotate(-12deg);
+      left: 0;
+      top: 8px;
+    }
+    .folio-stack-card:nth-child(2) {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      transform: rotate(3deg);
+      left: 22px;
+      top: 2px;
+    }
+    .folio-stack-card:nth-child(3) {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      transform: rotate(-4deg);
+      left: 42px;
+      top: 10px;
     }
     .folio-img {
       position: absolute;
@@ -6351,7 +6537,7 @@
 
     /* ===== Logo Rail / Marquee ===== */
     .logo-rail-wrap {
-      margin-top: 16px;
+      margin-top: 14px;
       overflow: hidden;
       position: relative;
       width: 100%;
@@ -6411,38 +6597,59 @@
 
   <!-- ========== MAIN BENTO GRID ========== -->
   <main class="left-half">
+    <aside class="notes-panel" aria-label="Notes">
+      <div class="quote-sticky-note">
+        <div class="quote-lines"></div>
+        <div class="quote-content">
+          <textarea 
+            id="quote-text" 
+            class="quote-textarea" 
+            placeholder="Write a note..."
+            rows="4"
+          >Design is not just what it looks like. Design is how it works.</textarea>
+          <input 
+            type="text" 
+            id="quote-author" 
+            class="quote-author-input" 
+            placeholder="— Author"
+            value="— Steve Jobs"
+          />
+        </div>
+      </div>
+    </aside>
+
     <div class="bento">
 
       <!-- ===== PROFILE ===== -->
       <div class="cell-profile card">
         <div id="profile-banner-vanta" class="profile-banner"></div>
-        <div style="padding: 0 22px 22px;">
+        <div class="profile-body">
           <div class="profile-avatar">
             <img src="./assets/logos/ShivanshuMathur.jpg" alt="Shivanshu Mathur">
           </div>
-          <div style="display: flex; align-items: center; gap: 8px; margin-top: 12px;">
-            <h1 style="font-size: 18px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.3px;">Shivanshu Mathur</h1>
+          <div class="profile-name-row">
+            <h1 class="profile-name">Shivanshu Mathur</h1>
           </div>
-          <p style="font-size: 13px; color: var(--text-secondary); margin-top: 3px; font-weight: 500;">AI &amp; UX Strategist</p>
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 14px; text-align: left;">
-            <div style="padding: 0 12px 0 0; border-right: 1px solid var(--border-subtle);">
-              <div style="font-size: 22px; line-height: 1; font-weight: 750; letter-spacing: -0.8px; color: var(--text-secondary);">6+</div>
-              <div style="font-size: 11px; line-height: 1.35; margin-top: 6px; color: var(--text-secondary); font-weight: 500;">Years of Experience</div>
+          <p class="profile-role">AI Native Product Designer</p>
+          <div class="profile-stats">
+            <div class="profile-stat">
+              <div class="profile-stat-value">6+</div>
+              <div class="profile-stat-label">Years of Experience</div>
             </div>
-            <div style="padding: 0 12px; border-right: 1px solid var(--border-subtle);">
-              <div style="font-size: 22px; line-height: 1; font-weight: 750; letter-spacing: -0.8px; color: var(--text-secondary);">20+</div>
-              <div style="font-size: 11px; line-height: 1.35; margin-top: 6px; color: var(--text-secondary); font-weight: 500;">Projects Delivered</div>
+            <div class="profile-stat">
+              <div class="profile-stat-value">20+</div>
+              <div class="profile-stat-label">Projects Delivered</div>
             </div>
-            <div style="padding: 0 0 0 12px;">
-              <div style="font-size: 22px; line-height: 1; font-weight: 750; letter-spacing: -0.8px; color: var(--text-secondary);">🐶</div>
-              <div style="font-size: 11px; line-height: 1.35; margin-top: 6px; color: var(--text-secondary); font-weight: 500;">Dog Person</div>
+            <div class="profile-stat">
+              <div class="profile-stat-value">🐶</div>
+              <div class="profile-stat-label">Dog Person</div>
             </div>
           </div>
-          <p style="font-size: 12px; color: var(--text-tertiary); line-height: 1.6; margin-top: 14px;">
-            Blending AI thinking, product strategy, and user-centered design to craft experiences that actually move the needle for businesses.
+          <p class="profile-bio">
+            I design intelligent products that make complexity feel simple.
           </p>
-          <div style="display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 11px; color: var(--text-muted);">
-            <span style="display: flex; align-items: center; gap: 4px;">
+          <div class="profile-meta">
+            <span class="profile-meta-item">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
               India
             </span>
@@ -6465,7 +6672,7 @@
             </div>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 10px; margin-top: 18px;">
+          <div class="profile-actions">
             <a href="mailto:ershivanshumathur@gmail.com" class="btn-chat">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
               Let's chat
@@ -6478,31 +6685,42 @@
         </div>
       </div>
 
-      <!-- ===== WORK (Primary App tile) ===== -->
-      <button type="button" class="cell-work card" id="open-work-folio" style="padding: 20px; display: flex; flex-direction: column; text-decoration: none; text-align: center; cursor: pointer; font-family: inherit; align-items: center; justify-content: space-between;">
-        <div style="flex: 1; display: flex; align-items: center; justify-content: center; width: 100%;">
-          <!-- Card graphics -->
-          <div class="folio-stack" style="height: 80px; width: 100px; flex-shrink: 0; position: relative;">
-            <div style="position: absolute; width: 45px; height: 55px; border-radius: 10px; background: linear-gradient(135deg, #3b82f6, #06b6d4); transform: rotate(-12deg); left: 2px; top: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
-            <div style="position: absolute; width: 45px; height: 55px; border-radius: 10px; background: linear-gradient(135deg, #8b5cf6, #ec4899); transform: rotate(3deg); left: 22px; top: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
-            <div style="position: absolute; width: 45px; height: 55px; border-radius: 10px; background: linear-gradient(135deg, #f59e0b, #ef4444); transform: rotate(-4deg); left: 42px; top: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"></div>
+      <!-- ===== WORK ===== -->
+      <button type="button" class="cell-work card bento-tile" id="open-work-folio">
+        <div class="bento-tile-visual">
+          <div class="folio-stack" aria-hidden="true">
+            <span class="folio-stack-card"></span>
+            <span class="folio-stack-card"></span>
+            <span class="folio-stack-card"></span>
           </div>
         </div>
-        <div style="display: flex; justify-content: center; margin-top: 16px; width: 100%;">
-          <a href="#" class="btn-linkedin" style="text-decoration: none; padding: 6px 14px;">
+        <div class="bento-tile-cta">
+          <span class="btn-linkedin">
             View Portfolio
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
-          </a>
+          </span>
         </div>
       </button>
 
-      <!-- ===== MUSIC (Passive widget) ===== -->
-      <div class="cell-listen card" style="padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
-        <div class="music-player-shell">
-          <div class="section-label">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"/></svg>
-            Listening
+      <!-- ===== AI LAB ===== -->
+      <a href="/ai-lab/" class="cell-ailab card bento-tile" aria-label="Open AI Lab">
+        <div class="bento-tile-visual" aria-hidden="true">
+          <div class="siri-orb">
+            <span class="siri-orb-wave"></span>
+            <span class="siri-orb-core"></span>
           </div>
+        </div>
+        <div class="bento-tile-cta">
+          <span class="btn-linkedin">
+            Enter AI Lab
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- ===== MUSIC (Passive widget) ===== -->
+      <div class="cell-listen card">
+        <div class="music-player-shell">
           <div class="music-banner">
             <img id="music-banner-img" src="https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg" alt="Sapphire video thumbnail">
           </div>
@@ -6520,7 +6738,7 @@
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 5v14l9-7zm10 0h3v14h-3z"/></svg>
             </button>
             <button type="button" class="music-btn" id="music-shuffle" aria-label="Shuffle listening playlist">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16 3h5v5M4 17h2.2c2.1 0 3.2-.9 4.6-3.2l2.4-3.6C14.6 7.9 15.7 7 17.8 7H21M16 21h5v-5M4 7h2.2c1.6 0 2.6.5 3.7 1.8M13.9 15.2c1.1 1.3 2.1 1.8 3.9 1.8H21"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10.59 9.17 5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
             </button>
           </div>
           <div class="music-player-embed" aria-hidden="true">
@@ -6529,53 +6747,9 @@
         </div>
       </div>
 
-
-      <!-- ===== QUOTE / PERSONALITY (Interactive sticky note) ===== -->
-      <div class="cell-quote card">
-        <div class="quote-sticky-note">
-          <div class="quote-lines"></div>
-          <div class="quote-content">
-            <textarea 
-              id="quote-text" 
-              class="quote-textarea" 
-              placeholder="Write a note..."
-              rows="4"
-            >Design is not just what it looks like. Design is how it works.</textarea>
-            <input 
-              type="text" 
-              id="quote-author" 
-              class="quote-author-input" 
-              placeholder="— Author"
-              value="— Steve Jobs"
-            />
-          </div>
-        </div>
-      </div>
-
     </div>
 
   </main>
-
-  <!-- ========== RIGHT SIDE - AI LAB ========== -->
-  <aside class="right-half">
-    <a class="notification-panel" href="/ai-lab/" aria-label="Open AI Lab">
-      <div class="notification-header">
-        <div class="notification-title">AI Lab</div>
-        <div class="notification-badge">Enter →</div>
-      </div>
-      <div class="notification-coming-soon">
-        <div class="notification-coming-soon-icon" aria-hidden="true">
-          <div class="siri-orb">
-            <span class="siri-orb-wave"></span>
-            <span class="siri-orb-core"></span>
-          </div>
-        </div>
-        <div class="notification-coming-soon-text">
-          Experiments in AI workflows, product strategy, and design systems.
-        </div>
-      </div>
-    </a>
-  </aside>
 
   <!-- ========== WORK APP OVERLAY ========== -->
   <div class="app-overlay" id="work-overlay">
@@ -10443,19 +10617,16 @@
       if (!bento) return;
 
       function syncBentoGrid() {
-        if (window.matchMedia('(max-width: 600px)').matches) {
+        if (window.matchMedia('(max-width: 960px)').matches) {
           bento.style.removeProperty('--tile-size');
-          bento.style.removeProperty('--profile-height');
           return;
         }
 
         var gap = 14;
         var width = bento.getBoundingClientRect().width;
-        var tileSize = Math.max(96, (width - (gap * 3)) / 4);
-        var profileHeight = Math.min(470, Math.max(450, width * 0.62));
+        var tileSize = Math.max(96, (width - (gap * 4)) / 5);
 
         bento.style.setProperty('--tile-size', tileSize + 'px');
-        bento.style.setProperty('--profile-height', profileHeight + 'px');
       }
 
       syncBentoGrid();

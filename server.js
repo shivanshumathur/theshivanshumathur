@@ -13,6 +13,8 @@ app.use((req, res, next) => {
   if (req.path.startsWith("/ai-lab")) {
     res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
     res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+    // Allow homepage (and other same-site pages) to fetch AI Lab assets
+    res.setHeader("Cross-Origin-Resource-Policy", "same-site");
   }
   next();
 });
