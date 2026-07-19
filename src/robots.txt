@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://theshivanshumathur.vercel.app/sitemap.xml
