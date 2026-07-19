@@ -26,6 +26,11 @@ app.get(/^\/ai-lab(\/.*)?$/, (req, res, next) => {
   res.sendFile(path.join(root, "ai-lab", "index.html"));
 });
 
+// Unknown routes — branded 404 with homepage CTA
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(root, "404.html"));
+});
+
 app.listen(PORT, () => {
   console.log(`Dashboard: http://localhost:${PORT}/`);
   console.log(`AI Lab:    http://localhost:${PORT}/ai-lab/`);
