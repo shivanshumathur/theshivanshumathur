@@ -2691,6 +2691,14 @@
       pointer-events: none;
     }
 
+    /* Keep the homepage status bar visible above the fullscreen portfolio */
+    #work-overlay {
+      top: 34px;
+    }
+    #work-overlay .app-frame.fullscreen {
+      height: 100% !important;
+    }
+
     /* Minimize animation — macOS genie effect */
     .app-overlay.minimizing .app-frame {
       transform-origin: bottom center;
