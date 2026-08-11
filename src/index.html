@@ -97,7 +97,7 @@
 
     body.dashboard-body {
       height: 100vh;
-      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", system-ui, sans-serif;
       overflow-x: hidden;
       overflow-y: hidden;
 
@@ -123,9 +123,28 @@
       --icon-color: rgba(255,255,255,0.35);
       --icon-hover: rgba(255,255,255,0.7);
       --shadow: rgba(0,0,0,0.3);
+      --accent: #007AFF;
+
+      /* Apple Liquid Glass material */
+      --glass-fill: rgba(255, 255, 255, 0.035);
+      --glass-fill-hover: rgba(255, 255, 255, 0.07);
+      --glass-stroke: rgba(255, 255, 255, 0.28);
+      --glass-stroke-hover: rgba(255, 255, 255, 0.4);
+      --glass-highlight: rgba(255, 255, 255, 0.42);
+      --glass-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.14),
+                      0 12px 36px rgba(0, 0, 0, 0.38),
+                      inset 0 0.5px 0 rgba(255, 255, 255, 0.42),
+                      inset 0 -0.5px 0 rgba(255, 255, 255, 0.08);
+      --glass-shadow-hover: 0 0 0 0.5px rgba(0, 0, 0, 0.14),
+                            0 18px 48px rgba(0, 0, 0, 0.42),
+                            inset 0 0.5px 0 rgba(255, 255, 255, 0.55),
+                            inset 0 -0.5px 0 rgba(255, 255, 255, 0.1);
+      --glass-blur: blur(44px) saturate(160%) brightness(1.04);
 
       color: var(--text-primary);
       background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     @media (max-width: 960px) {
@@ -153,39 +172,50 @@
       filter: invert(1);
     }
     body.dashboard-body.light-mode {
-      --bg: #f5f5f7;
-      --bg-card: #ffffff;
-      --bg-card-hover: #f9f9f9;
-      --bg-elevated: #f0f0f2;
+      --bg: #F2F2F7;
+      --bg-card: #FFFFFF;
+      --bg-card-hover: #f9f9fb;
+      --bg-elevated: #EBEBF0;
       --bg-subtle: rgba(0,0,0,0.01);
       --bg-hover: rgba(0,0,0,0.04);
       --bg-active: rgba(0,0,0,0.06);
-      --border: rgba(0,0,0,0.08);
-      --border-hover: rgba(0,0,0,0.15);
-      --border-subtle: rgba(0,0,0,0.06);
-      --text-primary: #1d1d1f;
-      --text-secondary: rgba(0,0,0,0.55);
-      --text-tertiary: rgba(0,0,0,0.4);
-      --text-muted: rgba(0,0,0,0.3);
-      --text-faint: rgba(0,0,0,0.1);
-      --overlay-bg: rgba(0,0,0,0.25);
+      --border: rgba(60, 60, 67, 0.12);
+      --border-hover: rgba(60, 60, 67, 0.22);
+      --border-subtle: rgba(60, 60, 67, 0.08);
+      --text-primary: #000000;
+      --text-secondary: #3C3C43;
+      --text-tertiary: rgba(60, 60, 67, 0.72);
+      --text-muted: rgba(60, 60, 67, 0.5);
+      --text-faint: rgba(60, 60, 67, 0.18);
+      --overlay-bg: rgba(0,0,0,0.22);
       --tooltip-bg: rgba(255,255,255,0.92);
       --scrollbar: rgba(0,0,0,0.1);
-      --icon-color: rgba(0,0,0,0.4);
-      --icon-hover: rgba(0,0,0,0.7);
-      --shadow: rgba(0,0,0,0.08);
-    }
+      --icon-color: rgba(60, 60, 67, 0.55);
+      --icon-hover: rgba(0,0,0,0.78);
+      --shadow: rgba(0,0,0,0.1);
+      --accent: #007AFF;
 
-    /* Navbar theme toggle: show correct icon per theme */
-    #icon-moon { display: none; }
-    body.dashboard-body.light-mode #icon-sun  { display: none; }
-    body.dashboard-body.light-mode #icon-moon { display: block; }
+      --glass-fill: rgba(255, 255, 255, 0.52);
+      --glass-fill-hover: rgba(255, 255, 255, 0.68);
+      --glass-stroke: rgba(255, 255, 255, 0.72);
+      --glass-stroke-hover: rgba(255, 255, 255, 0.88);
+      --glass-highlight: rgba(255, 255, 255, 0.78);
+      --glass-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.06),
+                      0 10px 28px rgba(0, 0, 0, 0.12),
+                      inset 0 0.5px 0 rgba(255, 255, 255, 0.85),
+                      inset 0 -0.5px 0 rgba(255, 255, 255, 0.28);
+      --glass-shadow-hover: 0 0 0 0.5px rgba(0, 0, 0, 0.06),
+                            0 16px 40px rgba(0, 0, 0, 0.16),
+                            inset 0 0.5px 0 rgba(255, 255, 255, 0.95),
+                            inset 0 -0.5px 0 rgba(255, 255, 255, 0.32);
+      --glass-blur: blur(44px) saturate(180%) brightness(1.06);
+    }
 
     /* ===== Top status bar ===== */
     .status-bar {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: space-between;
       padding: 1px 24px;
       position: fixed;
       top: 0;
@@ -193,16 +223,181 @@
       right: 0;
       z-index: 100;
       background: #000;
+      border-bottom: none;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
       transition: background 0.4s ease;
     }
-    /* Solid black status bar even when wallpaper is active */
-    body.wp-has-wallpaper .status-bar {
+    /* Solid black menu bar like macOS, even with wallpaper / light mode */
+    body.wp-has-wallpaper .status-bar,
+    body.dashboard-body.light-mode .status-bar {
       background: #000;
+    }
+    body.dashboard-body.light-mode .status-icon,
+    body.dashboard-body.light-mode .status-datetime {
+      color: #fff;
+    }
+    .status-bar-left {
+      position: relative;
+      display: flex;
+      align-items: center;
     }
     .status-bar-right {
       display: flex;
       align-items: center;
       gap: 16px;
+    }
+    .home-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      min-width: 228px;
+      padding: 6px;
+      display: none;
+      flex-direction: column;
+      z-index: 140;
+      border-radius: 12px;
+      background: rgba(36, 36, 38, 0.62);
+      border: 0.5px solid rgba(255, 255, 255, 0.2);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        inset 0 0.5px 0 rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+    }
+    .home-menu.open { display: flex; }
+    .home-menu-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      padding: 8px 12px;
+      border: none;
+      background: transparent;
+      color: #fff;
+      border-radius: 7px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .home-menu-item svg {
+      flex-shrink: 0;
+      opacity: 0.9;
+    }
+    .home-menu-item:hover {
+      background: var(--accent, #007AFF);
+    }
+    .home-menu-sep {
+      height: 1px;
+      margin: 4px 8px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .about-system-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .about-system-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .about-system-card {
+      position: relative;
+      width: min(340px, 92vw);
+      overflow: hidden;
+      padding: 12px 28px 22px;
+      border-radius: 20px;
+      text-align: center;
+      color: #fff;
+      background: rgba(28, 24, 36, 0.62);
+      border: 0.5px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(48px) saturate(180%);
+      -webkit-backdrop-filter: blur(48px) saturate(180%);
+    }
+    .about-system-card.maximized {
+      width: min(420px, 94vw);
+    }
+    .about-system-titlebar {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      padding: 0;
+    }
+    .about-system-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 18px;
+    }
+    .about-system-hero .about-icon {
+      width: 92px;
+      height: 92px;
+      border-radius: 24px;
+      margin: 0 auto 16px;
+    }
+    .about-system-hero .about-icon svg {
+      width: 44px;
+      height: 44px;
+    }
+    .about-system-card h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin: 0 0 4px;
+      color: #fff;
+    }
+    .about-system-sub {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.48);
+      margin: 0 0 22px;
+    }
+    .about-specs {
+      width: auto;
+      margin: 0 auto;
+      border-collapse: collapse;
+    }
+    .about-specs th,
+    .about-specs td {
+      padding: 3px 0;
+      border: none;
+      vertical-align: baseline;
+    }
+    .about-specs th {
+      padding-right: 14px;
+      text-align: right;
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.48);
+      white-space: nowrap;
+    }
+    .about-specs td {
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .about-specs td code {
+      font-family: inherit;
+      font-weight: 600;
+      color: #fff;
+    }
+    .about-legal {
+      margin: 16px 0 0;
+      font-size: 10px;
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.32);
     }
     .status-icon {
       width: 32px;
@@ -221,11 +416,182 @@
       letter-spacing: 0.3px;
     }
 
+    /* ===== macOS Control Center ===== */
+    .display-veil {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      pointer-events: none;
+      z-index: 90;
+      opacity: 0;
+      transition: opacity 0.12s linear;
+    }
+    .cc-panel {
+      position: fixed;
+      top: 38px;
+      right: 14px;
+      width: 320px;
+      padding: 14px;
+      z-index: 120;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      border-radius: 22px;
+      color: #fff;
+      background: rgba(36, 36, 38, 0.46);
+      border: 0.5px solid rgba(255, 255, 255, 0.2);
+      box-shadow:
+        0 0 0 0.5px rgba(0, 0, 0, 0.25),
+        0 18px 50px rgba(0, 0, 0, 0.42),
+        inset 0 0.5px 0 rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(48px) saturate(180%) brightness(1.05);
+      -webkit-backdrop-filter: blur(48px) saturate(180%) brightness(1.05);
+    }
+    .cc-panel.open {
+      display: flex;
+    }
+    .cc-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cc-module {
+      background: rgba(255, 255, 255, 0.08);
+      border: 0.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.12);
+    }
+    .cc-appearance {
+      width: 72px;
+      height: 72px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cc-appearance-btn {
+      width: 56px;
+      height: 56px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      background: #f2f2f7;
+      color: #1d1d1f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+    .cc-appearance-btn:hover { transform: scale(1.04); }
+    .cc-appearance-btn #cc-icon-moon { display: none; }
+    body.dashboard-body.light-mode .cc-appearance-btn {
+      background: #1d1d1f;
+      color: #f2f2f7;
+    }
+    body.dashboard-body.light-mode .cc-appearance-btn #cc-icon-sun { display: none; }
+    body.dashboard-body.light-mode .cc-appearance-btn #cc-icon-moon { display: block; }
+    .cc-more {
+      flex: 1;
+      height: 72px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 0.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      color: #fff;
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+    }
+    .cc-more:hover { background: rgba(255, 255, 255, 0.12); }
+    .cc-more-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .cc-more-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .cc-more-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+    .cc-more-sub {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.55);
+    }
+    .cc-slider-card {
+      padding: 12px 14px 14px;
+    }
+    .cc-slider-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: -0.15px;
+      margin-bottom: 10px;
+    }
+    .cc-slider-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cc-slider-row svg {
+      flex-shrink: 0;
+      opacity: 0.72;
+    }
+    .cc-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      flex: 1;
+      height: 22px;
+      border-radius: 11px;
+      background: linear-gradient(to right, #fff var(--fill, 80%), rgba(255, 255, 255, 0.14) var(--fill, 80%));
+      outline: none;
+      cursor: pointer;
+    }
+    .cc-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: none;
+    }
+    .cc-slider::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border: none;
+      border-radius: 50%;
+      background: transparent;
+    }
+    .cc-slider::-moz-range-track {
+      background: transparent;
+      border: none;
+    }
+    @media (max-width: 480px) {
+      .cc-panel {
+        right: 10px;
+        left: 10px;
+        width: auto;
+      }
+    }
+
     /* ===== Card base ===== */
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--tile-radius, 22px);
+      border-radius: var(--tile-radius, 20px);
       overflow: hidden;
       box-shadow: 0 1px 2px var(--shadow), 0 0 0 0 transparent;
       transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
@@ -236,6 +602,51 @@
       border-color: var(--border-hover);
       transform: translateY(-3px) scale(1.005);
       box-shadow: 0 12px 40px var(--shadow), 0 2px 6px var(--shadow);
+    }
+
+    /* Shared Apple Liquid Glass slab — used by bento cards + dock */
+    .liquid-glass {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background: var(--glass-fill);
+      border: 0.5px solid var(--glass-stroke);
+      border-radius: var(--tile-radius, 20px);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  background 0.3s ease,
+                  border-color 0.3s ease,
+                  box-shadow 0.3s ease;
+    }
+    .liquid-glass::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.22) 0%,
+        rgba(255, 255, 255, 0.06) 28%,
+        rgba(255, 255, 255, 0) 58%,
+        rgba(0, 0, 0, 0.06) 100%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+    .liquid-glass > * {
+      position: relative;
+      z-index: 1;
+    }
+    .liquid-glass:hover {
+      background: var(--glass-fill-hover);
+      border-color: var(--glass-stroke-hover);
+      box-shadow: var(--glass-shadow-hover);
+    }
+    .card.liquid-glass:hover {
+      border-color: var(--glass-stroke-hover);
+      box-shadow: var(--glass-shadow-hover);
     }
     @media (hover: none) {
       .card:hover,
@@ -250,7 +661,7 @@
       --bento-gap: 14px;
       --tile-size: 128px;
       --tile-pad: 16px;
-      --tile-radius: 22px;
+      --tile-radius: 20px;
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       grid-template-rows: var(--tile-size) auto var(--tile-size);
@@ -268,6 +679,31 @@
       display: flex;
       flex-direction: column;
       z-index: 1;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      color: #111;
+    }
+    .cell-profile .profile-name,
+    .cell-profile .profile-role,
+    .cell-profile .profile-bio,
+    .cell-profile .profile-stat-value,
+    .cell-profile .profile-meta {
+      color: #111;
+    }
+    .cell-profile .profile-stat-label,
+    .cell-profile .profile-meta-item {
+      color: rgba(0, 0, 0, 0.48);
+    }
+    .cell-profile:hover {
+      background: #fff;
+      border-color: rgba(0, 0, 0, 0.12);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+    .cell-profile .logo-rail-item {
+      filter: invert(1);
     }
     .cell-ailab    {
       grid-column: 4 / 5;
@@ -376,6 +812,8 @@
       padding: 6px 12px !important;
       font-size: 11px;
       gap: 4px;
+    }
+    .cell-ailab .bento-tile-cta .btn-linkedin {
       pointer-events: none;
     }
     button.bento-tile {
@@ -804,11 +1242,11 @@
       width: 64px;
       height: 64px;
       border-radius: 50%;
-      border: 3px solid var(--bg-card);
+      border: 3px solid rgba(255, 255, 255, 0.72);
       position: relative;
       margin-top: -32px;
       overflow: visible;
-      box-shadow: 0 4px 12px var(--shadow);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
       flex-shrink: 0;
     }
     .profile-avatar img {
@@ -859,7 +1297,7 @@
       line-height: 1;
       font-weight: 750;
       letter-spacing: -0.8px;
-      color: var(--text-secondary);
+      color: var(--text-primary);
     }
     .profile-stat-label {
       font-size: 11px;
@@ -922,36 +1360,51 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 9px 18px;
-      background: #2563eb;
+      padding: 8px 16px;
+      background: #0071e3;
       color: #fff;
-      border-radius: 980px;
-      font-size: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: background 0.25s, transform 0.25s;
-    }
-    .btn-chat:hover { background: #1d4ed8; transform: scale(1.03); }
-    .btn-linkedin {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 9px 18px;
-      background: var(--bg-active);
-      border: 1px solid var(--border);
-      color: var(--icon-hover);
+      border: none;
       border-radius: 980px;
       font-size: 12px;
       font-weight: 500;
       text-decoration: none;
       white-space: nowrap;
-      transition: all 0.25s;
+      box-shadow: none;
+      transition: background 0.2s ease;
+    }
+    .btn-chat:hover {
+      background: #0077ed;
+      filter: none;
+      transform: none;
+      box-shadow: none;
+    }
+    .btn-linkedin {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: #f5f5f7;
+      border: none;
+      color: #1d1d1f;
+      border-radius: 980px;
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      transition: background 0.2s ease;
     }
     .btn-linkedin:hover {
-      background: var(--bg-hover);
-      color: var(--text-primary);
-      transform: scale(1.03);
+      background: #e8e8ed;
+      color: #1d1d1f;
+      transform: none;
+    }
+    body.light-mode .btn-linkedin {
+      background: #f5f5f7;
+      border: none;
+      color: #1d1d1f;
     }
     .cell-work .btn-linkedin,
     .cell-ailab .btn-linkedin {
@@ -969,98 +1422,16 @@
       min-height: 0;
     }
 
-    /* AI Lab — liquid glass (same material as dock) */
+    /* AI Lab tile sizing on shared liquid-glass material */
     a.cell-ailab.liquid-glass {
       display: flex;
-      isolation: isolate;
-      overflow: hidden;
       width: 100%;
       height: var(--tile-size);
       min-height: var(--tile-size);
       aspect-ratio: 1 / 1;
-      background: rgba(255, 255, 255, 0.035);
-      border: 0.5px solid rgba(255, 255, 255, 0.22);
-      border-radius: var(--tile-radius, 22px);
-      box-shadow:
-        0 0 0 0.5px rgba(0, 0, 0, 0.12),
-        0 10px 30px rgba(0, 0, 0, 0.35),
-        inset 0 0.5px 0 rgba(255, 255, 255, 0.4),
-        inset 0 -0.5px 0 rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(40px) saturate(120%) brightness(1.02);
-      -webkit-backdrop-filter: blur(40px) saturate(120%) brightness(1.02);
-      animation: bento-rise 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.18s forwards;
-      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  background 0.3s ease,
-                  border-color 0.3s ease,
-                  box-shadow 0.3s ease;
     }
     a.cell-ailab.liquid-glass:hover {
-      opacity: 1;
-      background: rgba(255, 255, 255, 0.055);
-      border-color: rgba(255, 255, 255, 0.28);
       transform: translateY(-3px) scale(1.005);
-      box-shadow:
-        0 0 0 0.5px rgba(0, 0, 0, 0.12),
-        0 14px 36px rgba(0, 0, 0, 0.38),
-        inset 0 0.5px 0 rgba(255, 255, 255, 0.48),
-        inset 0 -0.5px 0 rgba(255, 255, 255, 0.1);
-    }
-    body.light-mode a.cell-ailab.liquid-glass {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.35);
-      animation: bento-rise 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.18s forwards;
-      box-shadow:
-        0 0 0 0.5px rgba(0, 0, 0, 0.06),
-        0 10px 28px rgba(0, 0, 0, 0.18),
-        inset 0 0.5px 0 rgba(255, 255, 255, 0.55),
-        inset 0 -0.5px 0 rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(40px) saturate(115%) brightness(1.04);
-      -webkit-backdrop-filter: blur(40px) saturate(115%) brightness(1.04);
-    }
-    body.light-mode a.cell-ailab.liquid-glass:hover {
-      opacity: 1;
-      background: rgba(255, 255, 255, 0.14);
-      border-color: rgba(255, 255, 255, 0.42);
-    }
-    @media (prefers-reduced-motion: reduce) {
-      a.cell-ailab.liquid-glass,
-      body.light-mode a.cell-ailab.liquid-glass {
-        animation: none;
-        opacity: 1;
-        transform: none;
-      }
-    }
-    /* Soft inner glass floor — same as dock */
-    a.cell-ailab.liquid-glass::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.1) 0%,
-        rgba(255, 255, 255, 0.02) 35%,
-        rgba(255, 255, 255, 0) 60%,
-        rgba(0, 0, 0, 0.04) 100%
-      );
-      pointer-events: none;
-      z-index: 0;
-    }
-    a.cell-ailab.liquid-glass > * {
-      position: relative;
-      z-index: 1;
-    }
-    a.cell-ailab.liquid-glass .btn-linkedin {
-      background: rgba(255, 255, 255, 0.08);
-      border: 0.5px solid rgba(255, 255, 255, 0.22);
-      box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(12px) saturate(120%);
-      -webkit-backdrop-filter: blur(12px) saturate(120%);
-      color: var(--text-primary);
-    }
-    body.light-mode a.cell-ailab.liquid-glass .btn-linkedin {
-      background: rgba(255, 255, 255, 0.28);
-      border-color: rgba(255, 255, 255, 0.4);
     }
 
     .cell-listen {
@@ -1310,10 +1681,11 @@
       flex: 1 1 auto;
       min-height: 0;
       width: 100%;
-      border-radius: 14px;
+      border-radius: 12px;
       overflow: hidden;
       background: var(--bg-card-hover);
-      border: 1px solid var(--border);
+      border: 0.5px solid rgba(255, 255, 255, 0.22);
+      box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.28);
     }
     .music-banner img {
       display: block;
@@ -1376,18 +1748,27 @@
       flex: 0 0 auto;
     }
     .music-btn {
-      width: 24px;
-      height: 24px;
-      border: 0;
-      background: transparent;
-      color: var(--text-secondary);
+      width: 28px;
+      height: 28px;
+      border: 0.5px solid rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.14);
+      color: var(--text-primary);
       padding: 0;
       font: inherit;
       cursor: pointer;
+      border-radius: 12px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(12px) saturate(140%);
+      -webkit-backdrop-filter: blur(12px) saturate(140%);
       transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+    body.light-mode .music-btn {
+      background: rgba(255, 255, 255, 0.5);
+      border-color: rgba(255, 255, 255, 0.75);
+      color: #000000;
     }
     .music-btn svg {
       width: 16px;
@@ -1455,6 +1836,65 @@
       left: 42px;
       top: 10px;
     }
+    .cell-work.folio-authing {
+      cursor: default;
+    }
+    .folio-auth {
+      display: none;
+      align-items: center;
+      width: 100%;
+      max-width: 148px;
+      height: 26px;
+      padding: 0 2px 0 10px;
+      background: rgba(0, 0, 0, 0.28);
+      border: 0.5px solid rgba(255, 255, 255, 0.22);
+      border-radius: 980px;
+      box-sizing: border-box;
+    }
+    .cell-work.folio-authing .folio-auth { display: flex; }
+    .cell-work.folio-authing .folio-idle-cta { display: none; }
+    .folio-auth input {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+      border: none;
+      background: none;
+      color: #fff;
+      font: inherit;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      outline: none;
+    }
+    .folio-auth input::placeholder {
+      color: rgba(255, 255, 255, 0.55);
+    }
+    .folio-auth-go {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+    .folio-auth-go:hover { background: rgba(255, 255, 255, 0.34); }
+    .cell-work.folio-auth-wrong .folio-auth {
+      animation: folio-shake 0.42s ease;
+      border-color: rgba(255, 69, 58, 0.7);
+    }
+    @keyframes folio-shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-5px); }
+      40% { transform: translateX(5px); }
+      60% { transform: translateX(-3px); }
+      80% { transform: translateX(3px); }
+    }
     .folio-img {
       position: absolute;
       width: 80px;
@@ -1505,27 +1945,18 @@
       padding: 5px 7px;
       border-radius: 14px;
       isolation: isolate;
-      /* Clear glass that picks up wallpaper color */
-      background: rgba(255, 255, 255, 0.035);
-      border: 0.5px solid rgba(255, 255, 255, 0.22);
-      box-shadow:
-        0 0 0 0.5px rgba(0, 0, 0, 0.12),
-        0 10px 30px rgba(0, 0, 0, 0.35),
-        inset 0 0.5px 0 rgba(255, 255, 255, 0.4),
-        inset 0 -0.5px 0 rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(40px) saturate(120%) brightness(1.02);
-      -webkit-backdrop-filter: blur(40px) saturate(120%) brightness(1.02);
+      background: var(--glass-fill);
+      border: 0.5px solid var(--glass-stroke);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
     }
     body.light-mode .dock-bar {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.35);
-      box-shadow:
-        0 0 0 0.5px rgba(0, 0, 0, 0.06),
-        0 10px 28px rgba(0, 0, 0, 0.18),
-        inset 0 0.5px 0 rgba(255, 255, 255, 0.55),
-        inset 0 -0.5px 0 rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(40px) saturate(115%) brightness(1.04);
-      -webkit-backdrop-filter: blur(40px) saturate(115%) brightness(1.04);
+      background: var(--glass-fill);
+      border-color: var(--glass-stroke);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
     }
     /* Soft inner glass floor */
     .dock-bar::after {
@@ -1937,168 +2368,224 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--overlay-bg);
-      backdrop-filter: saturate(150%) blur(12px);
-      -webkit-backdrop-filter: saturate(150%) blur(12px);
+      background: transparent;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease;
+    }
+    #settings-backdrop {
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
     }
     .settings-overlay.open {
       opacity: 1;
       pointer-events: auto;
     }
+    .settings-main { position: relative; }
     .settings-window {
       position: relative;
-      width: 82vw;
-      max-width: 880px;
-      height: 80vh;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
+      width: min(820px, 92vw);
+      height: min(560px, 84vh);
+      background: #1c1c1e;
+      border: 0.5px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
       overflow: hidden;
       display: flex;
-      flex-direction: column;
-      box-shadow: 0 0 0 0.5px var(--border),
-                  0 4px 16px rgba(0,0,0,0.06),
-                  0 24px 80px rgba(0,0,0,0.22);
+      flex-direction: row;
+      color: #fff;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
       transform: scale(0.94) translateY(20px);
       opacity: 0;
-      transition: transform 0.35s cubic-bezier(0.2,0.9,0.3,1), opacity 0.25s ease;
+      transition: transform 0.35s cubic-bezier(0.2,0.9,0.3,1), opacity 0.25s ease, width 0.2s ease, height 0.2s ease;
     }
     .settings-overlay.open .settings-window {
       transform: scale(1) translateY(0);
       opacity: 1;
     }
-
-    /* Title bar */
-    .settings-titlebar {
-      display: flex;
-      align-items: center;
-      padding: 14px 20px;
-      background: var(--bg-subtle);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-    .settings-titlebar-dots {
-      display: flex;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-    .settings-titlebar-dots span {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: opacity 0.15s;
-    }
-    .settings-titlebar-dots span:hover { opacity: 0.8; }
-    .settings-titlebar-nav {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-left: 14px;
-    }
-    .settings-titlebar-nav button {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: default;
-      padding: 2px;
-      display: flex;
-      align-items: center;
-    }
-    .settings-titlebar-title {
-      flex: 1;
-      text-align: center;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      letter-spacing: -0.1px;
-    }
-    .settings-titlebar-spacer {
-      width: 80px;
-      flex-shrink: 0;
+    .settings-window.maximized {
+      width: min(1100px, 96vw);
+      height: min(780px, 92vh);
     }
 
-    /* Settings body: sidebar + pane */
     .settings-body {
       display: flex;
       flex: 1;
       overflow: hidden;
+      width: 100%;
     }
 
-    /* Settings sidebar — Apple System Settings style */
     .settings-sidebar {
-      width: 230px;
+      width: 220px;
       flex-shrink: 0;
-      border-right: 1px solid var(--border);
       overflow-y: auto;
-      padding: 14px 12px;
-      background: var(--bg-subtle);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      padding: 12px 10px 16px;
+      background: #2a2a2c;
+      border-right: 0.5px solid rgba(255, 255, 255, 0.08);
     }
     .settings-sidebar::-webkit-scrollbar { width: 4px; }
     .settings-sidebar::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 2px; }
+    .settings-sidebar-chrome {
+      display: flex;
+      align-items: center;
+      padding: 2px 4px 12px;
+    }
+    .settings-search {
+      position: relative;
+      margin: 0 2px 12px;
+    }
+    .settings-search input {
+      width: 100%;
+      height: 28px;
+      border: none;
+      border-radius: 8px;
+      padding: 0 10px 0 28px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font: inherit;
+      font-size: 12px;
+      outline: none;
+    }
+    .settings-search input::placeholder { color: rgba(255, 255, 255, 0.4); }
+    .settings-search svg {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.45;
+      pointer-events: none;
+    }
+    .settings-nav-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      margin-bottom: 14px;
+    }
+    .settings-nav-group:last-child { margin-bottom: 0; }
     .settings-sidebar-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 8px 12px;
+      gap: 8px;
+      padding: 5px 8px;
       font-size: 13px;
       font-weight: 500;
-      color: var(--text-secondary);
+      color: rgba(255, 255, 255, 0.88);
       cursor: pointer;
       border: none;
       background: none;
       width: 100%;
       text-align: left;
       font-family: inherit;
-      transition: all 0.15s ease;
       border-radius: 8px;
       letter-spacing: -0.1px;
-      margin-bottom: 2px;
     }
     .settings-sidebar-item:hover {
-      background: var(--bg-hover);
-      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.08);
     }
     .settings-sidebar-item.active {
-      background: var(--accent, rgba(59,130,246,0.95));
+      background: var(--accent, #007AFF);
       color: #fff;
-      font-weight: 600;
     }
-    .settings-sidebar-item.active .settings-sidebar-icon {
-      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-    }
-    .settings-sidebar-item svg {
-      flex-shrink: 0;
-      opacity: 0.6;
-    }
-    .settings-sidebar-item:hover svg {
-      opacity: 0.9;
-    }
-    .settings-sidebar-item.active svg {
-      opacity: 1;
-    }
+    .settings-sidebar-item.hidden { display: none; }
     .settings-sidebar-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 7px;
+      width: 22px;
+      height: 22px;
+      border-radius: 5.5px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      overflow: hidden;
+      background: #3A3A3E;
+    }
+    .settings-sidebar-icon svg {
+      width: 16px;
+      height: 16px;
+      display: block;
     }
 
-    /* Settings main pane */
+    .settings-account {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 8px 10px;
+      margin: 0 2px 14px;
+      min-height: 52px;
+    }
+    .settings-account-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #3a3a3c;
+      flex-shrink: 0;
+    }
+    .settings-account-text {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .settings-account-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .settings-account-role {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.62);
+      margin-top: 1px;
+    }
+    .settings-account.active .settings-account-role {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .settings-main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      background: #1c1c1e;
+    }
+    .settings-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      height: 48px;
+      flex-shrink: 0;
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+    }
+    .settings-titlebar-nav {
+      position: absolute;
+      left: 14px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .settings-titlebar-nav button {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.35);
+      cursor: default;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+    }
+    .settings-titlebar-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.88);
+      letter-spacing: -0.1px;
+    }
+
     .settings-pane {
       flex: 1;
       overflow-y: auto;
-      padding: 32px 36px;
+      padding: 22px 28px 28px;
     }
     .settings-pane::-webkit-scrollbar { width: 6px; }
     .settings-pane::-webkit-scrollbar-track { background: transparent; }
@@ -2111,34 +2598,146 @@
     .settings-section { margin-bottom: 32px; }
     .settings-section:last-child { margin-bottom: 0; }
     .settings-section-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-      letter-spacing: -0.5px;
-      line-height: 1.2;
+      display: none;
     }
     .settings-section-subtitle {
       font-size: 13px;
-      color: var(--text-muted);
+      color: rgba(255, 255, 255, 0.45);
       margin-top: 0;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       line-height: 1.5;
     }
 
-    /* Apple-style grouped settings rows — rounded container with internal dividers */
     .settings-group {
-      background: var(--bg-hover);
-      border: 1px solid var(--border-subtle);
-      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      border-radius: 10px;
       overflow: hidden;
+    }
+    .settings-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin: 12px 0 16px;
+    }
+    .settings-action-btn,
+    .settings-btn {
+      appearance: none;
+      background: rgba(120, 120, 128, 0.32);
+      border: none;
+      color: #fff;
+      padding: 3px 10px;
+      min-height: 22px;
+      border-radius: 6px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: -0.08px;
+      cursor: pointer;
+      line-height: 1.2;
+    }
+    .settings-action-btn:hover,
+    .settings-btn:hover {
+      background: rgba(120, 120, 128, 0.44);
+    }
+    .settings-btn:active {
+      background: rgba(120, 120, 128, 0.28);
+    }
+    .settings-btn:disabled {
+      opacity: 0.38;
+      cursor: default;
+      pointer-events: none;
+    }
+    .lock-pane-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 22px;
+    }
+    .lock-msg-editor {
+      display: none;
+      gap: 8px;
+      padding: 10px 14px 14px;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+    }
+    .lock-msg-editor.open { display: flex; }
+    .lock-msg-editor input {
+      flex: 1;
+      min-width: 0;
+      background: rgba(120, 120, 128, 0.24);
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font: inherit;
+      font-size: 13px;
+      padding: 5px 10px;
+      outline: none;
+    }
+    .settings-user-list { padding: 0; }
+    .settings-user-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+    }
+    .settings-user-row:last-child { border-bottom: none; }
+    .settings-user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #3a3a3c;
+    }
+    .settings-user-meta { flex: 1; min-width: 0; }
+    .settings-user-name { font-size: 13px; font-weight: 500; color: #fff; }
+    .settings-user-role { font-size: 12px; color: rgba(255, 255, 255, 0.45); margin-top: 1px; }
+    .settings-info-btn {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      color: rgba(255, 255, 255, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      font-style: italic;
+      font-family: Georgia, serif;
+      background: none;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .settings-row-value {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.55);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .settings-help {
+      position: absolute;
+      right: 16px;
+      bottom: 14px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      color: rgba(255, 255, 255, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      background: none;
+      cursor: default;
     }
     .settings-group .settings-row {
       border: none;
       border-radius: 0;
       margin-bottom: 0;
       background: none;
-      border-bottom: 1px solid var(--border-subtle);
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
     }
     .settings-group .settings-row:last-child {
       border-bottom: none;
@@ -2156,34 +2755,29 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 20px;
-      background: var(--bg-hover);
-      border: 1px solid var(--border-subtle);
-      border-radius: 14px;
+      padding: 11px 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      border-radius: 10px;
       margin-bottom: 10px;
-      transition: border-color 0.2s;
-    }
-    .settings-row:hover {
-      border-color: var(--border);
     }
     .settings-row:last-child { margin-bottom: 0; }
     .settings-row-label {
       font-size: 13px;
-      font-weight: 600;
-      color: var(--text-secondary);
+      font-weight: 500;
+      color: #fff;
       letter-spacing: -0.05px;
     }
     .settings-row-sublabel {
       font-size: 11px;
-      color: var(--text-muted);
+      color: rgba(255, 255, 255, 0.4);
       margin-top: 3px;
       line-height: 1.4;
     }
 
-    /* Apple-style helper text below sections */
     .settings-helper {
       font-size: 11px;
-      color: var(--text-muted);
+      color: rgba(255, 255, 255, 0.4);
       margin-top: 8px;
       padding: 0 4px;
       line-height: 1.5;
@@ -2306,33 +2900,31 @@
     /* Typography buttons — Apple segmented control */
     .font-btns {
       display: flex;
-      gap: 0;
-      background: var(--bg-active);
-      border-radius: 10px;
+      gap: 1px;
+      background: rgba(120, 120, 128, 0.24);
+      border-radius: 7px;
       overflow: hidden;
-      border: 1px solid var(--border);
-      position: relative;
+      border: none;
+      padding: 2px;
     }
     .font-btn {
-      padding: 10px 22px;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-tertiary);
+      padding: 3px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.55);
       background: transparent;
       border: none;
       cursor: pointer;
       font-family: inherit;
-      transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
-      border-right: 1px solid var(--border);
-      letter-spacing: -0.2px;
-      position: relative;
+      letter-spacing: -0.08px;
+      border-radius: 5px;
     }
     .font-btn:last-child { border-right: none; }
-    .font-btn:hover { color: var(--text-secondary); background: var(--bg-hover); }
+    .font-btn:hover { color: #fff; }
     .font-btn.active {
-      background: var(--accent, #0082FF);
+      background: rgba(120, 120, 128, 0.42);
       color: #fff;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+      box-shadow: none;
     }
     .font-btn[data-font="sans"] { font-family: 'Poppins', sans-serif; }
     .font-btn[data-font="serif"] { font-family: Georgia, 'Times New Roman', serif; }
@@ -2360,8 +2952,14 @@
       margin-top: 8px;
     }
 
-    /* Text size slider — Apple style */
-    .size-slider-wrap { position: relative; width: 100%; margin-top: 10px; }
+    /* Text size slider — labels sit under thumb stops */
+    .size-slider-wrap {
+      position: relative;
+      width: 100%;
+      margin-top: 10px;
+      padding: 0 11px;
+      box-sizing: border-box;
+    }
     .size-slider {
       -webkit-appearance: none;
       appearance: none;
@@ -2371,7 +2969,7 @@
       background: var(--border-hover);
       outline: none;
       cursor: pointer;
-      transition: background 0.2s;
+      display: block;
     }
     .size-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
@@ -2381,7 +2979,6 @@
       border: 1px solid rgba(0,0,0,0.08);
       box-shadow: 0 1px 4px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.04);
       cursor: grab;
-      transition: box-shadow 0.15s;
     }
     .size-slider::-webkit-slider-thumb:hover {
       box-shadow: 0 2px 8px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.04);
@@ -2395,19 +2992,24 @@
       cursor: grab;
     }
     .size-labels {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 12px;
-      padding: 0 2px;
+      position: relative;
+      height: 18px;
+      margin-top: 10px;
     }
     .size-labels span {
+      position: absolute;
+      top: 0;
+      transform: translateX(-50%);
       font-size: 11px;
       color: var(--text-muted);
       font-weight: 500;
       cursor: pointer;
-      transition: color 0.15s;
-      padding: 2px 0;
+      white-space: nowrap;
     }
+    .size-labels span:nth-child(1) { left: 0; transform: none; }
+    .size-labels span:nth-child(2) { left: 33.333%; }
+    .size-labels span:nth-child(3) { left: 66.666%; }
+    .size-labels span:nth-child(4) { left: auto; right: 0; transform: none; }
     .size-labels span:hover { color: var(--text-secondary); }
     .size-labels span.active { color: var(--accent, #0082FF); font-weight: 600; }
 
@@ -2446,39 +3048,245 @@
       box-shadow: 0 4px 16px var(--shadow);
     }
     .theme-icon.light {
-      background: linear-gradient(160deg, #fafafa, #e8e8e8);
+      background: #d8d8dc;
     }
-    .theme-icon.light::before {
-      content: '';
-      position: absolute;
-      bottom: 4px; left: 6px; right: 6px;
-      height: 6px;
-      border-radius: 3px;
-      background: rgba(0,0,0,0.06);
-    }
-    .theme-icon.dark  {
-      background: linear-gradient(160deg, #2a2a2e, #111113);
-    }
-    .theme-icon.dark::before {
-      content: '';
-      position: absolute;
-      bottom: 4px; left: 6px; right: 6px;
-      height: 6px;
-      border-radius: 3px;
-      background: rgba(255,255,255,0.06);
-    }
-    .theme-icon.auto  {
-      background: linear-gradient(135deg, #fafafa 50%, #1a1a1e 50%);
+    .theme-icon.dark {
+      background: #111113;
     }
     .theme-btn.active .theme-icon {
-      border-color: var(--accent, #0082FF);
-      box-shadow: 0 0 0 2px var(--accent, #0082FF), 0 4px 16px rgba(0,130,255,0.15);
+      border-color: var(--accent, #0A84FF);
+      box-shadow: 0 0 0 2px var(--accent, #0A84FF);
     }
     .theme-btn span {
       font-size: 11px;
-      color: var(--text-tertiary);
+      color: rgba(255, 255, 255, 0.55);
       font-weight: 500;
       letter-spacing: -0.05px;
+    }
+    .settings-heading {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.42);
+      margin: 0 0 10px 2px;
+      letter-spacing: -0.1px;
+    }
+    .appearance-block { margin-bottom: 26px; }
+    .appearance-block:last-child { margin-bottom: 0; }
+    .mini-win {
+      width: 58px;
+      height: 40px;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .mini-win-bar {
+      height: 8px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 0 4px;
+      flex-shrink: 0;
+    }
+    .mini-win-bar i {
+      width: 3.5px;
+      height: 3.5px;
+      border-radius: 50%;
+      display: block;
+    }
+    .mini-win-body { flex: 1; display: flex; }
+    .mini-win-side { width: 16px; }
+    .mini-win-main { flex: 1; }
+    .theme-icon.light .mini-win { background: #fff; }
+    .theme-icon.light .mini-win-bar { background: #e8e8ed; }
+    .theme-icon.light .mini-win-bar i:nth-child(1) { background: #ff5f57; }
+    .theme-icon.light .mini-win-bar i:nth-child(2) { background: #febc2e; }
+    .theme-icon.light .mini-win-bar i:nth-child(3) { background: #28c840; }
+    .theme-icon.light .mini-win-side { background: #f2f2f7; }
+    .theme-icon.light .mini-win-main { background: #fff; }
+    .theme-icon.dark .mini-win { background: #2c2c2e; }
+    .theme-icon.dark .mini-win-bar { background: #3a3a3c; }
+    .theme-icon.dark .mini-win-bar i:nth-child(1) { background: #ff5f57; }
+    .theme-icon.dark .mini-win-bar i:nth-child(2) { background: #febc2e; }
+    .theme-icon.dark .mini-win-bar i:nth-child(3) { background: #28c840; }
+    .theme-icon.dark .mini-win-side { background: #1c1c1e; }
+    .theme-icon.dark .mini-win-main { background: #2c2c2e; }
+    .theme-icon.auto {
+      background: #1a1a1c;
+      display: flex;
+      flex-direction: row;
+      padding: 0;
+      gap: 0;
+    }
+    .theme-icon.auto .mini-win { width: 50%; height: 100%; border-radius: 0; box-shadow: none; }
+    .theme-icon.auto .mini-win:first-child { border-right: 0.5px solid rgba(255,255,255,0.12); }
+    .theme-icon.auto .mini-win-bar i:nth-child(1),
+    .theme-icon.glass-clear .mini-win-bar i:nth-child(1),
+    .theme-icon.glass-tinted .mini-win-bar i:nth-child(1) { background: #ff5f57; }
+    .theme-icon.auto .mini-win-bar i:nth-child(2),
+    .theme-icon.glass-clear .mini-win-bar i:nth-child(2),
+    .theme-icon.glass-tinted .mini-win-bar i:nth-child(2) { background: #febc2e; }
+    .theme-icon.auto .mini-win-bar i:nth-child(3),
+    .theme-icon.glass-clear .mini-win-bar i:nth-child(3),
+    .theme-icon.glass-tinted .mini-win-bar i:nth-child(3) { background: #28c840; }
+    .theme-icon.auto .mini-win:first-child .mini-win-bar { background: #e8e8ed; }
+    .theme-icon.auto .mini-win:last-child .mini-win-bar { background: #3a3a3c; }
+    .theme-icon.glass-clear .mini-win-bar,
+    .theme-icon.glass-tinted .mini-win-bar { background: rgba(255,255,255,0.2); }
+    .theme-icon.glass-clear {
+      background: linear-gradient(160deg, rgba(120,180,255,0.35), rgba(40,40,50,0.5));
+    }
+    .theme-icon.glass-tinted {
+      background: linear-gradient(160deg, rgba(10,132,255,0.55), rgba(20,20,30,0.75));
+    }
+    .theme-icon.glass-clear .mini-win,
+    .theme-icon.glass-tinted .mini-win {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+    }
+    .theme-icon.glass-tinted .mini-win { background: rgba(10,132,255,0.28); }
+    .accent-dot--multi {
+      background: conic-gradient(#FF375F, #FF9F0A, #FFD60A, #30D158, #0A84FF, #BF5AF2, #FF375F) !important;
+    }
+    .appearance-color-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+    body.dashboard-body.glass-tinted {
+      --glass-fill: color-mix(in srgb, var(--accent) 28%, rgba(16, 16, 20, 0.58));
+      --glass-fill-hover: color-mix(in srgb, var(--accent) 38%, rgba(16, 16, 20, 0.68));
+      --glass-stroke: color-mix(in srgb, var(--accent) 35%, rgba(255,255,255,0.2));
+    }
+    body.dashboard-body.light-mode.glass-tinted {
+      --glass-fill: color-mix(in srgb, var(--accent) 18%, rgba(255, 255, 255, 0.62));
+      --glass-fill-hover: color-mix(in srgb, var(--accent) 26%, rgba(255, 255, 255, 0.78));
+    }
+    .settings-note {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.42);
+      margin: 20px 0 10px;
+    }
+    .settings-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: rgba(120, 120, 128, 0.32) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='12' viewBox='0 0 8 12'%3E%3Cpath fill='%23fff' d='M1.2 4.2L4 1.4l2.8 2.8M1.2 7.8L4 10.6l2.8-2.8'/%3E%3C/svg%3E") no-repeat right 8px center;
+      border: none;
+      color: #fff;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 400;
+      border-radius: 6px;
+      padding: 3px 22px 3px 10px;
+      min-height: 22px;
+      cursor: pointer;
+    }
+    .settings-select option { color: #000; }
+    .settings-radio-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 12px 14px;
+    }
+    .settings-radio {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #fff;
+      cursor: pointer;
+    }
+    .settings-radio input {
+      accent-color: #0A84FF;
+      width: 15px;
+      height: 15px;
+      margin: 0;
+    }
+    .style-row {
+      display: flex;
+      gap: 14px;
+    }
+    .style-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      background: none;
+      padding: 0;
+      font: inherit;
+      color: rgba(255,255,255,0.55);
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .style-thumb {
+      width: 52px;
+      height: 40px;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      overflow: hidden;
+    }
+    .style-btn.active { color: #fff; }
+    .style-btn.active .style-thumb { border-color: #0A84FF; box-shadow: 0 0 0 1px #0A84FF; }
+    .style-thumb.default { background: linear-gradient(160deg, #5b5b60, #2c2c2e); }
+    .style-thumb.dark { background: #1c1c1e; }
+    .style-thumb.clear { background: linear-gradient(160deg, rgba(180,200,255,0.35), rgba(40,40,50,0.4)); }
+    .style-thumb.tinted { background: linear-gradient(160deg, rgba(10,132,255,0.55), #1c1c1e); }
+    .swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+      vertical-align: -1px;
+    }
+    .settings-sidebar { --ss-icon-size: 22px; }
+    .settings-sidebar-icon,
+    .settings-sidebar-icon svg {
+      width: var(--ss-icon-size);
+      height: var(--ss-icon-size);
+    }
+    body.ss-icons-small .settings-sidebar { --ss-icon-size: 18px; }
+    body.ss-icons-large .settings-sidebar { --ss-icon-size: 26px; }
+    body.dashboard-body {
+      --highlight: rgba(255, 55, 95, 0.45);
+    }
+    body.dashboard-body ::selection {
+      background: var(--highlight);
+    }
+    body.wp-tint-on .settings-window {
+      background-image: linear-gradient(rgba(28,28,30,0.78), rgba(28,28,30,0.88));
+      background-size: cover;
+      background-position: center;
+    }
+    body.wp-tint-on.wp-active-1 .settings-window { background-image: linear-gradient(rgba(28,28,30,0.72), rgba(28,28,30,0.86)), url('assets/wallpapers/wallpaper-1.jpg'); }
+    body.wp-tint-on.wp-active-2 .settings-window { background-image: linear-gradient(rgba(28,28,30,0.72), rgba(28,28,30,0.86)), url('assets/wallpapers/Wallpaper-2.jpg'); }
+    body.wp-tint-on.wp-active-9 .settings-window { background-image: linear-gradient(rgba(28,28,30,0.72), rgba(28,28,30,0.86)), url('assets/wallpapers/wallpaper-9.jpg'); }
+    body.wp-tint-on.wp-active-11 .settings-window { background-image: linear-gradient(rgba(28,28,30,0.72), rgba(28,28,30,0.86)), url('assets/wallpapers/wallpaper-11.jpg'); }
+    body.sb-always .settings-pane::-webkit-scrollbar { width: 10px; }
+    body.sb-always .settings-pane::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.28); }
+    body.sb-scroll .settings-pane::-webkit-scrollbar-thumb { background: transparent; }
+    body.sb-scroll .settings-pane:hover::-webkit-scrollbar-thumb { background: var(--scrollbar); }
+    body.icon-style-dark .liquid-glass {
+      background: rgba(20,20,22,0.82);
+    }
+    body.icon-style-clear .liquid-glass {
+      background: rgba(255,255,255,0.08);
+    }
+    body.icon-style-tinted .liquid-glass {
+      background: color-mix(in srgb, var(--accent) 24%, rgba(20,20,22,0.55));
     }
 
     /* About pane — Apple-style card */
@@ -2527,6 +3335,40 @@
       color: var(--text-tertiary);
       line-height: 1.5;
     }
+    .settings-window .about-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+    }
+    .settings-window .about-card h3,
+    .settings-window .theme-btn span,
+    .settings-window .wallpaper-label,
+    .settings-window .font-preview-text {
+      color: #fff;
+    }
+    .settings-window .about-card p,
+    .settings-window .about-card .about-version,
+    .settings-window .font-preview-caption {
+      color: rgba(255, 255, 255, 0.45);
+    }
+    .settings-window .about-divider {
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .settings-window .font-preview {
+      background: rgba(255, 255, 255, 0.06);
+      border: none;
+    }
+    .settings-window .size-labels span {
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .settings-window .size-labels span:hover { color: rgba(255, 255, 255, 0.75); }
+    .settings-window .size-labels span.active { color: var(--accent, #0A84FF); }
+    .settings-action-btn:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+    .settings-nav-group:not(:has(.settings-sidebar-item:not(.hidden))) {
+      display: none;
+    }
 
     @media (max-width: 768px) {
       .settings-window { width: 96vw; height: 92vh; border-radius: 12px; }
@@ -2538,64 +3380,108 @@
     }
     .theme-btn.active span { color: var(--accent, #0082FF); font-weight: 600; }
 
-    /* ===== Wallpaper picker ===== */
+    /* ===== Wallpaper picker (macOS System Settings) ===== */
+    .wp-hero {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 28px;
+      align-items: flex-start;
+    }
+    .wp-preview {
+      width: 210px;
+      aspect-ratio: 16/10;
+      border-radius: 10px;
+      flex-shrink: 0;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    }
+    .wp-hero-meta { flex: 1; min-width: 0; padding-top: 4px; }
+    .wp-hero-name {
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.4px;
+      color: #fff;
+    }
+    .wp-hero-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      margin: 6px 0 16px;
+      line-height: 1.45;
+    }
+    .wp-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .wp-section { margin-bottom: 22px; }
+    .wp-section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .wp-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .wp-section-count {
+      font-size: 12px;
+      color: rgba(255,255,255,0.38);
+    }
     .wallpaper-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px 10px;
     }
     .wallpaper-option {
       cursor: pointer;
-      border: 3px solid transparent;
-      border-radius: 16px;
-      overflow: hidden;
-      transition: border-color 0.25s, transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.3s;
+      border: none;
+      border-radius: 0;
+      overflow: visible;
       background: none;
       padding: 0;
       font-family: inherit;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 7px;
       position: relative;
     }
-    .wallpaper-option:hover { transform: scale(1.04); box-shadow: 0 8px 24px var(--shadow); }
-    .wallpaper-option.active {
-      border-color: var(--accent, #0082FF);
-      box-shadow: 0 0 0 2px var(--accent, #0082FF), 0 4px 16px rgba(0,130,255,0.12);
-    }
-    /* Checkmark overlay on active wallpaper */
-    .wallpaper-option.active::after {
-      content: '✓';
-      position: absolute;
-      top: 10px; right: 10px;
-      width: 24px; height: 24px;
-      border-radius: 50%;
-      background: var(--accent, #0082FF);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      z-index: 1;
-    }
+    .wallpaper-option:hover { transform: none; box-shadow: none; }
+    .wallpaper-option.active { border: none; box-shadow: none; }
+    .wallpaper-option.active::after { display: none; }
     .wallpaper-thumb {
       width: 100%;
       aspect-ratio: 16/10;
-      border-radius: 12px;
+      border-radius: 8px;
       background-size: cover;
       background-position: center;
+      box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.12);
+    }
+    .wallpaper-option.active .wallpaper-thumb {
+      box-shadow: 0 0 0 2px var(--accent, #0A84FF), 0 0 0 3px rgba(0,0,0,0.4);
     }
     .wallpaper-label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
-      color: var(--text-tertiary);
-      padding-bottom: 6px;
+      color: rgba(255,255,255,0.55);
+      padding-bottom: 0;
       letter-spacing: -0.05px;
+      text-align: center;
     }
-    .wallpaper-option.active .wallpaper-label { color: var(--accent, #0082FF); font-weight: 600; }
+    .wallpaper-option.active .wallpaper-label { color: #fff; font-weight: 500; }
+    .wp-add-thumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.55);
+      font-size: 28px;
+      font-weight: 300;
+      line-height: 1;
+    }
 
     /* Wallpaper thumbnail definitions */
     .wp-default   { background: var(--bg); }
@@ -2620,6 +3506,10 @@
     body.dashboard-body.wp-active-2::before  { background: url('assets/wallpapers/Wallpaper-2.jpg') center/cover no-repeat; opacity: 1; }
     body.dashboard-body.wp-active-9::before  { background: url('assets/wallpapers/wallpaper-9.jpg') center/cover no-repeat; opacity: 1; }
     body.dashboard-body.wp-active-11::before { background: url('assets/wallpapers/wallpaper-11.jpg') center/cover no-repeat; opacity: 1; }
+    body.dashboard-body.wp-active-custom::before {
+      background: var(--custom-wallpaper) center/cover no-repeat;
+      opacity: 1;
+    }
 
     /* ===== Work App Overlay ===== */
     .app-overlay {
@@ -7015,27 +7905,262 @@
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
+
+    /* ===== macOS lock screen ===== */
+    body.is-locked .status-bar,
+    body.is-locked .left-half,
+    body.is-locked .dock-wrap,
+    body.is-locked .notes-panel {
+      visibility: hidden;
+    }
+    .lock-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 1500;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      color: #fff;
+      background: transparent;
+      opacity: 1;
+      transition: opacity 0.55s ease;
+    }
+    body.is-locked .lock-screen {
+      display: flex;
+    }
+    body.is-locked .lock-screen.unlocked {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .lock-clock {
+      margin-top: 11vh;
+      text-align: center;
+      user-select: none;
+    }
+    .lock-date {
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      color: rgba(255, 255, 255, 0.92);
+    }
+    .lock-time {
+      font-size: clamp(72px, 12vw, 118px);
+      font-weight: 600;
+      line-height: 0.95;
+      letter-spacing: -4px;
+      color: rgba(255, 255, 255, 0.88);
+      margin-top: 4px;
+    }
+    .lock-user {
+      margin-top: auto;
+      margin-bottom: 11vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lock-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #111;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    }
+    .lock-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .lock-name {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+    .lock-hint {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.62);
+    }
+    .lock-user:hover .lock-avatar {
+      transform: scale(1.04);
+    }
+    .lock-bottom {
+      margin-top: auto;
+      margin-bottom: 11vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .lock-user {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .lock-message {
+      display: none;
+      max-width: 320px;
+      margin: 0 0 28px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.35;
+      color: rgba(255, 255, 255, 0.88);
+    }
+    body.lock-show-message .lock-message { display: block; }
+    body.lock-hide-user .lock-avatar,
+    body.lock-hide-user .lock-name { display: none; }
+    body.lock-hide-hint .lock-hint { display: none; }
+    body.lock-hide-clock .lock-clock { display: none; }
   </style>
 </head>
-<body class="dashboard-body light-mode wp-active-2 wp-has-wallpaper">
+<body class="dashboard-body light-mode wp-active-2 wp-has-wallpaper is-locked">
   <!-- Prevent flash of wrong theme by applying saved theme ASAP -->
   <script>
-    (function(){try{var s=JSON.parse(localStorage.getItem('dashboard-settings'));if(s){var t=s.theme||'light';if(t==='auto'){t=window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark';}if(t==='dark'){document.body.classList.remove('light-mode');}}}catch(e){}})();
+    (function(){try{var s=JSON.parse(localStorage.getItem('dashboard-settings'));if(s){var t=s.theme||'light';if(t==='auto'){t=window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark';}if(t==='dark'){document.body.classList.remove('light-mode');}if(s.lockShowUser===false)document.body.classList.add('lock-hide-user');if(s.lockShowHint===false)document.body.classList.add('lock-hide-hint');if(s.lockShowClock===false)document.body.classList.add('lock-hide-clock');if(s.lockShowMessage)document.body.classList.add('lock-show-message');if(s.lockUnlock==='click')document.body.classList.add('lock-click-only');}var start=s&&s.lockStart?s.lockStart:'first';var unlocked=!!localStorage.getItem('dashboard-unlocked');if(start==='never'||(start==='first'&&unlocked)){document.body.classList.remove('is-locked');}}catch(e){}})();
   </script>
+
+  <div class="lock-screen" id="lock-screen" role="dialog" aria-modal="true" aria-label="Lock screen">
+    <div class="lock-clock">
+      <div class="lock-date" id="lock-date">Sun 19 Jul</div>
+      <div class="lock-time" id="lock-time">4:26</div>
+    </div>
+    <div class="lock-bottom">
+      <p class="lock-message" id="lock-message"></p>
+      <button type="button" class="lock-user" id="lock-unlock" aria-label="Sign in as Guest">
+        <span class="lock-avatar" aria-hidden="true">
+          <img src="./assets/logos/guest-memoji.png" alt="">
+        </span>
+        <span class="lock-name">Guest</span>
+        <span class="lock-hint">Click to enter</span>
+      </button>
+    </div>
+  </div>
 
   <!-- ========== STATUS BAR ========== -->
   <div class="status-bar">
-    <div class="status-bar-right">
-      <button type="button" class="status-icon" id="open-settings" title="Settings" style="background:none;border:none;cursor:pointer;font-family:inherit;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+    <div class="status-bar-left">
+      <button type="button" class="status-icon" id="nav-home" title="Home" aria-label="Home" aria-haspopup="true" aria-expanded="false" style="background:none;border:none;cursor:pointer;font-family:inherit;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5 12 3l9 7.5V20a1.5 1.5 0 01-1.5 1.5H15v-6H9v6H4.5A1.5 1.5 0 013 20v-9.5z"/></svg>
       </button>
-      <button type="button" class="status-icon" id="theme-toggle" title="Toggle theme" style="background:none;border:none;cursor:pointer;font-family:inherit;">
-        <!-- Sun icon (shown in dark mode — click to go light) -->
-        <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
-        <!-- Moon icon (shown in light mode — click to go dark) -->
-        <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+      <div class="home-menu" id="home-menu" role="menu" aria-label="Home menu">
+        <button type="button" class="home-menu-item" id="home-about" role="menuitem">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 11v6M12 8h.01"/></svg>
+          About This System
+        </button>
+        <button type="button" class="home-menu-item" id="home-settings" role="menuitem">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9c.3.7.9 1.2 1.6 1.3H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>
+          System Settings
+        </button>
+        <div class="home-menu-sep"></div>
+        <button type="button" class="home-menu-item" id="home-lock" role="menuitem">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>
+          Lock Screen
+        </button>
+      </div>
+    </div>
+    <div class="status-bar-right">
+      <button type="button" class="status-icon" id="open-settings" title="Control Center" aria-label="Open Control Center" style="background:none;border:none;cursor:pointer;font-family:inherit;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="4.5" width="18" height="6" rx="3"/>
+          <circle cx="15.2" cy="7.5" r="1.7" fill="currentColor" stroke="none"/>
+          <rect x="3" y="13.5" width="18" height="6" rx="3"/>
+          <circle cx="8.8" cy="16.5" r="1.7" fill="currentColor" stroke="none"/>
+        </svg>
       </button>
       <span class="status-datetime" id="status-time">Mon, Feb 9  7:01 PM</span>
+    </div>
+  </div>
+
+  <div class="display-veil" id="display-veil" aria-hidden="true"></div>
+
+  <div class="about-system-overlay" id="about-system" role="dialog" aria-modal="true" aria-label="About This System">
+    <div class="about-system-card" id="about-system-card">
+      <div class="about-system-titlebar">
+        <div class="finder-titlebar-dots">
+          <span style="background:#ff5f57;" id="about-system-close" title="Close" tabindex="0"></span>
+          <span style="background:#febc2e;" id="about-system-minimize" title="Minimize" tabindex="0"></span>
+          <span style="background:#28c840;" id="about-system-maximize" title="Maximize" tabindex="0"></span>
+        </div>
+      </div>
+      <div class="about-system-hero">
+        <div class="about-icon" style="background: linear-gradient(135deg, #0082FF, #06b6d4);">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
+        </div>
+        <h2>Personal OS</h2>
+        <p class="about-system-sub">Web desktop, Version 1.0</p>
+      </div>
+
+      <table class="about-specs">
+        <tbody>
+          <tr>
+            <th scope="row">OS</th>
+            <td>Personal OS</td>
+          </tr>
+          <tr>
+            <th scope="row">Brand</th>
+            <td>OS29</td>
+          </tr>
+          <tr>
+            <th scope="row">Runtime</th>
+            <td>Browser, Vercel</td>
+          </tr>
+          <tr>
+            <th scope="row">Built with</th>
+            <td>HTML, CSS, JS</td>
+          </tr>
+          <tr>
+            <th scope="row">Version</th>
+            <td>1.0</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="about-legal">A portfolio imagined as a desktop. Designed and built by Shivanshu Mathur.</p>
+    </div>
+  </div>
+
+  <div class="cc-panel" id="control-center" role="dialog" aria-label="Control Center">
+    <div class="cc-row">
+      <div class="cc-module cc-appearance">
+        <button type="button" class="cc-appearance-btn" id="cc-appearance" title="Toggle appearance" aria-label="Toggle light and dark mode">
+          <svg id="cc-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 3v1.5M12 19.5V21M4.2 4.2l1.1 1.1M18.7 18.7l1.1 1.1M3 12h1.5M19.5 12H21M4.2 19.8l1.1-1.1M18.7 5.3l1.1-1.1"/></svg>
+          <svg id="cc-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 14.3A8.5 8.5 0 1110.2 3a7 7 0 1010.8 11.3z"/></svg>
+        </button>
+      </div>
+      <button type="button" class="cc-more" id="cc-open-settings">
+        <span class="cc-more-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </span>
+        <span class="cc-more-copy">
+          <span class="cc-more-title">Settings</span>
+          <span class="cc-more-sub">Wallpaper, accent, type</span>
+        </span>
+      </button>
+    </div>
+
+    <div class="cc-module cc-slider-card">
+      <div class="cc-slider-label">Display</div>
+      <div class="cc-slider-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path stroke-linecap="round" d="M12 3.5v1.6M12 18.9v1.6M4.9 4.9l1.1 1.1M18 18l1.1 1.1M3.5 12h1.6M18.9 12h1.6M4.9 19.1l1.1-1.1M18 6l1.1-1.1"/></svg>
+        <input type="range" class="cc-slider" id="cc-brightness" min="20" max="100" value="100" aria-label="Display brightness">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+      </div>
+    </div>
+
+    <div class="cc-module cc-slider-card">
+      <div class="cc-slider-label">Sound</div>
+      <div class="cc-slider-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 9h3.2L12 5.2v13.6L7.2 15H4V9z"/></svg>
+        <input type="range" class="cc-slider" id="cc-volume" min="0" max="100" value="80" aria-label="Sound volume">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 9h3.2L12 5.2v13.6L7.2 15H4V9zm10.1 1.1a3.2 3.2 0 010 3.8l-1.1-.9a1.8 1.8 0 000-2l1.1-.9zm1.7-2.4a6.2 6.2 0 010 8.6l-1.15-.95a4.7 4.7 0 000-6.7l1.15-.95zm1.7-2.3a9.2 9.2 0 010 13.2l-1.15-.95a7.7 7.7 0 000-11.3l1.15-.95z"/></svg>
+      </div>
     </div>
   </div>
 
@@ -7148,7 +8273,7 @@
       </a>
 
       <!-- ===== WORK ===== -->
-      <button type="button" class="cell-work card bento-tile" id="open-work-folio">
+      <div class="cell-work card bento-tile liquid-glass" id="work-folio-tile">
         <div class="bento-tile-visual">
           <div class="folio-stack" aria-hidden="true">
             <span class="folio-stack-card"></span>
@@ -7157,15 +8282,21 @@
           </div>
         </div>
         <div class="bento-tile-cta">
-          <span class="btn-linkedin">
+          <button type="button" class="btn-linkedin folio-idle-cta" id="open-work-folio">
             View Portfolio
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
-          </span>
+          </button>
+          <form class="folio-auth" id="folio-auth" autocomplete="off">
+            <input type="password" id="folio-password" name="folio-password" placeholder="Password" autocomplete="off" spellcheck="false">
+            <button type="submit" class="folio-auth-go" aria-label="Unlock">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+            </button>
+          </form>
         </div>
-      </button>
+      </div>
 
       <!-- ===== MUSIC (Passive widget) ===== -->
-      <div class="cell-listen card">
+      <div class="cell-listen card liquid-glass">
         <div class="music-player-shell">
           <div class="music-banner">
             <img id="music-banner-img" src="https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg" alt="Sapphire video thumbnail">
@@ -9422,230 +10553,424 @@
     <div class="app-backdrop" id="settings-backdrop"></div>
     <div class="settings-window" role="dialog" aria-modal="true" aria-label="Settings">
 
-      <!-- Title bar -->
-      <div class="settings-titlebar">
-        <div class="settings-titlebar-dots">
-          <span style="background:#ff5f57;" id="settings-close" title="Close" tabindex="0"></span>
-          <span style="background:#febc2e;"></span>
-          <span style="background:#28c840;"></span>
-        </div>
-        <div class="settings-titlebar-nav">
-          <button title="Back">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
-          </button>
-          <button title="Forward">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
-          </button>
-        </div>
-        <div class="settings-titlebar-title" id="settings-pane-title">Appearance</div>
-        <div class="settings-titlebar-spacer"></div>
-      </div>
-
-      <!-- Body: Sidebar + Pane -->
       <div class="settings-body">
-
-        <!-- Sidebar -->
         <nav class="settings-sidebar" aria-label="Settings categories">
+          <div class="settings-sidebar-chrome">
+            <div class="finder-titlebar-dots">
+              <span style="background:#ff5f57;" id="settings-close" title="Close" tabindex="0"></span>
+              <span style="background:#febc2e;" id="settings-minimize" title="Minimize"></span>
+              <span style="background:#28c840;" id="settings-zoom" title="Zoom"></span>
+            </div>
+          </div>
+          <div class="settings-search">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
+            <input type="search" id="settings-search" placeholder="Search" autocomplete="off">
+          </div>
 
-          <button class="settings-sidebar-item active" data-pane="appearance">
-            <div class="settings-sidebar-icon" style="background: linear-gradient(135deg, #6366f1, #a855f7);">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z"/></svg>
-            </div>
-            Appearance
+          <button type="button" class="settings-sidebar-item settings-account active" data-pane="users" id="settings-account">
+            <img class="settings-account-avatar" id="settings-account-avatar" src="./assets/logos/guest-memoji.png" alt="">
+            <span class="settings-account-text">
+              <span class="settings-account-name" id="settings-account-name">Guest</span>
+              <span class="settings-account-role" id="settings-account-role">Standard</span>
+            </span>
           </button>
-          <button class="settings-sidebar-item" data-pane="accent">
-            <div class="settings-sidebar-icon" style="background: linear-gradient(135deg, #0082FF, #06b6d4);">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l1.5 1.5.75-.75V8.758l2.276-.61a3 3 0 10-3.675-3.675l-.61 2.277H12l-.75.75 1.5 1.5M15 11.25l-8.47 8.47c-.34.34-.8.53-1.28.53s-.94-.19-1.28-.53a1.813 1.813 0 010-2.56L12.5 8.75"/></svg>
-            </div>
-            Accent Color
-          </button>
-          <button class="settings-sidebar-item" data-pane="typography">
-            <div class="settings-sidebar-icon" style="background: linear-gradient(135deg, #059669, #34d399);">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg>
-            </div>
-            Typography
-          </button>
-          <button class="settings-sidebar-item" data-pane="textsize">
-            <div class="settings-sidebar-icon" style="background: linear-gradient(135deg, #d97706, #fbbf24);">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"/></svg>
-            </div>
-            Text Size
-          </button>
-          <button class="settings-sidebar-item" data-pane="wallpaper">
-            <div class="settings-sidebar-icon" style="background: linear-gradient(135deg, #2563eb, #60a5fa);">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5a2.25 2.25 0 002.25-2.25V5.25a2.25 2.25 0 00-2.25-2.25H3.75a2.25 2.25 0 00-2.25 2.25v13.5a2.25 2.25 0 002.25 2.25z"/></svg>
-            </div>
-            Wallpaper
-          </button>
-          <button class="settings-sidebar-item" data-pane="about">
-            <div class="settings-sidebar-icon" style="background: linear-gradient(135deg, #475569, #94a3b8);">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"/></svg>
-            </div>
-            About
-          </button>
+
+          <div class="settings-nav-group">
+            <button class="settings-sidebar-item" data-pane="appearance">
+              <span class="sr-only">typography text size accent colour font</span>
+              <div class="settings-sidebar-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16">
+                  <circle cx="8" cy="8" r="6" fill="none" stroke="#fff" stroke-width="1.4"/>
+                  <path d="M8 2a6 6 0 0 0 0 12Z" fill="#fff"/>
+                </svg>
+              </div>
+              Appearance
+            </button>
+            <button class="settings-sidebar-item" data-pane="wallpaper">
+              <div class="settings-sidebar-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16">
+                  <g fill="#fff">
+                    <circle cx="8" cy="8" r="1.35"/>
+                    <ellipse cx="8" cy="3.9" rx="1.35" ry="2.15"/>
+                    <ellipse cx="8" cy="12.1" rx="1.35" ry="2.15"/>
+                    <ellipse cx="3.9" cy="8" rx="2.15" ry="1.35"/>
+                    <ellipse cx="12.1" cy="8" rx="2.15" ry="1.35"/>
+                    <ellipse cx="5.1" cy="5.1" rx="1.35" ry="2" transform="rotate(-45 5.1 5.1)"/>
+                    <ellipse cx="10.9" cy="10.9" rx="1.35" ry="2" transform="rotate(-45 10.9 10.9)"/>
+                    <ellipse cx="10.9" cy="5.1" rx="1.35" ry="2" transform="rotate(45 10.9 5.1)"/>
+                    <ellipse cx="5.1" cy="10.9" rx="1.35" ry="2" transform="rotate(45 5.1 10.9)"/>
+                  </g>
+                </svg>
+              </div>
+              Wallpaper
+            </button>
+          </div>
+
+          <div class="settings-nav-group">
+            <button class="settings-sidebar-item" data-pane="lock">
+              <div class="settings-sidebar-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none">
+                  <path d="M5.4 7.2V5.85a2.6 2.6 0 015.2 0V7.2" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+                  <rect x="4.1" y="7.2" width="7.8" height="5.7" rx="1.4" fill="#fff"/>
+                </svg>
+              </div>
+              Lock Screen
+            </button>
+          </div>
+
+          <div class="settings-nav-group">
+            <button class="settings-sidebar-item" data-pane="about">
+              <div class="settings-sidebar-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none">
+                  <circle cx="8" cy="8" r="6" stroke="#fff" stroke-width="1.4"/>
+                  <path d="M8 7.2v4.2M8 5.15h.01" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+              </div>
+              About
+            </button>
+          </div>
         </nav>
 
-        <!-- Main pane -->
-        <div class="settings-pane">
-
-          <!-- Pane: Appearance -->
-          <div class="settings-pane-content active" id="pane-appearance">
-            <div class="settings-section">
-              <div class="settings-section-title">Appearance</div>
-              <p class="settings-section-subtitle">Choose how the interface looks. Select Light, Dark, or Auto to match your system.</p>
+        <div class="settings-main">
+          <div class="settings-toolbar">
+            <div class="settings-titlebar-nav">
+              <button type="button" title="Back">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+              </button>
+              <button type="button" title="Forward">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+              </button>
             </div>
-            <div class="settings-section">
-              <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 18px;">
-                <div class="settings-row-label">Theme Mode</div>
-                <div class="theme-row">
-                  <button class="theme-btn active" data-theme="light">
-                    <div class="theme-icon light">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(0,0,0,0.35)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
-                    </div>
-                    <span>Light</span>
-                  </button>
-                  <button class="theme-btn" data-theme="dark">
-                    <div class="theme-icon dark">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
-                    </div>
-                    <span>Dark</span>
-                  </button>
-                  <button class="theme-btn" data-theme="auto">
-                    <div class="theme-icon auto">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(120,120,120,0.6)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
-                    </div>
-                    <span>Auto</span>
-                  </button>
-                </div>
-              </div>
-              <p class="settings-helper">Auto mode will match your system's appearance preference.</p>
-            </div>
+            <div class="settings-titlebar-title" id="settings-pane-title">Users &amp; Groups</div>
           </div>
+          <div class="settings-pane">
 
-          <!-- Pane: Accent Color -->
-          <div class="settings-pane-content" id="pane-accent">
-            <div class="settings-section">
-              <div class="settings-section-title">Accent Color</div>
-              <p class="settings-section-subtitle">Pick a highlight color that appears on buttons, links, and interactive elements.</p>
+          <div class="settings-pane-content" id="pane-appearance">
+            <div class="appearance-block">
+              <div class="settings-heading">Appearance</div>
+              <div class="theme-row">
+                <button type="button" class="theme-btn" data-theme="auto">
+                  <div class="theme-icon auto">
+                    <div class="mini-win">
+                      <div class="mini-win-bar"><i></i><i></i><i></i></div>
+                      <div class="mini-win-body"><div class="mini-win-side" style="background:#f2f2f7"></div><div class="mini-win-main" style="background:#fff"></div></div>
+                    </div>
+                    <div class="mini-win">
+                      <div class="mini-win-bar"><i></i><i></i><i></i></div>
+                      <div class="mini-win-body"><div class="mini-win-side" style="background:#1c1c1e"></div><div class="mini-win-main" style="background:#2c2c2e"></div></div>
+                    </div>
+                  </div>
+                  <span>Auto</span>
+                </button>
+                <button type="button" class="theme-btn active" data-theme="light">
+                  <div class="theme-icon light">
+                    <div class="mini-win">
+                      <div class="mini-win-bar"><i></i><i></i><i></i></div>
+                      <div class="mini-win-body"><div class="mini-win-side"></div><div class="mini-win-main"></div></div>
+                    </div>
+                  </div>
+                  <span>Light</span>
+                </button>
+                <button type="button" class="theme-btn" data-theme="dark">
+                  <div class="theme-icon dark">
+                    <div class="mini-win">
+                      <div class="mini-win-bar"><i></i><i></i><i></i></div>
+                      <div class="mini-win-body"><div class="mini-win-side"></div><div class="mini-win-main"></div></div>
+                    </div>
+                  </div>
+                  <span>Dark</span>
+                </button>
+              </div>
+              <p class="settings-note">Choose your preferred look for Liquid Glass.</p>
+              <div class="theme-row">
+                <button type="button" class="theme-btn glass-btn active" data-glass="clear">
+                  <div class="theme-icon glass-clear">
+                    <div class="mini-win">
+                      <div class="mini-win-bar"><i></i><i></i><i></i></div>
+                      <div class="mini-win-body"><div class="mini-win-side"></div><div class="mini-win-main"></div></div>
+                    </div>
+                  </div>
+                  <span>Clear</span>
+                </button>
+                <button type="button" class="theme-btn glass-btn" data-glass="tinted">
+                  <div class="theme-icon glass-tinted">
+                    <div class="mini-win">
+                      <div class="mini-win-bar"><i></i><i></i><i></i></div>
+                      <div class="mini-win-body"><div class="mini-win-side"></div><div class="mini-win-main"></div></div>
+                    </div>
+                  </div>
+                  <span>Tinted</span>
+                </button>
+              </div>
             </div>
-            <div class="settings-section">
+
+            <div class="appearance-block">
+              <div class="settings-heading">Theme</div>
               <div class="settings-group">
-                <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 16px;">
-                  <div class="settings-row-label">Presets</div>
+                <div class="settings-row appearance-color-row">
+                  <div class="settings-row-label">Colour</div>
                   <div class="accent-dots" id="accent-dots">
-                    <button class="accent-dot" data-hue="0" style="background: hsl(0,80%,55%); color: hsl(0,80%,55%);"></button>
-                    <button class="accent-dot" data-hue="25" style="background: hsl(25,80%,55%); color: hsl(25,80%,55%);"></button>
-                    <button class="accent-dot" data-hue="45" style="background: hsl(45,80%,55%); color: hsl(45,80%,55%);"></button>
-                    <button class="accent-dot" data-hue="120" style="background: hsl(120,80%,55%); color: hsl(120,80%,55%);"></button>
-                    <button class="accent-dot" data-hue="180" style="background: hsl(180,80%,55%); color: hsl(180,80%,55%);"></button>
-                    <button class="accent-dot active" data-hue="210" style="background: hsl(210,80%,55%); color: hsl(210,80%,55%);"></button>
-                    <button class="accent-dot" data-hue="260" style="background: hsl(260,80%,55%); color: hsl(260,80%,55%);"></button>
-                    <button class="accent-dot" data-hue="300" style="background: hsl(300,80%,55%); color: hsl(300,80%,55%);"></button>
-                    <button class="accent-dot" data-hue="330" style="background: hsl(330,80%,55%); color: hsl(330,80%,55%);"></button>
+                    <button type="button" class="accent-dot accent-dot--multi active" data-key="multi" data-hue="210" title="Multicolour"></button>
+                    <button type="button" class="accent-dot" data-key="blue" data-hue="211" title="Blue" style="background:#0A84FF;color:#0A84FF;"></button>
+                    <button type="button" class="accent-dot" data-key="purple" data-hue="280" title="Purple" style="background:#BF5AF2;color:#BF5AF2;"></button>
+                    <button type="button" class="accent-dot" data-key="pink" data-hue="330" title="Pink" style="background:#FF375F;color:#FF375F;"></button>
+                    <button type="button" class="accent-dot" data-key="red" data-hue="0" title="Red" style="background:#FF453A;color:#FF453A;"></button>
+                    <button type="button" class="accent-dot" data-key="orange" data-hue="28" title="Orange" style="background:#FF9F0A;color:#FF9F0A;"></button>
+                    <button type="button" class="accent-dot" data-key="yellow" data-hue="48" title="Yellow" style="background:#FFD60A;color:#FFD60A;"></button>
+                    <button type="button" class="accent-dot" data-key="green" data-hue="145" title="Green" style="background:#30D158;color:#30D158;"></button>
+                    <button type="button" class="accent-dot" data-key="grey" data-hue="grey" title="Grey" style="background:#8E8E93;color:#8E8E93;"></button>
                   </div>
                 </div>
-                <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 12px;">
-                  <div class="settings-row-label">Custom Hue</div>
-                  <div class="accent-track" style="width: 100%;">
-                    <input type="range" min="0" max="360" value="210" class="accent-slider" id="accent-slider">
-                  </div>
+                <div class="settings-row">
+                  <div class="settings-row-label">Text highlight colour</div>
+                  <select class="settings-select" id="highlight-select">
+                    <option value="auto">Automatic</option>
+                    <option value="blue">Blue</option>
+                    <option value="purple">Purple</option>
+                    <option value="pink">Pink</option>
+                    <option value="orange">Orange</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
+                  </select>
+                </div>
+                <div class="settings-row">
+                  <div class="settings-row-label">Folder colour</div>
+                  <select class="settings-select" id="folder-select">
+                    <option value="auto">Automatic</option>
+                    <option value="blue">Blue</option>
+                    <option value="purple">Purple</option>
+                    <option value="pink">Pink</option>
+                    <option value="orange">Orange</option>
+                    <option value="green">Green</option>
+                    <option value="grey">Grey</option>
+                  </select>
                 </div>
               </div>
-              <p class="settings-helper">Choose a preset or drag the slider to pick any hue across the spectrum.</p>
             </div>
-          </div>
 
-          <!-- Pane: Typography -->
-          <div class="settings-pane-content" id="pane-typography">
-            <div class="settings-section">
-              <div class="settings-section-title">Typography</div>
-              <p class="settings-section-subtitle">Choose a typeface that's used across the entire interface.</p>
+            <div class="appearance-block">
+              <div class="settings-heading">Windows</div>
+              <div class="settings-group">
+                <div class="settings-row">
+                  <div class="settings-row-label">Sidebar icon size</div>
+                  <select class="settings-select" id="sidebar-icon-select">
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option>
+                  </select>
+                </div>
+                <div class="settings-row">
+                  <div class="settings-row-label">Tint window background with wallpaper colour</div>
+                  <button type="button" class="toggle-switch on" id="wp-tint-toggle" aria-pressed="true"></button>
+                </div>
+              </div>
             </div>
-            <div class="settings-section">
+
+            <div class="appearance-block">
+              <div class="settings-heading">Show scroll bars</div>
+              <div class="settings-group">
+                <div class="settings-radio-list">
+                  <label class="settings-radio"><input type="radio" name="scrollbars" value="auto" checked> Automatically based on mouse or trackpad</label>
+                  <label class="settings-radio"><input type="radio" name="scrollbars" value="scroll"> When scrolling</label>
+                  <label class="settings-radio"><input type="radio" name="scrollbars" value="always"> Always</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="appearance-block">
+              <div class="settings-heading">Click in the scroll bar to</div>
+              <div class="settings-group">
+                <div class="settings-radio-list">
+                  <label class="settings-radio"><input type="radio" name="scrollclick" value="page" checked> Jump to the next page</label>
+                  <label class="settings-radio"><input type="radio" name="scrollclick" value="spot"> Jump to the spot that's clicked</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="appearance-block">
+              <div class="settings-heading">Text</div>
               <div class="settings-group">
                 <div class="settings-row">
                   <div>
-                    <div class="settings-row-label">Font Family</div>
-                    <div class="settings-row-sublabel">Applied to all headings, body text, and UI elements</div>
+                    <div class="settings-row-label">Font</div>
+                    <div class="settings-row-sublabel" id="font-preview">Sans-serif</div>
                   </div>
                   <div class="font-btns">
-                    <button class="font-btn active" data-font="sans">Aa</button>
-                    <button class="font-btn" data-font="serif">Aa</button>
-                    <button class="font-btn" data-font="mono">Aa</button>
+                    <button type="button" class="font-btn active" data-font="sans">Aa</button>
+                    <button type="button" class="font-btn" data-font="serif">Aa</button>
+                    <button type="button" class="font-btn" data-font="mono">Aa</button>
                   </div>
                 </div>
-              </div>
-              <div class="font-preview" id="font-preview">
-                <div class="font-preview-text">The quick brown fox jumps over the lazy dog.</div>
-                <div class="font-preview-caption">Preview — current font family</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pane: Text Size -->
-          <div class="settings-pane-content" id="pane-textsize">
-            <div class="settings-section">
-              <div class="settings-section-title">Text Size</div>
-              <p class="settings-section-subtitle">Make text larger or smaller across the interface to suit your preference.</p>
-            </div>
-            <div class="settings-section">
-              <div class="settings-group">
-                <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 16px;">
+                <div class="settings-row" style="flex-direction: column; align-items: flex-start; gap: 14px;">
                   <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                    <div class="settings-row-label">Text Scale</div>
-                    <span style="font-size: 13px; font-weight: 600; color: var(--accent, #0082FF); background: rgba(0,130,255,0.08); padding: 3px 10px; border-radius: 6px;" id="size-label">Normal (1x)</span>
+                    <div class="settings-row-label">Text size</div>
+                    <span id="size-label" style="font-size: 12px; color: rgba(255,255,255,0.45);">Normal</span>
                   </div>
                   <div class="size-slider-wrap">
                     <input type="range" min="0" max="3" value="1" step="1" class="size-slider" id="size-slider">
-                  </div>
-                  <div class="size-labels">
-                    <span data-step="0">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align: -1px; margin-right: 2px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"/></svg>
-                      Compact
-                    </span>
-                    <span data-step="1" class="active">Normal</span>
-                    <span data-step="2">Comfortable</span>
-                    <span data-step="3">
-                      Large
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align: -1px; margin-left: 2px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"/></svg>
-                    </span>
+                    <div class="size-labels">
+                      <span data-step="0">Compact</span>
+                      <span data-step="1" class="active">Normal</span>
+                      <span data-step="2">Comfortable</span>
+                      <span data-step="3">Large</span>
+                    </div>
                   </div>
                 </div>
               </div>
-              <p class="settings-helper">Drag the slider or click a label below to set the preferred reading size.</p>
             </div>
           </div>
 
           <!-- Pane: Wallpaper -->
           <div class="settings-pane-content" id="pane-wallpaper">
-            <div class="settings-section">
-              <div class="settings-section-title">Wallpaper</div>
-              <p class="settings-section-subtitle">Set a desktop wallpaper. The selected image appears behind all content.</p>
+            <div class="wp-hero">
+              <div class="wp-preview wp-2" id="wp-preview"></div>
+              <div class="wp-hero-meta">
+                <div class="wp-hero-name" id="wp-hero-name">Ambient</div>
+                <p class="wp-hero-desc" id="wp-hero-desc">Soft ambient light. The default desktop look.</p>
+                <div class="settings-row" style="margin: 0; padding: 8px 0; background: none; border-radius: 0;">
+                  <div class="settings-row-label">Show on desktop</div>
+                  <button type="button" class="toggle-switch on" id="wp-show-toggle" aria-pressed="true"></button>
+                </div>
+                <div class="wp-actions">
+                  <button type="button" class="settings-btn" id="wp-add-photo">Add Photo...</button>
+                </div>
+              </div>
             </div>
-            <div class="settings-section">
-              <div class="wallpaper-grid" id="wallpaper-grid">
-                <button class="wallpaper-option" data-wallpaper="default">
-                  <div class="wallpaper-thumb wp-default"></div>
-                  <span class="wallpaper-label">Default</span>
-                </button>
-                <button class="wallpaper-option" data-wallpaper="1">
+
+            <div class="wp-section">
+              <div class="wp-section-head">
+                <div class="wp-section-title">Featured</div>
+                <div class="wp-section-count">4</div>
+              </div>
+              <div class="wallpaper-grid">
+                <button type="button" class="wallpaper-option" data-wallpaper="1">
                   <div class="wallpaper-thumb wp-1"></div>
                   <span class="wallpaper-label">Sequoia</span>
                 </button>
-                <button class="wallpaper-option active" data-wallpaper="2">
+                <button type="button" class="wallpaper-option active" data-wallpaper="2">
                   <div class="wallpaper-thumb wp-2"></div>
                   <span class="wallpaper-label">Ambient</span>
                 </button>
-                <button class="wallpaper-option" data-wallpaper="9">
-                  <div class="wallpaper-thumb wp-9"></div>
-                  <span class="wallpaper-label">Nebula</span>
-                </button>
-                <button class="wallpaper-option" data-wallpaper="11">
+                <button type="button" class="wallpaper-option" data-wallpaper="11">
                   <div class="wallpaper-thumb wp-11"></div>
                   <span class="wallpaper-label">Horizon</span>
                 </button>
+                <button type="button" class="wallpaper-option" data-wallpaper="9">
+                  <div class="wallpaper-thumb wp-9"></div>
+                  <span class="wallpaper-label">Nebula</span>
+                </button>
               </div>
-              <p class="settings-helper">Click a wallpaper to apply it instantly. The active one is marked with a checkmark.</p>
+            </div>
+
+            <div class="wp-section">
+              <div class="wp-section-head">
+                <div class="wp-section-title">Your Photos</div>
+              </div>
+              <div class="wallpaper-grid">
+                <button type="button" class="wallpaper-option" data-wallpaper="custom" id="wp-custom-option" hidden>
+                  <div class="wallpaper-thumb" id="wp-custom-thumb"></div>
+                  <span class="wallpaper-label">Photo</span>
+                </button>
+              </div>
+              <input type="file" id="wp-file" accept="image/*" hidden>
+            </div>
+
+            <div class="wp-section">
+              <div class="wp-section-head">
+                <div class="wp-section-title">Colours</div>
+              </div>
+              <div class="wallpaper-grid">
+                <button type="button" class="wallpaper-option" data-wallpaper="default">
+                  <div class="wallpaper-thumb wp-default"></div>
+                  <span class="wallpaper-label">Default</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-pane-content" id="pane-lock">
+            <div class="appearance-block">
+              <div class="settings-group">
+                <div class="settings-row">
+                  <div class="settings-row-label">Lock when inactive</div>
+                  <select class="settings-select" id="lock-idle-select">
+                    <option value="never">Never</option>
+                    <option value="1">For 1 minute</option>
+                    <option value="5">For 5 minutes</option>
+                    <option value="15">For 15 minutes</option>
+                  </select>
+                </div>
+                <div class="settings-row">
+                  <div class="settings-row-label">Start locked</div>
+                  <select class="settings-select" id="lock-start-select">
+                    <option value="first">On first visit</option>
+                    <option value="every">Every visit</option>
+                    <option value="never">Never</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="appearance-block">
+              <div class="settings-group">
+                <div class="settings-row">
+                  <div class="settings-row-label">Show username and photo</div>
+                  <button type="button" class="toggle-switch on" id="lock-user-toggle" aria-pressed="true"></button>
+                </div>
+                <div class="settings-row">
+                  <div class="settings-row-label">Show click-to-enter hint</div>
+                  <button type="button" class="toggle-switch on" id="lock-hint-toggle" aria-pressed="true"></button>
+                </div>
+                <div class="settings-row">
+                  <div class="settings-row-label">Show message when locked</div>
+                  <div class="settings-row-value">
+                    <button type="button" class="settings-btn" id="lock-msg-set" disabled>Set...</button>
+                    <button type="button" class="toggle-switch" id="lock-msg-toggle" aria-pressed="false"></button>
+                  </div>
+                </div>
+                <div class="lock-msg-editor" id="lock-msg-editor">
+                  <input type="text" id="lock-msg-input" maxlength="80" placeholder="Enter a message" autocomplete="off">
+                  <button type="button" class="settings-btn" id="lock-msg-save">Done</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="appearance-block">
+              <div class="settings-heading">When locked</div>
+              <div class="settings-group">
+                <div class="settings-row">
+                  <div class="settings-row-label">Show clock</div>
+                  <button type="button" class="toggle-switch on" id="lock-clock-toggle" aria-pressed="true"></button>
+                </div>
+                <div class="settings-radio-list">
+                  <div class="settings-row-label" style="margin-bottom: 2px;">Unlock with</div>
+                  <label class="settings-radio"><input type="radio" name="lock-unlock" value="any" checked> Click or any key</label>
+                  <label class="settings-radio"><input type="radio" name="lock-unlock" value="click"> Click only</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="lock-pane-footer">
+              <button type="button" class="settings-btn" id="lock-now-btn">Lock Now</button>
+            </div>
+          </div>
+
+          <div class="settings-pane-content active" id="pane-users">
+            <div class="settings-group settings-user-list">
+              <div class="settings-user-row">
+                <img class="settings-user-avatar" src="./assets/logos/guest-memoji.png" alt="Guest">
+                <div class="settings-user-meta">
+                  <div class="settings-user-name">Guest</div>
+                  <div class="settings-user-role">Standard</div>
+                </div>
+              </div>
+              <div class="settings-user-row">
+                <img class="settings-user-avatar" src="./assets/logos/ShivanshuMathur.jpg" alt="Shivanshu Mathur">
+                <div class="settings-user-meta">
+                  <div class="settings-user-name">Shivanshu Mathur</div>
+                  <div class="settings-user-role">Admin</div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -9673,15 +10998,16 @@
                     <div class="settings-row-label">Reset All Settings</div>
                     <div class="settings-row-sublabel">Restore all preferences to their defaults</div>
                   </div>
-                  <button id="settings-reset" style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.18); color: #ef4444; padding: 7px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s;">Reset</button>
+                  <button type="button" class="settings-btn" id="settings-reset">Reset...</button>
                 </div>
               </div>
             </div>
           </div>
 
-        </div><!-- end settings-pane -->
-      </div><!-- end settings-body -->
-    </div><!-- end settings-window -->
+        </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ========== macOS Tahoe Liquid Glass DOCK ========== -->
@@ -9811,6 +11137,61 @@
     })();
   </script>
 
+  <script>
+    (function () {
+      var lock = document.getElementById('lock-screen');
+      var unlockBtn = document.getElementById('lock-unlock');
+      var dateEl = document.getElementById('lock-date');
+      var timeEl = document.getElementById('lock-time');
+      if (!lock) return;
+
+      var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+      function pad(n) { return n < 10 ? '0' + n : '' + n; }
+      function tick() {
+        var now = new Date();
+        if (dateEl) dateEl.textContent = days[now.getDay()] + ' ' + now.getDate() + ' ' + months[now.getMonth()];
+        if (timeEl) timeEl.textContent = (now.getHours() % 12 || 12) + ':' + pad(now.getMinutes());
+      }
+      tick();
+      setInterval(tick, 1000);
+
+      function unlock() {
+        if (!document.body.classList.contains('is-locked')) return;
+        lock.classList.add('unlocked');
+        try { localStorage.setItem('dashboard-unlocked', '1'); } catch (e) {}
+        setTimeout(function () {
+          document.body.classList.remove('is-locked');
+          lock.classList.remove('unlocked');
+        }, 560);
+      }
+
+      function lockDesktop() {
+        var menu = document.getElementById('home-menu');
+        if (menu) menu.classList.remove('open');
+        lock.classList.remove('unlocked');
+        document.body.classList.add('is-locked');
+      }
+      window.lockDesktop = lockDesktop;
+
+      if (unlockBtn) unlockBtn.addEventListener('click', unlock);
+      lock.addEventListener('click', function (e) {
+        if (e.target.closest('a, input, textarea, select')) return;
+        unlock();
+      });
+      var homeLock = document.getElementById('home-lock');
+      if (homeLock) homeLock.addEventListener('click', lockDesktop);
+      document.addEventListener('keydown', function (e) {
+        if (!document.body.classList.contains('is-locked')) return;
+        if (document.body.classList.contains('lock-click-only')) return;
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        e.preventDefault();
+        unlock();
+      });
+    })();
+  </script>
+
   <!-- Settings Panel Logic -->
   <script>
     (function () {
@@ -9825,7 +11206,6 @@
       var sidebarItems = document.querySelectorAll('.settings-sidebar-item');
       var paneContents = document.querySelectorAll('.settings-pane-content');
 
-      var accentSlider = document.getElementById('accent-slider');
       var accentDots   = document.querySelectorAll('.accent-dot');
       var fontBtns     = document.querySelectorAll('.font-btn');
       var sizeSlider   = document.getElementById('size-slider');
@@ -9835,10 +11215,11 @@
       var body = document.body;
       var root = document.documentElement;
 
-      var themeBtns = document.querySelectorAll('.theme-btn');
+      var themeBtns = document.querySelectorAll('.theme-btn[data-theme]');
+      var glassBtns = document.querySelectorAll('.glass-btn');
 
       /* ---------- Defaults ---------- */
-      var DEFAULTS = { hue: 210, font: 'sans', size: 1, theme: 'light', wallpaper: '2' };
+      var DEFAULTS = { hue: 210, accent: 'multi', font: 'sans', size: 1, theme: 'light', glass: 'clear', wallpaper: '2', brightness: 100, volume: 80, highlight: 'auto', folder: 'auto', sidebarIcons: 'medium', wpTint: true, scrollbars: 'auto', scrollClick: 'page', lockIdle: 'never', lockStart: 'first', lockShowUser: true, lockShowHint: true, lockShowMessage: false, lockMessage: '', lockShowClock: true, lockUnlock: 'any' };
 
       /* Load saved settings from localStorage, falling back to defaults */
       function loadState() {
@@ -9853,7 +11234,25 @@
       }
 
       var saved = loadState();
-      var state = saved || { hue: DEFAULTS.hue, font: DEFAULTS.font, size: DEFAULTS.size, theme: DEFAULTS.theme, wallpaper: DEFAULTS.wallpaper };
+      var state = saved || { hue: DEFAULTS.hue, accent: DEFAULTS.accent, font: DEFAULTS.font, size: DEFAULTS.size, theme: DEFAULTS.theme, glass: DEFAULTS.glass, wallpaper: DEFAULTS.wallpaper, brightness: DEFAULTS.brightness, volume: DEFAULTS.volume };
+      if (typeof state.brightness !== 'number') state.brightness = DEFAULTS.brightness;
+      if (typeof state.volume !== 'number') state.volume = DEFAULTS.volume;
+      if (!state.accent) state.accent = DEFAULTS.accent;
+      if (!state.glass) state.glass = DEFAULTS.glass;
+      if (!state.highlight) state.highlight = DEFAULTS.highlight;
+      if (!state.folder) state.folder = DEFAULTS.folder;
+      if (!state.sidebarIcons) state.sidebarIcons = DEFAULTS.sidebarIcons;
+      if (typeof state.wpTint !== 'boolean') state.wpTint = DEFAULTS.wpTint;
+      if (!state.scrollbars) state.scrollbars = DEFAULTS.scrollbars;
+      if (!state.scrollClick) state.scrollClick = DEFAULTS.scrollClick;
+      if (!state.lockIdle) state.lockIdle = DEFAULTS.lockIdle;
+      if (!state.lockStart) state.lockStart = DEFAULTS.lockStart;
+      if (typeof state.lockShowUser !== 'boolean') state.lockShowUser = DEFAULTS.lockShowUser;
+      if (typeof state.lockShowHint !== 'boolean') state.lockShowHint = DEFAULTS.lockShowHint;
+      if (typeof state.lockShowMessage !== 'boolean') state.lockShowMessage = DEFAULTS.lockShowMessage;
+      if (typeof state.lockMessage !== 'string') state.lockMessage = DEFAULTS.lockMessage;
+      if (typeof state.lockShowClock !== 'boolean') state.lockShowClock = DEFAULTS.lockShowClock;
+      if (!state.lockUnlock) state.lockUnlock = DEFAULTS.lockUnlock;
 
       // One-time migration: force Ambient (Wallpaper-2) as the default background.
       // This moves existing visitors whose saved preference predates this default
@@ -9878,56 +11277,146 @@
       }
 
       var SIZE_MAP = [
-        { label: 'Compact (0.85x)', scale: 0.85 },
-        { label: 'Normal (1x)',     scale: 1 },
-        { label: 'Comfortable (1.15x)', scale: 1.15 },
-        { label: 'Large (1.3x)',    scale: 1.3 }
+        { label: 'Compact', scale: 0.85 },
+        { label: 'Normal',     scale: 1 },
+        { label: 'Comfortable', scale: 1.15 },
+        { label: 'Large',    scale: 1.3 }
       ];
 
       var FONT_MAP = {
-        sans:  "'Poppins', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+        sans:  "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Segoe UI', system-ui, sans-serif",
         serif: "Georgia, 'Times New Roman', serif",
         mono:  "'Share Tech Mono', 'Courier New', monospace"
       };
 
       /* ---------- Apply ---------- */
-      function applyAccent(hue) {
-        var hex = hslColor(hue);
-        root.style.setProperty('--accent', hex);
+      var ACCENT_HEX = {
+        multi: '#007AFF',
+        blue: '#0A84FF',
+        purple: '#BF5AF2',
+        pink: '#FF375F',
+        red: '#FF453A',
+        orange: '#FF9F0A',
+        yellow: '#FFD60A',
+        green: '#30D158',
+        grey: '#8E8E93'
+      };
 
-        // Accent-dependent UI elements
-        document.querySelectorAll('.btn-chat').forEach(function (btn) { btn.style.background = hex; });
+      function resolveAccent(hue, key) {
+        if (key && ACCENT_HEX[key]) return ACCENT_HEX[key];
+        if (hue === 'grey' || hue === 'gray') return '#8E8E93';
+        var n = parseInt(hue, 10);
+        if (isNaN(n)) n = 210;
+        return hslColor(n);
+      }
+
+      function applyAccent(hue) {
+        if (hue === undefined) hue = state.hue;
+        state.hue = hue;
+        var hex = resolveAccent(hue, state.accent);
+        root.style.setProperty('--accent', hex);
+        body.style.setProperty('--accent', hex);
+
         document.querySelectorAll('.eq-bar').forEach(function (bar) { bar.style.background = hex; });
 
-        // Font btns
         fontBtns.forEach(function (btn) {
-          btn.style.background = btn.classList.contains('active') ? hex : 'transparent';
+          btn.style.background = '';
         });
 
-        // Size labels
         sizeLabels.forEach(function (lbl) {
           lbl.style.color = lbl.classList.contains('active') ? hex : '';
         });
 
-        // Accent dots
         accentDots.forEach(function (dot) {
-          var dotHue = parseInt(dot.getAttribute('data-hue'));
-          if (dotHue === hue) dot.classList.add('active');
-          else dot.classList.remove('active');
+          dot.classList.toggle('active', dot.getAttribute('data-key') === state.accent);
+        });
+      }
+
+      function applyGlass(mode) {
+        var next = mode === 'tinted' ? 'tinted' : 'clear';
+        state.glass = next;
+        body.classList.toggle('glass-tinted', next === 'tinted');
+        glassBtns.forEach(function (btn) {
+          btn.classList.toggle('active', btn.getAttribute('data-glass') === next);
+        });
+      }
+
+      var HIGHLIGHT_MAP = {
+        auto: 'rgba(255, 55, 95, 0.45)',
+        blue: 'rgba(10, 132, 255, 0.45)',
+        purple: 'rgba(191, 90, 242, 0.45)',
+        pink: 'rgba(255, 55, 95, 0.5)',
+        orange: 'rgba(255, 159, 10, 0.45)',
+        yellow: 'rgba(255, 214, 10, 0.5)',
+        green: 'rgba(48, 209, 88, 0.45)'
+      };
+      var FOLDER_MAP = {
+        auto: '',
+        blue: '#0A84FF',
+        purple: '#BF5AF2',
+        pink: '#FF375F',
+        orange: '#FF9F0A',
+        green: '#30D158',
+        grey: '#8E8E93'
+      };
+
+      function applyHighlight(key) {
+        state.highlight = key || 'auto';
+        root.style.setProperty('--highlight', HIGHLIGHT_MAP[state.highlight] || HIGHLIGHT_MAP.auto);
+        var sel = document.getElementById('highlight-select');
+        if (sel) sel.value = state.highlight;
+      }
+
+      function applyFolderColor(key) {
+        state.folder = key || 'auto';
+        root.style.setProperty('--folder-color', FOLDER_MAP[state.folder] || 'var(--accent)');
+        var sel = document.getElementById('folder-select');
+        if (sel) sel.value = state.folder;
+      }
+
+      function applySidebarIcons(size) {
+        state.sidebarIcons = size || 'medium';
+        body.classList.remove('ss-icons-small', 'ss-icons-large');
+        if (state.sidebarIcons === 'small') body.classList.add('ss-icons-small');
+        if (state.sidebarIcons === 'large') body.classList.add('ss-icons-large');
+        var sel = document.getElementById('sidebar-icon-select');
+        if (sel) sel.value = state.sidebarIcons;
+      }
+
+      function applyWpTint(on) {
+        state.wpTint = !!on;
+        body.classList.toggle('wp-tint-on', state.wpTint);
+        var toggle = document.getElementById('wp-tint-toggle');
+        if (toggle) {
+          toggle.classList.toggle('on', state.wpTint);
+          toggle.setAttribute('aria-pressed', state.wpTint ? 'true' : 'false');
+        }
+      }
+
+      function applyScrollbars(mode) {
+        state.scrollbars = mode || 'auto';
+        body.classList.remove('sb-always', 'sb-scroll');
+        if (state.scrollbars === 'always') body.classList.add('sb-always');
+        if (state.scrollbars === 'scroll') body.classList.add('sb-scroll');
+        document.querySelectorAll('input[name="scrollbars"]').forEach(function (el) {
+          el.checked = el.value === state.scrollbars;
+        });
+      }
+
+      function applyScrollClick(mode) {
+        state.scrollClick = mode || 'page';
+        document.querySelectorAll('input[name="scrollclick"]').forEach(function (el) {
+          el.checked = el.value === state.scrollClick;
         });
       }
 
       function applyFont(key) {
         var family = FONT_MAP[key] || FONT_MAP.sans;
         body.style.fontFamily = family;
-        /* Update font preview card */
-        var previewText = document.querySelector('#font-preview .font-preview-text');
-        var previewCap  = document.querySelector('#font-preview .font-preview-caption');
-        if (previewText) {
-          previewText.style.fontFamily = family;
-          previewCap.textContent = 'Preview — ' + (key === 'sans' ? 'Sans-Serif' : key === 'serif' ? 'Serif' : 'Monospace');
+        var preview = document.getElementById('font-preview');
+        if (preview) {
+          preview.textContent = key === 'sans' ? 'Sans-serif' : key === 'serif' ? 'Serif' : 'Monospace';
         }
-        /* Update font button active state */
         fontBtns.forEach(function (btn) {
           btn.classList.toggle('active', btn.getAttribute('data-font') === key);
         });
@@ -9941,7 +11430,7 @@
           var lblStep = parseInt(lbl.getAttribute('data-step'));
           if (lblStep === step) {
             lbl.classList.add('active');
-            lbl.style.color = hslColor(state.hue);
+            lbl.style.color = resolveAccent(state.hue, state.accent);
           } else {
             lbl.classList.remove('active');
             lbl.style.color = '';
@@ -10006,31 +11495,261 @@
       }
 
       function applyAll() {
-        accentSlider.value = state.hue;
-        sizeSlider.value = state.size;
+        if (sizeSlider) sizeSlider.value = state.size;
         applyAccent(state.hue);
         applyFont(state.font);
         applySize(state.size);
         applyTheme(state.theme);
+        applyGlass(state.glass);
+        applyHighlight(state.highlight);
+        applyFolderColor(state.folder);
+        applySidebarIcons(state.sidebarIcons);
+        applyWpTint(state.wpTint);
+        applyScrollbars(state.scrollbars);
+        applyScrollClick(state.scrollClick);
+        applyBrightness(state.brightness);
+        applyVolume(state.volume);
+        applyLockSettings();
 
         fontBtns.forEach(function (btn) {
-          var hex = hslColor(state.hue);
-          if (btn.getAttribute('data-font') === state.font) {
-            btn.classList.add('active');
-            btn.style.background = hex;
-          } else {
-            btn.classList.remove('active');
-            btn.style.background = 'transparent';
-          }
+          btn.classList.toggle('active', btn.getAttribute('data-font') === state.font);
+          btn.style.background = '';
         });
       }
 
+      /* ---------- Control Center ---------- */
+      var ccPanel = document.getElementById('control-center');
+      var ccAppearance = document.getElementById('cc-appearance');
+      var ccOpenSettings = document.getElementById('cc-open-settings');
+      var ccBrightness = document.getElementById('cc-brightness');
+      var ccVolume = document.getElementById('cc-volume');
+      var displayVeil = document.getElementById('display-veil');
+
+      function setSliderFill(el, value) {
+        if (!el) return;
+        var min = Number(el.min) || 0;
+        var max = Number(el.max) || 100;
+        var pct = ((value - min) / (max - min)) * 100;
+        el.style.setProperty('--fill', pct + '%');
+        el.value = value;
+      }
+
+      function applyBrightness(value) {
+        var v = Math.max(20, Math.min(100, Number(value) || 100));
+        state.brightness = v;
+        if (displayVeil) displayVeil.style.opacity = String((100 - v) / 100 * 0.72);
+        setSliderFill(ccBrightness, v);
+      }
+
+      function applyVolume(value) {
+        var v = Math.max(0, Math.min(100, Number(value) || 0));
+        state.volume = v;
+        window.__pendingMusicVolume = v;
+        setSliderFill(ccVolume, v);
+        if (typeof window.__setMusicVolume === 'function') {
+          window.__setMusicVolume(v);
+        }
+      }
+
+      var lockIdleTimer = null;
+      var lockIdleSelect = document.getElementById('lock-idle-select');
+      var lockStartSelect = document.getElementById('lock-start-select');
+      var lockUserToggle = document.getElementById('lock-user-toggle');
+      var lockHintToggle = document.getElementById('lock-hint-toggle');
+      var lockMsgToggle = document.getElementById('lock-msg-toggle');
+      var lockMsgSet = document.getElementById('lock-msg-set');
+      var lockMsgEditor = document.getElementById('lock-msg-editor');
+      var lockMsgInput = document.getElementById('lock-msg-input');
+      var lockMsgSave = document.getElementById('lock-msg-save');
+      var lockClockToggle = document.getElementById('lock-clock-toggle');
+      var lockNowBtn = document.getElementById('lock-now-btn');
+      var lockMessageEl = document.getElementById('lock-message');
+
+      function setToggle(el, on) {
+        if (!el) return;
+        el.classList.toggle('on', on);
+        el.setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+
+      function resetLockIdle() {
+        if (lockIdleTimer) {
+          clearTimeout(lockIdleTimer);
+          lockIdleTimer = null;
+        }
+        var mins = parseInt(state.lockIdle, 10);
+        if (!mins || document.body.classList.contains('is-locked')) return;
+        lockIdleTimer = setTimeout(function () {
+          if (document.body.classList.contains('is-locked')) return;
+          if (overlay) overlay.classList.remove('open');
+          if (typeof window.lockDesktop === 'function') window.lockDesktop();
+        }, mins * 60 * 1000);
+      }
+
+      function applyLockSettings() {
+        body.classList.toggle('lock-hide-user', state.lockShowUser === false);
+        body.classList.toggle('lock-hide-hint', state.lockShowHint === false);
+        body.classList.toggle('lock-hide-clock', state.lockShowClock === false);
+        body.classList.toggle('lock-show-message', !!state.lockShowMessage && !!state.lockMessage);
+        body.classList.toggle('lock-click-only', state.lockUnlock === 'click');
+        if (lockMessageEl) lockMessageEl.textContent = state.lockMessage || '';
+        if (lockIdleSelect) lockIdleSelect.value = state.lockIdle;
+        if (lockStartSelect) lockStartSelect.value = state.lockStart;
+        setToggle(lockUserToggle, state.lockShowUser);
+        setToggle(lockHintToggle, state.lockShowHint);
+        setToggle(lockMsgToggle, state.lockShowMessage);
+        setToggle(lockClockToggle, state.lockShowClock);
+        if (lockMsgSet) lockMsgSet.disabled = !state.lockShowMessage;
+        if (lockMsgInput) lockMsgInput.value = state.lockMessage || '';
+        document.querySelectorAll('input[name="lock-unlock"]').forEach(function (el) {
+          el.checked = el.value === state.lockUnlock;
+        });
+        resetLockIdle();
+      }
+
+      ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(function (evt) {
+        document.addEventListener(evt, resetLockIdle, { passive: true });
+      });
+
+      function openControlCenter() {
+        closeHomeMenu();
+        if (ccPanel) ccPanel.classList.add('open');
+      }
+      function closeControlCenter() {
+        if (ccPanel) ccPanel.classList.remove('open');
+      }
+
+      var homeBtn = document.getElementById('nav-home');
+      var homeMenu = document.getElementById('home-menu');
+      var aboutSystem = document.getElementById('about-system');
+      var aboutSystemClose = document.getElementById('about-system-close');
+      var aboutSystemMin = document.getElementById('about-system-minimize');
+      var aboutSystemMax = document.getElementById('about-system-maximize');
+      var aboutSystemCard = document.getElementById('about-system-card');
+
+      function openHomeMenu() {
+        closeControlCenter();
+        if (homeMenu) homeMenu.classList.add('open');
+        if (homeBtn) homeBtn.setAttribute('aria-expanded', 'true');
+      }
+      function closeHomeMenu() {
+        if (homeMenu) homeMenu.classList.remove('open');
+        if (homeBtn) homeBtn.setAttribute('aria-expanded', 'false');
+      }
+      function syncAccountBanner() {
+        var avatar = document.getElementById('settings-account-avatar');
+        var nameEl = document.getElementById('settings-account-name');
+        var roleEl = document.getElementById('settings-account-role');
+        var unlocked = false;
+        try { unlocked = !!localStorage.getItem('dashboard-unlocked'); } catch (e) {}
+        if (document.body.classList.contains('is-locked')) unlocked = false;
+        if (avatar) avatar.src = unlocked ? './assets/logos/ShivanshuMathur.jpg' : './assets/logos/guest-memoji.png';
+        if (nameEl) nameEl.textContent = unlocked ? 'Shivanshu Mathur' : 'Guest';
+        if (roleEl) roleEl.textContent = unlocked ? 'Admin' : 'Standard';
+      }
+      function openSettingsWindow() {
+        closeHomeMenu();
+        closeControlCenter();
+        syncAccountBanner();
+        if (overlay) overlay.classList.add('open');
+      }
+      function setAboutGit(sha, branch) {
+        var short = (sha || '').slice(0, 7);
+        var shaEl = document.getElementById('about-git-sha');
+        var shaTable = document.getElementById('about-git-sha-table');
+        var branchEl = document.getElementById('about-git-branch');
+        var branchTable = document.getElementById('about-git-branch-table');
+        var link = document.getElementById('about-git-link');
+        if (shaEl) shaEl.textContent = short;
+        if (shaTable) shaTable.textContent = short;
+        if (branchEl) branchEl.textContent = branch || 'main';
+        if (branchTable) branchTable.textContent = branch || 'main';
+        if (link && short) {
+          link.href = 'https://github.com/shivanshumathur/theshivanshumathur/commit/' + short;
+        }
+      }
+      function refreshAboutGit() {
+        fetch('https://api.github.com/repos/shivanshumathur/theshivanshumathur/commits/main')
+          .then(function (res) { return res.ok ? res.json() : null; })
+          .then(function (data) {
+            if (data && data.sha) setAboutGit(data.sha, 'main');
+          })
+          .catch(function () {});
+      }
+      function openAboutSystem() {
+        closeHomeMenu();
+        refreshAboutGit();
+        if (aboutSystem) aboutSystem.classList.add('open');
+      }
+      function closeAboutSystem() {
+        if (aboutSystem) aboutSystem.classList.remove('open');
+        if (aboutSystemCard) aboutSystemCard.classList.remove('maximized');
+      }
       /* ---------- Open / Close ---------- */
       if (openBtn) {
-        openBtn.addEventListener('click', function () {
-          overlay.classList.add('open');
+        openBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (ccPanel && ccPanel.classList.contains('open')) closeControlCenter();
+          else openControlCenter();
         });
       }
+      if (ccOpenSettings) {
+        ccOpenSettings.addEventListener('click', openSettingsWindow);
+      }
+      if (homeBtn) {
+        homeBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (homeMenu && homeMenu.classList.contains('open')) closeHomeMenu();
+          else openHomeMenu();
+        });
+      }
+      var homeAbout = document.getElementById('home-about');
+      var homeSettings = document.getElementById('home-settings');
+      if (homeAbout) homeAbout.addEventListener('click', openAboutSystem);
+      if (homeSettings) homeSettings.addEventListener('click', openSettingsWindow);
+      if (aboutSystemClose) aboutSystemClose.addEventListener('click', closeAboutSystem);
+      if (aboutSystemMin) aboutSystemMin.addEventListener('click', closeAboutSystem);
+      if (aboutSystemMax) {
+        aboutSystemMax.addEventListener('click', function () {
+          if (aboutSystemCard) aboutSystemCard.classList.toggle('maximized');
+        });
+      }
+      if (aboutSystem) {
+        aboutSystem.addEventListener('click', function (e) {
+          if (e.target === aboutSystem) closeAboutSystem();
+        });
+      }
+      if (ccAppearance) {
+        ccAppearance.addEventListener('click', function () {
+          var isLight = body.classList.contains('light-mode');
+          state.theme = isLight ? 'dark' : 'light';
+          applyTheme(state.theme);
+          saveState();
+        });
+      }
+      if (ccBrightness) {
+        ccBrightness.addEventListener('input', function () {
+          applyBrightness(this.value);
+        });
+        ccBrightness.addEventListener('change', saveState);
+      }
+      if (ccVolume) {
+        ccVolume.addEventListener('input', function () {
+          applyVolume(this.value);
+        });
+        ccVolume.addEventListener('change', saveState);
+      }
+      document.addEventListener('click', function (e) {
+        if (ccPanel && ccPanel.classList.contains('open')) {
+          if (!(ccPanel.contains(e.target) || (openBtn && openBtn.contains(e.target)))) {
+            closeControlCenter();
+          }
+        }
+        if (homeMenu && homeMenu.classList.contains('open')) {
+          if (!(homeMenu.contains(e.target) || (homeBtn && homeBtn.contains(e.target)))) {
+            closeHomeMenu();
+          }
+        }
+      });
       closeBtn.addEventListener('click', function () {
         overlay.classList.remove('open');
       });
@@ -10038,50 +11757,208 @@
         overlay.classList.remove('open');
       });
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && overlay.classList.contains('open')) {
+        if (e.key !== 'Escape') return;
+        if (aboutSystem && aboutSystem.classList.contains('open')) {
+          closeAboutSystem();
+          return;
+        }
+        if (overlay.classList.contains('open')) {
           overlay.classList.remove('open');
+          return;
+        }
+        if (ccPanel && ccPanel.classList.contains('open')) {
+          closeControlCenter();
+          return;
+        }
+        if (homeMenu && homeMenu.classList.contains('open')) {
+          closeHomeMenu();
         }
       });
 
       /* ---------- Sidebar navigation ---------- */
       var PANE_TITLES = {
         appearance: 'Appearance',
-        accent: 'Accent Color',
-        typography: 'Typography',
-        textsize: 'Text Size',
         wallpaper: 'Wallpaper',
+        lock: 'Lock Screen',
+        users: 'Users & Groups',
         about: 'About'
       };
+      var settingsWindow = overlay ? overlay.querySelector('.settings-window') : null;
+      var settingsSearch = document.getElementById('settings-search');
+      var settingsMin = document.getElementById('settings-minimize');
+      var settingsZoom = document.getElementById('settings-zoom');
 
       sidebarItems.forEach(function (item) {
         item.addEventListener('click', function () {
+          var target = this.getAttribute('data-pane');
+          if (!target) return;
           sidebarItems.forEach(function (i) { i.classList.remove('active'); });
           this.classList.add('active');
-
-          var target = this.getAttribute('data-pane');
           paneContents.forEach(function (p) { p.classList.remove('active'); });
           var targetPane = document.getElementById('pane-' + target);
           if (targetPane) targetPane.classList.add('active');
-
-          paneTitle.textContent = PANE_TITLES[target] || 'Settings';
+          if (paneTitle) paneTitle.textContent = PANE_TITLES[target] || 'Settings';
         });
       });
 
-      /* ---------- Accent Color ---------- */
-      accentSlider.addEventListener('input', function () {
-        state.hue = parseInt(this.value);
-        applyAccent(state.hue);
-        saveState();
-      });
+      if (settingsSearch) {
+        settingsSearch.addEventListener('input', function () {
+          var q = this.value.toLowerCase().trim();
+          sidebarItems.forEach(function (item) {
+            var text = item.textContent.toLowerCase();
+            item.classList.toggle('hidden', q !== '' && text.indexOf(q) === -1);
+          });
+        });
+      }
+      if (settingsMin) {
+        settingsMin.addEventListener('click', function () {
+          overlay.classList.remove('open');
+        });
+      }
+      if (settingsZoom && settingsWindow) {
+        settingsZoom.addEventListener('click', function () {
+          settingsWindow.classList.toggle('maximized');
+        });
+      }
 
+      /* ---------- Accent Color ---------- */
       accentDots.forEach(function (dot) {
         dot.addEventListener('click', function () {
-          state.hue = parseInt(this.getAttribute('data-hue'));
-          accentSlider.value = state.hue;
+          state.accent = this.getAttribute('data-key') || 'multi';
+          var raw = this.getAttribute('data-hue');
+          state.hue = raw === 'grey' ? 'grey' : parseInt(raw, 10);
           applyAccent(state.hue);
           saveState();
         });
       });
+
+      glassBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          applyGlass(this.getAttribute('data-glass'));
+          saveState();
+        });
+      });
+
+      var highlightSelect = document.getElementById('highlight-select');
+      if (highlightSelect) {
+        highlightSelect.addEventListener('change', function () {
+          applyHighlight(this.value);
+          saveState();
+        });
+      }
+      var folderSelect = document.getElementById('folder-select');
+      if (folderSelect) {
+        folderSelect.addEventListener('change', function () {
+          applyFolderColor(this.value);
+          saveState();
+        });
+      }
+      var sidebarIconSelect = document.getElementById('sidebar-icon-select');
+      if (sidebarIconSelect) {
+        sidebarIconSelect.addEventListener('change', function () {
+          applySidebarIcons(this.value);
+          saveState();
+        });
+      }
+      var wpTintToggle = document.getElementById('wp-tint-toggle');
+      if (wpTintToggle) {
+        wpTintToggle.addEventListener('click', function () {
+          applyWpTint(!state.wpTint);
+          saveState();
+        });
+      }
+      document.querySelectorAll('input[name="scrollbars"]').forEach(function (el) {
+        el.addEventListener('change', function () {
+          if (this.checked) {
+            applyScrollbars(this.value);
+            saveState();
+          }
+        });
+      });
+      document.querySelectorAll('input[name="scrollclick"]').forEach(function (el) {
+        el.addEventListener('change', function () {
+          if (this.checked) {
+            applyScrollClick(this.value);
+            saveState();
+          }
+        });
+      });
+
+      if (lockIdleSelect) {
+        lockIdleSelect.addEventListener('change', function () {
+          state.lockIdle = this.value;
+          applyLockSettings();
+          saveState();
+        });
+      }
+      if (lockStartSelect) {
+        lockStartSelect.addEventListener('change', function () {
+          state.lockStart = this.value;
+          saveState();
+        });
+      }
+      if (lockUserToggle) {
+        lockUserToggle.addEventListener('click', function () {
+          state.lockShowUser = !state.lockShowUser;
+          applyLockSettings();
+          saveState();
+        });
+      }
+      if (lockHintToggle) {
+        lockHintToggle.addEventListener('click', function () {
+          state.lockShowHint = !state.lockShowHint;
+          applyLockSettings();
+          saveState();
+        });
+      }
+      if (lockMsgToggle) {
+        lockMsgToggle.addEventListener('click', function () {
+          state.lockShowMessage = !state.lockShowMessage;
+          if (!state.lockShowMessage && lockMsgEditor) lockMsgEditor.classList.remove('open');
+          applyLockSettings();
+          saveState();
+        });
+      }
+      if (lockMsgSet) {
+        lockMsgSet.addEventListener('click', function () {
+          if (!state.lockShowMessage || !lockMsgEditor) return;
+          lockMsgEditor.classList.add('open');
+          if (lockMsgInput) {
+            lockMsgInput.value = state.lockMessage || '';
+            lockMsgInput.focus();
+          }
+        });
+      }
+      if (lockMsgSave) {
+        lockMsgSave.addEventListener('click', function () {
+          state.lockMessage = lockMsgInput ? lockMsgInput.value.trim() : '';
+          if (lockMsgEditor) lockMsgEditor.classList.remove('open');
+          applyLockSettings();
+          saveState();
+        });
+      }
+      if (lockClockToggle) {
+        lockClockToggle.addEventListener('click', function () {
+          state.lockShowClock = !state.lockShowClock;
+          applyLockSettings();
+          saveState();
+        });
+      }
+      document.querySelectorAll('input[name="lock-unlock"]').forEach(function (el) {
+        el.addEventListener('change', function () {
+          if (this.checked) {
+            state.lockUnlock = this.value;
+            applyLockSettings();
+            saveState();
+          }
+        });
+      });
+      if (lockNowBtn) {
+        lockNowBtn.addEventListener('click', function () {
+          if (overlay) overlay.classList.remove('open');
+          if (typeof window.lockDesktop === 'function') window.lockDesktop();
+        });
+      }
 
       /* ---------- Font ---------- */
       fontBtns.forEach(function (btn) {
@@ -10093,7 +11970,7 @@
       });
 
       /* ---------- Size ---------- */
-      sizeSlider.addEventListener('input', function () {
+      if (sizeSlider) sizeSlider.addEventListener('input', function () {
         state.size = parseInt(this.value);
         applySize(state.size);
         saveState();
@@ -10128,51 +12005,134 @@
       /* ---------- Reset ---------- */
       resetBtn.addEventListener('click', function () {
         state.hue = DEFAULTS.hue;
+        state.accent = DEFAULTS.accent;
         state.font = DEFAULTS.font;
         state.size = DEFAULTS.size;
         state.theme = DEFAULTS.theme;
+        state.glass = DEFAULTS.glass;
+        state.highlight = DEFAULTS.highlight;
+        state.folder = DEFAULTS.folder;
+        state.sidebarIcons = DEFAULTS.sidebarIcons;
+        state.wpTint = DEFAULTS.wpTint;
+        state.scrollbars = DEFAULTS.scrollbars;
+        state.scrollClick = DEFAULTS.scrollClick;
+        state.lockIdle = DEFAULTS.lockIdle;
+        state.lockStart = DEFAULTS.lockStart;
+        state.lockShowUser = DEFAULTS.lockShowUser;
+        state.lockShowHint = DEFAULTS.lockShowHint;
+        state.lockShowMessage = DEFAULTS.lockShowMessage;
+        state.lockMessage = DEFAULTS.lockMessage;
+        state.lockShowClock = DEFAULTS.lockShowClock;
+        state.lockUnlock = DEFAULTS.lockUnlock;
         state.wallpaper = '2';
+        state.brightness = DEFAULTS.brightness;
+        state.volume = DEFAULTS.volume;
         applyAll();
         applyWallpaper('2');
         saveState();
       });
 
       /* ---------- Wallpaper ---------- */
-      var wpGrid = document.getElementById('wallpaper-grid');
-      var wpOptions = wpGrid ? wpGrid.querySelectorAll('.wallpaper-option') : [];
-      var ALL_WP_CLASSES = ['wp-active-1', 'wp-active-2', 'wp-active-9', 'wp-active-11'];
+      var wpPane = document.getElementById('pane-wallpaper');
+      var wpOptions = wpPane ? wpPane.querySelectorAll('.wallpaper-option[data-wallpaper]') : [];
+      var ALL_WP_CLASSES = ['wp-active-1', 'wp-active-2', 'wp-active-9', 'wp-active-11', 'wp-active-custom'];
+      var WP_META = {
+        default: { name: 'Default', desc: 'Solid desktop colour, no image.', preview: 'wp-default' },
+        '1': { name: 'Sequoia', desc: 'A Sequoia-inspired landscape for the desktop.', preview: 'wp-1' },
+        '2': { name: 'Ambient', desc: 'Soft ambient light. The default desktop look.', preview: 'wp-2' },
+        '9': { name: 'Nebula', desc: 'A deep space colour field.', preview: 'wp-9' },
+        '11': { name: 'Horizon', desc: 'Wide sky at the horizon.', preview: 'wp-11' },
+        custom: { name: 'Photo', desc: 'A photo from your library.', preview: 'wp-custom' }
+      };
 
       state.wallpaper = state.wallpaper || '2';
+      if (state.wallpaper === 'custom') state.wallpaper = '2';
+
+      function updateWpHero(name) {
+        var meta = WP_META[name] || WP_META['2'];
+        var preview = document.getElementById('wp-preview');
+        var title = document.getElementById('wp-hero-name');
+        var desc = document.getElementById('wp-hero-desc');
+        if (title) title.textContent = meta.name;
+        if (desc) desc.textContent = meta.desc;
+        if (preview) {
+          preview.className = 'wp-preview ' + meta.preview;
+          if (name === 'custom') {
+            preview.style.backgroundImage = body.style.getPropertyValue('--custom-wallpaper');
+            preview.style.backgroundSize = 'cover';
+            preview.style.backgroundPosition = 'center';
+          } else {
+            preview.style.backgroundImage = '';
+          }
+        }
+        var showToggle = document.getElementById('wp-show-toggle');
+        if (showToggle) {
+          var on = name !== 'default';
+          showToggle.classList.toggle('on', on);
+          showToggle.setAttribute('aria-pressed', on ? 'true' : 'false');
+        }
+      }
 
       function applyWallpaper(name) {
-        var body = document.body;
-        // Remove all wallpaper classes
         ALL_WP_CLASSES.forEach(function (cls) { body.classList.remove(cls); });
-        // Apply new one (unless default)
         if (name && name !== 'default') {
           body.classList.add('wp-active-' + name);
           body.classList.add('wp-has-wallpaper');
         } else {
           body.classList.remove('wp-has-wallpaper');
+          name = 'default';
         }
-        // Update active thumbnail
         wpOptions.forEach(function (opt) {
-          if (opt.getAttribute('data-wallpaper') === name) {
-            opt.classList.add('active');
-          } else {
-            opt.classList.remove('active');
-          }
+          opt.classList.toggle('active', opt.getAttribute('data-wallpaper') === name);
         });
         state.wallpaper = name;
+        if (name !== 'default') state.lastWallpaper = name;
+        updateWpHero(name);
       }
 
       wpOptions.forEach(function (opt) {
         opt.addEventListener('click', function () {
           var wp = this.getAttribute('data-wallpaper');
+          if (wp === 'custom' && !body.style.getPropertyValue('--custom-wallpaper')) return;
           applyWallpaper(wp);
           saveState();
         });
       });
+
+      var wpShowToggle = document.getElementById('wp-show-toggle');
+      if (wpShowToggle) {
+        wpShowToggle.addEventListener('click', function () {
+          if (state.wallpaper === 'default') {
+            applyWallpaper(state.lastWallpaper || '2');
+          } else {
+            applyWallpaper('default');
+          }
+          saveState();
+        });
+      }
+
+      var wpAdd = document.getElementById('wp-add-photo');
+      var wpFile = document.getElementById('wp-file');
+      var wpCustomOpt = document.getElementById('wp-custom-option');
+      var wpCustomThumb = document.getElementById('wp-custom-thumb');
+      if (wpAdd && wpFile) {
+        wpAdd.addEventListener('click', function () { wpFile.click(); });
+        wpFile.addEventListener('change', function () {
+          var file = this.files && this.files[0];
+          if (!file) return;
+          var url = URL.createObjectURL(file);
+          var cssUrl = 'url(' + JSON.stringify(url) + ')';
+          body.style.setProperty('--custom-wallpaper', cssUrl);
+          if (wpCustomThumb) {
+            wpCustomThumb.style.backgroundImage = cssUrl;
+            wpCustomThumb.style.backgroundSize = 'cover';
+            wpCustomThumb.style.backgroundPosition = 'center';
+          }
+          if (wpCustomOpt) wpCustomOpt.hidden = false;
+          applyWallpaper('custom');
+          saveState();
+        });
+      }
 
       /* ---------- Init ---------- */
       applyAll();
@@ -10314,6 +12274,85 @@
         document.getElementById('open-work-dock')
       ];
 
+      var folioTile = document.getElementById('work-folio-tile');
+      var folioAuth = document.getElementById('folio-auth');
+      var folioPassword = document.getElementById('folio-password');
+      var FOLIO_KEY = 'portfolio-unlocked';
+      var FOLIO_HASH = 'a1b047aa1f99e8849ede427e7b074db0db4f2c3616c3f012b75b8a0b1fe81b51';
+
+      function folioUnlocked() {
+        try { return sessionStorage.getItem(FOLIO_KEY) === '1'; } catch (e) { return false; }
+      }
+      function setFolioUnlocked() {
+        try { sessionStorage.setItem(FOLIO_KEY, '1'); } catch (e) {}
+      }
+      function hideFolioAuth() {
+        if (folioTile) {
+          folioTile.classList.remove('folio-authing', 'folio-auth-wrong');
+        }
+        if (folioPassword) folioPassword.value = '';
+      }
+      function showFolioAuth() {
+        if (!folioTile || !folioAuth || !folioPassword) {
+          openWork();
+          return;
+        }
+        folioTile.classList.add('folio-authing');
+        folioTile.classList.remove('folio-auth-wrong');
+        folioPassword.value = '';
+        setTimeout(function () { folioPassword.focus(); }, 40);
+      }
+      function sha256Hex(text) {
+        return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(function (buf) {
+          return Array.from(new Uint8Array(buf)).map(function (b) {
+            return b.toString(16).padStart(2, '0');
+          }).join('');
+        });
+      }
+      function requestPortfolio() {
+        if (folioUnlocked()) {
+          hideFolioAuth();
+          openWork();
+          return;
+        }
+        showFolioAuth();
+      }
+      if (folioAuth) {
+        folioAuth.addEventListener('submit', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var value = (folioPassword && folioPassword.value || '').trim().toLowerCase();
+          sha256Hex(value).then(function (hash) {
+            if (hash === FOLIO_HASH) {
+              setFolioUnlocked();
+              hideFolioAuth();
+              openWork();
+              return;
+            }
+            if (folioTile) {
+              folioTile.classList.remove('folio-auth-wrong');
+              void folioTile.offsetWidth;
+              folioTile.classList.add('folio-auth-wrong');
+            }
+            if (folioPassword) {
+              folioPassword.value = '';
+              folioPassword.focus();
+            }
+          });
+        });
+      }
+      if (folioTile) {
+        folioTile.addEventListener('click', function (e) {
+          if (e.target.closest('#folio-auth')) return;
+          if (e.target.closest('#open-work-folio')) return;
+          requestPortfolio();
+        });
+      }
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        if (folioTile && folioTile.classList.contains('folio-authing')) hideFolioAuth();
+      });
+
       var lastFocusedEl = null;
 
       function openWork() {
@@ -10398,7 +12437,8 @@
         if (btn) {
           btn.addEventListener('click', function (e) {
             e.preventDefault();
-            openWork();
+            e.stopPropagation();
+            requestPortfolio();
           });
         }
       });
@@ -11242,6 +13282,9 @@
             onReady: function () {
               playerReady = true;
               cueCurrentTrack();
+              if (typeof window.__pendingMusicVolume === 'number') {
+                player.setVolume(window.__pendingMusicVolume);
+              }
               if (pendingPlay) {
                 pendingPlay = false;
                 playCurrentTrack();
@@ -11256,6 +13299,14 @@
       };
 
       updateTrackLabel();
+
+      window.__setMusicVolume = function (value) {
+        var v = Math.max(0, Math.min(100, Number(value) || 0));
+        window.__pendingMusicVolume = v;
+        if (playerReady && player && typeof player.setVolume === 'function') {
+          player.setVolume(v);
+        }
+      };
 
       if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
         var script = document.createElement('script');
