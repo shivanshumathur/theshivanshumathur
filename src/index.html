@@ -452,7 +452,7 @@
     }
     .cc-row {
       display: flex;
-      align-items: center;
+      align-items: stretch;
       gap: 10px;
     }
     .cc-module {
@@ -491,46 +491,75 @@
     }
     body.dashboard-body.light-mode .cc-appearance-btn #cc-icon-sun { display: none; }
     body.dashboard-body.light-mode .cc-appearance-btn #cc-icon-moon { display: block; }
-    .cc-more {
+    .cc-music {
       flex: 1;
-      height: 72px;
-      padding: 0 16px;
+      min-height: 148px;
+      padding: 12px 12px 10px;
       display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 0.5px solid rgba(255, 255, 255, 0.1);
-      border-radius: 18px;
-      color: #fff;
-      cursor: pointer;
-      font: inherit;
-      text-align: left;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    .cc-more:hover { background: rgba(255, 255, 255, 0.12); }
-    .cc-more-icon {
+    .cc-music-art {
       width: 36px;
       height: 36px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.08);
+      flex-shrink: 0;
+    }
+    .cc-music-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .cc-music-meta {
+      margin-top: 12px;
+      min-width: 0;
+    }
+    .cc-music-title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      color: #fff;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cc-music-artist {
+      margin-top: 2px;
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.52);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cc-music-controls {
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
+      gap: 22px;
+      margin-top: 12px;
     }
-    .cc-more-copy {
+    .cc-music-btn {
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: none;
+      background: none;
+      color: rgba(255, 255, 255, 0.88);
       display: flex;
-      flex-direction: column;
-      gap: 2px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
     }
-    .cc-more-title {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: -0.2px;
-    }
-    .cc-more-sub {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.55);
-    }
+    .cc-music-btn:hover { color: #fff; }
+    .cc-music-play { width: 22px; height: 22px; }
+    .cc-music-play .cc-icon-pause { display: none; }
+    .cc-music.is-playing .cc-music-play .cc-icon-play { display: none; }
+    .cc-music.is-playing .cc-music-play .cc-icon-pause { display: block; }
     .cc-slider-card {
       padding: 12px 14px 14px;
     }
@@ -1853,7 +1882,8 @@
     }
     .cell-work.folio-authing .folio-auth { display: flex; }
     .cell-work.folio-authing .folio-idle-cta { display: none; }
-    .folio-auth input {
+    .folio-auth input,
+    .dock-auth input {
       flex: 1;
       min-width: 0;
       height: 100%;
@@ -1866,7 +1896,8 @@
       letter-spacing: 0.2px;
       outline: none;
     }
-    .folio-auth input::placeholder {
+    .folio-auth input::placeholder,
+    .dock-auth input::placeholder {
       color: rgba(255, 255, 255, 0.55);
     }
     .folio-auth-go {
@@ -1884,10 +1915,34 @@
       padding: 0;
     }
     .folio-auth-go:hover { background: rgba(255, 255, 255, 0.34); }
-    .cell-work.folio-auth-wrong .folio-auth {
+    .cell-work.folio-auth-wrong .folio-auth,
+    .dock-work.folio-auth-wrong .dock-auth {
       animation: folio-shake 0.42s ease;
       border-color: rgba(255, 69, 58, 0.7);
     }
+    .dock-work {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dock-auth {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 14px);
+      left: 50%;
+      transform: translateX(-50%);
+      align-items: center;
+      width: 168px;
+      height: 28px;
+      padding: 0 2px 0 10px;
+      background: rgba(36, 36, 38, 0.88);
+      border: 0.5px solid rgba(255, 255, 255, 0.22);
+      border-radius: 980px;
+      box-sizing: border-box;
+      z-index: 20;
+    }
+    .dock-work.dock-authing .dock-auth { display: flex; }
     @keyframes folio-shake {
       0%, 100% { transform: translateX(0); }
       20% { transform: translateX(-5px); }
@@ -8134,15 +8189,27 @@
           <svg id="cc-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 14.3A8.5 8.5 0 1110.2 3a7 7 0 1010.8 11.3z"/></svg>
         </button>
       </div>
-      <button type="button" class="cc-more" id="cc-open-settings">
-        <span class="cc-more-icon" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        </span>
-        <span class="cc-more-copy">
-          <span class="cc-more-title">Settings</span>
-          <span class="cc-more-sub">Wallpaper, accent, type</span>
-        </span>
-      </button>
+      <div class="cc-module cc-music" id="cc-music">
+        <div class="cc-music-art" aria-hidden="true">
+          <img id="cc-music-art" src="https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg" alt="Sapphire">
+        </div>
+        <div class="cc-music-meta">
+          <div class="cc-music-title" id="cc-music-title">Sapphire</div>
+          <div class="cc-music-artist" id="cc-music-artist">Ed Sheeran</div>
+        </div>
+        <div class="cc-music-controls">
+          <button type="button" class="cc-music-btn" id="cc-music-prev" aria-label="Previous track">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2.2v12H6V6zm3.2 6 10.3 6.2V5.8L9.2 12z"/></svg>
+          </button>
+          <button type="button" class="cc-music-btn cc-music-play" id="cc-music-toggle" aria-label="Play">
+            <svg class="cc-icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5z"/></svg>
+            <svg class="cc-icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3.6v14H7V5zm6.4 0H17v14h-3.6V5z"/></svg>
+          </button>
+          <button type="button" class="cc-music-btn" id="cc-music-next" aria-label="Next track">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15.8 6H18v12h-2.2V6zM4.5 18.2V5.8L14.8 12 4.5 18.2z"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="cc-module cc-slider-card">
@@ -11013,16 +11080,24 @@
   <!-- ========== macOS Tahoe Liquid Glass DOCK ========== -->
   <nav class="dock-wrap" aria-label="Dock">
     <div class="dock-bar">
-      <button type="button" class="dock-item" data-label="Work" title="Work" id="open-work-dock" aria-label="Open Work">
-        <span class="dock-icon dock-icon--work" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect x="3" y="8" width="18" height="12" rx="2.5" fill="#fff" fill-opacity="0.96"/>
-            <path d="M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8" stroke="#0066cc" stroke-width="1.6" stroke-linecap="round"/>
-            <path d="M3 13h18" stroke="#0a84ff" stroke-width="1.3" stroke-opacity="0.45"/>
-            <rect x="10.25" y="12.25" width="3.5" height="2.2" rx="0.7" fill="#0066cc"/>
-          </svg>
-        </span>
-      </button>
+      <div class="dock-work" id="dock-work">
+        <button type="button" class="dock-item" data-label="Work" title="Work" id="open-work-dock" aria-label="Open Work">
+          <span class="dock-icon dock-icon--work" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="8" width="18" height="12" rx="2.5" fill="#fff" fill-opacity="0.96"/>
+              <path d="M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8" stroke="#0066cc" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M3 13h18" stroke="#0a84ff" stroke-width="1.3" stroke-opacity="0.45"/>
+              <rect x="10.25" y="12.25" width="3.5" height="2.2" rx="0.7" fill="#0066cc"/>
+            </svg>
+          </span>
+        </button>
+        <form class="dock-auth" id="dock-auth" autocomplete="off">
+          <input type="password" id="dock-password" name="dock-password" placeholder="Password" autocomplete="off" spellcheck="false">
+          <button type="submit" class="folio-auth-go" aria-label="Unlock">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+          </button>
+        </form>
+      </div>
       <a href="https://www.figma.com/@shivanshumathur" target="_blank" rel="noopener noreferrer" class="dock-item" data-label="Figma" title="Figma" aria-label="Open Figma">
         <span class="dock-icon dock-icon--figma" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none">
@@ -11520,7 +11595,13 @@
       /* ---------- Control Center ---------- */
       var ccPanel = document.getElementById('control-center');
       var ccAppearance = document.getElementById('cc-appearance');
-      var ccOpenSettings = document.getElementById('cc-open-settings');
+      var ccMusic = document.getElementById('cc-music');
+      var ccMusicTitle = document.getElementById('cc-music-title');
+      var ccMusicArtist = document.getElementById('cc-music-artist');
+      var ccMusicArt = document.getElementById('cc-music-art');
+      var ccMusicToggle = document.getElementById('cc-music-toggle');
+      var ccMusicPrev = document.getElementById('cc-music-prev');
+      var ccMusicNext = document.getElementById('cc-music-next');
       var ccBrightness = document.getElementById('cc-brightness');
       var ccVolume = document.getElementById('cc-volume');
       var displayVeil = document.getElementById('display-veil');
@@ -11692,8 +11773,34 @@
           else openControlCenter();
         });
       }
-      if (ccOpenSettings) {
-        ccOpenSettings.addEventListener('click', openSettingsWindow);
+      function syncCcMusic(detail) {
+        var playing = !!(detail && detail.playing);
+        if (ccMusic) ccMusic.classList.toggle('is-playing', playing);
+        if (ccMusicTitle) ccMusicTitle.textContent = (detail && detail.title) || 'Sapphire';
+        if (ccMusicArtist) ccMusicArtist.textContent = (detail && detail.artist) || 'Ed Sheeran';
+        if (ccMusicArt) {
+          ccMusicArt.src = (detail && detail.thumbnail) || 'https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg';
+          ccMusicArt.alt = (detail && detail.title) || 'Sapphire';
+        }
+        if (ccMusicToggle) ccMusicToggle.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+      }
+      window.addEventListener('music-state', function (e) {
+        syncCcMusic(e.detail || {});
+      });
+      if (ccMusicToggle) {
+        ccMusicToggle.addEventListener('click', function () {
+          if (typeof window.__musicToggle === 'function') window.__musicToggle();
+        });
+      }
+      if (ccMusicPrev) {
+        ccMusicPrev.addEventListener('click', function () {
+          if (typeof window.__musicPrev === 'function') window.__musicPrev();
+        });
+      }
+      if (ccMusicNext) {
+        ccMusicNext.addEventListener('click', function () {
+          if (typeof window.__musicNext === 'function') window.__musicNext();
+        });
       }
       if (homeBtn) {
         homeBtn.addEventListener('click', function (e) {
@@ -12277,30 +12384,39 @@
       var folioTile = document.getElementById('work-folio-tile');
       var folioAuth = document.getElementById('folio-auth');
       var folioPassword = document.getElementById('folio-password');
-      var FOLIO_KEY = 'portfolio-unlocked';
+      var dockWork = document.getElementById('dock-work');
+      var dockAuth = document.getElementById('dock-auth');
+      var dockPassword = document.getElementById('dock-password');
+      var workAuthed = false;
       var FOLIO_HASH = 'a1b047aa1f99e8849ede427e7b074db0db4f2c3616c3f012b75b8a0b1fe81b51';
 
-      function folioUnlocked() {
-        try { return sessionStorage.getItem(FOLIO_KEY) === '1'; } catch (e) { return false; }
-      }
-      function setFolioUnlocked() {
-        try { sessionStorage.setItem(FOLIO_KEY, '1'); } catch (e) {}
-      }
       function hideFolioAuth() {
-        if (folioTile) {
-          folioTile.classList.remove('folio-authing', 'folio-auth-wrong');
-        }
+        if (folioTile) folioTile.classList.remove('folio-authing', 'folio-auth-wrong');
         if (folioPassword) folioPassword.value = '';
       }
+      function hideDockAuth() {
+        if (dockWork) dockWork.classList.remove('dock-authing', 'folio-auth-wrong');
+        if (dockPassword) dockPassword.value = '';
+      }
+      function hideAllAuth() {
+        hideFolioAuth();
+        hideDockAuth();
+      }
       function showFolioAuth() {
-        if (!folioTile || !folioAuth || !folioPassword) {
-          openWork();
-          return;
-        }
+        hideDockAuth();
+        if (!folioTile || !folioAuth || !folioPassword) return;
         folioTile.classList.add('folio-authing');
         folioTile.classList.remove('folio-auth-wrong');
         folioPassword.value = '';
         setTimeout(function () { folioPassword.focus(); }, 40);
+      }
+      function showDockAuth() {
+        hideFolioAuth();
+        if (!dockWork || !dockAuth || !dockPassword) return;
+        dockWork.classList.add('dock-authing');
+        dockWork.classList.remove('folio-auth-wrong');
+        dockPassword.value = '';
+        setTimeout(function () { dockPassword.focus(); }, 40);
       }
       function sha256Hex(text) {
         return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(function (buf) {
@@ -12309,48 +12425,63 @@
           }).join('');
         });
       }
-      function requestPortfolio() {
-        if (folioUnlocked()) {
-          hideFolioAuth();
+      function requestPortfolio(from) {
+        if (workAuthed || (overlay && overlay.classList.contains('open')) || isMinimized) {
+          hideAllAuth();
           openWork();
           return;
         }
-        showFolioAuth();
+        if (from === 'dock') showDockAuth();
+        else showFolioAuth();
+      }
+      function submitFolioPassword(value, host, input) {
+        sha256Hex((value || '').trim().toLowerCase()).then(function (hash) {
+          if (hash === FOLIO_HASH) {
+            workAuthed = true;
+            hideAllAuth();
+            openWork();
+            return;
+          }
+          if (host) {
+            host.classList.remove('folio-auth-wrong');
+            void host.offsetWidth;
+            host.classList.add('folio-auth-wrong');
+          }
+          if (input) {
+            input.value = '';
+            input.focus();
+          }
+        });
       }
       if (folioAuth) {
         folioAuth.addEventListener('submit', function (e) {
           e.preventDefault();
           e.stopPropagation();
-          var value = (folioPassword && folioPassword.value || '').trim().toLowerCase();
-          sha256Hex(value).then(function (hash) {
-            if (hash === FOLIO_HASH) {
-              setFolioUnlocked();
-              hideFolioAuth();
-              openWork();
-              return;
-            }
-            if (folioTile) {
-              folioTile.classList.remove('folio-auth-wrong');
-              void folioTile.offsetWidth;
-              folioTile.classList.add('folio-auth-wrong');
-            }
-            if (folioPassword) {
-              folioPassword.value = '';
-              folioPassword.focus();
-            }
-          });
+          submitFolioPassword(folioPassword && folioPassword.value, folioTile, folioPassword);
+        });
+      }
+      if (dockAuth) {
+        dockAuth.addEventListener('submit', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          submitFolioPassword(dockPassword && dockPassword.value, dockWork, dockPassword);
         });
       }
       if (folioTile) {
         folioTile.addEventListener('click', function (e) {
           if (e.target.closest('#folio-auth')) return;
           if (e.target.closest('#open-work-folio')) return;
-          requestPortfolio();
+          requestPortfolio('tile');
         });
       }
       document.addEventListener('keydown', function (e) {
         if (e.key !== 'Escape') return;
-        if (folioTile && folioTile.classList.contains('folio-authing')) hideFolioAuth();
+        hideAllAuth();
+      });
+      document.addEventListener('mousedown', function (e) {
+        if (dockWork && dockWork.classList.contains('dock-authing') && !dockWork.contains(e.target)) {
+          hideDockAuth();
+        }
       });
 
       var lastFocusedEl = null;
@@ -12409,6 +12540,8 @@
         overlay.classList.remove('minimizing');
         isMinimized = false;
         overlay.classList.remove('open');
+        workAuthed = false;
+        hideAllAuth();
         if (lastFocusedEl) {
           setTimeout(function () { lastFocusedEl.focus(); }, 80);
         }
@@ -12438,7 +12571,7 @@
           btn.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            requestPortfolio();
+            requestPortfolio(btn.id === 'open-work-dock' ? 'dock' : 'tile');
           });
         }
       });
@@ -13168,6 +13301,18 @@
         return tracks[currentIndex];
       }
 
+      function broadcastMusic() {
+        var track = currentTrack();
+        window.dispatchEvent(new CustomEvent('music-state', {
+          detail: {
+            playing: tile.classList.contains('is-playing'),
+            title: track.title,
+            artist: track.artist,
+            thumbnail: track.thumbnail
+          }
+        }));
+      }
+
       function updateTrackLabel() {
         var track = currentTrack();
         titleEl.textContent = track.title;
@@ -13175,6 +13320,7 @@
         bannerImg.src = track.thumbnail;
         bannerImg.alt = track.title + ' video thumbnail';
         toggleBtn.setAttribute('aria-label', 'Play ' + track.title);
+        broadcastMusic();
       }
 
       function setPlaying(isPlaying) {
@@ -13182,6 +13328,7 @@
         if (playIcon) playIcon.style.display = isPlaying ? 'none' : 'block';
         if (pauseIcon) pauseIcon.style.display = isPlaying ? 'block' : 'none';
         toggleBtn.setAttribute('aria-label', (isPlaying ? 'Pause ' : 'Play ') + currentTrack().title);
+        broadcastMusic();
       }
 
       function cueCurrentTrack() {
@@ -13307,6 +13454,9 @@
           player.setVolume(v);
         }
       };
+      window.__musicToggle = function () { toggleBtn.click(); };
+      window.__musicPrev = goToPrevTrack;
+      window.__musicNext = goToNextTrack;
 
       if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
         var script = document.createElement('script');
