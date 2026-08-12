@@ -86,7 +86,7 @@ Advanced mode runs this three times (best/likely/worst assumption sets) and repo
 
 ## Roadmap
 
-- [ ] **v1 — Simple Mode MVP:** cost inputs, preset metric library, linear payback calc, single-number output
+- [x] **v1 — Simple Mode MVP:** cost inputs, preset metric library, linear payback calc, single-number output
 - [ ] **v2 — J-Curve Engine:** dip/recovery/compounding phases, configurable curve shape
 - [ ] **v3 — Advanced Mode:** best/likely/worst scenario bands, confidence intervals, custom metric input
 - [ ] **v4 — Hidden Cost Layer:** token/usage estimator, verification-time capture, infra cost presets by tool category
