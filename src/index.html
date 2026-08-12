@@ -1249,6 +1249,20 @@
         transform: scale(1.04);
         overflow: hidden;
         will-change: left, top, transform;
+        align-self: auto !important;
+        justify-self: auto !important;
+        aspect-ratio: auto !important;
+        grid-column: auto !important;
+        grid-row: auto !important;
+        min-height: 0 !important;
+        max-height: none;
+      }
+      .bento-drag-ghost.cell-ailab,
+      .bento-drag-ghost.cell-work,
+      .bento-drag-ghost.cell-listen,
+      .bento-drag-ghost.cell-ailab.liquid-glass,
+      .bento-drag-ghost.bento-tile {
+        aspect-ratio: auto !important;
       }
       .bento-drag-ghost.notes-panel,
       .bento-drag-ghost.notes-panel .quote-sticky-note {
@@ -13815,6 +13829,14 @@
         bentoDrag.target = next;
         reflowWithFlip(layout);
       }
+      function lockDragGhostRect(ghost, rect) {
+        ghost.style.setProperty('width', rect.width + 'px', 'important');
+        ghost.style.setProperty('height', rect.height + 'px', 'important');
+        ghost.style.setProperty('min-height', '0', 'important');
+        ghost.style.setProperty('max-height', rect.height + 'px', 'important');
+        ghost.style.left = rect.left + 'px';
+        ghost.style.top = rect.top + 'px';
+      }
       function settleGhost(finalRect, onDone) {
         if (!bentoDrag || !bentoDrag.ghost || !bentoDrag.el) {
           if (onDone) onDone();
@@ -13824,10 +13846,7 @@
         bentoDrag.settling = true;
         ghost.classList.add('is-settling');
         void ghost.offsetWidth;
-        ghost.style.left = finalRect.left + 'px';
-        ghost.style.top = finalRect.top + 'px';
-        ghost.style.width = finalRect.width + 'px';
-        ghost.style.height = finalRect.height + 'px';
+        lockDragGhostRect(ghost, finalRect);
         ghost.style.transform = 'scale(1)';
         var done = false;
         var finish = function () {
@@ -13872,10 +13891,7 @@
         ghost.removeAttribute('href');
         ghost.removeAttribute('data-drag-armed');
         ghost.setAttribute('aria-hidden', 'true');
-        ghost.style.width = rect.width + 'px';
-        ghost.style.height = rect.height + 'px';
-        ghost.style.left = rect.left + 'px';
-        ghost.style.top = rect.top + 'px';
+        lockDragGhostRect(ghost, rect);
         document.body.appendChild(ghost);
         bentoDrag.ghost = ghost;
 
