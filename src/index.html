@@ -1299,6 +1299,19 @@
       .bento-drag-ghost.cell-ailab[data-size="small"] .bento-tile-cta {
         margin-top: 0;
       }
+      .bento-drag-ghost.cell-work[data-size="small"] .bento-tile-visual {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        height: auto !important;
+        max-height: 100% !important;
+      }
+      .bento-drag-ghost.cell-work[data-size="small"] .bento-tile-cta {
+        flex: 0 0 auto;
+        margin-top: 0;
+      }
+      .bento-drag-ghost.cell-work .folio-auth {
+        display: none !important;
+      }
       .bento-drag-ghost,
       .bento-drag-ghost * {
         animation: none !important;
@@ -13930,6 +13943,30 @@
           });
         }
       }
+      function buildWorkSmallGhost(source, ghost) {
+        ghost.innerHTML = '';
+        var visual = document.createElement('div');
+        visual.className = 'bento-tile-visual';
+        var srcStack = source.querySelector('.folio-stack');
+        if (srcStack) visual.appendChild(srcStack.cloneNode(true));
+        ghost.appendChild(visual);
+        var srcCta = source.querySelector('.folio-idle-cta');
+        if (srcCta) {
+          var ctaWrap = document.createElement('div');
+          ctaWrap.className = 'bento-tile-cta';
+          var cta = srcCta.cloneNode(true);
+          cta.removeAttribute('id');
+          ctaWrap.appendChild(cta);
+          ghost.appendChild(ctaWrap);
+        }
+        var srcStackEl = source.querySelector('.folio-stack');
+        var ghostStack = ghost.querySelector('.folio-stack');
+        if (srcStackEl && ghostStack) {
+          var cs = window.getComputedStyle(srcStackEl);
+          ghostStack.style.width = cs.width;
+          ghostStack.style.height = cs.height;
+        }
+      }
       function buildAilabSmallGhost(source, ghost) {
         ghost.innerHTML = '';
         var layout = document.createElement('div');
@@ -13967,6 +14004,8 @@
         var size = source.getAttribute('data-size') || 'small';
         if (widget === 'ailab' && size === 'small') {
           buildAilabSmallGhost(source, ghost);
+        } else if (widget === 'work' && size === 'small') {
+          buildWorkSmallGhost(source, ghost);
         } else {
           ghost.innerHTML = source.innerHTML;
         }
@@ -13982,12 +14021,12 @@
         if (source.hasAttribute('data-orient')) {
           ghost.setAttribute('data-orient', source.getAttribute('data-orient'));
         }
-        if (size === 'small' && widget !== 'ailab') {
+        if (size === 'small' && widget !== 'ailab' && widget !== 'work') {
           ghost.querySelectorAll('.widget-detail-md, .widget-detail-lg').forEach(function (node) {
             node.style.setProperty('display', 'none', 'important');
           });
         }
-        if (widget !== 'ailab') {
+        if (widget !== 'ailab' && widget !== 'work') {
           [
             '.bento-tile-visual', '.ailab-memoji', '.bento-tile-cta',
             '.folio-stack', '.music-player-shell', '.music-banner', '.music-controls',
