@@ -403,6 +403,475 @@
       display: flex;
     }
     .widget-hidden { display: none !important; }
+
+    /* ===== Edit Widgets gallery (macOS bottom sheet) ===== */
+    .widget-gallery-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2500;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0;
+      background: rgba(0, 0, 0, 0.22);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.28s ease;
+    }
+    .widget-gallery-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .widget-gallery {
+      width: min(980px, 72vw);
+      max-width: calc(100vw - 48px);
+      height: min(540px, 68vh);
+      display: flex;
+      flex-direction: column;
+      border-radius: 22px 22px 0 0;
+      overflow: hidden;
+      color: #fff;
+      background: rgba(40, 40, 42, 0.72);
+      border: 0.5px solid rgba(255, 255, 255, 0.18);
+      border-bottom: none;
+      box-shadow:
+        0 -12px 50px rgba(0, 0, 0, 0.4),
+        inset 0 0.5px 0 rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(48px) saturate(180%);
+      -webkit-backdrop-filter: blur(48px) saturate(180%);
+      transform: translateY(110%);
+      opacity: 1;
+      transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+    .widget-gallery-overlay.open .widget-gallery {
+      transform: translateY(0);
+    }
+    .widget-gallery-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+    }
+    .widget-gallery-sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      padding: 14px 10px 12px;
+      border-right: 0.5px solid rgba(255, 255, 255, 0.1);
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.12);
+    }
+    .widget-gallery-search {
+      position: relative;
+      margin: 0 2px 12px;
+    }
+    .widget-gallery-search input {
+      width: 100%;
+      height: 28px;
+      border: none;
+      border-radius: 8px;
+      padding: 0 10px 0 28px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font: inherit;
+      font-size: 12px;
+      outline: none;
+    }
+    .widget-gallery-search input::placeholder { color: rgba(255, 255, 255, 0.4); }
+    .widget-gallery-search svg {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.45;
+      pointer-events: none;
+    }
+    .widget-gallery-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .widget-gallery-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 6px 8px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.9);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+    }
+    .widget-gallery-nav-item:hover { background: rgba(255, 255, 255, 0.08); }
+    .widget-gallery-nav-item.active {
+      background: rgba(255, 255, 255, 0.14);
+    }
+    .widget-gallery-nav-item.hidden { display: none; }
+    .widget-gallery-nav-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .widget-gallery-nav-icon.all { background: linear-gradient(180deg, #64d2ff, #0a84ff); }
+    .widget-gallery-nav-icon.notes { background: linear-gradient(180deg, #ffe566, #f5c518); color: #5c4800; }
+    .widget-gallery-nav-icon.profile { background: linear-gradient(180deg, #ff9f0a, #ff453a); }
+    .widget-gallery-nav-icon.ailab { background: linear-gradient(180deg, #bf5af2, #5e5ce6); }
+    .widget-gallery-nav-icon.work { background: linear-gradient(180deg, #64d2ff, #0a84ff); }
+    .widget-gallery-nav-icon.music { background: linear-gradient(180deg, #ff375f, #ff2d55); }
+    .widget-gallery-main {
+      flex: 1;
+      min-width: 0;
+      overflow-y: auto;
+      padding: 22px 24px 18px;
+    }
+    .widget-gallery-section { margin-bottom: 28px; }
+    .widget-gallery-section:last-child { margin-bottom: 8px; }
+    .widget-gallery-section.hidden { display: none; }
+    .widget-gallery-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 0 0 14px;
+      letter-spacing: -0.01em;
+    }
+    .widget-gallery-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .wg-card {
+      position: relative;
+      border: none;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+      color: inherit;
+      font: inherit;
+    }
+    .wg-card:focus-visible { outline: 2px solid var(--accent, #007AFF); outline-offset: 3px; border-radius: 16px; }
+    .wg-preview {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.28),
+        inset 0 0.5px 0 rgba(255, 255, 255, 0.2);
+      border: 0.5px solid rgba(255, 255, 255, 0.16);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .wg-card:hover .wg-preview {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.36);
+    }
+    .wg-card.is-added .wg-preview {
+      box-shadow:
+        0 0 0 2px var(--accent, #007AFF),
+        0 8px 24px rgba(0, 0, 0, 0.28);
+    }
+    .wg-card-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent, #007AFF);
+      color: #fff;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    .wg-card.is-added .wg-card-badge { display: flex; }
+    .wg-preview.small {
+      width: 118px;
+      height: 118px;
+    }
+    .wg-preview.large {
+      width: 252px;
+      height: 118px;
+    }
+    .wg-preview.profile-large {
+      width: 252px;
+      height: 168px;
+    }
+    .wg-preview.notes {
+      background: #ffeb3b;
+      color: #5c4800;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+    }
+    .wg-preview.notes .wg-notes-text {
+      font-size: 10px;
+      line-height: 1.35;
+      font-weight: 500;
+      overflow: hidden;
+      flex: 1;
+    }
+    .wg-preview.notes .wg-notes-author {
+      font-size: 9px;
+      opacity: 0.7;
+      margin-top: 6px;
+    }
+    .wg-preview.profile {
+      background: #fff;
+      color: #111;
+      display: flex;
+      flex-direction: column;
+    }
+    .wg-preview.profile .wg-profile-banner {
+      height: 28px;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      flex-shrink: 0;
+    }
+    .wg-preview.profile.small .wg-profile-banner { display: none; }
+    .wg-preview.profile .wg-profile-body {
+      padding: 8px 10px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-height: 0;
+    }
+    .wg-preview.profile.small .wg-profile-body {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .wg-preview.profile .wg-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #fff;
+      margin-top: -14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .wg-preview.profile.small .wg-avatar { margin-top: 0; width: 36px; height: 36px; }
+    .wg-preview.profile .wg-name {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+    .wg-preview.profile .wg-role {
+      font-size: 9px;
+      color: rgba(0,0,0,0.5);
+    }
+    .wg-preview.glass {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+    }
+    .wg-preview.glass.large {
+      flex-direction: row;
+      justify-content: flex-start;
+      padding: 14px 16px;
+      gap: 14px;
+    }
+    .wg-preview .wg-visual {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .wg-preview .wg-visual img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+    }
+    .wg-preview .wg-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.92);
+    }
+    .wg-preview.music .wg-art {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .wg-preview.music.large {
+      flex-direction: row;
+      padding: 10px;
+      gap: 10px;
+    }
+    .wg-preview.music.large .wg-art-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .wg-preview.music.small .wg-art-wrap {
+      position: absolute;
+      inset: 0;
+    }
+    .wg-preview.music.small .wg-label,
+    .wg-preview.music.small .wg-sub { display: none; }
+    .wg-preview.music .wg-meta { min-width: 0; }
+    .wg-preview.music .wg-sub {
+      font-size: 10px;
+      color: rgba(255,255,255,0.55);
+      margin-top: 2px;
+    }
+    .wg-card-caption {
+      margin-top: 8px;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.55);
+      text-align: center;
+    }
+    .widget-gallery-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 18px;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.16);
+      flex-shrink: 0;
+    }
+    .widget-gallery-hint {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .widget-gallery-done {
+      border: none;
+      border-radius: 980px;
+      padding: 6px 18px;
+      background: rgba(255, 255, 255, 0.88);
+      color: #111;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .widget-gallery-done:hover {
+      background: #fff;
+      transform: scale(1.02);
+    }
+    @media (max-width: 720px) {
+      .widget-gallery-overlay {
+        padding: 0;
+      }
+      .widget-gallery {
+        width: 100%;
+        max-width: none;
+        height: min(78vh, 640px);
+        border-radius: 18px 18px 0 0;
+      }
+      .widget-gallery-body { flex-direction: column; }
+      .widget-gallery-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
+        max-height: 140px;
+      }
+      .widget-gallery-nav { flex-direction: row; flex-wrap: wrap; }
+    }
+    .desktop-menu-label {
+      padding: 4px 11px 2px;
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.45);
+      letter-spacing: -0.01em;
+    }
+    .desktop-menu-item.check-left {
+      padding-left: 8px;
+      gap: 6px;
+    }
+    .desktop-menu-item.check-left .desktop-menu-check {
+      margin-left: 0;
+      width: 14px;
+    }
+    [data-widget][data-size="small"] .widget-detail-md,
+    [data-widget][data-size="small"] .widget-detail-lg { display: none !important; }
+
+    .bento-tile-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      color: var(--text-primary);
+    }
+    [data-size="small"] .bento-tile { justify-content: center; }
+
+    @media (min-width: 961px) {
+      .bento {
+        grid-template-rows: none;
+        grid-auto-rows: var(--tile-size);
+        grid-auto-flow: dense;
+        align-items: stretch;
+      }
+      .bento > .cell-profile,
+      .bento > .cell-ailab,
+      .bento > .cell-listen,
+      .bento > .cell-work {
+        grid-column: auto;
+        grid-row: auto;
+      }
+      .cell-profile[data-size="small"] { grid-column: span 1; min-height: var(--tile-size); }
+      .cell-profile[data-size="large"] { grid-column: span 3; grid-row: span 2; }
+
+      .cell-ailab[data-size="small"],
+      .cell-work[data-size="small"],
+      .cell-listen[data-size="small"] { grid-column: span 1; }
+
+      .cell-ailab[data-size="large"],
+      .cell-work[data-size="large"],
+      .cell-listen[data-size="large"] { grid-column: span 2; grid-row: span 2; }
+
+      [data-size="large"] .bento-tile {
+        aspect-ratio: auto;
+        height: 100%;
+      }
+
+      .cell-profile[data-size="small"] {
+        aspect-ratio: 1 / 1;
+      }
+      .cell-profile[data-size="small"] .profile-avatar {
+        width: 48px;
+        height: 48px;
+        margin-top: 12px;
+        border-width: 2px;
+      }
+      .cell-profile[data-size="small"] .profile-body {
+        align-items: center;
+        text-align: center;
+        padding: 0 10px 10px;
+      }
+      .cell-profile[data-size="small"] .profile-name {
+        font-size: 13px;
+      }
+      .cell-profile[data-size="small"] .profile-name-row {
+        margin-top: 8px;
+        justify-content: center;
+      }
+      aside.notes-panel[data-size="small"] { width: 112px; height: 112px; }
+      aside.notes-panel[data-size="large"] { width: 168px; height: 168px; }
+    }
     .about-system-overlay {
       position: fixed;
       inset: 0;
@@ -861,7 +1330,7 @@
       height: 168px;
       margin: 0;
       padding: 0;
-      z-index: 40;
+      z-index: 80;
       background: transparent;
       border: none;
       box-shadow: none;
@@ -1138,14 +1607,21 @@
       min-width: 480px;
       padding: 56px 24px 120px 28px;
       height: 100vh;
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+    }
+    .bento-wrap {
+      flex: 1 1 auto;
+      min-height: 0;
       overflow-y: auto;
       overflow-x: hidden;
       -ms-overflow-style: none;
       scrollbar-width: none;
-      position: relative;
-      z-index: 1;
     }
-    .left-half::-webkit-scrollbar {
+    .bento-wrap::-webkit-scrollbar {
       display: none;
     }
 
@@ -1181,6 +1657,10 @@
       }
       .dock-wrap {
         left: 50%;
+      }
+      .bento-wrap {
+        display: contents;
+        overflow: visible;
       }
       .bento {
         display: contents;
@@ -1908,6 +2388,10 @@
     .music-copy {
       flex: 1;
       min-width: 0;
+    }
+    .music-meta {
+      min-width: 0;
+      flex: 0 0 auto;
     }
     .music-title {
       font-size: 12px;
@@ -8418,6 +8902,9 @@
         </button>
       </div>
     </div>
+    <div class="desktop-menu-row">
+      <button type="button" class="desktop-menu-item" data-action="edit-widgets" role="menuitem">Edit Widgets...</button>
+    </div>
     <div class="home-menu-sep"></div>
 
     <div class="desktop-menu-row has-sub" data-sub="wallpaper">
@@ -8464,9 +8951,241 @@
     </div>
   </div>
 
+  <div class="desktop-menu" id="widget-menu" hidden role="menu" aria-label="Widget">
+    <div class="desktop-menu-label">Size</div>
+    <button type="button" class="desktop-menu-item check-left" data-widget-size="small" role="menuitemradio">
+      <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      Small
+    </button>
+    <button type="button" class="desktop-menu-item check-left" data-widget-size="large" role="menuitemradio">
+      <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      Large
+    </button>
+    <div class="home-menu-sep"></div>
+    <button type="button" class="desktop-menu-item" data-action="remove-widget" role="menuitem">Remove Widget</button>
+    <div class="home-menu-sep"></div>
+    <button type="button" class="desktop-menu-item" data-action="edit-widgets" role="menuitem">Edit Widgets...</button>
+  </div>
+
+  <div class="widget-gallery-overlay" id="widget-gallery" aria-hidden="true">
+    <div class="widget-gallery" role="dialog" aria-modal="true" aria-label="Edit Widgets">
+      <div class="widget-gallery-body">
+        <aside class="widget-gallery-sidebar">
+          <div class="widget-gallery-search">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-3.5-3.5"/></svg>
+            <input type="search" id="widget-gallery-search" placeholder="Search Widgets" autocomplete="off">
+          </div>
+          <div class="widget-gallery-nav" id="widget-gallery-nav">
+            <button type="button" class="widget-gallery-nav-item active" data-gallery-cat="all">
+              <span class="widget-gallery-nav-icon all" aria-hidden="true">◉</span>
+              All Widgets
+            </button>
+            <button type="button" class="widget-gallery-nav-item" data-gallery-cat="profile">
+              <span class="widget-gallery-nav-icon profile" aria-hidden="true">S</span>
+              Profile
+            </button>
+            <button type="button" class="widget-gallery-nav-item" data-gallery-cat="notes">
+              <span class="widget-gallery-nav-icon notes" aria-hidden="true">N</span>
+              Notes
+            </button>
+            <button type="button" class="widget-gallery-nav-item" data-gallery-cat="ailab">
+              <span class="widget-gallery-nav-icon ailab" aria-hidden="true">AI</span>
+              AI Lab
+            </button>
+            <button type="button" class="widget-gallery-nav-item" data-gallery-cat="work">
+              <span class="widget-gallery-nav-icon work" aria-hidden="true">W</span>
+              Work
+            </button>
+            <button type="button" class="widget-gallery-nav-item" data-gallery-cat="music">
+              <span class="widget-gallery-nav-icon music" aria-hidden="true">♪</span>
+              Music
+            </button>
+          </div>
+        </aside>
+
+        <div class="widget-gallery-main" id="widget-gallery-main">
+          <section class="widget-gallery-section" data-gallery-section="suggestions">
+            <h3 class="widget-gallery-section-title">Suggestions</h3>
+            <div class="widget-gallery-grid">
+              <button type="button" class="wg-card" data-add-widget="notes" data-add-size="large" data-gallery-cat="notes">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview notes large">
+                  <div class="wg-notes-text">Design is not just what it looks like. Design is how it works.</div>
+                  <div class="wg-notes-author">— Steve Jobs</div>
+                </div>
+                <div class="wg-card-caption">Notes</div>
+              </button>
+              <button type="button" class="wg-card" data-add-widget="music" data-add-size="small" data-gallery-cat="music">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview glass music small">
+                  <div class="wg-art-wrap"><img class="wg-art" src="https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg" alt=""></div>
+                </div>
+                <div class="wg-card-caption">Music</div>
+              </button>
+              <button type="button" class="wg-card" data-add-widget="ailab" data-add-size="small" data-gallery-cat="ailab">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview glass small">
+                  <div class="wg-visual"><img src="./assets/logos/ai-lab-memoji.png" alt=""></div>
+                  <div class="wg-label">AI Lab</div>
+                </div>
+                <div class="wg-card-caption">AI Lab</div>
+              </button>
+              <button type="button" class="wg-card" data-add-widget="work" data-add-size="small" data-gallery-cat="work">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview glass small">
+                  <div class="wg-visual" style="background:linear-gradient(180deg,#64d2ff,#0a84ff);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="4" y="5" width="10" height="13" rx="1.5"/><rect x="9" y="7" width="10" height="13" rx="1.5"/></svg>
+                  </div>
+                  <div class="wg-label">Portfolio</div>
+                </div>
+                <div class="wg-card-caption">Work</div>
+              </button>
+              <button type="button" class="wg-card" data-add-widget="profile" data-add-size="large" data-gallery-cat="profile">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview profile profile-large large">
+                  <div class="wg-profile-banner"></div>
+                  <div class="wg-profile-body">
+                    <img class="wg-avatar" src="./assets/logos/ShivanshuMathur.jpg" alt="">
+                    <div class="wg-name">Shivanshu Mathur</div>
+                    <div class="wg-role">AI Native Product Designer</div>
+                  </div>
+                </div>
+                <div class="wg-card-caption">Profile</div>
+              </button>
+            </div>
+          </section>
+
+          <section class="widget-gallery-section" data-gallery-section="notes" data-gallery-cat="notes">
+            <h3 class="widget-gallery-section-title">Notes</h3>
+            <div class="widget-gallery-grid">
+              <button type="button" class="wg-card" data-add-widget="notes" data-add-size="small" data-gallery-cat="notes">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview notes small">
+                  <div class="wg-notes-text">Design is not just what it looks like…</div>
+                </div>
+                <div class="wg-card-caption">Small</div>
+              </button>
+              <button type="button" class="wg-card" data-add-widget="notes" data-add-size="large" data-gallery-cat="notes">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview notes large">
+                  <div class="wg-notes-text">Design is not just what it looks like. Design is how it works.</div>
+                  <div class="wg-notes-author">— Steve Jobs</div>
+                </div>
+                <div class="wg-card-caption">Large</div>
+              </button>
+            </div>
+          </section>
+
+          <section class="widget-gallery-section" data-gallery-section="profile" data-gallery-cat="profile">
+            <h3 class="widget-gallery-section-title">Profile</h3>
+            <div class="widget-gallery-grid">
+              <button type="button" class="wg-card" data-add-widget="profile" data-add-size="small" data-gallery-cat="profile">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview profile small">
+                  <div class="wg-profile-body">
+                    <img class="wg-avatar" src="./assets/logos/ShivanshuMathur.jpg" alt="">
+                    <div class="wg-name">Shivanshu</div>
+                  </div>
+                </div>
+                <div class="wg-card-caption">Small</div>
+              </button>
+              <button type="button" class="wg-card" data-add-widget="profile" data-add-size="large" data-gallery-cat="profile">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview profile profile-large large">
+                  <div class="wg-profile-banner"></div>
+                  <div class="wg-profile-body">
+                    <img class="wg-avatar" src="./assets/logos/ShivanshuMathur.jpg" alt="">
+                    <div class="wg-name">Shivanshu Mathur</div>
+                    <div class="wg-role">AI Native Product Designer</div>
+                  </div>
+                </div>
+                <div class="wg-card-caption">Large</div>
+              </button>
+            </div>
+          </section>
+
+          <section class="widget-gallery-section" data-gallery-section="ailab" data-gallery-cat="ailab">
+            <h3 class="widget-gallery-section-title">AI Lab</h3>
+            <div class="widget-gallery-grid">
+              <button type="button" class="wg-card" data-add-widget="ailab" data-add-size="small" data-gallery-cat="ailab">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview glass small">
+                  <div class="wg-visual"><img src="./assets/logos/ai-lab-memoji.png" alt=""></div>
+                </div>
+                <div class="wg-card-caption">Small</div>
+              </button>
+              <button type="button" class="wg-card" data-add-widget="ailab" data-add-size="large" data-gallery-cat="ailab">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview glass large">
+                  <div class="wg-visual"><img src="./assets/logos/ai-lab-memoji.png" alt=""></div>
+                  <div class="wg-label">Enter AI Lab</div>
+                </div>
+                <div class="wg-card-caption">Large</div>
+              </button>
+            </div>
+          </section>
+
+          <section class="widget-gallery-section" data-gallery-section="work" data-gallery-cat="work">
+            <h3 class="widget-gallery-section-title">Work</h3>
+            <div class="widget-gallery-grid">
+              <button type="button" class="wg-card" data-add-widget="work" data-add-size="small" data-gallery-cat="work">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview glass small">
+                  <div class="wg-visual" style="background:linear-gradient(180deg,#64d2ff,#0a84ff);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="4" y="5" width="10" height="13" rx="1.5"/><rect x="9" y="7" width="10" height="13" rx="1.5"/></svg>
+                  </div>
+                </div>
+                <div class="wg-card-caption">Small</div>
+              </button>
+              <button type="button" class="wg-card" data-add-widget="work" data-add-size="large" data-gallery-cat="work">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview glass large">
+                  <div class="wg-visual" style="background:linear-gradient(180deg,#64d2ff,#0a84ff);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="4" y="5" width="10" height="13" rx="1.5"/><rect x="9" y="7" width="10" height="13" rx="1.5"/></svg>
+                  </div>
+                  <div class="wg-label">View Portfolio</div>
+                </div>
+                <div class="wg-card-caption">Large</div>
+              </button>
+            </div>
+          </section>
+
+          <section class="widget-gallery-section" data-gallery-section="music" data-gallery-cat="music">
+            <h3 class="widget-gallery-section-title">Music</h3>
+            <div class="widget-gallery-grid">
+              <button type="button" class="wg-card" data-add-widget="music" data-add-size="small" data-gallery-cat="music">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview glass music small">
+                  <div class="wg-art-wrap"><img class="wg-art" src="https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg" alt=""></div>
+                </div>
+                <div class="wg-card-caption">Small</div>
+              </button>
+              <button type="button" class="wg-card" data-add-widget="music" data-add-size="large" data-gallery-cat="music">
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <div class="wg-preview glass music large">
+                  <div class="wg-art-wrap"><img class="wg-art" src="https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg" alt=""></div>
+                  <div class="wg-meta">
+                    <div class="wg-label">Sapphire</div>
+                    <div class="wg-sub">Ed Sheeran</div>
+                  </div>
+                </div>
+                <div class="wg-card-caption">Large</div>
+              </button>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div class="widget-gallery-footer">
+        <p class="widget-gallery-hint">Click a widget to place it on the desktop. Click again to remove.</p>
+        <button type="button" class="widget-gallery-done" id="widget-gallery-done">Done</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ========== MAIN BENTO GRID ========== -->
   <main class="left-half">
-    <aside class="notes-panel" data-widget="notes" aria-label="Notes">
+    <aside class="notes-panel" data-widget="notes" data-size="large" aria-label="Notes">
       <div class="quote-sticky-note">
         <div class="quote-lines"></div>
         <div class="quote-content">
@@ -8479,7 +9198,7 @@
           <input 
             type="text" 
             id="quote-author" 
-            class="quote-author-input" 
+            class="quote-author-input widget-detail-md" 
             placeholder="— Author"
             value="— Steve Jobs"
           />
@@ -8487,11 +9206,12 @@
       </div>
     </aside>
 
+    <div class="bento-wrap">
     <div class="bento">
 
       <!-- ===== PROFILE ===== -->
-      <div class="cell-profile card" data-widget="profile">
-        <div id="profile-banner-vanta" class="profile-banner"></div>
+      <div class="cell-profile card" data-widget="profile" data-size="large">
+        <div id="profile-banner-vanta" class="profile-banner widget-detail-md"></div>
         <div class="profile-body">
           <div class="profile-avatar">
             <img src="./assets/logos/ShivanshuMathur.jpg" alt="Shivanshu Mathur">
@@ -8499,8 +9219,8 @@
           <div class="profile-name-row">
             <h1 class="profile-name">Shivanshu Mathur</h1>
           </div>
-          <p class="profile-role">AI Native Product Designer</p>
-          <div class="profile-stats">
+          <p class="profile-role widget-detail-md">AI Native Product Designer</p>
+          <div class="profile-stats widget-detail-lg">
             <div class="profile-stat">
               <div class="profile-stat-value">6+</div>
               <div class="profile-stat-label">Years of Experience</div>
@@ -8514,10 +9234,10 @@
               <div class="profile-stat-label">Dog Person</div>
             </div>
           </div>
-          <p class="profile-bio">
+          <p class="profile-bio widget-detail-lg">
             I design intelligent products that make complexity feel simple.
           </p>
-          <div class="profile-meta">
+          <div class="profile-meta widget-detail-md">
             <span class="profile-meta-item">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
               India
@@ -8525,7 +9245,7 @@
           </div>
 
           <!-- Logo Rail -->
-          <div class="logo-rail-wrap">
+          <div class="logo-rail-wrap widget-detail-lg">
             <div class="logo-rail">
               <img src="./assets/logos/NOVARTIS-white.svg" alt="Novartis" class="logo-rail-item">
               <img src="./assets/logos/ATLASSIAN-white.svg" alt="Atlassian" class="logo-rail-item">
@@ -8541,7 +9261,7 @@
             </div>
           </div>
 
-          <div class="profile-actions">
+          <div class="profile-actions widget-detail-lg">
             <a href="mailto:ershivanshumathur@gmail.com" class="btn-chat">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
               Let's chat
@@ -8555,10 +9275,11 @@
       </div>
 
       <!-- ===== AI LAB ===== -->
-      <a href="/ai-lab/" class="cell-ailab bento-tile liquid-glass" data-widget="ailab" aria-label="Open AI Lab">
+      <a href="/ai-lab/" class="cell-ailab bento-tile liquid-glass" data-widget="ailab" data-size="small" aria-label="Open AI Lab">
         <div class="bento-tile-visual" aria-hidden="true">
           <img class="ailab-memoji" src="./assets/logos/ai-lab-memoji.png" alt="" width="388" height="512">
         </div>
+        <span class="bento-tile-label widget-detail-md">AI Lab</span>
         <div class="bento-tile-cta">
           <span class="btn-linkedin">
             Enter AI Lab
@@ -8568,7 +9289,7 @@
       </a>
 
       <!-- ===== WORK ===== -->
-      <div class="cell-work card bento-tile liquid-glass" id="work-folio-tile" data-widget="work">
+      <div class="cell-work card bento-tile liquid-glass" id="work-folio-tile" data-widget="work" data-size="small">
         <div class="bento-tile-visual">
           <div class="folio-stack" aria-hidden="true">
             <span class="folio-stack-card"></span>
@@ -8576,6 +9297,7 @@
             <span class="folio-stack-card"></span>
           </div>
         </div>
+        <span class="bento-tile-label widget-detail-md">Portfolio</span>
         <div class="bento-tile-cta">
           <button type="button" class="btn-linkedin folio-idle-cta" id="open-work-folio">
             View Portfolio
@@ -8591,13 +9313,15 @@
       </div>
 
       <!-- ===== MUSIC (Passive widget) ===== -->
-      <div class="cell-listen card liquid-glass" data-widget="music">
+      <div class="cell-listen card liquid-glass" data-widget="music" data-size="small">
         <div class="music-player-shell">
           <div class="music-banner">
             <img id="music-banner-img" src="https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg" alt="Sapphire video thumbnail">
           </div>
-          <span class="music-sr-label" id="music-title">Sapphire</span>
-          <span class="music-sr-label" id="music-artist">Ed Sheeran</span>
+          <div class="music-meta widget-detail-md">
+            <div class="music-title" id="music-title">Sapphire</div>
+            <div class="music-artist widget-detail-lg" id="music-artist">Ed Sheeran</div>
+          </div>
           <div class="music-controls" aria-label="Listening controls">
             <button type="button" class="music-btn" id="music-prev" aria-label="Previous track">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h3v14H6zm4 7 9 7V5z"/></svg>
@@ -8609,7 +9333,7 @@
             <button type="button" class="music-btn" id="music-next" aria-label="Next track">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 5v14l9-7zm10 0h3v14h-3z"/></svg>
             </button>
-            <button type="button" class="music-btn" id="music-shuffle" aria-label="Shuffle listening playlist">
+            <button type="button" class="music-btn widget-detail-md" id="music-shuffle" aria-label="Shuffle listening playlist">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10.59 9.17 5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
             </button>
           </div>
@@ -8619,6 +9343,7 @@
         </div>
       </div>
 
+    </div>
     </div>
 
   </main>
@@ -11511,6 +12236,13 @@
         if (menu) menu.classList.remove('open');
         var desktopMenu = document.getElementById('desktop-menu');
         if (desktopMenu) desktopMenu.hidden = true;
+        var widgetMenuEl = document.getElementById('widget-menu');
+        if (widgetMenuEl) widgetMenuEl.hidden = true;
+        var gallery = document.getElementById('widget-gallery');
+        if (gallery) {
+          gallery.classList.remove('open');
+          gallery.setAttribute('aria-hidden', 'true');
+        }
         lock.classList.remove('unlocked');
         document.body.classList.add('is-locked');
       }
@@ -11560,7 +12292,8 @@
       var glassBtns = document.querySelectorAll('.glass-btn');
 
       /* ---------- Defaults ---------- */
-      var DEFAULTS = { hue: 210, accent: 'multi', font: 'sans', size: 1, theme: 'light', glass: 'clear', wallpaper: '2', brightness: 100, volume: 80, highlight: 'auto', folder: 'auto', sidebarIcons: 'medium', wpTint: true, scrollbars: 'auto', scrollClick: 'page', lockIdle: 'never', lockStart: 'first', lockShowUser: true, lockShowHint: true, lockShowMessage: false, lockMessage: '', lockShowClock: true, lockUnlock: 'any', widgets: { notes: true, profile: true, ailab: true, work: true, music: true } };
+      var DEFAULT_WIDGET_SIZES = { notes: 'large', profile: 'large', ailab: 'small', work: 'small', music: 'small' };
+      var DEFAULTS = { hue: 210, accent: 'multi', font: 'sans', size: 1, theme: 'light', glass: 'clear', wallpaper: '2', brightness: 100, volume: 80, highlight: 'auto', folder: 'auto', sidebarIcons: 'medium', wpTint: true, scrollbars: 'auto', scrollClick: 'page', lockIdle: 'never', lockStart: 'first', lockShowUser: true, lockShowHint: true, lockShowMessage: false, lockMessage: '', lockShowClock: true, lockUnlock: 'any', widgets: { notes: true, profile: true, ailab: true, work: true, music: true }, widgetSizes: { notes: 'large', profile: 'large', ailab: 'small', work: 'small', music: 'small' } };
 
       /* Load saved settings from localStorage, falling back to defaults */
       function loadState() {
@@ -11599,6 +12332,16 @@
       } else {
         ['notes', 'profile', 'ailab', 'work', 'music'].forEach(function (key) {
           if (typeof state.widgets[key] !== 'boolean') state.widgets[key] = true;
+        });
+      }
+      if (!state.widgetSizes || typeof state.widgetSizes !== 'object') {
+        state.widgetSizes = { notes: 'large', profile: 'large', ailab: 'small', work: 'small', music: 'small' };
+      } else {
+        ['notes', 'profile', 'ailab', 'work', 'music'].forEach(function (key) {
+          if (state.widgetSizes[key] === 'medium') state.widgetSizes[key] = 'large';
+          if (state.widgetSizes[key] !== 'small' && state.widgetSizes[key] !== 'large') {
+            state.widgetSizes[key] = DEFAULT_WIDGET_SIZES[key];
+          }
         });
       }
 
@@ -11843,11 +12586,22 @@
       }
 
       var WIDGET_KEYS = ['notes', 'profile', 'ailab', 'work', 'music'];
+      function widgetEl(key) {
+        return document.querySelector('[data-widget="' + key + '"]');
+      }
       function applyWidgets() {
         WIDGET_KEYS.forEach(function (key) {
-          var el = document.querySelector('.left-half [data-widget="' + key + '"]');
+          var el = widgetEl(key);
           if (!el) return;
           el.classList.toggle('widget-hidden', state.widgets[key] === false);
+        });
+      }
+      function applyWidgetSizes() {
+        WIDGET_KEYS.forEach(function (key) {
+          var el = widgetEl(key);
+          if (!el) return;
+          var size = state.widgetSizes[key] || DEFAULT_WIDGET_SIZES[key];
+          el.setAttribute('data-size', size);
         });
       }
 
@@ -11868,6 +12622,7 @@
         applyVolume(state.volume);
         applyLockSettings();
         applyWidgets();
+        applyWidgetSizes();
 
         fontBtns.forEach(function (btn) {
           btn.classList.toggle('active', btn.getAttribute('data-font') === state.font);
@@ -11977,6 +12732,8 @@
       function openControlCenter() {
         closeHomeMenu();
         closeDesktopMenu();
+        closeWidgetMenu();
+        closeWidgetGallery();
         if (ccPanel) ccPanel.classList.add('open');
       }
       function closeControlCenter() {
@@ -11994,6 +12751,8 @@
       function openHomeMenu() {
         closeControlCenter();
         closeDesktopMenu();
+        closeWidgetMenu();
+        closeWidgetGallery();
         if (homeMenu) homeMenu.classList.add('open');
         if (homeBtn) homeBtn.setAttribute('aria-expanded', 'true');
       }
@@ -12003,12 +12762,131 @@
       }
 
       var desktopMenu = document.getElementById('desktop-menu');
+      var widgetMenu = document.getElementById('widget-menu');
+      var activeWidgetKey = null;
+      var lastContextPoint = { x: 0, y: 0 };
       function closeDesktopMenu() {
         if (!desktopMenu) return;
         desktopMenu.hidden = true;
         desktopMenu.querySelectorAll('.has-sub.open').forEach(function (row) {
           row.classList.remove('open');
         });
+      }
+      function closeWidgetMenu() {
+        if (!widgetMenu) return;
+        widgetMenu.hidden = true;
+        activeWidgetKey = null;
+      }
+      var widgetGallery = document.getElementById('widget-gallery');
+      var widgetGallerySearch = document.getElementById('widget-gallery-search');
+      var widgetGalleryCat = 'all';
+      function syncWidgetGallery() {
+        if (!widgetGallery) return;
+        widgetGallery.querySelectorAll('.wg-card[data-add-widget]').forEach(function (card) {
+          var key = card.getAttribute('data-add-widget');
+          var size = card.getAttribute('data-add-size');
+          var on = state.widgets[key] !== false && String(state.widgetSizes[key] || DEFAULT_WIDGET_SIZES[key]) === size;
+          card.classList.toggle('is-added', on);
+        });
+      }
+      function filterWidgetGallery() {
+        if (!widgetGallery) return;
+        var q = (widgetGallerySearch && widgetGallerySearch.value || '').toLowerCase().trim();
+        widgetGallery.querySelectorAll('.widget-gallery-nav-item').forEach(function (item) {
+          var cat = item.getAttribute('data-gallery-cat') || '';
+          var text = (item.textContent || '').toLowerCase();
+          item.classList.toggle('hidden', q !== '' && cat !== 'all' && text.indexOf(q) === -1);
+          item.classList.toggle('active', cat === widgetGalleryCat);
+        });
+        widgetGallery.querySelectorAll('.widget-gallery-section').forEach(function (section) {
+          var cat = section.getAttribute('data-gallery-cat') || '';
+          var isSuggestions = section.getAttribute('data-gallery-section') === 'suggestions';
+          var title = ((section.querySelector('.widget-gallery-section-title') || {}).textContent || '').toLowerCase();
+          var show;
+          if (widgetGalleryCat === 'all') {
+            show = true;
+          } else {
+            show = isSuggestions ? false : cat === widgetGalleryCat;
+          }
+          if (q) {
+            if (isSuggestions) {
+              var any = false;
+              section.querySelectorAll('.wg-card').forEach(function (card) {
+                var caption = ((card.querySelector('.wg-card-caption') || {}).textContent || '').toLowerCase();
+                var c = (card.getAttribute('data-gallery-cat') || '').toLowerCase();
+                var match = caption.indexOf(q) !== -1 || c.indexOf(q) !== -1;
+                card.style.display = match ? '' : 'none';
+                if (match) any = true;
+              });
+              show = any;
+            } else {
+              show = show && title.indexOf(q) !== -1;
+              section.querySelectorAll('.wg-card').forEach(function (card) { card.style.display = ''; });
+            }
+          } else {
+            section.querySelectorAll('.wg-card').forEach(function (card) { card.style.display = ''; });
+          }
+          section.classList.toggle('hidden', !show);
+        });
+      }
+      function openWidgetGallery() {
+        if (!widgetGallery) return;
+        closeDesktopMenu();
+        closeWidgetMenu();
+        closeHomeMenu();
+        closeControlCenter();
+        widgetGalleryCat = 'all';
+        if (widgetGallerySearch) widgetGallerySearch.value = '';
+        syncWidgetGallery();
+        filterWidgetGallery();
+        widgetGallery.classList.add('open');
+        widgetGallery.setAttribute('aria-hidden', 'false');
+        if (widgetGallerySearch) setTimeout(function () { widgetGallerySearch.focus(); }, 50);
+      }
+      function closeWidgetGallery() {
+        if (!widgetGallery) return;
+        widgetGallery.classList.remove('open');
+        widgetGallery.setAttribute('aria-hidden', 'true');
+      }
+      function setOpenDesktopSubmenu(row) {
+        if (!desktopMenu) return;
+        desktopMenu.querySelectorAll('.has-sub.open').forEach(function (el) {
+          if (el !== row) el.classList.remove('open');
+        });
+        if (row) row.classList.add('open');
+      }
+      function positionContextMenu(menu, x, y) {
+        if (!menu) return;
+        menu.hidden = false;
+        menu.style.left = '0px';
+        menu.style.top = '0px';
+        var rect = menu.getBoundingClientRect();
+        var left = x;
+        var top = y;
+        if (left + rect.width > window.innerWidth - 8) left = window.innerWidth - rect.width - 8;
+        if (top + rect.height > window.innerHeight - 8) top = window.innerHeight - rect.height - 8;
+        if (left < 8) left = 8;
+        if (top < 8) top = 8;
+        menu.style.left = left + 'px';
+        menu.style.top = top + 'px';
+        return { left: left, top: top, width: rect.width };
+      }
+      function syncWidgetMenuState() {
+        if (!widgetMenu || !activeWidgetKey) return;
+        var size = state.widgetSizes[activeWidgetKey] || DEFAULT_WIDGET_SIZES[activeWidgetKey];
+        widgetMenu.querySelectorAll('[data-widget-size]').forEach(function (btn) {
+          var on = btn.getAttribute('data-widget-size') === size;
+          btn.classList.toggle('is-checked', on);
+          btn.setAttribute('aria-checked', on ? 'true' : 'false');
+        });
+      }
+      function openWidgetMenu(widgetEl, x, y) {
+        if (!widgetMenu || !widgetEl) return;
+        closeDesktopMenu();
+        activeWidgetKey = widgetEl.getAttribute('data-widget');
+        lastContextPoint = { x: x, y: y };
+        syncWidgetMenuState();
+        positionContextMenu(widgetMenu, x, y);
       }
       function syncDesktopMenuState() {
         if (!desktopMenu) return;
@@ -12032,20 +12910,10 @@
       }
       function openDesktopMenu(x, y) {
         if (!desktopMenu) return;
+        closeWidgetMenu();
         syncDesktopMenuState();
-        desktopMenu.hidden = false;
-        desktopMenu.style.left = '0px';
-        desktopMenu.style.top = '0px';
-        var rect = desktopMenu.getBoundingClientRect();
-        var left = x;
-        var top = y;
-        if (left + rect.width > window.innerWidth - 8) left = window.innerWidth - rect.width - 8;
-        if (top + rect.height > window.innerHeight - 8) top = window.innerHeight - rect.height - 8;
-        if (left < 8) left = 8;
-        if (top < 8) top = 8;
-        desktopMenu.style.left = left + 'px';
-        desktopMenu.style.top = top + 'px';
-        var roomRight = window.innerWidth - (left + rect.width) > 190;
+        var pos = positionContextMenu(desktopMenu, x, y) || { left: x, width: 198 };
+        var roomRight = window.innerWidth - (pos.left + pos.width) > 190;
         desktopMenu.querySelectorAll('.desktop-submenu').forEach(function (sub) {
           sub.classList.toggle('flip', !roomRight);
         });
@@ -12065,6 +12933,8 @@
         closeHomeMenu();
         closeControlCenter();
         closeDesktopMenu();
+        closeWidgetMenu();
+        closeWidgetGallery();
         syncAccountBanner();
         if (overlay) overlay.classList.add('open');
       }
@@ -12094,6 +12964,8 @@
       function openAboutSystem() {
         closeHomeMenu();
         closeDesktopMenu();
+        closeWidgetMenu();
+        closeWidgetGallery();
         refreshAboutGit();
         if (aboutSystem) aboutSystem.classList.add('open');
       }
@@ -12184,14 +13056,29 @@
 
       document.addEventListener('contextmenu', function (e) {
         if (body.classList.contains('is-locked')) return;
+        if (e.target.closest('.app-overlay, .settings-overlay, .about-system-overlay, .cc-panel, .home-menu, .ask-overlay, .dock-wrap, .widget-gallery-overlay, #widget-gallery')) return;
+        var tile = e.target.closest('[data-widget]');
+        if (tile && !e.target.closest('#desktop-menu, #widget-menu')) {
+          if (e.target.closest('input, select') && tile.getAttribute('data-widget') !== 'notes') return;
+          e.preventDefault();
+          closeHomeMenu();
+          closeControlCenter();
+          openWidgetMenu(tile, e.clientX, e.clientY);
+          return;
+        }
         if (e.target.closest('input, textarea, select, [contenteditable="true"]')) return;
-        if (e.target.closest('.app-overlay, .settings-overlay, .about-system-overlay, .cc-panel, .home-menu, .ask-overlay, .dock-wrap')) return;
         e.preventDefault();
         closeHomeMenu();
         closeControlCenter();
         openDesktopMenu(e.clientX, e.clientY);
       });
       if (desktopMenu) {
+        desktopMenu.addEventListener('mouseover', function (e) {
+          if (e.target.closest('.desktop-submenu')) return;
+          var row = e.target.closest('.desktop-menu-row');
+          if (!row || !desktopMenu.contains(row)) return;
+          setOpenDesktopSubmenu(row.classList.contains('has-sub') ? row : null);
+        });
         desktopMenu.addEventListener('contextmenu', function (e) {
           e.preventDefault();
           e.stopPropagation();
@@ -12203,10 +13090,7 @@
 
           var row = item.closest('.desktop-menu-row.has-sub');
           if (row && !item.closest('.desktop-submenu')) {
-            desktopMenu.querySelectorAll('.has-sub.open').forEach(function (el) {
-              if (el !== row) el.classList.remove('open');
-            });
-            row.classList.toggle('open');
+            setOpenDesktopSubmenu(row);
             return;
           }
 
@@ -12234,6 +13118,11 @@
             syncDesktopMenuState();
             return;
           }
+          if (action === 'edit-widgets') {
+            closeDesktopMenu();
+            openWidgetGallery();
+            return;
+          }
           if (action === 'settings') {
             openSettingsWindow();
             return;
@@ -12243,8 +13132,81 @@
           }
         });
       }
-      window.addEventListener('resize', closeDesktopMenu);
-      document.addEventListener('scroll', closeDesktopMenu, true);
+      if (widgetMenu) {
+        widgetMenu.addEventListener('contextmenu', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        });
+        widgetMenu.addEventListener('click', function (e) {
+          var item = e.target.closest('.desktop-menu-item');
+          if (!item || !activeWidgetKey) return;
+          e.stopPropagation();
+          var size = item.getAttribute('data-widget-size');
+          var action = item.getAttribute('data-action');
+          if (size) {
+            state.widgetSizes[activeWidgetKey] = size;
+            applyWidgetSizes();
+            saveState();
+            syncWidgetMenuState();
+            return;
+          }
+          if (action === 'remove-widget') {
+            state.widgets[activeWidgetKey] = false;
+            applyWidgets();
+            saveState();
+            syncDesktopMenuState();
+            closeWidgetMenu();
+            return;
+          }
+          if (action === 'edit-widgets') {
+            closeWidgetMenu();
+            openWidgetGallery();
+          }
+        });
+      }
+      if (widgetGallery) {
+        var galleryDone = document.getElementById('widget-gallery-done');
+        if (galleryDone) galleryDone.addEventListener('click', closeWidgetGallery);
+        widgetGallery.addEventListener('click', function (e) {
+          if (e.target === widgetGallery) closeWidgetGallery();
+        });
+        widgetGallery.querySelectorAll('.widget-gallery-nav-item').forEach(function (item) {
+          item.addEventListener('click', function () {
+            widgetGalleryCat = this.getAttribute('data-gallery-cat') || 'all';
+            filterWidgetGallery();
+          });
+        });
+        if (widgetGallerySearch) {
+          widgetGallerySearch.addEventListener('input', filterWidgetGallery);
+        }
+        widgetGallery.addEventListener('click', function (e) {
+          var card = e.target.closest('.wg-card[data-add-widget]');
+          if (!card || !widgetGallery.contains(card)) return;
+          var key = card.getAttribute('data-add-widget');
+          var size = card.getAttribute('data-add-size') || 'small';
+          var currentSize = state.widgetSizes[key] || DEFAULT_WIDGET_SIZES[key];
+          var isSame = state.widgets[key] !== false && currentSize === size;
+          if (isSame) {
+            state.widgets[key] = false;
+          } else {
+            state.widgets[key] = true;
+            state.widgetSizes[key] = size;
+          }
+          applyWidgets();
+          applyWidgetSizes();
+          saveState();
+          syncDesktopMenuState();
+          syncWidgetGallery();
+        });
+      }
+      window.addEventListener('resize', function () {
+        closeDesktopMenu();
+        closeWidgetMenu();
+      });
+      document.addEventListener('scroll', function () {
+        closeDesktopMenu();
+        closeWidgetMenu();
+      }, true);
 
       document.addEventListener('click', function (e) {
         if (ccPanel && ccPanel.classList.contains('open')) {
@@ -12260,6 +13222,9 @@
         if (desktopMenu && !desktopMenu.hidden && !desktopMenu.contains(e.target)) {
           closeDesktopMenu();
         }
+        if (widgetMenu && !widgetMenu.hidden && !widgetMenu.contains(e.target)) {
+          closeWidgetMenu();
+        }
       });
       closeBtn.addEventListener('click', function () {
         overlay.classList.remove('open');
@@ -12269,6 +13234,14 @@
       });
       document.addEventListener('keydown', function (e) {
         if (e.key !== 'Escape') return;
+        if (widgetGallery && widgetGallery.classList.contains('open')) {
+          closeWidgetGallery();
+          return;
+        }
+        if (widgetMenu && !widgetMenu.hidden) {
+          closeWidgetMenu();
+          return;
+        }
         if (desktopMenu && !desktopMenu.hidden) {
           closeDesktopMenu();
           return;
@@ -12543,6 +13516,7 @@
         state.brightness = DEFAULTS.brightness;
         state.volume = DEFAULTS.volume;
         state.widgets = { notes: true, profile: true, ailab: true, work: true, music: true };
+        state.widgetSizes = { notes: 'large', profile: 'large', ailab: 'small', work: 'small', music: 'small' };
         applyAll();
         applyWallpaper('2');
         saveState();
@@ -12757,7 +13731,7 @@
       }
 
       function submitFolioPassword(value, host, input) {
-        sha256Hex((value || '').trim().toLowerCase()).then(function (hash) {
+        sha256Hex((value || '').trim()).then(function (hash) {
           if (hash === FOLIO_HASH) {
             workAuthed = true;
             hideAllAuth();
