@@ -89,7 +89,7 @@ Advanced mode runs this three times (best/likely/worst assumption sets) and repo
 - [x] **v1 — Simple Mode MVP:** cost inputs, preset metric library, linear payback calc, single-number output
 - [x] **v2 — J-Curve Engine:** dip/recovery/compounding phases, configurable curve shape
 - [x] **v3 — Advanced Mode:** best/likely/worst scenario bands, confidence intervals, custom metric input
-- [ ] **v4 — Hidden Cost Layer:** token/usage estimator, verification-time capture, infra cost presets by tool category
+- [x] **v4 — Hidden Cost Layer:** token/usage estimator, verification-time capture, infra cost presets by tool category
 - [ ] **v5 — Shareable Reports:** exportable summary (PDF/link) for stakeholder/CFO conversations
 
 Build phases map 1:1 to the [SKILL.md](./SKILL.md) Phase 0–5 checklist. Do not build ahead of the current phase.

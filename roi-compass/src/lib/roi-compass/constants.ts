@@ -15,6 +15,12 @@ export const SECONDS_PER_HOUR = 3600;
  */
 export const TIME_SAVED_HOURS_PER_IMPROVED_TASK = 1;
 
+/**
+ * Average weeks per month — used to convert weekly verification hours to monthly $.
+ * Named constant (not a magic 4.33 inline).
+ */
+export const WEEKS_PER_MONTH = 4.33;
+
 export const PRODUCT_NAME = "AI ROI Compass";
 
 export const PRODUCT_TAGLINE =

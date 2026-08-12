@@ -3,6 +3,12 @@ import {
   SECONDS_PER_HOUR,
   TIME_SAVED_HOURS_PER_IMPROVED_TASK,
 } from "./constants";
+import {
+  calculateInfraCost,
+  calculateSeatCost,
+  calculateUsageCost,
+  calculateVerificationCost,
+} from "./hiddenCosts";
 import { applyJCurve } from "./jcurve";
 import type {
   CostInputs,
@@ -11,6 +17,14 @@ import type {
   ROIResult,
   UXMetric,
 } from "./types";
+
+export {
+  breakDownMonthlyCosts,
+  calculateInfraCost,
+  calculateSeatCost,
+  calculateUsageCost,
+  calculateVerificationCost,
+} from "./hiddenCosts";
 
 /**
  * Convert a single UX metric into an estimated monthly dollar value.
@@ -47,8 +61,13 @@ export function convertMetricToDollarValue(metric: UXMetric): number {
 }
 
 export function calculateTotalMonthlyCost(costs: CostInputs): number {
-  // Phase 1: seat license only. Optional Phase 4 fields are ignored when undefined.
-  return costs.seatCount * costs.costPerSeatPerMonth;
+  // Seat + optional Phase 4 layers. Undefined optionals degrade to $0.
+  return (
+    calculateSeatCost(costs) +
+    calculateUsageCost(costs) +
+    calculateInfraCost(costs) +
+    calculateVerificationCost(costs)
+  );
 }
 
 export function calculateTotalMonthlyValue(metrics: UXMetric[]): number {

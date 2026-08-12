@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { CostBreakdown } from "./components/roi-compass/CostBreakdown";
 import { CostInputForm } from "./components/roi-compass/CostInputForm";
 import { JCurveChart } from "./components/roi-compass/JCurveChart";
 import { JCurveControls } from "./components/roi-compass/JCurveControls";
@@ -109,6 +110,8 @@ export default function App() {
               jCurve={jCurve}
               linearPaybackMonth={linearPaybackMonth}
             />
+
+            <CostBreakdown costs={costs} />
 
             {mode === "simple" && simpleResult ? (
               <JCurveChart
