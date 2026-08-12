@@ -1312,6 +1312,28 @@
       .bento-drag-ghost.cell-work .folio-auth {
         display: none !important;
       }
+      .bento-drag-ghost.cell-listen[data-size="small"] .music-player-shell {
+        gap: 10px;
+        justify-content: space-between;
+        height: auto !important;
+        max-height: 100% !important;
+        min-height: 0 !important;
+        flex: 1 1 auto !important;
+        overflow: hidden;
+      }
+      .bento-drag-ghost.cell-listen[data-size="small"] .music-banner {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        height: auto !important;
+        max-height: 100% !important;
+      }
+      .bento-drag-ghost.cell-listen[data-size="small"] .music-controls {
+        flex: 0 0 auto;
+      }
+      .bento-drag-ghost.cell-listen .music-player-embed,
+      .bento-drag-ghost.cell-listen .music-meta {
+        display: none !important;
+      }
       .bento-drag-ghost,
       .bento-drag-ghost * {
         animation: none !important;
@@ -13943,6 +13965,33 @@
           });
         }
       }
+      function buildMusicSmallGhost(source, ghost) {
+        ghost.innerHTML = '';
+        var shell = document.createElement('div');
+        shell.className = 'music-player-shell';
+        var srcBanner = source.querySelector('.music-banner');
+        if (srcBanner) shell.appendChild(srcBanner.cloneNode(true));
+        var srcControls = source.querySelector('.music-controls');
+        if (srcControls) {
+          var controls = document.createElement('div');
+          controls.className = 'music-controls';
+          controls.setAttribute('aria-hidden', 'true');
+          srcControls.querySelectorAll('.music-btn:not(.widget-detail-md)').forEach(function (btn) {
+            var clone = btn.cloneNode(true);
+            clone.removeAttribute('id');
+            controls.appendChild(clone);
+          });
+          shell.appendChild(controls);
+        }
+        ghost.appendChild(shell);
+        var srcBannerEl = source.querySelector('.music-banner');
+        var ghostBanner = ghost.querySelector('.music-banner');
+        if (srcBannerEl && ghostBanner) {
+          var cs = window.getComputedStyle(srcBannerEl);
+          ghostBanner.style.width = cs.width;
+          ghostBanner.style.height = cs.height;
+        }
+      }
       function buildWorkSmallGhost(source, ghost) {
         ghost.innerHTML = '';
         var visual = document.createElement('div');
@@ -14006,6 +14055,8 @@
           buildAilabSmallGhost(source, ghost);
         } else if (widget === 'work' && size === 'small') {
           buildWorkSmallGhost(source, ghost);
+        } else if (widget === 'music' && size === 'small') {
+          buildMusicSmallGhost(source, ghost);
         } else {
           ghost.innerHTML = source.innerHTML;
         }
@@ -14021,12 +14072,12 @@
         if (source.hasAttribute('data-orient')) {
           ghost.setAttribute('data-orient', source.getAttribute('data-orient'));
         }
-        if (size === 'small' && widget !== 'ailab' && widget !== 'work') {
+        if (size === 'small' && widget !== 'ailab' && widget !== 'work' && widget !== 'music') {
           ghost.querySelectorAll('.widget-detail-md, .widget-detail-lg').forEach(function (node) {
             node.style.setProperty('display', 'none', 'important');
           });
         }
-        if (widget !== 'ailab' && widget !== 'work') {
+        if (widget !== 'ailab' && widget !== 'work' && widget !== 'music') {
           [
             '.bento-tile-visual', '.ailab-memoji', '.bento-tile-cta',
             '.folio-stack', '.music-player-shell', '.music-banner', '.music-controls',
