@@ -420,6 +420,9 @@
     }
     .widget-gallery-overlay.open {
       opacity: 1;
+      pointer-events: none;
+    }
+    .widget-gallery-overlay.open .widget-gallery {
       pointer-events: auto;
     }
     .widget-gallery {
@@ -689,6 +692,50 @@
       padding: 14px 16px;
       gap: 14px;
     }
+    .wg-preview.glass.large.ailab-large {
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      text-align: left;
+    }
+    .wg-preview.ailab-large .wg-ailab-copy {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .wg-preview.ailab-large .wg-label {
+      font-size: 12px;
+      margin: 0;
+    }
+    .wg-preview.ailab-large .wg-ailab-sub {
+      font-size: 9px;
+      line-height: 1.3;
+      color: rgba(255, 255, 255, 0.55);
+    }
+    .wg-preview.ailab-large .wg-ailab-cta {
+      margin-top: 2px;
+      font-size: 9px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.88);
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .wg-preview.ailab-large .wg-visual {
+      width: 44px;
+      height: 44px;
+      order: 0;
+    }
+    .wg-preview.ailab-large .wg-visual img {
+      width: 40px;
+      height: 40px;
+    }
     .wg-preview .wg-visual {
       width: 42px;
       height: 42px;
@@ -820,28 +867,251 @@
 
     @media (min-width: 961px) {
       .bento {
-        grid-template-rows: none;
+        --bento-cols: 16;
+        --bento-major: 8;
+        --bento-rows: 12;
+        --bento-gap: 14px;
+        --widget-pad: 16px;
+        --tile-pad: var(--widget-pad);
+        grid-template-rows: repeat(var(--bento-rows), var(--tile-size));
+        grid-template-columns: repeat(16, minmax(0, 1fr));
         grid-auto-rows: var(--tile-size);
         grid-auto-flow: dense;
         align-items: stretch;
+        align-content: start;
+        justify-content: stretch;
+        width: 100%;
+        max-width: none;
+        height: calc(var(--bento-rows) * var(--tile-size) + (var(--bento-rows) - 1) * var(--bento-gap));
+        min-height: 0;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
       }
       .bento > .cell-profile,
       .bento > .cell-ailab,
       .bento > .cell-listen,
-      .bento > .cell-work {
+      .bento > .cell-work,
+      .bento > aside.notes-panel {
         grid-column: auto;
         grid-row: auto;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        max-height: none;
+        aspect-ratio: auto;
+        align-self: stretch;
+        justify-self: stretch;
+        box-sizing: border-box;
       }
-      .cell-profile[data-size="small"] { grid-column: span 1; min-height: var(--tile-size); }
-      .cell-profile[data-size="large"] { grid-column: span 3; grid-row: span 2; }
+      .bento > .cell-ailab.bento-tile,
+      .bento > .cell-work.bento-tile,
+      .bento > .cell-listen {
+        padding: var(--widget-pad) !important;
+      }
+      .bento > aside.notes-panel {
+        padding: var(--widget-pad);
+        background: transparent;
+      }
+      .bento > aside.notes-panel .quote-sticky-note {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      a.cell-ailab.liquid-glass {
+        height: 100% !important;
+        min-height: 0 !important;
+        aspect-ratio: auto !important;
+      }
+      .cell-work,
+      .cell-ailab {
+        height: 100% !important;
+        min-height: 0 !important;
+        aspect-ratio: auto !important;
+      }
+      .cell-profile[data-size="large"] {
+        --profile-pad: var(--tile-pad);
+        --profile-gap: 12px;
+        --profile-banner-h: 88px;
+        --profile-avatar-size: 64px;
+        --profile-avatar-top: 60px;
+        grid-column: span 6;
+        min-height: 0;
+        height: auto;
+        position: relative;
+        overflow: hidden;
+        align-self: start;
+        border-radius: var(--tile-radius, 20px);
+        box-sizing: border-box;
+      }
+      .cell-profile[data-size="large"] .profile-banner {
+        width: 100%;
+        max-width: 100%;
+        height: var(--profile-banner-h);
+        border-radius: 0;
+        flex-shrink: 0;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+      .cell-profile[data-size="large"] .profile-banner canvas {
+        max-width: 100%;
+      }
+      .cell-profile[data-size="large"] .profile-body {
+        padding-left: var(--profile-pad);
+        padding-right: var(--profile-pad);
+        padding-bottom: var(--profile-pad);
+        padding-top: calc(var(--profile-avatar-top) + var(--profile-avatar-size) - var(--profile-banner-h) + var(--profile-gap));
+        min-height: 0;
+        flex: 0 0 auto;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: var(--profile-gap);
+      }
+      .cell-profile[data-size="large"] .profile-avatar {
+        position: absolute;
+        top: var(--profile-avatar-top);
+        left: var(--profile-pad);
+        width: var(--profile-avatar-size);
+        height: var(--profile-avatar-size);
+        margin-top: 0;
+        z-index: 4;
+      }
+      .cell-profile[data-size="large"] .logo-rail-wrap {
+        min-height: 18px;
+        width: 100%;
+        overflow: hidden;
+      }
+      .cell-profile[data-size="large"] .logo-rail {
+        display: flex;
+        animation: rail-scroll 14s linear infinite;
+      }
+      .cell-profile[data-size="large"] .profile-stat {
+        padding: 0 12px;
+      }
+      .cell-profile[data-size="large"] .profile-stat:first-child {
+        padding-left: 0;
+      }
+      .cell-profile[data-size="large"] .profile-stat:last-child {
+        padding-right: 0;
+      }
+      .cell-profile[data-size="large"] .profile-role-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-width: 0;
+      }
+      .cell-profile[data-size="large"] .profile-role-row .profile-role {
+        min-width: 0;
+        flex: 1;
+      }
+      .cell-profile[data-size="large"] .profile-tools {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+      .cell-profile[data-size="small"] {
+        --profile-pad: 12px;
+        --profile-gap: 8px;
+        grid-column: span 2;
+        grid-row: span 2;
+        min-height: 0;
+        height: 100%;
+        aspect-ratio: auto;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+      .cell-profile[data-size="small"] .profile-banner {
+        width: 100%;
+        border-radius: 0;
+      }
+      .cell-profile[data-size="small"] .profile-body {
+        padding: 0 var(--profile-pad) var(--profile-pad);
+        gap: var(--profile-gap);
+      }
 
       .cell-ailab[data-size="small"],
       .cell-work[data-size="small"],
-      .cell-listen[data-size="small"] { grid-column: span 1; }
+      .cell-listen[data-size="small"] {
+        grid-column: span 2;
+        grid-row: span 2;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        aspect-ratio: auto;
+      }
 
       .cell-ailab[data-size="large"],
-      .cell-work[data-size="large"],
-      .cell-listen[data-size="large"] { grid-column: span 2; grid-row: span 2; }
+      .cell-work[data-size="large"] {
+        grid-column: span 4;
+        grid-row: span 8;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        aspect-ratio: auto;
+      }
+
+      .cell-listen[data-size="large"] {
+        grid-column: span 8;
+        grid-row: span 8;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        aspect-ratio: auto;
+      }
+
+      a.cell-ailab.liquid-glass[data-size="small"],
+      a.cell-ailab.liquid-glass[data-size="large"] {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        aspect-ratio: auto;
+      }
+
+      /* Notes — 2×2 cell, fills its grid area */
+      aside.notes-panel {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        left: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none;
+        max-height: none;
+        min-width: 0;
+        min-height: 0;
+        margin: 0;
+        z-index: 6;
+        align-self: stretch;
+        justify-self: stretch;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+      aside.notes-panel[data-size="small"],
+      aside.notes-panel[data-size="large"] {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none;
+        max-height: none;
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+      aside.notes-panel .quote-sticky-note {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        max-height: 100%;
+        box-sizing: border-box;
+      }
+      aside.notes-panel .quote-content {
+        min-height: 0;
+      }
+      aside.notes-panel .quote-textarea {
+        min-height: 0;
+      }
 
       [data-size="large"] .bento-tile {
         aspect-ratio: auto;
@@ -849,28 +1119,169 @@
       }
 
       .cell-profile[data-size="small"] {
-        aspect-ratio: 1 / 1;
+        aspect-ratio: auto;
+        min-height: 0;
+        height: 100%;
+      }
+      .cell-profile[data-size="small"] .profile-banner {
+        height: 44px;
+        display: block;
       }
       .cell-profile[data-size="small"] .profile-avatar {
-        width: 48px;
-        height: 48px;
-        margin-top: 12px;
+        width: 40px;
+        height: 40px;
+        margin-top: -20px;
         border-width: 2px;
       }
       .cell-profile[data-size="small"] .profile-body {
         align-items: center;
         text-align: center;
-        padding: 0 10px 10px;
+      }
+      .cell-profile[data-size="small"] .profile-name-row,
+      .cell-profile[data-size="small"] .profile-role-row {
+        margin: 0;
       }
       .cell-profile[data-size="small"] .profile-name {
         font-size: 13px;
+        letter-spacing: -0.2px;
       }
       .cell-profile[data-size="small"] .profile-name-row {
-        margin-top: 8px;
         justify-content: center;
       }
-      aside.notes-panel[data-size="small"] { width: 112px; height: 112px; }
-      aside.notes-panel[data-size="large"] { width: 168px; height: 168px; }
+      .cell-profile[data-size="small"] .profile-role {
+        font-size: 11px;
+        line-height: 1.3;
+      }
+      .cell-profile[data-size="small"] .profile-role-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
+      }
+      .cell-profile[data-size="small"] .profile-role-row .profile-role {
+        text-align: center;
+      }
+      .cell-profile[data-size="small"] .profile-tools {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+      }
+      .cell-profile[data-size="small"] .profile-tools img {
+        width: 14px;
+        height: 14px;
+      }
+      .cell-profile[data-size="small"] .profile-stats {
+        display: none;
+      }
+      .cell-profile[data-size="small"] .profile-stat {
+        padding: 0 8px;
+      }
+      .cell-profile[data-size="small"] .profile-stat:first-child {
+        padding-left: 8px;
+      }
+      .cell-profile[data-size="small"] .profile-stat-value {
+        font-size: 16px;
+        letter-spacing: -0.4px;
+      }
+      .cell-profile[data-size="small"] .profile-stat-label {
+        font-size: 9px;
+        margin-top: 3px;
+        line-height: 1.25;
+      }
+      aside.notes-panel[data-size="small"],
+      aside.notes-panel[data-size="large"] {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none;
+        max-height: none;
+      }
+
+      /* Grid rearrange — desktop bento tiles */
+      .bento > [data-widget] {
+        cursor: grab;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-user-drag: none;
+      }
+      .bento > [data-widget] img {
+        -webkit-user-drag: none;
+        pointer-events: none;
+      }
+      .bento > [data-widget] input,
+      .bento > [data-widget] textarea,
+      .bento > [data-widget] button,
+      .bento > [data-widget] a.btn-chat,
+      .bento > [data-widget] a.btn-linkedin {
+        user-select: auto;
+        -webkit-user-select: auto;
+        cursor: pointer;
+      }
+      .bento > [data-widget].is-dragging {
+        opacity: 0.28 !important;
+        cursor: grabbing;
+        z-index: 2;
+        box-shadow: none !important;
+      }
+      .bento > [data-widget].bento-flipping {
+        z-index: 4;
+        will-change: transform;
+        pointer-events: none;
+      }
+      body.is-bento-dragging .bento > [data-widget] {
+        animation: none !important;
+      }
+      .bento-drag-ghost {
+        position: fixed;
+        z-index: 2600;
+        pointer-events: none;
+        margin: 0;
+        box-sizing: border-box;
+        border-radius: var(--tile-radius, 20px);
+        box-shadow:
+          0 28px 70px rgba(0, 0, 0, 0.4),
+          0 10px 28px rgba(0, 0, 0, 0.18),
+          0 0 0 0.5px rgba(255, 255, 255, 0.2);
+        opacity: 0.98;
+        transform: scale(1.04);
+        overflow: hidden;
+        will-change: left, top, transform;
+      }
+      .bento-drag-ghost.notes-panel,
+      .bento-drag-ghost.notes-panel .quote-sticky-note {
+        border-radius: 2px;
+        overflow: visible;
+        background: transparent;
+        box-shadow: none;
+      }
+      .bento-drag-ghost.notes-panel .quote-sticky-note {
+        box-shadow:
+          0 1px 1px rgba(0, 0, 0, 0.06),
+          0 6px 16px rgba(0, 0, 0, 0.18),
+          0 12px 28px rgba(0, 0, 0, 0.1);
+      }
+      .bento-drag-ghost.is-settling {
+        transition:
+          left 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+          top 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+        transform: scale(1);
+      }
+      body.is-bento-dragging {
+        cursor: grabbing !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
+      }
+      body.is-bento-dragging * {
+        cursor: grabbing !important;
+      }
+      /* Let drops land through chrome while rearranging */
+      body.is-bento-dragging aside.notes-panel textarea,
+      body.is-bento-dragging aside.notes-panel input {
+        pointer-events: none;
+      }
     }
     .about-system-overlay {
       position: fixed;
@@ -1265,6 +1676,7 @@
     /* ===== Bento grid ===== */
     .bento {
       --bento-gap: 14px;
+      --bento-cols: 4;
       --tile-size: 128px;
       --tile-pad: 16px;
       --tile-radius: 20px;
@@ -1275,6 +1687,13 @@
       width: 100%;
       max-width: 780px;
       align-items: start;
+    }
+    /* Desktop board = full wallpaper stage (must follow base .bento so 780px doesn't win) */
+    @media (min-width: 961px) {
+      .bento {
+        max-width: none;
+        box-sizing: border-box;
+      }
     }
 
     .cell-profile  {
@@ -1291,6 +1710,9 @@
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
       color: #111;
+      --profile-gap: 12px;
+      overflow: hidden;
+      box-sizing: border-box;
     }
     .cell-profile .profile-name,
     .cell-profile .profile-role,
@@ -1319,7 +1741,7 @@
     .cell-listen   { grid-column: 1 / 2; grid-row: 3 / 4; }
     .cell-work     { grid-column: 2 / 3; grid-row: 3 / 4; }
 
-    /* Notes — classic sticky note, pinned top-right on desktop */
+    /* Notes — classic sticky note (desktop: grid cell; mobile: fixed overrides cleared in breakpoints) */
     aside.notes-panel {
       position: fixed;
       top: 56px;
@@ -1575,6 +1997,139 @@
       transform: scale(1.07);
       filter: drop-shadow(0 12px 16px rgba(15, 23, 42, 0.2));
     }
+    .ailab-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      flex: 1 1 auto;
+    }
+    .ailab-layout .bento-tile-visual {
+      flex: 1 1 auto;
+    }
+    .cell-ailab[data-size="small"] .bento-tile-cta {
+      margin-top: 2px;
+    }
+    .ailab-copy {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      flex: 0 0 auto;
+    }
+    .ailab-intro {
+      width: 100%;
+    }
+    .ailab-kicker {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: var(--text-primary);
+      line-height: 1.15;
+    }
+    .ailab-tagline {
+      margin: 2px 0 0;
+      font-size: 11px;
+      line-height: 1.3;
+      color: var(--text-secondary, rgba(255, 255, 255, 0.55));
+    }
+    body.light-mode .ailab-tagline {
+      color: rgba(0, 0, 0, 0.55);
+    }
+    .cell-ailab[data-size="large"] {
+      aspect-ratio: auto;
+      height: 100%;
+      min-height: var(--tile-size);
+    }
+    a.cell-ailab.liquid-glass[data-size="large"] {
+      aspect-ratio: auto;
+      height: 100%;
+      min-height: var(--tile-size);
+      align-items: stretch;
+      justify-content: center;
+      text-align: left;
+      padding: 8px 18px;
+    }
+    .cell-ailab[data-size="large"] .ailab-layout {
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 18px;
+    }
+    .cell-ailab[data-size="large"] .bento-tile-visual {
+      flex: 0 0 auto;
+      width: auto;
+    }
+    .cell-ailab[data-size="large"] .ailab-memoji {
+      height: calc(var(--tile-size, 128px) - 16px);
+      max-height: 112px;
+      max-width: none;
+      width: auto;
+    }
+    .cell-ailab[data-size="large"]:hover .ailab-memoji {
+      transform: scale(1.07);
+    }
+    .cell-ailab[data-size="large"] .ailab-copy {
+      flex: 1 1 auto;
+      min-width: 0;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 12px;
+      text-align: left;
+    }
+    .cell-ailab[data-size="large"] .ailab-kicker {
+      font-size: 16px;
+    }
+    .cell-ailab[data-size="large"] .ailab-tagline {
+      font-size: 12px;
+      max-width: 42ch;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+    .cell-ailab[data-size="large"] .ailab-intro {
+      text-align: left;
+    }
+    .cell-ailab[data-size="large"] .bento-tile-cta {
+      margin-top: 4px;
+      width: auto;
+      justify-content: flex-start;
+    }
+    /* Tall expand: grew down in-place when sideways room wasn't available */
+    a.cell-ailab.liquid-glass[data-size="large"][data-orient="tall"] {
+      padding: 12px 14px;
+      text-align: center;
+    }
+    .cell-ailab[data-size="large"][data-orient="tall"] .ailab-layout {
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .cell-ailab[data-size="large"][data-orient="tall"] .ailab-memoji {
+      height: clamp(72px, calc(var(--tile-size, 128px) * 0.7), 100px);
+    }
+    .cell-ailab[data-size="large"][data-orient="tall"] .ailab-copy {
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+    }
+    .cell-ailab[data-size="large"][data-orient="tall"] .ailab-intro {
+      text-align: center;
+    }
+    .cell-ailab[data-size="large"][data-orient="tall"] .ailab-tagline {
+      max-width: 18ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cell-ailab[data-size="large"][data-orient="tall"] .bento-tile-cta {
+      justify-content: center;
+      width: 100%;
+    }
     @keyframes memoji-float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-4px); }
@@ -1601,7 +2156,7 @@
       }
     }
 
-    /* ===== Left-half wrapper ===== */
+    /* ===== Left-half wrapper / full desktop stage ===== */
     .left-half {
       width: 55%;
       min-width: 480px;
@@ -1612,6 +2167,30 @@
       flex-direction: column;
       position: relative;
       z-index: 1;
+    }
+    @media (min-width: 961px) {
+      .left-half {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        height: 100%;
+        margin: 0;
+        padding: 40px;
+        padding-bottom: 72px;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+      .bento-wrap {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+      }
     }
     .bento-wrap {
       flex: 1 1 auto;
@@ -1645,6 +2224,8 @@
     /* Tablet */
     @media (max-width: 960px) {
       .left-half {
+        position: relative;
+        inset: auto;
         width: 100%;
         min-width: 0;
         padding: 48px 20px calc(100px + env(safe-area-inset-bottom, 0px));
@@ -1888,15 +2469,22 @@
     .bento > *:nth-child(3) { animation-delay: 0.28s; }
     .bento > *:nth-child(4) { animation-delay: 0.36s; }
     .bento > *:nth-child(5) { animation-delay: 0.44s; }
+    /* After first play, lock visible so drag/end never replays the fade */
+    .bento.is-settled > * {
+      opacity: 1 !important;
+      animation: none !important;
+    }
 
     /* ===== Profile card ===== */
     .profile-banner {
       width: 100%;
+      max-width: 100%;
       height: 100px;
       background: var(--bg-elevated);
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
+      box-sizing: border-box;
     }
     .profile-body {
       padding: 0 var(--tile-pad) var(--tile-pad);
@@ -1904,6 +2492,16 @@
       flex-direction: column;
       flex: 1 1 auto;
       min-height: 0;
+      gap: var(--profile-gap, 12px);
+    }
+    .cell-profile .profile-body > *,
+    .cell-profile .profile-name-row,
+    .cell-profile .profile-role-row,
+    .cell-profile .profile-stats,
+    .cell-profile .profile-bio,
+    .cell-profile .logo-rail-wrap,
+    .cell-profile .profile-actions {
+      margin: 0;
     }
     .profile-avatar {
       width: 64px;
@@ -1926,7 +2524,6 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-top: 12px;
     }
     .profile-name {
       font-size: 18px;
@@ -1938,19 +2535,42 @@
     .profile-role {
       font-size: 13px;
       color: var(--text-secondary);
-      margin: 3px 0 0;
+      margin: 0;
       font-weight: 500;
+    }
+    .profile-role-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-width: 0;
+    }
+    .profile-role-row .profile-role {
+      min-width: 0;
+      flex: 1;
+    }
+    .profile-tools {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .profile-tools img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      display: block;
+      border-radius: 4px;
     }
     .profile-stats {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0;
-      margin-top: 14px;
       text-align: left;
     }
     .profile-stat {
       padding: 0 12px;
-      border-right: 1px solid var(--border-subtle);
+      border-right: 1px solid rgba(0, 0, 0, 0.12);
     }
     .profile-stat:first-child {
       padding-left: 0;
@@ -1958,6 +2578,16 @@
     .profile-stat:last-child {
       padding-right: 0;
       border-right: none;
+    }
+    .cell-profile .profile-stat {
+      border-right-color: rgba(0, 0, 0, 0.12);
+    }
+    .cell-profile[data-size="small"] .profile-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .cell-profile[data-size="small"] .profile-stat:nth-child(2) {
+      border-right: none;
+      padding-right: 0;
     }
     .profile-stat-value {
       font-size: 22px;
@@ -1977,7 +2607,7 @@
       font-size: 12px;
       color: var(--text-tertiary);
       line-height: 1.6;
-      margin: 14px 0 0;
+      margin: 0;
     }
     .profile-meta {
       display: flex;
@@ -1996,7 +2626,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-top: 14px;
     }
     .avatar-dot {
       width: 16px;
@@ -8568,10 +9197,10 @@
 
     /* ===== Logo Rail / Marquee ===== */
     .logo-rail-wrap {
-      margin-top: 14px;
       overflow: hidden;
       position: relative;
       width: 100%;
+      margin: 0;
       mask-image: linear-gradient(to right, transparent 0%, #000 15%, #000 85%, transparent 100%);
       -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 15%, #000 85%, transparent 100%);
     }
@@ -8905,6 +9534,9 @@
     <div class="desktop-menu-row">
       <button type="button" class="desktop-menu-item" data-action="edit-widgets" role="menuitem">Edit Widgets...</button>
     </div>
+    <div class="desktop-menu-row">
+      <button type="button" class="desktop-menu-item" data-action="reset-layout" role="menuitem">Reset Widget Layout</button>
+    </div>
     <div class="home-menu-sep"></div>
 
     <div class="desktop-menu-row has-sub" data-sub="wallpaper">
@@ -8965,6 +9597,7 @@
     <button type="button" class="desktop-menu-item" data-action="remove-widget" role="menuitem">Remove Widget</button>
     <div class="home-menu-sep"></div>
     <button type="button" class="desktop-menu-item" data-action="edit-widgets" role="menuitem">Edit Widgets...</button>
+    <button type="button" class="desktop-menu-item" data-action="reset-layout" role="menuitem">Reset Widget Layout</button>
   </div>
 
   <div class="widget-gallery-overlay" id="widget-gallery" aria-hidden="true">
@@ -9116,9 +9749,13 @@
               </button>
               <button type="button" class="wg-card" data-add-widget="ailab" data-add-size="large" data-gallery-cat="ailab">
                 <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                <div class="wg-preview glass large">
+                <div class="wg-preview glass large ailab-large">
                   <div class="wg-visual"><img src="./assets/logos/ai-lab-memoji.png" alt=""></div>
-                  <div class="wg-label">Enter AI Lab</div>
+                  <div class="wg-ailab-copy">
+                    <div class="wg-label">AI Lab</div>
+                    <div class="wg-ailab-sub">Experiments in AI workflows…</div>
+                    <div class="wg-ailab-cta">Enter AI Lab</div>
+                  </div>
                 </div>
                 <div class="wg-card-caption">Large</div>
               </button>
@@ -9177,7 +9814,7 @@
       </div>
 
       <div class="widget-gallery-footer">
-        <p class="widget-gallery-hint">Click a widget to place it on the desktop. Click again to remove.</p>
+        <p class="widget-gallery-hint">Drag any widget — including Notes — across the desktop grid. Reset Widget Layout restores the default arrangement.</p>
         <button type="button" class="widget-gallery-done" id="widget-gallery-done">Done</button>
       </div>
     </div>
@@ -9185,33 +9822,34 @@
 
   <!-- ========== MAIN BENTO GRID ========== -->
   <main class="left-half">
-    <aside class="notes-panel" data-widget="notes" data-size="large" aria-label="Notes">
-      <div class="quote-sticky-note">
-        <div class="quote-lines"></div>
-        <div class="quote-content">
-          <textarea 
-            id="quote-text" 
-            class="quote-textarea" 
-            placeholder="Write a note..."
-            rows="4"
-          >Design is not just what it looks like. Design is how it works.</textarea>
-          <input 
-            type="text" 
-            id="quote-author" 
-            class="quote-author-input widget-detail-md" 
-            placeholder="— Author"
-            value="— Steve Jobs"
-          />
-        </div>
-      </div>
-    </aside>
-
     <div class="bento-wrap">
     <div class="bento">
 
+      <!-- ===== NOTES ===== -->
+      <aside class="notes-panel" data-widget="notes" data-size="small" aria-label="Notes">
+        <div class="quote-sticky-note">
+          <div class="quote-lines"></div>
+          <div class="quote-content">
+            <textarea 
+              id="quote-text" 
+              class="quote-textarea" 
+              placeholder="Write a note..."
+              rows="4"
+            >Design is not just what it looks like. Design is how it works.</textarea>
+            <input 
+              type="text" 
+              id="quote-author" 
+              class="quote-author-input widget-detail-md" 
+              placeholder="— Author"
+              value="— Steve Jobs"
+            />
+          </div>
+        </div>
+      </aside>
+
       <!-- ===== PROFILE ===== -->
       <div class="cell-profile card" data-widget="profile" data-size="large">
-        <div id="profile-banner-vanta" class="profile-banner widget-detail-md"></div>
+        <div id="profile-banner-vanta" class="profile-banner"></div>
         <div class="profile-body">
           <div class="profile-avatar">
             <img src="./assets/logos/ShivanshuMathur.jpg" alt="Shivanshu Mathur">
@@ -9219,8 +9857,16 @@
           <div class="profile-name-row">
             <h1 class="profile-name">Shivanshu Mathur</h1>
           </div>
-          <p class="profile-role widget-detail-md">AI Native Product Designer</p>
-          <div class="profile-stats widget-detail-lg">
+          <div class="profile-role-row">
+            <p class="profile-role">AI Native Product Designer</p>
+            <div class="profile-tools" aria-label="Tools">
+              <img src="./assets/tools-icons/Claude_Logo.svg" alt="Claude" title="Claude">
+              <img src="./assets/tools-icons/Cursor_Logo.svg" alt="Cursor" title="Cursor">
+              <img src="./assets/tools-icons/Figma_Logo.svg" alt="Figma" title="Figma">
+              <img src="./assets/tools-icons/Stitch_Logo.svg" alt="Stitch" title="Stitch">
+            </div>
+          </div>
+          <div class="profile-stats">
             <div class="profile-stat">
               <div class="profile-stat-value">6+</div>
               <div class="profile-stat-label">Years of Experience</div>
@@ -9229,7 +9875,7 @@
               <div class="profile-stat-value">20+</div>
               <div class="profile-stat-label">Projects Delivered</div>
             </div>
-            <div class="profile-stat">
+            <div class="profile-stat widget-detail-lg">
               <div class="profile-stat-value">🐶</div>
               <div class="profile-stat-label">Dog Person</div>
             </div>
@@ -9237,12 +9883,6 @@
           <p class="profile-bio widget-detail-lg">
             I design intelligent products that make complexity feel simple.
           </p>
-          <div class="profile-meta widget-detail-md">
-            <span class="profile-meta-item">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
-              India
-            </span>
-          </div>
 
           <!-- Logo Rail -->
           <div class="logo-rail-wrap widget-detail-lg">
@@ -9276,15 +9916,22 @@
 
       <!-- ===== AI LAB ===== -->
       <a href="/ai-lab/" class="cell-ailab bento-tile liquid-glass" data-widget="ailab" data-size="small" aria-label="Open AI Lab">
-        <div class="bento-tile-visual" aria-hidden="true">
-          <img class="ailab-memoji" src="./assets/logos/ai-lab-memoji.png" alt="" width="388" height="512">
-        </div>
-        <span class="bento-tile-label widget-detail-md">AI Lab</span>
-        <div class="bento-tile-cta">
-          <span class="btn-linkedin">
-            Enter AI Lab
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
-          </span>
+        <div class="ailab-layout">
+          <div class="bento-tile-visual" aria-hidden="true">
+            <img class="ailab-memoji" src="./assets/logos/ai-lab-memoji.png" alt="" width="388" height="512">
+          </div>
+          <div class="ailab-copy">
+            <div class="ailab-intro widget-detail-lg">
+              <span class="ailab-kicker">AI Lab</span>
+              <p class="ailab-tagline">Experiments in AI workflows, product strategy &amp; design systems.</p>
+            </div>
+            <div class="bento-tile-cta">
+              <span class="btn-linkedin">
+                Enter AI Lab
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+              </span>
+            </div>
+          </div>
         </div>
       </a>
 
@@ -12292,8 +12939,22 @@
       var glassBtns = document.querySelectorAll('.glass-btn');
 
       /* ---------- Defaults ---------- */
-      var DEFAULT_WIDGET_SIZES = { notes: 'large', profile: 'large', ailab: 'small', work: 'small', music: 'small' };
-      var DEFAULTS = { hue: 210, accent: 'multi', font: 'sans', size: 1, theme: 'light', glass: 'clear', wallpaper: '2', brightness: 100, volume: 80, highlight: 'auto', folder: 'auto', sidebarIcons: 'medium', wpTint: true, scrollbars: 'auto', scrollClick: 'page', lockIdle: 'never', lockStart: 'first', lockShowUser: true, lockShowHint: true, lockShowMessage: false, lockMessage: '', lockShowClock: true, lockUnlock: 'any', widgets: { notes: true, profile: true, ailab: true, work: true, music: true }, widgetSizes: { notes: 'large', profile: 'large', ailab: 'small', work: 'small', music: 'small' } };
+      var DEFAULT_WIDGET_SIZES = { notes: 'small', profile: 'large', ailab: 'small', work: 'small', music: 'small' };
+      var DEFAULT_WIDGET_LAYOUT = {
+        profile: { col: 1, row: 1 },
+        ailab: { col: 7, row: 1 },
+        work: { col: 7, row: 3 },
+        music: { col: 1, row: 5 },
+        notes: { col: 15, row: 1 }
+      };
+      var BENTO_WIDGET_KEYS = ['profile', 'ailab', 'work', 'music', 'notes'];
+      var BENTO_COLS = 16;
+      var BENTO_COLS_FIXED = 16;
+      var BENTO_COLS_MIN = 16;
+      var BENTO_GAP = 14;
+      var BENTO_LEGACY_BOARD = 780;
+      var BENTO_COLS_LEGACY = 4;
+      var DEFAULTS = { hue: 210, accent: 'multi', font: 'sans', size: 1, theme: 'light', glass: 'clear', wallpaper: '2', brightness: 100, volume: 80, highlight: 'auto', folder: 'auto', sidebarIcons: 'medium', wpTint: true, scrollbars: 'auto', scrollClick: 'page', lockIdle: 'never', lockStart: 'first', lockShowUser: true, lockShowHint: true, lockShowMessage: false, lockMessage: '', lockShowClock: true, lockUnlock: 'any', widgets: { notes: true, profile: true, ailab: true, work: true, music: true }, widgetSizes: { notes: 'small', profile: 'large', ailab: 'small', work: 'small', music: 'small' }, widgetLayout: { profile: { col: 1, row: 1 }, ailab: { col: 7, row: 1 }, work: { col: 7, row: 3 }, music: { col: 1, row: 5 }, notes: { col: 15, row: 1 } } };
 
       /* Load saved settings from localStorage, falling back to defaults */
       function loadState() {
@@ -12335,7 +12996,7 @@
         });
       }
       if (!state.widgetSizes || typeof state.widgetSizes !== 'object') {
-        state.widgetSizes = { notes: 'large', profile: 'large', ailab: 'small', work: 'small', music: 'small' };
+        state.widgetSizes = { notes: 'small', profile: 'large', ailab: 'small', work: 'small', music: 'small' };
       } else {
         ['notes', 'profile', 'ailab', 'work', 'music'].forEach(function (key) {
           if (state.widgetSizes[key] === 'medium') state.widgetSizes[key] = 'large';
@@ -12344,6 +13005,65 @@
           }
         });
       }
+      function ensureWidgetLayout() {
+        if (!state.widgetLayout || typeof state.widgetLayout !== 'object') {
+          state.widgetLayout = JSON.parse(JSON.stringify(DEFAULT_WIDGET_LAYOUT));
+          return true; // needs notes default placement after sync
+        }
+        var notesWasMissing = !state.widgetLayout.notes;
+        BENTO_WIDGET_KEYS.forEach(function (key) {
+          var p = state.widgetLayout[key];
+          if (!p || typeof p.col !== 'number' || typeof p.row !== 'number' || p.col < 1 || p.row < 1) {
+            state.widgetLayout[key] = { col: DEFAULT_WIDGET_LAYOUT[key].col, row: DEFAULT_WIDGET_LAYOUT[key].row };
+            if (key === 'notes') notesWasMissing = true;
+            return;
+          }
+          // Keep old 4-col saves; clamp anything that somehow exceeds the widened board
+          if (p.col > BENTO_COLS) {
+            state.widgetLayout[key] = { col: BENTO_COLS, row: p.row };
+          }
+        });
+        return notesWasMissing;
+      }
+      var notesNeedsDefaultSlot = ensureWidgetLayout();
+      // Force the current homepage default layout to override older saved widget arrangements
+      if (!state.widgetSpanV7) {
+        state.widgetSizes = JSON.parse(JSON.stringify(DEFAULT_WIDGET_SIZES));
+        state.widgetLayout = JSON.parse(JSON.stringify(DEFAULT_WIDGET_LAYOUT));
+        state.widgetSpanV7 = true;
+        notesNeedsDefaultSlot = false;
+        try { saveState(); } catch (e) { /* ignore */ }
+      }
+      if (!state.widgetLayoutV8) {
+        state.widgetLayout = JSON.parse(JSON.stringify(DEFAULT_WIDGET_LAYOUT));
+        state.widgetLayoutV8 = true;
+        notesNeedsDefaultSlot = false;
+        try { saveState(); } catch (e) { /* ignore */ }
+      }
+      if (!state.widgetLayoutV9) {
+        state.widgetLayout = JSON.parse(JSON.stringify(DEFAULT_WIDGET_LAYOUT));
+        state.widgetSizes = JSON.parse(JSON.stringify(DEFAULT_WIDGET_SIZES));
+        state.widgetLayoutV9 = true;
+        notesNeedsDefaultSlot = false;
+        try { saveState(); } catch (e) { /* ignore */ }
+      }
+      // Drop freeform leftovers from the previous experiment
+      delete state.widgetPositions;
+      body.classList.remove('widgets-freeform', 'is-widget-dragging');
+      ['notes', 'profile', 'ailab', 'work', 'music'].forEach(function (key) {
+        var el = document.querySelector('[data-widget="' + key + '"]');
+        if (!el) return;
+        el.style.removeProperty('left');
+        el.style.removeProperty('top');
+        el.style.removeProperty('width');
+        el.style.removeProperty('height');
+        el.style.removeProperty('min-height');
+        el.style.removeProperty('right');
+        el.style.removeProperty('bottom');
+        el.style.removeProperty('transform');
+        el.style.removeProperty('z-index');
+        el.classList.remove('is-dragging');
+      });
 
       // One-time migration: force Ambient (Wallpaper-2) as the default background.
       // This moves existing visitors whose saved preference predates this default
@@ -12586,8 +13306,197 @@
       }
 
       var WIDGET_KEYS = ['notes', 'profile', 'ailab', 'work', 'music'];
+      var profileAutoRowSpan = null;
+      var WIDGET_SPANS = {
+        /* Fine grid is 16 cols (2 tracks = 1 visual cell). Small widgets are 25% smaller than before */
+        profile: { small: [2, 2], large: [6, 2] },
+        ailab: { small: [2, 2], large: [4, 8] },
+        work: { small: [2, 2], large: [4, 8] },
+        music: { small: [2, 2], large: [8, 8] },
+        notes: { small: [2, 2], large: [2, 2] }
+      };
       function widgetEl(key) {
         return document.querySelector('[data-widget="' + key + '"]');
+      }
+      function isDesktopBento() {
+        return window.matchMedia('(min-width: 961px)').matches;
+      }
+      function clearWidgetGridPin(el) {
+        if (!el) return;
+        el.style.removeProperty('grid-column');
+        el.style.removeProperty('grid-row');
+        el.removeAttribute('data-orient');
+      }
+      function resolveWidgetSpan(key, size, col) {
+        var spans = WIDGET_SPANS[key];
+        var span = (spans && (spans[size] || spans.small)) || [2, 2];
+        var colSpan = span[0];
+        var rowSpan = span[1];
+        if (key === 'profile' && size === 'large' && profileAutoRowSpan) {
+          rowSpan = profileAutoRowSpan;
+        }
+        var orient = rowSpan >= colSpan ? 'tall' : 'wide';
+        var nextCol = col;
+        if (nextCol + colSpan - 1 > BENTO_COLS) {
+          nextCol = Math.max(1, BENTO_COLS - colSpan + 1);
+        }
+        return { col: nextCol, colSpan: colSpan, rowSpan: rowSpan, orient: orient };
+      }
+      function widgetIsVisible(key) {
+        return state.widgets[key] !== false;
+      }
+      function occupiedCellsFor(key, layout) {
+        var size = state.widgetSizes[key] || DEFAULT_WIDGET_SIZES[key];
+        var pos = (layout || state.widgetLayout)[key] || DEFAULT_WIDGET_LAYOUT[key];
+        var span = resolveWidgetSpan(key, size, pos.col);
+        var cells = [];
+        var c, r;
+        for (c = span.col; c < span.col + span.colSpan; c++) {
+          for (r = pos.row; r < pos.row + span.rowSpan; r++) {
+            cells.push(c + ':' + r);
+          }
+        }
+        return cells;
+      }
+      function widgetsOverlap(a, b, layout) {
+        var aCells = occupiedCellsFor(a, layout);
+        var bSet = {};
+        occupiedCellsFor(b, layout).forEach(function (cell) { bSet[cell] = true; });
+        return aCells.some(function (cell) { return bSet[cell]; });
+      }
+      function findFreeCell(key, layout) {
+        var size = state.widgetSizes[key] || DEFAULT_WIDGET_SIZES[key];
+        var base = spansBase(key, size);
+        var row, col, trial, ok, other;
+        for (row = 1; row <= 24; row++) {
+          for (col = 1; col <= BENTO_COLS; col++) {
+            if (col + base[0] - 1 > BENTO_COLS) continue;
+            trial = Object.assign({}, layout);
+            trial[key] = { col: col, row: row };
+            ok = true;
+            for (other = 0; other < BENTO_WIDGET_KEYS.length; other++) {
+              var oKey = BENTO_WIDGET_KEYS[other];
+              if (oKey === key || !widgetIsVisible(oKey)) continue;
+              if (widgetsOverlap(key, oKey, trial)) { ok = false; break; }
+            }
+            if (ok) return { col: col, row: row };
+          }
+        }
+        return { col: DEFAULT_WIDGET_LAYOUT[key].col, row: DEFAULT_WIDGET_LAYOUT[key].row };
+      }
+      function spansBase(key, size) {
+        var spans = WIDGET_SPANS[key];
+        var base = (spans && (spans[size] || spans.small)) || [2, 2];
+        if (key === 'profile' && size === 'large' && profileAutoRowSpan) {
+          return [base[0], profileAutoRowSpan];
+        }
+        return base;
+      }
+      function syncProfileAutoSpan() {
+        var el = widgetEl('profile');
+        if (!el || !isDesktopBento() || !widgetIsVisible('profile')) {
+          profileAutoRowSpan = null;
+          return null;
+        }
+        var size = state.widgetSizes.profile || DEFAULT_WIDGET_SIZES.profile;
+        if (size !== 'large') {
+          profileAutoRowSpan = null;
+          return null;
+        }
+        var m = getBentoMetrics();
+        if (!m) return null;
+        ensureWidgetLayout();
+        var pos = state.widgetLayout.profile || DEFAULT_WIDGET_LAYOUT.profile;
+        var span = resolveWidgetSpan('profile', 'large', pos.col);
+        el.setAttribute('data-size', size);
+        el.setAttribute('data-orient', span.orient);
+        el.style.setProperty('height', 'auto', 'important');
+        el.style.setProperty('align-self', 'start', 'important');
+        el.style.setProperty('grid-column', span.col + ' / span ' + span.colSpan, 'important');
+        el.style.setProperty('grid-row', pos.row + ' / span 1', 'important');
+        el.style.removeProperty('max-width');
+        el.style.removeProperty('max-height');
+        var h = el.getBoundingClientRect().height;
+        var step = m.tileH + m.gap;
+        var rowSpan = Math.max(2, Math.ceil((h + m.gap * 0.25) / step));
+        profileAutoRowSpan = rowSpan;
+        el.style.setProperty('grid-row', pos.row + ' / span ' + rowSpan, 'important');
+        return rowSpan;
+      }
+      function pinWidgetToLayout(key) {
+        var el = widgetEl(key);
+        if (!el) return;
+        var size = state.widgetSizes[key] || DEFAULT_WIDGET_SIZES[key];
+        if (!isDesktopBento()) {
+          clearWidgetGridPin(el);
+          el.removeAttribute('data-orient');
+          el.setAttribute('data-size', size);
+          return;
+        }
+        ensureWidgetLayout();
+        var pos = state.widgetLayout[key] || DEFAULT_WIDGET_LAYOUT[key];
+        var span = resolveWidgetSpan(key, size, pos.col);
+        if (span.col !== pos.col) {
+          state.widgetLayout[key] = { col: span.col, row: Math.max(1, pos.row) };
+          pos = state.widgetLayout[key];
+        }
+        el.setAttribute('data-size', size);
+        if (size === 'large' && key !== 'notes') el.setAttribute('data-orient', span.orient);
+        else el.removeAttribute('data-orient');
+        if (key === 'profile' && size === 'large') {
+          el.style.setProperty('height', 'auto', 'important');
+          el.style.setProperty('align-self', 'start', 'important');
+        }
+        // Explicit start + span so widgets lock to the same tracks as the red guides
+        el.style.setProperty('grid-column', span.col + ' / span ' + span.colSpan, 'important');
+        var rowSpan = span.rowSpan;
+        if (key === 'profile' && size === 'large' && profileAutoRowSpan) {
+          rowSpan = profileAutoRowSpan;
+        }
+        el.style.setProperty('grid-row', pos.row + ' / span ' + rowSpan, 'important');
+        el.style.removeProperty('width');
+        el.style.removeProperty('height');
+        el.style.removeProperty('max-width');
+        el.style.removeProperty('max-height');
+      }
+      function resolveLayoutOverlaps(preferKey) {
+        ensureWidgetLayout();
+        var guard = 0;
+        while (guard++ < 20) {
+          var moved = false;
+          var i, j, a, b;
+          for (i = 0; i < BENTO_WIDGET_KEYS.length; i++) {
+            a = BENTO_WIDGET_KEYS[i];
+            if (!widgetIsVisible(a)) continue;
+            for (j = i + 1; j < BENTO_WIDGET_KEYS.length; j++) {
+              b = BENTO_WIDGET_KEYS[j];
+              if (!widgetIsVisible(b)) continue;
+              if (!widgetsOverlap(a, b, state.widgetLayout)) continue;
+              var relocate = preferKey && (a === preferKey) ? b : (preferKey && b === preferKey ? a : b);
+              state.widgetLayout[relocate] = findFreeCell(relocate, (function () {
+                var copy = JSON.parse(JSON.stringify(state.widgetLayout));
+                copy[relocate] = { col: 99, row: 99 };
+                return copy;
+              })());
+              moved = true;
+            }
+          }
+          if (!moved) break;
+        }
+      }
+      function applyWidgetSizeInPlace(key, size) {
+        var el = widgetEl(key);
+        if (!el) return;
+        state.widgetSizes[key] = size;
+        if (!isDesktopBento()) {
+          el.setAttribute('data-size', size);
+          el.removeAttribute('data-orient');
+          clearWidgetGridPin(el);
+          return;
+        }
+        pinWidgetToLayout(key);
+        resolveLayoutOverlaps(key);
+        BENTO_WIDGET_KEYS.forEach(pinWidgetToLayout);
       }
       function applyWidgets() {
         WIDGET_KEYS.forEach(function (key) {
@@ -12596,16 +13505,475 @@
           el.classList.toggle('widget-hidden', state.widgets[key] === false);
         });
       }
-      function applyWidgetSizes() {
+      function applyWidgetSizes(opts) {
+        var focusKey = opts && opts.focusKey;
         WIDGET_KEYS.forEach(function (key) {
           var el = widgetEl(key);
           if (!el) return;
           var size = state.widgetSizes[key] || DEFAULT_WIDGET_SIZES[key];
-          el.setAttribute('data-size', size);
+          if (!isDesktopBento()) {
+            clearWidgetGridPin(el);
+            el.removeAttribute('data-orient');
+            el.setAttribute('data-size', size);
+            return;
+          }
+          if (focusKey && key === focusKey) {
+            applyWidgetSizeInPlace(key, size);
+          } else {
+            pinWidgetToLayout(key);
+          }
         });
+        if (isDesktopBento()) {
+          profileAutoRowSpan = null;
+          if (focusKey) resolveLayoutOverlaps(focusKey);
+          BENTO_WIDGET_KEYS.forEach(pinWidgetToLayout);
+          syncProfileAutoSpan();
+          resolveLayoutOverlaps('profile');
+          BENTO_WIDGET_KEYS.forEach(pinWidgetToLayout);
+          syncProfileAutoSpan();
+        }
+        if (window.__vantaInstance) {
+          requestAnimationFrame(function () {
+            try {
+              if (typeof window.__vantaInstance.resize === 'function') {
+                window.__vantaInstance.resize();
+              }
+            } catch (e) { /* ignore */ }
+          });
+        }
+      }
+      function placeNotesDefault() {
+        state.widgetLayout.notes = { col: 15, row: 1 };
+      }
+      function resetWidgetLayout() {
+        state.widgetLayout = JSON.parse(JSON.stringify(DEFAULT_WIDGET_LAYOUT));
+        state.widgetSizes = JSON.parse(JSON.stringify(DEFAULT_WIDGET_SIZES));
+        syncBentoBoard();
+        resolveLayoutOverlaps();
+        applyWidgetSizes();
+        saveState();
+      }
+
+      function syncBentoBoard() {
+        var bento = document.querySelector('.bento');
+        if (!bento) return;
+        if (!isDesktopBento()) {
+          BENTO_COLS = BENTO_COLS_FIXED;
+          bento.style.removeProperty('--tile-size');
+          bento.style.removeProperty('--bento-cols');
+          bento.style.removeProperty('--bento-rows');
+          bento.style.removeProperty('width');
+          bento.style.removeProperty('height');
+          bento.style.removeProperty('grid-template-columns');
+          bento.style.removeProperty('grid-template-rows');
+          return;
+        }
+
+        var stage = bento.parentElement || bento;
+        var stageRect = stage.getBoundingClientRect();
+        var availW = Math.max(0, stageRect.width);
+        var availH = Math.max(0, stageRect.height);
+        var cols = BENTO_COLS_FIXED;
+        var gap = BENTO_GAP;
+        // Full-width 16 fine tracks (8 visual columns); square rows
+        var tileSize = (availW - gap * (cols - 1)) / cols;
+        tileSize = Math.max(40, tileSize);
+        var rows = Math.max(12, Math.floor((availH + gap) / (tileSize + gap)));
+
+        BENTO_COLS = cols;
+        bento.style.setProperty('--tile-size', tileSize + 'px');
+        bento.style.setProperty('--bento-cols', String(cols));
+        bento.style.setProperty('--bento-rows', String(rows));
+        bento.style.setProperty('--bento-gap', gap + 'px');
+        bento.style.width = '100%';
+        bento.style.maxWidth = 'none';
+        bento.style.height = (rows * tileSize + (rows - 1) * gap) + 'px';
+        bento.style.gridTemplateColumns = 'repeat(16, minmax(0, 1fr))';
+        bento.style.gridTemplateRows = 'repeat(' + rows + ', ' + tileSize + 'px)';
+      }
+
+      function getBentoMetrics() {
+        var bento = document.querySelector('.bento');
+        if (!bento) return null;
+        var rect = bento.getBoundingClientRect();
+        var styles = window.getComputedStyle(bento);
+        var gap = parseFloat(styles.gap) || BENTO_GAP;
+        var borderL = parseFloat(styles.borderLeftWidth) || 0;
+        var borderR = parseFloat(styles.borderRightWidth) || 0;
+        var borderT = parseFloat(styles.borderTopWidth) || 0;
+        var contentW = Math.max(0, rect.width - borderL - borderR);
+        var tileH = parseFloat(styles.getPropertyValue('--tile-size')) || 128;
+        var tileW = BENTO_COLS > 0
+          ? (contentW - gap * (BENTO_COLS - 1)) / BENTO_COLS
+          : tileH;
+        return {
+          bento: bento,
+          rect: rect,
+          left: rect.left + borderL,
+          top: rect.top + borderT,
+          gap: gap,
+          tileW: tileW,
+          tileH: tileH
+        };
+      }
+      function clientToGridCell(clientX, clientY) {
+        var m = getBentoMetrics();
+        if (!m) return { col: 1, row: 1 };
+        var stepX = m.tileW + m.gap;
+        var stepY = m.tileH + m.gap;
+        var lx = clientX - m.left;
+        var ly = clientY - m.top;
+        var col = Math.floor(lx / stepX) + 1;
+        var row = Math.floor(ly / stepY) + 1;
+        if (col < 1) col = 1;
+        if (col > BENTO_COLS) col = BENTO_COLS;
+        if (row < 1) row = 1;
+        return { col: col, row: row };
+      }
+
+      /* ---------- Bento grid drag ---------- */
+      var bentoDrag = null;
+      var FLIP_MS = 300;
+      var FLIP_EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+      function suppressNextClick(el) {
+        if (!el) return;
+        var block = function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          el.removeEventListener('click', block, true);
+        };
+        el.addEventListener('click', block, true);
+      }
+      function captureBentoRects() {
+        var map = {};
+        BENTO_WIDGET_KEYS.forEach(function (key) {
+          var el = widgetEl(key);
+          if (!el || el.classList.contains('widget-hidden')) return;
+          map[key] = el.getBoundingClientRect();
+        });
+        return map;
+      }
+      function clearFlipTransforms() {
+        BENTO_WIDGET_KEYS.forEach(function (key) {
+          var el = widgetEl(key);
+          if (!el) return;
+          el.style.transition = 'none';
+          el.style.transform = '';
+          el.classList.remove('bento-flipping');
+        });
+      }
+      function flipBentoWidgets(beforeRects) {
+        var bento = document.querySelector('.bento');
+        if (bento) void bento.offsetWidth;
+        BENTO_WIDGET_KEYS.forEach(function (key) {
+          var el = widgetEl(key);
+          var before = beforeRects[key];
+          if (!el || !before || el.classList.contains('widget-hidden')) return;
+          if (el.classList.contains('is-dragging')) return;
+          var after = el.getBoundingClientRect();
+          var dx = before.left - after.left;
+          var dy = before.top - after.top;
+          if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+          el.classList.add('bento-flipping');
+          el.style.transition = 'none';
+          el.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)';
+          void el.offsetWidth;
+          el.style.transition = 'transform ' + FLIP_MS + 'ms ' + FLIP_EASE;
+          el.style.transform = 'translate(0px, 0px)';
+          var cleared = false;
+          var clear = function () {
+            if (cleared) return;
+            cleared = true;
+            el.style.transition = '';
+            el.style.transform = '';
+            el.classList.remove('bento-flipping');
+            el.removeEventListener('transitionend', onEnd);
+          };
+          var onEnd = function (ev) {
+            if (ev.propertyName !== 'transform') return;
+            clear();
+          };
+          el.addEventListener('transitionend', onEnd);
+          setTimeout(clear, FLIP_MS + 80);
+        });
+      }
+      function widgetAtCellInLayout(layout, col, row, exceptKey) {
+        var cell = col + ':' + row;
+        var i, key;
+        for (i = 0; i < BENTO_WIDGET_KEYS.length; i++) {
+          key = BENTO_WIDGET_KEYS[i];
+          if (key === exceptKey || !widgetIsVisible(key)) continue;
+          if (occupiedCellsFor(key, layout).indexOf(cell) !== -1) return key;
+        }
+        return null;
+      }
+      function computeDropLayout(baseLayout, key, col, row, opts) {
+        var layout = JSON.parse(JSON.stringify(baseLayout));
+        var oldPos = {
+          col: (layout[key] || DEFAULT_WIDGET_LAYOUT[key]).col,
+          row: (layout[key] || DEFAULT_WIDGET_LAYOUT[key]).row
+        };
+        var size = state.widgetSizes[key] || DEFAULT_WIDGET_SIZES[key];
+        var span = resolveWidgetSpan(key, size, col);
+        var next = { col: span.col, row: row };
+        if (next.col === oldPos.col && next.row === oldPos.row) return layout;
+        var victim = widgetAtCellInLayout(layout, next.col, next.row, key);
+        layout[key] = next;
+        if (victim) layout[victim] = oldPos;
+        if (!(opts && opts.live)) {
+          var prev = state.widgetLayout;
+          state.widgetLayout = layout;
+          resolveLayoutOverlaps(key);
+          layout = state.widgetLayout;
+          state.widgetLayout = prev;
+        }
+        return layout;
+      }
+      function applyLayoutPins(layout) {
+        state.widgetLayout = layout;
+        BENTO_WIDGET_KEYS.forEach(pinWidgetToLayout);
+      }
+      function reflowWithFlip(layout) {
+        var before = captureBentoRects();
+        clearFlipTransforms();
+        applyLayoutPins(layout);
+        flipBentoWidgets(before);
+      }
+      function cleanupBentoDrag() {
+        if (!bentoDrag) return;
+        if (bentoDrag.ghost && bentoDrag.ghost.parentNode) bentoDrag.ghost.parentNode.removeChild(bentoDrag.ghost);
+        if (bentoDrag.el) {
+          bentoDrag.el.classList.remove('is-dragging');
+          bentoDrag.el.removeAttribute('data-drag-armed');
+        }
+        document.body.classList.remove('is-bento-dragging');
+        var bento = document.querySelector('.bento');
+        if (bento) bento.classList.add('is-settled');
+        bentoDrag = null;
+      }
+      function applyLivePreview(col, row) {
+        if (!bentoDrag || !bentoDrag.originLayout) return;
+        var key = bentoDrag.key;
+        var size = state.widgetSizes[key] || DEFAULT_WIDGET_SIZES[key];
+        var span = resolveWidgetSpan(key, size, col);
+        var next = { col: span.col, row: row };
+        if (bentoDrag.target && bentoDrag.target.col === next.col && bentoDrag.target.row === next.row) return;
+        var layout = computeDropLayout(bentoDrag.originLayout, key, next.col, next.row, { live: true });
+        bentoDrag.target = next;
+        reflowWithFlip(layout);
+      }
+      function settleGhost(finalRect, onDone) {
+        if (!bentoDrag || !bentoDrag.ghost || !bentoDrag.el) {
+          if (onDone) onDone();
+          return;
+        }
+        var ghost = bentoDrag.ghost;
+        bentoDrag.settling = true;
+        ghost.classList.add('is-settling');
+        void ghost.offsetWidth;
+        ghost.style.left = finalRect.left + 'px';
+        ghost.style.top = finalRect.top + 'px';
+        ghost.style.width = finalRect.width + 'px';
+        ghost.style.height = finalRect.height + 'px';
+        ghost.style.transform = 'scale(1)';
+        var done = false;
+        var finish = function () {
+          if (done) return;
+          done = true;
+          ghost.removeEventListener('transitionend', onEnd);
+          if (onDone) onDone();
+        };
+        var onEnd = function (ev) {
+          if (ev.target !== ghost) return;
+          if (ev.propertyName !== 'left' && ev.propertyName !== 'top' && ev.propertyName !== 'transform') return;
+          finish();
+        };
+        ghost.addEventListener('transitionend', onEnd);
+        setTimeout(finish, FLIP_MS + 50);
+      }
+      function beginBentoDrag(e) {
+        if (!bentoDrag || bentoDrag.moved) return;
+        var el = bentoDrag.el;
+        var key = bentoDrag.key;
+        if (document.activeElement && el.contains(document.activeElement)) {
+          try { document.activeElement.blur(); } catch (err) { /* ignore */ }
+        }
+        var rect = el.getBoundingClientRect();
+        bentoDrag.moved = true;
+        bentoDrag.settling = false;
+        bentoDrag.offsetX = bentoDrag.startX - rect.left;
+        bentoDrag.offsetY = bentoDrag.startY - rect.top;
+        bentoDrag.originLayout = JSON.parse(JSON.stringify(state.widgetLayout));
+        var origin = state.widgetLayout[key] || DEFAULT_WIDGET_LAYOUT[key];
+        bentoDrag.target = { col: origin.col, row: origin.row };
+        el.classList.add('is-dragging');
+        el.setAttribute('data-drag-armed', '1');
+        document.body.classList.add('is-bento-dragging');
+        var bentoEl = document.querySelector('.bento');
+        if (bentoEl) bentoEl.classList.add('is-settled');
+
+        var ghost = el.cloneNode(true);
+        ghost.classList.add('bento-drag-ghost');
+        ghost.classList.remove('is-dragging', 'bento-flipping');
+        ghost.removeAttribute('data-widget');
+        ghost.removeAttribute('href');
+        ghost.removeAttribute('data-drag-armed');
+        ghost.setAttribute('aria-hidden', 'true');
+        ghost.style.width = rect.width + 'px';
+        ghost.style.height = rect.height + 'px';
+        ghost.style.left = rect.left + 'px';
+        ghost.style.top = rect.top + 'px';
+        document.body.appendChild(ghost);
+        bentoDrag.ghost = ghost;
+
+        try { el.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        if (typeof closeDesktopMenu === 'function') closeDesktopMenu();
+        if (typeof closeWidgetMenu === 'function') closeWidgetMenu();
+        e.preventDefault();
+      }
+      function moveBentoDrag(e) {
+        if (!bentoDrag || !bentoDrag.moved || bentoDrag.settling) return;
+        e.preventDefault();
+        if (bentoDrag.ghost) {
+          bentoDrag.ghost.style.left = (e.clientX - bentoDrag.offsetX) + 'px';
+          bentoDrag.ghost.style.top = (e.clientY - bentoDrag.offsetY) + 'px';
+        }
+        var cell = clientToGridCell(e.clientX, e.clientY);
+        applyLivePreview(cell.col, cell.row);
+      }
+      function finishBentoDrag() {
+        if (!bentoDrag || !bentoDrag.moved) {
+          cleanupBentoDrag();
+          return;
+        }
+        var key = bentoDrag.key;
+        var target = bentoDrag.target || {
+          col: (bentoDrag.originLayout[key] || DEFAULT_WIDGET_LAYOUT[key]).col,
+          row: (bentoDrag.originLayout[key] || DEFAULT_WIDGET_LAYOUT[key]).row
+        };
+        var layout = computeDropLayout(bentoDrag.originLayout, key, target.col, target.row);
+        var before = captureBentoRects();
+        clearFlipTransforms();
+        applyLayoutPins(layout);
+        var finalRect = bentoDrag.el.getBoundingClientRect();
+        flipBentoWidgets(before);
+        settleGhost(finalRect, function () {
+          saveState();
+          cleanupBentoDrag();
+          if (window.__vantaInstance) {
+            requestAnimationFrame(function () {
+              try {
+                if (typeof window.__vantaInstance.resize === 'function') window.__vantaInstance.resize();
+              } catch (err) { /* ignore */ }
+            });
+          }
+        });
+      }
+      function cancelBentoDrag() {
+        if (!bentoDrag) return;
+        if (bentoDrag.moved && bentoDrag.originLayout) {
+          reflowWithFlip(JSON.parse(JSON.stringify(bentoDrag.originLayout)));
+        }
+        cleanupBentoDrag();
+      }
+      function onBentoPointerDown(e) {
+        if (!isDesktopBento() || e.button !== 0) return;
+        if (body.classList.contains('is-locked')) return;
+        if (bentoDrag && bentoDrag.settling) return;
+        if (e.target.closest('#desktop-menu, #widget-menu, .widget-gallery, .cc-panel, .home-menu, .settings-overlay, .about-system-overlay, .app-overlay, .ask-overlay, .dock-wrap')) return;
+        var interactive = e.target.closest('input, textarea, select, button, .music-controls, .folio-auth, .profile-actions');
+        if (interactive) {
+          // Notes: arm drag from the sticky; click without move still edits text
+          var notesHost = e.target.closest('.bento > aside.notes-panel[data-widget="notes"]');
+          if (!notesHost || !notesHost.contains(interactive)) return;
+        }
+        var tile = e.target.closest('.bento > [data-widget]');
+        if (!tile || tile.classList.contains('widget-hidden')) return;
+        var key = tile.getAttribute('data-widget');
+        if (!key || BENTO_WIDGET_KEYS.indexOf(key) === -1) return;
+        bentoDrag = {
+          el: tile,
+          key: key,
+          startX: e.clientX,
+          startY: e.clientY,
+          pointerId: e.pointerId,
+          moved: false,
+          settling: false,
+          ghost: null,
+          target: null,
+          originLayout: null,
+          offsetX: 0,
+          offsetY: 0
+        };
+      }
+      function onBentoPointerMove(e) {
+        if (!bentoDrag || bentoDrag.settling) return;
+        if (!bentoDrag.moved) {
+          var dx = e.clientX - bentoDrag.startX;
+          var dy = e.clientY - bentoDrag.startY;
+          if ((dx * dx + dy * dy) < 64) return;
+          beginBentoDrag(e);
+        }
+        moveBentoDrag(e);
+      }
+      function onBentoPointerUp() {
+        if (!bentoDrag) return;
+        if (bentoDrag.settling) return;
+        if (bentoDrag.moved) {
+          suppressNextClick(bentoDrag.el);
+          finishBentoDrag();
+          return;
+        }
+        bentoDrag = null;
+      }
+      document.addEventListener('pointerdown', onBentoPointerDown, true);
+      document.addEventListener('pointermove', onBentoPointerMove, true);
+      document.addEventListener('pointerup', onBentoPointerUp, true);
+      document.addEventListener('pointercancel', cancelBentoDrag, true);
+      document.addEventListener('dragstart', function (e) {
+        if (e.target.closest('.bento > [data-widget], .bento-drag-ghost')) e.preventDefault();
+      }, true);
+      document.addEventListener('click', function (e) {
+        var armed = e.target.closest('a[data-widget][data-drag-armed]');
+        if (!armed) return;
+        e.preventDefault();
+        e.stopPropagation();
+        armed.removeAttribute('data-drag-armed');
+      }, true);
+      setTimeout(function () {
+        var bento = document.querySelector('.bento');
+        if (bento) bento.classList.add('is-settled');
+      }, 900);
+
+      syncBentoBoard();
+      window.addEventListener('resize', function () {
+        syncBentoBoard();
+        profileAutoRowSpan = null;
+        syncProfileAutoSpan();
+        resolveLayoutOverlaps('profile');
+        BENTO_WIDGET_KEYS.forEach(pinWidgetToLayout);
+        syncProfileAutoSpan();
+      });
+      if ('ResizeObserver' in window) {
+        var stageEl = document.querySelector('.bento-wrap') || document.querySelector('.bento');
+        if (stageEl) new ResizeObserver(function () {
+          syncBentoBoard();
+          profileAutoRowSpan = null;
+          syncProfileAutoSpan();
+          resolveLayoutOverlaps('profile');
+          BENTO_WIDGET_KEYS.forEach(pinWidgetToLayout);
+          syncProfileAutoSpan();
+        }).observe(stageEl);
       }
 
       function applyAll() {
+        syncBentoBoard();
+        if (notesNeedsDefaultSlot) {
+          placeNotesDefault();
+          resolveLayoutOverlaps('notes');
+          notesNeedsDefaultSlot = false;
+          try { saveState(); } catch (e) { /* ignore */ }
+        }
         if (sizeSlider) sizeSlider.value = state.size;
         applyAccent(state.hue);
         applyFont(state.font);
@@ -13123,6 +14491,11 @@
             openWidgetGallery();
             return;
           }
+          if (action === 'reset-layout') {
+            resetWidgetLayout();
+            closeDesktopMenu();
+            return;
+          }
           if (action === 'settings') {
             openSettingsWindow();
             return;
@@ -13145,7 +14518,7 @@
           var action = item.getAttribute('data-action');
           if (size) {
             state.widgetSizes[activeWidgetKey] = size;
-            applyWidgetSizes();
+            applyWidgetSizes({ focusKey: activeWidgetKey });
             saveState();
             syncWidgetMenuState();
             return;
@@ -13161,6 +14534,10 @@
           if (action === 'edit-widgets') {
             closeWidgetMenu();
             openWidgetGallery();
+          }
+          if (action === 'reset-layout') {
+            resetWidgetLayout();
+            closeWidgetMenu();
           }
         });
       }
@@ -13193,7 +14570,7 @@
             state.widgetSizes[key] = size;
           }
           applyWidgets();
-          applyWidgetSizes();
+          applyWidgetSizes({ focusKey: key });
           saveState();
           syncDesktopMenuState();
           syncWidgetGallery();
@@ -13202,6 +14579,13 @@
       window.addEventListener('resize', function () {
         closeDesktopMenu();
         closeWidgetMenu();
+        if (!isDesktopBento()) {
+          WIDGET_KEYS.forEach(function (key) {
+            clearWidgetGridPin(widgetEl(key));
+          });
+        } else {
+          applyWidgetSizes();
+        }
       });
       document.addEventListener('scroll', function () {
         closeDesktopMenu();
@@ -13516,7 +14900,11 @@
         state.brightness = DEFAULTS.brightness;
         state.volume = DEFAULTS.volume;
         state.widgets = { notes: true, profile: true, ailab: true, work: true, music: true };
-        state.widgetSizes = { notes: 'large', profile: 'large', ailab: 'small', work: 'small', music: 'small' };
+        state.widgetSizes = { notes: 'small', profile: 'large', ailab: 'small', work: 'small', music: 'small' };
+        state.widgetLayout = JSON.parse(JSON.stringify(DEFAULT_WIDGET_LAYOUT));
+        state.widgetSpanV7 = true;
+        state.widgetLayoutV8 = true;
+        state.widgetLayoutV9 = true;
         applyAll();
         applyWallpaper('2');
         saveState();
@@ -14555,32 +15943,6 @@
       </div>
     </div>
   </div>
-
-  <script>
-    (function () {
-      var bento = document.querySelector('.bento');
-      if (!bento) return;
-
-      function syncBentoGrid() {
-        if (window.matchMedia('(max-width: 960px)').matches) {
-          bento.style.removeProperty('--tile-size');
-          return;
-        }
-
-        var gap = 14;
-        var width = bento.getBoundingClientRect().width;
-        var tileSize = Math.max(96, (width - (gap * 3)) / 4);
-
-        bento.style.setProperty('--tile-size', tileSize + 'px');
-      }
-
-      syncBentoGrid();
-      window.addEventListener('resize', syncBentoGrid);
-      if ('ResizeObserver' in window) {
-        new ResizeObserver(syncBentoGrid).observe(bento);
-      }
-    })();
-  </script>
 
   <script>
     (function () {

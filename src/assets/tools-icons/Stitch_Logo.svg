@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Stitch">
+  <!-- Vectorized from official stitch.withgoogle.com favicon (gstatic labs-code/stitch) -->
+  <rect width="512" height="512" rx="112" fill="#0A0A0F"/>
+  <rect x="76" y="184" width="357" height="143" rx="71.5" fill="#fff"/>
+  <circle cx="218.5" cy="255.5" r="17.5" fill="#0A0A0F"/>
+  <circle cx="292" cy="255.5" r="17.5" fill="#0A0A0F"/>
+</svg>
