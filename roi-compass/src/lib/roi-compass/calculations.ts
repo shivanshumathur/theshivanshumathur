@@ -71,14 +71,16 @@ export function runSimpleProjection(costs: CostInputs, metrics: UXMetric[]): ROI
 /**
  * J-curve-adjusted projection: multipliers apply to monthly *value* only.
  * Cost is paid in full every month from day one.
+ * `adoptionRate` (0–1) scales realized value before the J-curve (Phase 3 scenarios).
  */
 export function runJCurveProjection(
   costs: CostInputs,
   metrics: UXMetric[],
   jCurveParams: JCurveParams,
+  adoptionRate: number = 1,
 ): ROIResult {
   const monthlyCost = calculateTotalMonthlyCost(costs);
-  const monthlyValue = calculateTotalMonthlyValue(metrics);
+  const monthlyValue = calculateTotalMonthlyValue(metrics) * adoptionRate;
   const rawValues = Array.from({ length: PROJECTION_WINDOW_MONTHS }, () => monthlyValue);
   const adjustedValues = applyJCurve(rawValues, jCurveParams);
   return buildProjectionFromMonthlyValues(adjustedValues, monthlyCost);
