@@ -1,0 +1,408 @@
+/* Ask — Type to Siri layout, pinned to the far right */
+
+.dock-sep {
+  position: relative;
+  z-index: 1;
+  width: 1px;
+  height: 26px;
+  flex-shrink: 0;
+  margin: 0 3px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.12);
+}
+body.light-mode .dock-sep {
+  background: rgba(0, 0, 0, 0.18);
+  box-shadow: none;
+}
+
+.dock-item--ask {
+  width: 46px;
+  height: 46px;
+  touch-action: none;
+}
+.dock-item--ask .siri-orb {
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+}
+.dock-item--ask.ask-dock-live .siri-orb {
+  transform: scale(1.06);
+  box-shadow:
+    0 0 0 1px rgba(220, 200, 255, 0.34),
+    0 0 16px rgba(120, 90, 220, 0.4),
+    0 0 28px rgba(233, 30, 99, 0.2);
+}
+
+.ask-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1400;
+  pointer-events: none;
+}
+.ask-overlay.open {
+  pointer-events: none;
+}
+.ask-scrim {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  pointer-events: none;
+}
+.ask-overlay.open .ask-scrim {
+  pointer-events: auto;
+}
+
+.ask-stage {
+  position: absolute;
+  top: 46px;
+  right: 18px;
+  width: min(430px, calc(100vw - 28px));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  opacity: 0;
+  transform: translateX(28px);
+  pointer-events: none;
+  transition: opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ask-overlay.open .ask-stage {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.ask-glass {
+  background: rgba(32, 32, 36, 0.52);
+  border: 0.5px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.28),
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(36px) saturate(1.6);
+  -webkit-backdrop-filter: blur(36px) saturate(1.6);
+}
+body.light-mode .ask-glass {
+  background: rgba(246, 246, 248, 0.62);
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 10px 36px rgba(0, 0, 0, 0.12),
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.8);
+}
+
+.ask-bar {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px 6px 8px;
+}
+
+.ask-orb-wrap {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.ask-orb-wrap:focus-visible {
+  outline: 2px solid var(--accent, #0a84ff);
+  outline-offset: 2px;
+}
+.ask-orb-wrap .siri-orb {
+  width: 40px;
+  height: 40px;
+}
+.ask-overlay[data-state="listening"] .ask-orb-wrap .siri-orb {
+  transform: scale(1.06);
+  box-shadow:
+    0 0 0 1px rgba(220, 200, 255, 0.38),
+    0 0 18px rgba(120, 90, 220, 0.45),
+    0 0 32px rgba(233, 30, 99, 0.22);
+}
+.ask-overlay[data-state="thinking"] .ask-orb-wrap .siri-orb {
+  transform: scale(0.92);
+}
+.ask-overlay[data-state="refuse"] .ask-orb-wrap .siri-orb {
+  filter: grayscale(0.35) saturate(0.7);
+}
+
+.ask-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: -0.2px;
+  outline: none;
+  caret-color: #0a84ff;
+}
+body.light-mode .ask-input {
+  color: #1d1d1f;
+}
+.ask-input::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+body.light-mode .ask-input::placeholder {
+  color: rgba(0, 0, 0, 0.38);
+}
+
+.ask-mic,
+.ask-speaker {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body.light-mode .ask-mic,
+body.light-mode .ask-speaker {
+  color: #1d1d1f;
+}
+.ask-mic:hover,
+.ask-speaker:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.ask-speaker .ask-speaker-on { display: none; }
+.ask-speaker .ask-speaker-off { display: block; }
+.ask-speaker[aria-pressed="true"] .ask-speaker-on { display: block; }
+.ask-speaker[aria-pressed="true"] .ask-speaker-off { display: none; }
+.ask-speaker.is-off {
+  opacity: 0.55;
+}
+.ask-overlay[data-state="listening"] .ask-mic {
+  color: #ff453a;
+}
+
+.ask-chips {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  padding-left: 10px;
+}
+.ask-overlay.is-answered .ask-chips {
+  display: none;
+}
+
+.ask-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 16px 8px 8px;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.15px;
+  cursor: pointer;
+  text-align: left;
+}
+body.light-mode .ask-chip {
+  color: #1d1d1f;
+}
+.ask-chip:hover {
+  background: rgba(48, 48, 54, 0.62);
+}
+body.light-mode .ask-chip:hover {
+  background: rgba(255, 255, 255, 0.78);
+}
+.ask-chip-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.ask-chip-icon svg,
+.ask-chip-icon img {
+  display: block;
+}
+.ask-chip-icon--orb .siri-orb {
+  width: 28px;
+  height: 28px;
+}
+.ask-chip-icon--work {
+  background: linear-gradient(180deg, #64d2ff 0%, #0a84ff 100%);
+}
+.ask-chip-icon--mail {
+  background: linear-gradient(180deg, #6cb4ff 0%, #0071e3 100%);
+}
+.ask-chip-icon--cal {
+  background: linear-gradient(180deg, #ff6b6b 0%, #ff3b30 100%);
+}
+
+.ask-reply {
+  display: none;
+  width: fit-content;
+  max-width: 100%;
+  margin-left: 10px;
+  border-radius: 22px;
+  padding: 12px 16px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: -0.15px;
+  text-align: left;
+}
+.ask-overlay.is-answered .ask-reply {
+  display: block;
+}
+body.light-mode .ask-reply {
+  color: rgba(29, 29, 31, 0.82);
+}
+.ask-reply.is-refuse {
+  color: #ff8a80;
+}
+
+.ask-cards {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+  padding-left: 10px;
+}
+.ask-cards[hidden] { display: none; }
+.ask-card {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  text-align: left;
+}
+.ask-card-media {
+  display: block;
+  width: 100%;
+  height: 112px;
+  object-fit: cover;
+  background: rgba(0, 0, 0, 0.2);
+}
+.ask-card-body {
+  padding: 10px 12px 12px;
+}
+.ask-card-kicker {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 2px;
+}
+.ask-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+.ask-card-sub {
+  margin-top: 2px;
+  font-size: 13px;
+  opacity: 0.72;
+  line-height: 1.35;
+}
+.ask-card-meta {
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: 0.55;
+}
+.ask-card-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.ask-metric-value {
+  display: block;
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: -0.3px;
+}
+.ask-metric-label {
+  display: block;
+  font-size: 11px;
+  opacity: 0.55;
+  margin-top: 2px;
+}
+.ask-card-steps {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.55;
+  opacity: 0.88;
+}
+.ask-card-cta,
+.ask-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.ask-card-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 6px 11px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(10, 132, 255, 0.95);
+}
+body.light-mode .ask-card-btn {
+  color: #fff;
+}
+.ask-card-btn.ghost {
+  background: rgba(255, 255, 255, 0.12);
+  color: inherit;
+}
+body.light-mode .ask-card-btn.ghost {
+  background: rgba(0, 0, 0, 0.06);
+}
+body.light-mode .ask-reply.is-refuse {
+  color: #9f1239;
+}
+
+.ask-status,
+.ask-user,
+.ask-hint,
+.ask-mute,
+.ask-send {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .ask-stage {
+    top: auto;
+    bottom: 88px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ask-stage { transition: none; }
+}

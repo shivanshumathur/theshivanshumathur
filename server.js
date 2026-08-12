@@ -7,6 +7,43 @@ const PORT = process.env.PORT || 5173;
 const root = path.join(__dirname, "src");
 
 const app = express();
+app.use(express.json({ limit: '8kb' }));
+
+app.get("/api/speak", async (req, res) => {
+  const { ttsReady } = await import("./lib/tts.js");
+  res.setHeader("Cache-Control", "no-store");
+  res.json({ ready: ttsReady() });
+});
+
+app.get("/api/ask", async (req, res) => {
+  const { llmReady } = await import("./lib/ask-rag.js");
+  res.setHeader("Cache-Control", "no-store");
+  res.json({ ready: true, llm: llmReady() });
+});
+
+app.post("/api/ask", async (req, res) => {
+  res.setHeader("Cache-Control", "no-store");
+  try {
+    const { answer } = await import("./lib/ask-rag.js");
+    const result = await answer((req.body && (req.body.message || req.body.text)) || "");
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message || "Ask failed" });
+  }
+});
+
+app.post("/api/speak", async (req, res) => {
+  res.setHeader("Cache-Control", "no-store");
+  try {
+    const { synthesize } = await import("./lib/tts.js");
+    const { buffer, contentType } = await synthesize(req.body && req.body.text);
+    res.setHeader("Content-Type", contentType);
+    res.send(buffer);
+  } catch (err) {
+    const status = err.code === "NO_PROVIDER" ? 503 : 502;
+    res.status(status).json({ error: err.message || "TTS failed" });
+  }
+});
 
 // Required for AI Lab WebGL workers / SharedArrayBuffer
 app.use((req, res, next) => {

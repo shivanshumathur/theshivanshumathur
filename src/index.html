@@ -37,6 +37,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link href="./output.css" rel="stylesheet">
+  <link href="./ask/ask.css" rel="stylesheet">
 
   <script type="application/ld+json">
   {
@@ -295,6 +296,113 @@
       margin: 4px 8px;
       background: rgba(255, 255, 255, 0.12);
     }
+
+    /* ===== Desktop right-click menu (macOS density + Home/Settings chrome) ===== */
+    .desktop-menu {
+      position: fixed;
+      z-index: 2400;
+      min-width: 198px;
+      padding: 4px 5px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 10px;
+      background: rgba(36, 36, 38, 0.62);
+      border: 0.5px solid rgba(255, 255, 255, 0.2);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        inset 0 0.5px 0 rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      overflow: visible;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .desktop-menu[hidden] { display: none !important; }
+    .desktop-menu .home-menu-sep {
+      margin: 3px 8px;
+    }
+    .desktop-menu-row { position: relative; }
+    .desktop-menu-item {
+      width: 100%;
+      min-height: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-align: left;
+      padding: 3px 8px 3px 11px;
+      border: none;
+      background: transparent;
+      color: inherit;
+      border-radius: 5px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 16px;
+      cursor: pointer;
+    }
+    .desktop-menu-item svg {
+      flex-shrink: 0;
+      opacity: 0.9;
+    }
+    .desktop-menu-item:hover,
+    .desktop-menu-item:focus-visible,
+    .desktop-menu-row.has-sub:hover > .desktop-menu-item,
+    .desktop-menu-row.has-sub.open > .desktop-menu-item {
+      background: var(--accent, #007AFF);
+      color: #fff;
+      outline: none;
+    }
+    .desktop-menu-check,
+    .desktop-menu-chevron {
+      margin-left: auto;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .desktop-menu-check {
+      width: 12px;
+      height: 12px;
+      opacity: 0;
+    }
+    .desktop-menu-item.is-checked .desktop-menu-check { opacity: 1; }
+    .desktop-menu-chevron {
+      width: 6px;
+      height: 10px;
+      opacity: 0.85;
+    }
+    .desktop-submenu {
+      display: none;
+      position: absolute;
+      left: calc(100% + 4px);
+      top: -4px;
+      min-width: 148px;
+      padding: 4px 5px;
+      flex-direction: column;
+      border-radius: 10px;
+      background: rgba(36, 36, 38, 0.62);
+      border: 0.5px solid rgba(255, 255, 255, 0.2);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        inset 0 0.5px 0 rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      z-index: 1;
+    }
+    .desktop-submenu.flip {
+      left: auto;
+      right: calc(100% + 4px);
+    }
+    .desktop-menu-row.has-sub:hover > .desktop-submenu,
+    .desktop-menu-row.has-sub.open > .desktop-submenu {
+      display: flex;
+    }
+    .widget-hidden { display: none !important; }
     .about-system-overlay {
       position: fixed;
       inset: 0;
@@ -853,25 +961,45 @@
     a.bento-tile {
       color: inherit;
     }
-    /* Siri-style orb */
+    /* Plasma globe orb */
     .siri-orb {
       width: 56px;
       height: 56px;
       border-radius: 50%;
       position: relative;
       flex-shrink: 0;
-      /* Shadow lives on the outer shell so Safari clip/mask can't eat it */
+      overflow: visible;
+      background: #05060c;
       box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.1),
-        0 4px 16px rgba(59, 130, 246, 0.35),
-        0 0 28px rgba(139, 92, 246, 0.3),
-        0 0 40px rgba(236, 72, 153, 0.22);
+        0 0 0 1px rgba(210, 220, 255, 0.22),
+        0 0 14px rgba(90, 80, 200, 0.32),
+        0 0 28px rgba(120, 50, 170, 0.18);
       transition: transform 0.35s ease, box-shadow 0.35s ease;
     }
-    /* Inner clip — Safari fails to clip filter:blur with overflow+border-radius alone */
+    .siri-orb::before,
+    .siri-orb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .siri-orb::before {
+      box-shadow:
+        inset 0 0 0 0.7px rgba(230, 236, 255, 0.38),
+        inset 0 -7px 11px rgba(0, 0, 0, 0.42),
+        inset 0 5px 8px rgba(200, 210, 255, 0.08);
+    }
+    .siri-orb::after {
+      background:
+        radial-gradient(ellipse 34% 22% at 28% 16%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.06) 46%, transparent 70%),
+        radial-gradient(circle at 74% 80%, rgba(0, 0, 0, 0.22) 0%, transparent 42%);
+    }
     .siri-orb-clip {
       position: absolute;
       inset: 0;
+      z-index: 0;
       border-radius: 50%;
       overflow: hidden;
       isolation: isolate;
@@ -881,102 +1009,126 @@
       mask-image: radial-gradient(closest-side, #000 99.5%, transparent 100%);
       transform: translateZ(0);
       -webkit-transform: translateZ(0);
-    }
-    .siri-orb-clip::before {
-      content: '';
-      position: absolute;
-      inset: -40%;
       background:
-        radial-gradient(circle at 28% 28%, #3b82f6 0%, transparent 42%),
-        radial-gradient(circle at 72% 22%, #8b5cf6 0%, transparent 44%),
-        radial-gradient(circle at 78% 72%, #ef4444 0%, transparent 42%),
-        radial-gradient(circle at 24% 76%, #06b6d4 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, #3b82f6 0%, #8b5cf6 45%, #ec4899 100%);
-      animation: siri-spin 7.5s linear infinite;
-      filter: blur(5px) saturate(1.35);
-      will-change: transform;
+        radial-gradient(circle at 50% 48%, #1a0c24 0%, #0a0814 62%, #04040a 100%);
     }
-    .siri-orb-clip::after {
-      content: '';
-      position: absolute;
-      inset: -22%;
-      background:
-        radial-gradient(ellipse 55% 45% at 34% 38%, rgba(255, 255, 255, 0.55) 0%, transparent 55%),
-        radial-gradient(ellipse 42% 50% at 68% 66%, rgba(236, 72, 153, 0.55) 0%, transparent 52%),
-        radial-gradient(ellipse 50% 40% at 56% 28%, rgba(6, 182, 212, 0.5) 0%, transparent 50%),
-        radial-gradient(ellipse 40% 40% at 42% 72%, rgba(245, 158, 11, 0.45) 0%, transparent 50%);
-      animation: siri-morph 4.2s ease-in-out infinite alternate;
-      filter: blur(3.5px);
-      mix-blend-mode: screen;
-      will-change: transform;
-    }
-    .siri-orb-core {
-      position: absolute;
-      inset: 18%;
-      border-radius: 50%;
-      background: radial-gradient(circle at 40% 35%,
-        rgba(255, 255, 255, 0.45) 0%,
-        rgba(255, 255, 255, 0.08) 40%,
-        transparent 70%);
-      pointer-events: none;
-      z-index: 1;
-    }
+    .siri-orb-clip::before,
+    .siri-orb-clip::after,
+    .siri-orb-core,
     .siri-orb-wave {
+      display: none;
+    }
+    .plasma-globe {
       position: absolute;
-      inset: 6%;
-      border-radius: 42% 58% 55% 45% / 48% 42% 58% 52%;
-      background: linear-gradient(135deg,
-        rgba(59, 130, 246, 0.9),
-        rgba(6, 182, 212, 0.85),
-        rgba(139, 92, 246, 0.9),
-        rgba(236, 72, 153, 0.85),
-        rgba(245, 158, 11, 0.8),
-        rgba(239, 68, 68, 0.85));
-      animation: siri-blob 3.1s ease-in-out infinite;
-      filter: blur(2.5px) saturate(1.25);
-      mix-blend-mode: soft-light;
-      opacity: 0.95;
-      will-change: border-radius, transform;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
     }
-    @keyframes siri-spin {
-      to { transform: rotate(360deg); }
+    .plasma-gas {
+      pointer-events: none;
     }
-    @keyframes siri-morph {
-      0%   { transform: translate(-4%, -2%) scale(1) rotate(0deg); }
-      50%  { transform: translate(3%, 4%) scale(1.08) rotate(12deg); }
-      100% { transform: translate(-2%, 3%) scale(0.96) rotate(-8deg); }
+    .plasma-filament-glow {
+      fill: none;
+      stroke: #6d28d9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2.6;
+      opacity: 0.3;
     }
-    @keyframes siri-blob {
-      0% {
-        border-radius: 42% 58% 55% 45% / 48% 42% 58% 52%;
-        transform: rotate(0deg) scale(1);
-      }
-      33% {
-        border-radius: 58% 42% 45% 55% / 42% 55% 45% 58%;
-        transform: rotate(40deg) scale(1.06);
-      }
-      66% {
-        border-radius: 48% 52% 62% 38% / 55% 48% 52% 45%;
-        transform: rotate(80deg) scale(0.94);
-      }
-      100% {
-        border-radius: 42% 58% 55% 45% / 48% 42% 58% 52%;
-        transform: rotate(120deg) scale(1);
-      }
+    .plasma-filament-glow.is-main { stroke-width: 3.4; opacity: 0.4; }
+    .plasma-filament-glow.is-branch { stroke-width: 1.6; opacity: 0.22; }
+    .plasma-midglow {
+      fill: none;
+      stroke: #8b5cf6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 5.4;
+      opacity: 0.22;
     }
-    .cell-ailab:hover .siri-orb {
-      transform: scale(1.06);
-      box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.14),
-        0 6px 22px rgba(59, 130, 246, 0.45),
-        0 0 36px rgba(139, 92, 246, 0.4),
-        0 0 48px rgba(236, 72, 153, 0.3);
+    .plasma-midglow.is-main {
+      stroke-width: 6.8;
+      opacity: 0.28;
+      stroke: #a78bfa;
+    }
+    .plasma-filament {
+      fill: none;
+      stroke: #7df9ff;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 0.8;
+    }
+    .plasma-filament.is-main {
+      stroke-width: 1.2;
+      filter: drop-shadow(0 0 1.4px rgba(125, 249, 255, 0.7));
+    }
+    .plasma-filament.is-branch {
+      stroke: #c4b5fd;
+      stroke-width: 0.55;
+    }
+    .plasma-tip {
+      fill: #ff6b9d;
+      filter: drop-shadow(0 0 3px #e91e63);
+    }
+    .plasma-tip.is-main {
+      filter: drop-shadow(0 0 4.5px #ff2d6a);
+    }
+    .plasma-halo {
+      fill: rgba(255, 70, 120, 0.16);
+    }
+    .plasma-core {
+      fill: #ff3b6b;
+      filter: drop-shadow(0 0 3px #ff2d55);
+    }
+    .plasma-core-hot {
+      fill: #fff0f6;
+    }
+    .ailab-memoji {
+      display: block;
+      height: clamp(52px, calc(var(--tile-size, 128px) * 0.5), 86px);
+      width: auto;
+      max-width: 78%;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 8px 12px rgba(15, 23, 42, 0.16));
+      transition: transform 0.35s ease;
+      animation: memoji-glow 8s ease-in-out infinite;
+    }
+    .cell-ailab .bento-tile-visual {
+      animation: memoji-float 3.2s ease-in-out infinite;
+    }
+    .cell-ailab:hover .bento-tile-visual {
+      animation-play-state: paused;
+    }
+    .cell-ailab:hover .ailab-memoji {
+      animation: none;
+      transform: scale(1.07);
+      filter: drop-shadow(0 12px 16px rgba(15, 23, 42, 0.2));
+    }
+    @keyframes memoji-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    @keyframes memoji-glow {
+      0%, 72%, 100% {
+        filter: drop-shadow(0 8px 12px rgba(15, 23, 42, 0.16));
+      }
+      82%, 90% {
+        filter: drop-shadow(0 8px 16px rgba(34, 211, 238, 0.42));
+      }
     }
     @media (prefers-reduced-motion: reduce) {
-      .siri-orb-clip::before,
-      .siri-orb-clip::after,
-      .siri-orb-wave {
+      .plasma-filament,
+      .plasma-tip {
         animation: none;
+      }
+      .cell-ailab .bento-tile-visual,
+      .ailab-memoji,
+      .cell-ailab:hover .ailab-memoji {
+        animation: none;
+        transition: none;
+        transform: none;
       }
     }
 
@@ -1138,6 +1290,9 @@
         width: 42px;
         height: 42px;
       }
+      .ailab-memoji {
+        height: 48px;
+      }
       .folio-stack {
         transform: scale(0.88);
         transform-origin: center center;
@@ -1230,6 +1385,9 @@
       .siri-orb {
         width: 36px;
         height: 36px;
+      }
+      .ailab-memoji {
+        height: 40px;
       }
       .profile-stat-label {
         font-size: 8px;
@@ -8231,9 +8389,84 @@
     </div>
   </div>
 
+  <div class="desktop-menu" id="desktop-menu" hidden role="menu" aria-label="Desktop">
+    <div class="desktop-menu-row has-sub" data-sub="widgets">
+      <button type="button" class="desktop-menu-item" data-action="widgets" role="menuitem" aria-haspopup="true">
+        Add Widget
+        <svg class="desktop-menu-chevron" viewBox="0 0 8 12" fill="none" aria-hidden="true"><path d="M2 1.5 6.5 6 2 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="desktop-submenu" data-sub="widgets" role="menu">
+        <button type="button" class="desktop-menu-item" data-toggle-widget="notes" role="menuitemcheckbox">
+          Notes
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button type="button" class="desktop-menu-item" data-toggle-widget="profile" role="menuitemcheckbox">
+          Profile
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button type="button" class="desktop-menu-item" data-toggle-widget="ailab" role="menuitemcheckbox">
+          AI Lab
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button type="button" class="desktop-menu-item" data-toggle-widget="work" role="menuitemcheckbox">
+          Work
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button type="button" class="desktop-menu-item" data-toggle-widget="music" role="menuitemcheckbox">
+          Music
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+      </div>
+    </div>
+    <div class="home-menu-sep"></div>
+
+    <div class="desktop-menu-row has-sub" data-sub="wallpaper">
+      <button type="button" class="desktop-menu-item" data-action="wallpaper" role="menuitem" aria-haspopup="true">
+        Change Wallpaper
+        <svg class="desktop-menu-chevron" viewBox="0 0 8 12" fill="none" aria-hidden="true"><path d="M2 1.5 6.5 6 2 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="desktop-submenu" data-sub="wallpaper" role="menu">
+        <button type="button" class="desktop-menu-item" data-wallpaper="1" role="menuitemradio">
+          Sequoia
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button type="button" class="desktop-menu-item" data-wallpaper="2" role="menuitemradio">
+          Ambient
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button type="button" class="desktop-menu-item" data-wallpaper="11" role="menuitemradio">
+          Horizon
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+        <button type="button" class="desktop-menu-item" data-wallpaper="9" role="menuitemradio">
+          Nebula
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </button>
+      </div>
+    </div>
+    <div class="home-menu-sep"></div>
+
+    <div class="desktop-menu-row">
+      <button type="button" class="desktop-menu-item" data-action="dark" role="menuitemcheckbox" aria-checked="false">
+        Dark Mode
+        <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </button>
+    </div>
+    <div class="home-menu-sep"></div>
+
+    <div class="desktop-menu-row">
+      <button type="button" class="desktop-menu-item" data-action="settings" role="menuitem">Settings</button>
+    </div>
+    <div class="home-menu-sep"></div>
+
+    <div class="desktop-menu-row">
+      <button type="button" class="desktop-menu-item" data-action="refresh" role="menuitem">Refresh</button>
+    </div>
+  </div>
+
   <!-- ========== MAIN BENTO GRID ========== -->
   <main class="left-half">
-    <aside class="notes-panel" aria-label="Notes">
+    <aside class="notes-panel" data-widget="notes" aria-label="Notes">
       <div class="quote-sticky-note">
         <div class="quote-lines"></div>
         <div class="quote-content">
@@ -8257,7 +8490,7 @@
     <div class="bento">
 
       <!-- ===== PROFILE ===== -->
-      <div class="cell-profile card">
+      <div class="cell-profile card" data-widget="profile">
         <div id="profile-banner-vanta" class="profile-banner"></div>
         <div class="profile-body">
           <div class="profile-avatar">
@@ -8322,14 +8555,9 @@
       </div>
 
       <!-- ===== AI LAB ===== -->
-      <a href="/ai-lab/" class="cell-ailab bento-tile liquid-glass" aria-label="Open AI Lab">
+      <a href="/ai-lab/" class="cell-ailab bento-tile liquid-glass" data-widget="ailab" aria-label="Open AI Lab">
         <div class="bento-tile-visual" aria-hidden="true">
-          <div class="siri-orb">
-            <div class="siri-orb-clip">
-              <span class="siri-orb-wave"></span>
-              <span class="siri-orb-core"></span>
-            </div>
-          </div>
+          <img class="ailab-memoji" src="./assets/logos/ai-lab-memoji.png" alt="" width="388" height="512">
         </div>
         <div class="bento-tile-cta">
           <span class="btn-linkedin">
@@ -8340,7 +8568,7 @@
       </a>
 
       <!-- ===== WORK ===== -->
-      <div class="cell-work card bento-tile liquid-glass" id="work-folio-tile">
+      <div class="cell-work card bento-tile liquid-glass" id="work-folio-tile" data-widget="work">
         <div class="bento-tile-visual">
           <div class="folio-stack" aria-hidden="true">
             <span class="folio-stack-card"></span>
@@ -8363,7 +8591,7 @@
       </div>
 
       <!-- ===== MUSIC (Passive widget) ===== -->
-      <div class="cell-listen card liquid-glass">
+      <div class="cell-listen card liquid-glass" data-widget="music">
         <div class="music-player-shell">
           <div class="music-banner">
             <img id="music-banner-img" src="https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg" alt="Sapphire video thumbnail">
@@ -11117,44 +11345,80 @@
           </svg>
         </span>
       </a>
+      <span class="dock-sep" aria-hidden="true"></span>
+      <button type="button" class="dock-item dock-item--ask" data-label="Ask" title="Ask" id="open-ask" aria-label="Ask about Shivanshu's work" aria-pressed="false">
+        <span class="siri-orb" aria-hidden="true">
+          <span class="siri-orb-clip">
+            <span class="siri-orb-wave"></span>
+            <span class="siri-orb-core"></span>
+          </span>
+        </span>
+      </button>
     </div>
   </nav>
 
-  <!-- ========== CHATBOT SIDEBAR ========== -->
-  <div class="chatbot-backdrop" id="chatbot-backdrop" style="display: none;"></div>
-  <div class="chatbot-sidebar" id="chatbot-sidebar" style="display: none;">
-    <div class="chatbot-header">
-      <h3>Chat Assistant</h3>
-      <button type="button" class="chatbot-close" id="chatbot-close" title="Close">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 6L6 18M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-    <div class="chatbot-messages" id="chatbot-messages">
-      <div class="chatbot-message">
-        <div class="chatbot-avatar">AI</div>
-        <div class="chatbot-content">
-          <div class="chatbot-bubble">
-            Hi! I'm your AI assistant. How can I help you today?
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="chatbot-input-area">
-      <div class="chatbot-input-wrapper">
-        <textarea 
-          class="chatbot-input" 
-          id="chatbot-input" 
-          placeholder="Type your message..."
-          rows="1"
-        ></textarea>
-        <button type="button" class="chatbot-send" id="chatbot-send" title="Send">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+  <!-- ========== ASK (Type to Siri, far right) ========== -->
+  <div class="ask-overlay" id="ask-overlay" data-state="idle" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Ask">
+    <div class="ask-scrim"></div>
+    <div class="ask-stage">
+      <div class="ask-bar ask-glass">
+        <button type="button" class="ask-orb-wrap" id="ask-orb" aria-label="Hold to talk">
+          <span class="siri-orb" aria-hidden="true">
+            <span class="siri-orb-clip">
+              <span class="siri-orb-wave"></span>
+              <span class="siri-orb-core"></span>
+            </span>
+          </span>
+        </button>
+        <input class="ask-input" id="ask-input" type="text" placeholder="Type to Ask" autocomplete="off" spellcheck="false" aria-label="Type to Ask">
+        <button type="button" class="ask-speaker is-off" id="ask-speaker" title="Turn voice on" aria-label="Turn voice on" aria-pressed="false">
+          <svg class="ask-speaker-on" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+            <path d="M15.5 8.5a5 5 0 010 7"/>
+            <path d="M18.5 6a9 9 0 010 12"/>
+          </svg>
+          <svg class="ask-speaker-off" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+            <path d="M22 9l-6 6M16 9l6 6"/>
+          </svg>
+        </button>
+        <button type="button" class="ask-mic" id="ask-mic" title="Listen" aria-label="Listen">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="9" y="3" width="6" height="11" rx="3"/>
+            <path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/>
           </svg>
         </button>
       </div>
+      <div class="ask-chips" id="ask-chips">
+        <button type="button" class="ask-chip ask-glass" data-ask="Who is Shivanshu?">
+          <span class="ask-chip-icon ask-chip-icon--orb" aria-hidden="true">
+            <span class="siri-orb"><span class="siri-orb-clip"><span class="siri-orb-wave"></span><span class="siri-orb-core"></span></span></span>
+          </span>
+          Who is Shivanshu?
+        </button>
+        <button type="button" class="ask-chip ask-glass" data-ask="Tell me about Forge">
+          <span class="ask-chip-icon ask-chip-icon--work" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="8" width="18" height="12" rx="2" fill="#fff"/><path d="M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8" stroke="#0066cc" stroke-width="1.6"/></svg>
+          </span>
+          Open the Forge case study
+        </button>
+        <button type="button" class="ask-chip ask-glass" data-ask="Book a call">
+          <span class="ask-chip-icon ask-chip-icon--cal" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>
+          </span>
+          Book a call
+        </button>
+        <button type="button" class="ask-chip ask-glass" data-ask="What can you do?">
+          <span class="ask-chip-icon ask-chip-icon--orb" aria-hidden="true">
+            <span class="siri-orb"><span class="siri-orb-clip"><span class="siri-orb-wave"></span><span class="siri-orb-core"></span></span></span>
+          </span>
+          What can I do?
+        </button>
+      </div>
+      <div class="ask-reply ask-glass" id="ask-reply" aria-live="polite"></div>
+      <div class="ask-cards" id="ask-cards" hidden></div>
+      <div class="ask-status" id="ask-status"></div>
+      <div class="ask-user" id="ask-user"></div>
     </div>
   </div>
 
@@ -11245,6 +11509,8 @@
       function lockDesktop() {
         var menu = document.getElementById('home-menu');
         if (menu) menu.classList.remove('open');
+        var desktopMenu = document.getElementById('desktop-menu');
+        if (desktopMenu) desktopMenu.hidden = true;
         lock.classList.remove('unlocked');
         document.body.classList.add('is-locked');
       }
@@ -11294,7 +11560,7 @@
       var glassBtns = document.querySelectorAll('.glass-btn');
 
       /* ---------- Defaults ---------- */
-      var DEFAULTS = { hue: 210, accent: 'multi', font: 'sans', size: 1, theme: 'light', glass: 'clear', wallpaper: '2', brightness: 100, volume: 80, highlight: 'auto', folder: 'auto', sidebarIcons: 'medium', wpTint: true, scrollbars: 'auto', scrollClick: 'page', lockIdle: 'never', lockStart: 'first', lockShowUser: true, lockShowHint: true, lockShowMessage: false, lockMessage: '', lockShowClock: true, lockUnlock: 'any' };
+      var DEFAULTS = { hue: 210, accent: 'multi', font: 'sans', size: 1, theme: 'light', glass: 'clear', wallpaper: '2', brightness: 100, volume: 80, highlight: 'auto', folder: 'auto', sidebarIcons: 'medium', wpTint: true, scrollbars: 'auto', scrollClick: 'page', lockIdle: 'never', lockStart: 'first', lockShowUser: true, lockShowHint: true, lockShowMessage: false, lockMessage: '', lockShowClock: true, lockUnlock: 'any', widgets: { notes: true, profile: true, ailab: true, work: true, music: true } };
 
       /* Load saved settings from localStorage, falling back to defaults */
       function loadState() {
@@ -11328,6 +11594,13 @@
       if (typeof state.lockMessage !== 'string') state.lockMessage = DEFAULTS.lockMessage;
       if (typeof state.lockShowClock !== 'boolean') state.lockShowClock = DEFAULTS.lockShowClock;
       if (!state.lockUnlock) state.lockUnlock = DEFAULTS.lockUnlock;
+      if (!state.widgets || typeof state.widgets !== 'object') {
+        state.widgets = { notes: true, profile: true, ailab: true, work: true, music: true };
+      } else {
+        ['notes', 'profile', 'ailab', 'work', 'music'].forEach(function (key) {
+          if (typeof state.widgets[key] !== 'boolean') state.widgets[key] = true;
+        });
+      }
 
       // One-time migration: force Ambient (Wallpaper-2) as the default background.
       // This moves existing visitors whose saved preference predates this default
@@ -11569,6 +11842,15 @@
         });
       }
 
+      var WIDGET_KEYS = ['notes', 'profile', 'ailab', 'work', 'music'];
+      function applyWidgets() {
+        WIDGET_KEYS.forEach(function (key) {
+          var el = document.querySelector('.left-half [data-widget="' + key + '"]');
+          if (!el) return;
+          el.classList.toggle('widget-hidden', state.widgets[key] === false);
+        });
+      }
+
       function applyAll() {
         if (sizeSlider) sizeSlider.value = state.size;
         applyAccent(state.hue);
@@ -11585,6 +11867,7 @@
         applyBrightness(state.brightness);
         applyVolume(state.volume);
         applyLockSettings();
+        applyWidgets();
 
         fontBtns.forEach(function (btn) {
           btn.classList.toggle('active', btn.getAttribute('data-font') === state.font);
@@ -11693,6 +11976,7 @@
 
       function openControlCenter() {
         closeHomeMenu();
+        closeDesktopMenu();
         if (ccPanel) ccPanel.classList.add('open');
       }
       function closeControlCenter() {
@@ -11709,12 +11993,62 @@
 
       function openHomeMenu() {
         closeControlCenter();
+        closeDesktopMenu();
         if (homeMenu) homeMenu.classList.add('open');
         if (homeBtn) homeBtn.setAttribute('aria-expanded', 'true');
       }
       function closeHomeMenu() {
         if (homeMenu) homeMenu.classList.remove('open');
         if (homeBtn) homeBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      var desktopMenu = document.getElementById('desktop-menu');
+      function closeDesktopMenu() {
+        if (!desktopMenu) return;
+        desktopMenu.hidden = true;
+        desktopMenu.querySelectorAll('.has-sub.open').forEach(function (row) {
+          row.classList.remove('open');
+        });
+      }
+      function syncDesktopMenuState() {
+        if (!desktopMenu) return;
+        var isDark = !body.classList.contains('light-mode');
+        var darkBtn = desktopMenu.querySelector('[data-action="dark"]');
+        if (darkBtn) {
+          darkBtn.classList.toggle('is-checked', isDark);
+          darkBtn.setAttribute('aria-checked', isDark ? 'true' : 'false');
+        }
+        desktopMenu.querySelectorAll('[data-toggle-widget]').forEach(function (btn) {
+          var key = btn.getAttribute('data-toggle-widget');
+          var on = state.widgets[key] !== false;
+          btn.classList.toggle('is-checked', on);
+          btn.setAttribute('aria-checked', on ? 'true' : 'false');
+        });
+        desktopMenu.querySelectorAll('[data-wallpaper]').forEach(function (btn) {
+          var on = btn.getAttribute('data-wallpaper') === String(state.wallpaper);
+          btn.classList.toggle('is-checked', on);
+          btn.setAttribute('aria-checked', on ? 'true' : 'false');
+        });
+      }
+      function openDesktopMenu(x, y) {
+        if (!desktopMenu) return;
+        syncDesktopMenuState();
+        desktopMenu.hidden = false;
+        desktopMenu.style.left = '0px';
+        desktopMenu.style.top = '0px';
+        var rect = desktopMenu.getBoundingClientRect();
+        var left = x;
+        var top = y;
+        if (left + rect.width > window.innerWidth - 8) left = window.innerWidth - rect.width - 8;
+        if (top + rect.height > window.innerHeight - 8) top = window.innerHeight - rect.height - 8;
+        if (left < 8) left = 8;
+        if (top < 8) top = 8;
+        desktopMenu.style.left = left + 'px';
+        desktopMenu.style.top = top + 'px';
+        var roomRight = window.innerWidth - (left + rect.width) > 190;
+        desktopMenu.querySelectorAll('.desktop-submenu').forEach(function (sub) {
+          sub.classList.toggle('flip', !roomRight);
+        });
       }
       function syncAccountBanner() {
         var avatar = document.getElementById('settings-account-avatar');
@@ -11730,6 +12064,7 @@
       function openSettingsWindow() {
         closeHomeMenu();
         closeControlCenter();
+        closeDesktopMenu();
         syncAccountBanner();
         if (overlay) overlay.classList.add('open');
       }
@@ -11758,6 +12093,7 @@
       }
       function openAboutSystem() {
         closeHomeMenu();
+        closeDesktopMenu();
         refreshAboutGit();
         if (aboutSystem) aboutSystem.classList.add('open');
       }
@@ -11845,6 +12181,71 @@
         });
         ccVolume.addEventListener('change', saveState);
       }
+
+      document.addEventListener('contextmenu', function (e) {
+        if (body.classList.contains('is-locked')) return;
+        if (e.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+        if (e.target.closest('.app-overlay, .settings-overlay, .about-system-overlay, .cc-panel, .home-menu, .ask-overlay, .dock-wrap')) return;
+        e.preventDefault();
+        closeHomeMenu();
+        closeControlCenter();
+        openDesktopMenu(e.clientX, e.clientY);
+      });
+      if (desktopMenu) {
+        desktopMenu.addEventListener('contextmenu', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        });
+        desktopMenu.addEventListener('click', function (e) {
+          var item = e.target.closest('.desktop-menu-item');
+          if (!item) return;
+          e.stopPropagation();
+
+          var row = item.closest('.desktop-menu-row.has-sub');
+          if (row && !item.closest('.desktop-submenu')) {
+            desktopMenu.querySelectorAll('.has-sub.open').forEach(function (el) {
+              if (el !== row) el.classList.remove('open');
+            });
+            row.classList.toggle('open');
+            return;
+          }
+
+          var toggleWidget = item.getAttribute('data-toggle-widget');
+          var wallpaper = item.getAttribute('data-wallpaper');
+          var action = item.getAttribute('data-action');
+
+          if (toggleWidget) {
+            state.widgets[toggleWidget] = state.widgets[toggleWidget] === false;
+            applyWidgets();
+            saveState();
+            syncDesktopMenuState();
+            return;
+          }
+          if (wallpaper) {
+            applyWallpaper(wallpaper);
+            saveState();
+            syncDesktopMenuState();
+            return;
+          }
+          if (action === 'dark') {
+            state.theme = body.classList.contains('light-mode') ? 'dark' : 'light';
+            applyTheme(state.theme);
+            saveState();
+            syncDesktopMenuState();
+            return;
+          }
+          if (action === 'settings') {
+            openSettingsWindow();
+            return;
+          }
+          if (action === 'refresh') {
+            location.reload();
+          }
+        });
+      }
+      window.addEventListener('resize', closeDesktopMenu);
+      document.addEventListener('scroll', closeDesktopMenu, true);
+
       document.addEventListener('click', function (e) {
         if (ccPanel && ccPanel.classList.contains('open')) {
           if (!(ccPanel.contains(e.target) || (openBtn && openBtn.contains(e.target)))) {
@@ -11856,6 +12257,9 @@
             closeHomeMenu();
           }
         }
+        if (desktopMenu && !desktopMenu.hidden && !desktopMenu.contains(e.target)) {
+          closeDesktopMenu();
+        }
       });
       closeBtn.addEventListener('click', function () {
         overlay.classList.remove('open');
@@ -11865,6 +12269,10 @@
       });
       document.addEventListener('keydown', function (e) {
         if (e.key !== 'Escape') return;
+        if (desktopMenu && !desktopMenu.hidden) {
+          closeDesktopMenu();
+          return;
+        }
         if (aboutSystem && aboutSystem.classList.contains('open')) {
           closeAboutSystem();
           return;
@@ -12134,6 +12542,7 @@
         state.wallpaper = '2';
         state.brightness = DEFAULTS.brightness;
         state.volume = DEFAULTS.volume;
+        state.widgets = { notes: true, profile: true, ailab: true, work: true, music: true };
         applyAll();
         applyWallpaper('2');
         saveState();
@@ -12244,117 +12653,21 @@
       /* ---------- Init ---------- */
       applyAll();
       applyWallpaper(state.wallpaper);
+
+      window.PersonalOS = window.PersonalOS || {};
+      window.PersonalOS.setTheme = function (mode) {
+        applyTheme(mode);
+        saveState();
+      };
+      window.PersonalOS.getTheme = function () {
+        return body.classList.contains('light-mode') ? 'light' : 'dark';
+      };
     })();
   </script>
 
-  <!-- Chatbot Logic -->
-  <script>
-    (function () {
-      var sidebar = document.getElementById('chatbot-sidebar');
-      var backdrop = document.getElementById('chatbot-backdrop');
-      var openBtn = document.getElementById('open-chatbot');
-      var closeBtn = document.getElementById('chatbot-close');
-      var input = document.getElementById('chatbot-input');
-      var sendBtn = document.getElementById('chatbot-send');
-      var messagesContainer = document.getElementById('chatbot-messages');
-
-      function openChatbot() {
-        sidebar.classList.add('open');
-        backdrop.classList.add('open');
-        input.focus();
-      }
-
-      function closeChatbot() {
-        sidebar.classList.remove('open');
-        backdrop.classList.remove('open');
-      }
-
-      function addMessage(text, isUser) {
-        var messageDiv = document.createElement('div');
-        messageDiv.className = 'chatbot-message' + (isUser ? ' user' : '');
-        
-        var avatar = document.createElement('div');
-        avatar.className = 'chatbot-avatar';
-        avatar.textContent = isUser ? 'You' : 'AI';
-        
-        var content = document.createElement('div');
-        content.className = 'chatbot-content';
-        
-        var bubble = document.createElement('div');
-        bubble.className = 'chatbot-bubble';
-        bubble.textContent = text;
-        
-        content.appendChild(bubble);
-        messageDiv.appendChild(avatar);
-        messageDiv.appendChild(content);
-        messagesContainer.appendChild(messageDiv);
-        
-        // Scroll to bottom
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      }
-
-      function sendMessage() {
-        var text = input.value.trim();
-        if (!text) return;
-        
-        // Add user message
-        addMessage(text, true);
-        input.value = '';
-        input.style.height = 'auto';
-        
-        // Auto-resize textarea
-        input.style.height = input.scrollHeight + 'px';
-        
-        // Simulate AI response (you can replace this with actual API call)
-        setTimeout(function() {
-          var responses = [
-            "That's interesting! Can you tell me more about that?",
-            "I understand. How can I help you further?",
-            "Thanks for sharing. Is there anything specific you'd like to know?",
-            "Got it! Let me know if you need any assistance.",
-            "I see. What would you like to explore next?"
-          ];
-          var randomResponse = responses[Math.floor(Math.random() * responses.length)];
-          addMessage(randomResponse, false);
-        }, 1000);
-      }
-
-      // Event listeners
-      if (openBtn) {
-        openBtn.addEventListener('click', openChatbot);
-      }
-      if (closeBtn) {
-        closeBtn.addEventListener('click', closeChatbot);
-      }
-      if (backdrop) {
-        backdrop.addEventListener('click', closeChatbot);
-      }
-      if (sendBtn) {
-        sendBtn.addEventListener('click', sendMessage);
-      }
-      if (input) {
-        input.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage();
-          }
-        });
-        
-        // Auto-resize textarea
-        input.addEventListener('input', function() {
-          this.style.height = 'auto';
-          this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-        });
-      }
-
-      // Close on Escape key
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-          closeChatbot();
-        }
-      });
-    })();
-  </script>
+  <script src="./ask/knowledge.js"></script>
+  <script src="./ask/plasma.js"></script>
+  <script src="./ask/ask.js"></script>
 
 
   <!-- ========== WORK APP LOGIC ========== -->
@@ -12434,12 +12747,22 @@
         if (from === 'dock') showDockAuth();
         else showFolioAuth();
       }
+      var pendingAskProject = null;
+
+      function flushPendingCaseStudy() {
+        if (!pendingAskProject) return;
+        var id = pendingAskProject;
+        pendingAskProject = null;
+        setTimeout(function () { openCaseStudy(id); }, 280);
+      }
+
       function submitFolioPassword(value, host, input) {
         sha256Hex((value || '').trim().toLowerCase()).then(function (hash) {
           if (hash === FOLIO_HASH) {
             workAuthed = true;
             hideAllAuth();
             openWork();
+            flushPendingCaseStudy();
             return;
           }
           if (host) {
@@ -12893,6 +13216,21 @@
           }
         });
       });
+
+      window.PersonalOS = window.PersonalOS || {};
+      window.PersonalOS.requestPortfolio = function (from) {
+        requestPortfolio(from || 'dock');
+      };
+      window.PersonalOS.openCaseStudy = function (projectId) {
+        pendingAskProject = projectId || null;
+        if (workAuthed || (overlay && overlay.classList.contains('open')) || isMinimized) {
+          openWork();
+          flushPendingCaseStudy();
+          return true;
+        }
+        requestPortfolio('dock');
+        return false;
+      };
 
     })();
   </script>
