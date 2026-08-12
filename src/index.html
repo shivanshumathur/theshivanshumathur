@@ -1680,6 +1680,43 @@
       border-color: var(--glass-stroke-hover);
       box-shadow: var(--glass-shadow-hover);
     }
+    /* Bento dashboard widgets — static on hover (no lift / glow) */
+    .bento > .card:hover,
+    .bento > .liquid-glass:hover,
+    .bento > .card.liquid-glass:hover,
+    .bento > a.cell-ailab.liquid-glass:hover,
+    .bento > .cell-listen:hover,
+    .bento > .cell-profile:hover {
+      transform: none;
+    }
+    .bento > .card:hover,
+    .bento > .cell-profile:hover {
+      border-color: var(--border);
+      box-shadow: 0 1px 2px var(--shadow), 0 0 0 0 transparent;
+    }
+    .bento > .cell-profile:hover {
+      background: #fff;
+      border-color: rgba(0, 0, 0, 0.08);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    }
+    .bento > .liquid-glass:hover,
+    .bento > .card.liquid-glass:hover {
+      background: var(--glass-fill);
+      border-color: var(--glass-stroke);
+      box-shadow: var(--glass-shadow);
+    }
+    .bento > .cell-ailab:hover .bento-tile-visual {
+      animation-play-state: running;
+    }
+    .bento > .cell-ailab:hover .ailab-memoji,
+    .bento > .cell-ailab[data-size="large"]:hover .ailab-memoji {
+      transform: none;
+      filter: drop-shadow(0 8px 12px rgba(15, 23, 42, 0.16));
+    }
+    .bento > .card,
+    .bento > .liquid-glass {
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
     @media (hover: none) {
       .card:hover,
       .cell-listen:hover,
@@ -1739,11 +1776,6 @@
     .cell-profile .profile-stat-label,
     .cell-profile .profile-meta-item {
       color: rgba(0, 0, 0, 0.48);
-    }
-    .cell-profile:hover {
-      background: #fff;
-      border-color: rgba(0, 0, 0, 0.12);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     }
     .cell-profile .logo-rail-item {
       filter: invert(1);
@@ -2001,16 +2033,24 @@
       transition: transform 0.35s ease;
       animation: memoji-glow 8s ease-in-out infinite;
     }
+    .cell-ailab[data-size="small"] .ailab-memoji {
+      height: clamp(64px, calc(var(--tile-size, 128px) * 0.96), 118px);
+      max-width: 88%;
+    }
+    .cell-ailab[data-size="small"] .ailab-layout {
+      gap: 2px;
+      justify-content: center;
+    }
+    .cell-ailab[data-size="small"] .ailab-layout .bento-tile-visual {
+      flex: 1 1 0;
+      min-height: 0;
+      width: 100%;
+    }
+    .cell-ailab[data-size="small"] .ailab-copy {
+      flex: 0 0 auto;
+    }
     .cell-ailab .bento-tile-visual {
       animation: memoji-float 3.2s ease-in-out infinite;
-    }
-    .cell-ailab:hover .bento-tile-visual {
-      animation-play-state: paused;
-    }
-    .cell-ailab:hover .ailab-memoji {
-      animation: none;
-      transform: scale(1.07);
-      filter: drop-shadow(0 12px 16px rgba(15, 23, 42, 0.2));
     }
     .ailab-layout {
       display: flex;
@@ -2027,7 +2067,7 @@
       flex: 1 1 auto;
     }
     .cell-ailab[data-size="small"] .bento-tile-cta {
-      margin-top: 2px;
+      margin-top: 0;
     }
     .ailab-copy {
       display: flex;
@@ -2085,9 +2125,6 @@
       max-height: 112px;
       max-width: none;
       width: auto;
-    }
-    .cell-ailab[data-size="large"]:hover .ailab-memoji {
-      transform: scale(1.07);
     }
     .cell-ailab[data-size="large"] .ailab-copy {
       flex: 1 1 auto;
@@ -2369,6 +2406,9 @@
       .ailab-memoji {
         height: 48px;
       }
+      .cell-ailab[data-size="small"] .ailab-memoji {
+        height: clamp(56px, calc(var(--tile-size, 128px) * 0.85), 100px);
+      }
       .folio-stack {
         transform: scale(0.88);
         transform-origin: center center;
@@ -2464,6 +2504,9 @@
       }
       .ailab-memoji {
         height: 40px;
+      }
+      .cell-ailab[data-size="small"] .ailab-memoji {
+        height: clamp(48px, calc(var(--tile-size, 128px) * 0.8), 92px);
       }
       .profile-stat-label {
         font-size: 8px;
@@ -2741,9 +2784,6 @@
       min-height: var(--tile-size);
       aspect-ratio: 1 / 1;
     }
-    a.cell-ailab.liquid-glass:hover {
-      transform: translateY(-3px) scale(1.005);
-    }
 
     .cell-listen {
       width: 100%;
@@ -2755,10 +2795,6 @@
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
-    }
-
-    .cell-listen:hover {
-      transform: translateY(-3px) scale(1.005);
     }
     
     /* Sticky note style for quote card */
