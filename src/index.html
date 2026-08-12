@@ -856,6 +856,8 @@
     }
     [data-widget][data-size="small"] .widget-detail-md,
     [data-widget][data-size="small"] .widget-detail-lg { display: none !important; }
+    .bento-drag-ghost[data-widget][data-size="small"] .widget-detail-md,
+    .bento-drag-ghost[data-widget][data-size="small"] .widget-detail-lg { display: none !important; }
 
     .bento-tile-label {
       font-size: 12px;
@@ -1221,7 +1223,8 @@
         cursor: pointer;
       }
       .bento > [data-widget].is-dragging {
-        opacity: 0.28 !important;
+        opacity: 0 !important;
+        pointer-events: none;
         cursor: grabbing;
         z-index: 2;
         box-shadow: none !important;
@@ -1255,14 +1258,51 @@
         grid-column: auto !important;
         grid-row: auto !important;
         min-height: 0 !important;
-        max-height: none;
       }
       .bento-drag-ghost.cell-ailab,
       .bento-drag-ghost.cell-work,
       .bento-drag-ghost.cell-listen,
-      .bento-drag-ghost.cell-ailab.liquid-glass,
+      .bento-drag-ghost.cell-ailab.liquid-glass {
+        aspect-ratio: auto !important;
+        height: auto;
+        min-height: 0 !important;
+      }
       .bento-drag-ghost.bento-tile {
         aspect-ratio: auto !important;
+        padding: var(--widget-pad, var(--tile-pad, 16px)) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
+      }
+      .bento-drag-ghost.cell-ailab[data-size="small"] .ailab-layout {
+        gap: 2px;
+        justify-content: center;
+        width: 100%;
+        height: auto !important;
+        max-height: 100% !important;
+        min-height: 0 !important;
+        flex: 1 1 auto !important;
+        overflow: hidden;
+      }
+      .bento-drag-ghost.cell-ailab[data-size="small"] .ailab-layout .bento-tile-visual {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        height: auto !important;
+        max-height: 100% !important;
+      }
+      .bento-drag-ghost.cell-ailab[data-size="small"] .ailab-copy {
+        flex: 0 0 auto;
+      }
+      .bento-drag-ghost.cell-ailab[data-size="small"] .bento-tile-cta {
+        margin-top: 0;
+      }
+      .bento-drag-ghost,
+      .bento-drag-ghost * {
+        animation: none !important;
+        transition: none !important;
       }
       .bento-drag-ghost.notes-panel,
       .bento-drag-ghost.notes-panel .quote-sticky-note {
@@ -1277,11 +1317,14 @@
           0 6px 16px rgba(0, 0, 0, 0.18),
           0 12px 28px rgba(0, 0, 0, 0.1);
       }
+      .bento-drag-ghost .profile-banner canvas {
+        display: none !important;
+      }
       .bento-drag-ghost.is-settling {
         transition:
           left 0.28s cubic-bezier(0.22, 1, 0.36, 1),
           top 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-          transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+          transform 0.28s cubic-bezier(0.22, 1, 0.36, 1) !important;
         transform: scale(1);
       }
       body.is-bento-dragging {
@@ -13832,14 +13875,18 @@
         }
         return layout;
       }
-      function applyLayoutPins(layout) {
+      function applyLayoutPins(layout, opts) {
         state.widgetLayout = layout;
-        BENTO_WIDGET_KEYS.forEach(pinWidgetToLayout);
+        var skipPin = opts && opts.skipPin;
+        BENTO_WIDGET_KEYS.forEach(function (key) {
+          if (skipPin && key === skipPin) return;
+          pinWidgetToLayout(key);
+        });
       }
-      function reflowWithFlip(layout) {
+      function reflowWithFlip(layout, opts) {
         var before = captureBentoRects();
         clearFlipTransforms();
-        applyLayoutPins(layout);
+        applyLayoutPins(layout, opts);
         flipBentoWidgets(before);
       }
       function cleanupBentoDrag() {
@@ -13863,7 +13910,101 @@
         if (bentoDrag.target && bentoDrag.target.col === next.col && bentoDrag.target.row === next.row) return;
         var layout = computeDropLayout(bentoDrag.originLayout, key, next.col, next.row, { live: true });
         bentoDrag.target = next;
-        reflowWithFlip(layout);
+        reflowWithFlip(layout, { skipPin: key });
+      }
+      function copyFrozenStyles(sourceNode, ghostNode, opts) {
+        if (!sourceNode || !ghostNode) return;
+        var skipLayout = opts && opts.skipLayout;
+        var cs = window.getComputedStyle(sourceNode);
+        [
+          'display', 'flexDirection', 'flexWrap', 'alignItems', 'justifyContent', 'alignSelf',
+          'gap', 'width', 'padding', 'margin', 'fontSize', 'lineHeight', 'letterSpacing', 'objectFit', 'filter'
+        ].forEach(function (prop) {
+          var val = cs[prop];
+          if (val) ghostNode.style[prop] = val;
+        });
+        if (!skipLayout) {
+          ['flex', 'minWidth', 'minHeight'].forEach(function (prop) {
+            var val = cs[prop];
+            if (val) ghostNode.style[prop] = val;
+          });
+        }
+      }
+      function buildAilabSmallGhost(source, ghost) {
+        ghost.innerHTML = '';
+        var layout = document.createElement('div');
+        layout.className = 'ailab-layout';
+        var srcVisual = source.querySelector('.bento-tile-visual');
+        var srcCta = source.querySelector('.bento-tile-cta');
+        if (srcVisual) layout.appendChild(srcVisual.cloneNode(true));
+        if (srcCta) {
+          var copy = document.createElement('div');
+          copy.className = 'ailab-copy';
+          copy.appendChild(srcCta.cloneNode(true));
+          layout.appendChild(copy);
+        }
+        ghost.appendChild(layout);
+        var srcMemoji = source.querySelector('.ailab-memoji');
+        var ghostMemoji = ghost.querySelector('.ailab-memoji');
+        if (srcMemoji && ghostMemoji) {
+          var cs = window.getComputedStyle(srcMemoji);
+          ghostMemoji.style.width = cs.width;
+          ghostMemoji.style.height = cs.height;
+          ghostMemoji.style.maxWidth = cs.maxWidth;
+          ghostMemoji.style.objectFit = cs.objectFit;
+        }
+      }
+      function createDragGhost(source, rect) {
+        var ghost = document.createElement('div');
+        ghost.className = source.className;
+        ghost.classList.add('bento-drag-ghost');
+        ghost.classList.remove('is-dragging', 'bento-flipping');
+        ['data-widget', 'data-size', 'data-orient'].forEach(function (attr) {
+          if (source.hasAttribute(attr)) ghost.setAttribute(attr, source.getAttribute(attr));
+        });
+        ghost.setAttribute('aria-hidden', 'true');
+        var widget = source.getAttribute('data-widget');
+        var size = source.getAttribute('data-size') || 'small';
+        if (widget === 'ailab' && size === 'small') {
+          buildAilabSmallGhost(source, ghost);
+        } else {
+          ghost.innerHTML = source.innerHTML;
+        }
+        lockDragGhostRect(ghost, rect);
+        stabilizeDragGhost(ghost, source, rect);
+        return ghost;
+      }
+      function stabilizeDragGhost(ghost, source, rect) {
+        var size = source.getAttribute('data-size') || 'small';
+        var widget = source.getAttribute('data-widget');
+        if (widget) ghost.setAttribute('data-widget', widget);
+        ghost.setAttribute('data-size', size);
+        if (source.hasAttribute('data-orient')) {
+          ghost.setAttribute('data-orient', source.getAttribute('data-orient'));
+        }
+        if (size === 'small' && widget !== 'ailab') {
+          ghost.querySelectorAll('.widget-detail-md, .widget-detail-lg').forEach(function (node) {
+            node.style.setProperty('display', 'none', 'important');
+          });
+        }
+        if (widget !== 'ailab') {
+          [
+            '.bento-tile-visual', '.ailab-memoji', '.bento-tile-cta',
+            '.folio-stack', '.music-player-shell', '.music-banner', '.music-controls',
+            '.quote-sticky-note', '.profile-body', '.profile-banner', '.profile-actions'
+          ].forEach(function (sel) {
+            copyFrozenStyles(source.querySelector(sel), ghost.querySelector(sel), { skipLayout: true });
+          });
+        }
+        var srcBanner = source.querySelector('.profile-banner');
+        var ghostBanner = ghost.querySelector('.profile-banner');
+        if (srcBanner && ghostBanner) {
+          var bg = window.getComputedStyle(srcBanner).backgroundColor;
+          if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+            ghostBanner.style.background = bg;
+          }
+        }
+        lockDragGhostRect(ghost, rect);
       }
       function lockDragGhostRect(ghost, rect) {
         ghost.style.setProperty('width', rect.width + 'px', 'important');
@@ -13920,14 +14061,7 @@
         var bentoEl = document.querySelector('.bento');
         if (bentoEl) bentoEl.classList.add('is-settled');
 
-        var ghost = el.cloneNode(true);
-        ghost.classList.add('bento-drag-ghost');
-        ghost.classList.remove('is-dragging', 'bento-flipping');
-        ghost.removeAttribute('data-widget');
-        ghost.removeAttribute('href');
-        ghost.removeAttribute('data-drag-armed');
-        ghost.setAttribute('aria-hidden', 'true');
-        lockDragGhostRect(ghost, rect);
+        var ghost = createDragGhost(el, rect);
         document.body.appendChild(ghost);
         bentoDrag.ghost = ghost;
 
