@@ -2,17 +2,20 @@ import {
   CartesianGrid,
   Line,
   LineChart,
+  ReferenceArea,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
-import type { MonthlyProjection } from "../../lib/roi-compass/types";
+import { getJCurvePhaseRanges } from "../../lib/roi-compass/jcurve";
+import type { JCurveParams, MonthlyProjection } from "../../lib/roi-compass/types";
 
 interface JCurveChartProps {
   projections: MonthlyProjection[];
   paybackMonth: number | null;
+  jCurve: JCurveParams;
 }
 
 function formatAxisMoney(value: number): string {
@@ -22,18 +25,21 @@ function formatAxisMoney(value: number): string {
   return `$${Math.round(value)}`;
 }
 
-export function JCurveChart({ projections, paybackMonth }: JCurveChartProps) {
+export function JCurveChart({ projections, paybackMonth, jCurve }: JCurveChartProps) {
   if (projections.length === 0) {
     return null;
   }
 
+  const phases = getJCurvePhaseRanges(jCurve);
+  const lastMonth = projections[projections.length - 1]?.month ?? 24;
+
   return (
     <section className="rounded-2xl border border-[var(--color-line)] bg-white/80 p-4 sm:p-6">
-      <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="text-lg font-medium tracking-tight">Cumulative net value</h2>
+          <h2 className="text-lg font-medium tracking-tight">J-curve payback timeline</h2>
           <p className="text-sm text-[var(--color-muted)]">
-            Linear timeline — straight line until the J-curve engine lands in Phase 2.
+            Cumulative net value with adoption dip, recovery ramp, and compounding.
           </p>
         </div>
         {paybackMonth !== null ? (
@@ -47,9 +53,48 @@ export function JCurveChart({ projections, paybackMonth }: JCurveChartProps) {
         )}
       </div>
 
+      <div className="mb-3 flex flex-wrap gap-3 text-xs text-[var(--color-muted)]">
+        <LegendSwatch color="rgba(37, 99, 235, 0.12)" label="Dip" />
+        <LegendSwatch color="rgba(37, 99, 235, 0.22)" label="Ramp" />
+        <LegendSwatch color="rgba(10, 10, 10, 0.06)" label="Compounding" />
+      </div>
+
       <div className="h-72 w-full sm:h-80">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={projections} margin={{ top: 8, right: 12, left: 4, bottom: 0 }}>
+          <LineChart data={projections} margin={{ top: 16, right: 12, left: 4, bottom: 0 }}>
+            {phases.dip ? (
+              <ReferenceArea
+                x1={phases.dip.start}
+                x2={phases.dip.end}
+                fill="rgba(37, 99, 235, 0.12)"
+                strokeOpacity={0}
+                label={{ value: "Dip", position: "insideTopLeft", fill: "#525252", fontSize: 11 }}
+              />
+            ) : null}
+            {phases.ramp ? (
+              <ReferenceArea
+                x1={phases.ramp.start}
+                x2={phases.ramp.end}
+                fill="rgba(37, 99, 235, 0.22)"
+                strokeOpacity={0}
+                label={{ value: "Ramp", position: "insideTopLeft", fill: "#525252", fontSize: 11 }}
+              />
+            ) : null}
+            {phases.compoundStart <= lastMonth ? (
+              <ReferenceArea
+                x1={phases.compoundStart}
+                x2={lastMonth}
+                fill="rgba(10, 10, 10, 0.05)"
+                strokeOpacity={0}
+                label={{
+                  value: "Compounding",
+                  position: "insideTopLeft",
+                  fill: "#525252",
+                  fontSize: 11,
+                }}
+              />
+            ) : null}
+
             <CartesianGrid stroke="rgba(10,10,10,0.08)" strokeDasharray="4 4" />
             <XAxis
               dataKey="month"
@@ -96,7 +141,7 @@ export function JCurveChart({ projections, paybackMonth }: JCurveChartProps) {
               />
             ) : null}
             <Line
-              type="linear"
+              type="monotone"
               dataKey="cumulativeNetValue"
               stroke="#2563eb"
               strokeWidth={2.5}
@@ -108,5 +153,14 @@ export function JCurveChart({ projections, paybackMonth }: JCurveChartProps) {
         </ResponsiveContainer>
       </div>
     </section>
+  );
+}
+
+function LegendSwatch({ color, label }: { color: string; label: string }) {
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      <span className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: color }} />
+      {label}
+    </span>
   );
 }

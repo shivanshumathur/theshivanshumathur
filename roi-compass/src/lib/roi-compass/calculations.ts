@@ -3,7 +3,14 @@ import {
   SECONDS_PER_HOUR,
   TIME_SAVED_HOURS_PER_IMPROVED_TASK,
 } from "./constants";
-import type { CostInputs, MonthlyProjection, ROIResult, UXMetric } from "./types";
+import { applyJCurve } from "./jcurve";
+import type {
+  CostInputs,
+  JCurveParams,
+  MonthlyProjection,
+  ROIResult,
+  UXMetric,
+} from "./types";
 
 /**
  * Convert a single UX metric into an estimated monthly dollar value.
@@ -55,14 +62,43 @@ export function calculateTotalMonthlyValue(metrics: UXMetric[]): number {
 export function runSimpleProjection(costs: CostInputs, metrics: UXMetric[]): ROIResult {
   const monthlyCost = calculateTotalMonthlyCost(costs);
   const monthlyValue = calculateTotalMonthlyValue(metrics);
-  const monthlyNetValue = monthlyValue - monthlyCost;
+  return buildProjectionFromMonthlyValues(
+    Array.from({ length: PROJECTION_WINDOW_MONTHS }, () => monthlyValue),
+    monthlyCost,
+  );
+}
 
+/**
+ * J-curve-adjusted projection: multipliers apply to monthly *value* only.
+ * Cost is paid in full every month from day one.
+ */
+export function runJCurveProjection(
+  costs: CostInputs,
+  metrics: UXMetric[],
+  jCurveParams: JCurveParams,
+): ROIResult {
+  const monthlyCost = calculateTotalMonthlyCost(costs);
+  const monthlyValue = calculateTotalMonthlyValue(metrics);
+  const rawValues = Array.from({ length: PROJECTION_WINDOW_MONTHS }, () => monthlyValue);
+  const adjustedValues = applyJCurve(rawValues, jCurveParams);
+  return buildProjectionFromMonthlyValues(adjustedValues, monthlyCost);
+}
+
+function buildProjectionFromMonthlyValues(
+  monthlyValues: number[],
+  monthlyCost: number,
+): ROIResult {
   const monthlyProjections: MonthlyProjection[] = [];
   let cumulativeNetValue = 0;
   let paybackMonth: number | null = null;
+  let totalValueOverWindow = 0;
 
-  for (let month = 1; month <= PROJECTION_WINDOW_MONTHS; month += 1) {
+  monthlyValues.forEach((monthlyValue, index) => {
+    const month = index + 1;
+    const monthlyNetValue = monthlyValue - monthlyCost;
     cumulativeNetValue += monthlyNetValue;
+    totalValueOverWindow += monthlyValue;
+
     monthlyProjections.push({
       month,
       monthlyNetValue,
@@ -72,12 +108,12 @@ export function runSimpleProjection(costs: CostInputs, metrics: UXMetric[]): ROI
     if (paybackMonth === null && cumulativeNetValue >= 0) {
       paybackMonth = month;
     }
-  }
+  });
 
   return {
     paybackMonth,
-    totalCostOverWindow: monthlyCost * PROJECTION_WINDOW_MONTHS,
-    totalValueOverWindow: monthlyValue * PROJECTION_WINDOW_MONTHS,
+    totalCostOverWindow: monthlyCost * monthlyValues.length,
+    totalValueOverWindow,
     monthlyProjections,
   };
 }

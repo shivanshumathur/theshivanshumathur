@@ -1,31 +1,41 @@
 import { useMemo, useState } from "react";
 import { CostInputForm } from "./components/roi-compass/CostInputForm";
 import { JCurveChart } from "./components/roi-compass/JCurveChart";
+import { JCurveControls } from "./components/roi-compass/JCurveControls";
 import { MetricInputForm } from "./components/roi-compass/MetricInputForm";
 import { MetricPresetPicker } from "./components/roi-compass/MetricPresetPicker";
 import { ResultsSummary } from "./components/roi-compass/ResultsSummary";
 import {
   calculateTotalMonthlyCost,
   calculateTotalMonthlyValue,
+  runJCurveProjection,
   runSimpleProjection,
 } from "./lib/roi-compass/calculations";
 import {
   DEFAULT_COST_INPUTS,
+  DEFAULT_JCURVE,
   PRODUCT_NAME,
   PRODUCT_TAGLINE,
 } from "./lib/roi-compass/constants";
 import { METRIC_PRESETS } from "./lib/roi-compass/presets/metrics";
-import type { CostInputs, UXMetric } from "./lib/roi-compass/types";
+import type { CostInputs, JCurveParams, UXMetric } from "./lib/roi-compass/types";
 
 export default function App() {
   const [costs, setCosts] = useState<CostInputs>({ ...DEFAULT_COST_INPUTS });
   const [metrics, setMetrics] = useState<UXMetric[]>(() => [
-    METRIC_PRESETS[0]!.create(),
+    // Time-on-task presets show a visible adoption dip with default seat costs
+    METRIC_PRESETS[1]!.create(),
   ]);
+  const [jCurve, setJCurve] = useState<JCurveParams>({ ...DEFAULT_JCURVE });
 
   const result = useMemo(() => {
     if (metrics.length === 0) return null;
-    return runSimpleProjection(costs, metrics);
+    return runJCurveProjection(costs, metrics, jCurve);
+  }, [costs, metrics, jCurve]);
+
+  const linearPaybackMonth = useMemo(() => {
+    if (metrics.length === 0) return null;
+    return runSimpleProjection(costs, metrics).paybackMonth;
   }, [costs, metrics]);
 
   const monthlyCost = calculateTotalMonthlyCost(costs);
@@ -36,7 +46,7 @@ export default function App() {
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
         <header className="flex flex-col gap-3 border-b border-[var(--color-line)] pb-6">
           <p className="font-[family-name:var(--font-mono)] text-xs tracking-[0.14em] text-[var(--color-muted)] uppercase">
-            AI Lab · Simple mode
+            AI Lab · Simple mode · J-curve
           </p>
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{PRODUCT_NAME}</h1>
           <p className="max-w-2xl text-base leading-relaxed text-[var(--color-muted)] sm:text-lg">
@@ -47,6 +57,7 @@ export default function App() {
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
           <div className="flex flex-col gap-8 rounded-2xl border border-[var(--color-line)] bg-white/70 p-5 backdrop-blur-sm sm:p-7">
             <CostInputForm value={costs} onChange={setCosts} />
+            <JCurveControls value={jCurve} onChange={setJCurve} />
             <MetricPresetPicker
               metrics={metrics}
               onAdd={(metric) => setMetrics((current) => [...current, metric])}
@@ -60,11 +71,14 @@ export default function App() {
               hasMetrics={metrics.length > 0}
               monthlyCost={monthlyCost}
               monthlyValue={monthlyValue}
+              jCurve={jCurve}
+              linearPaybackMonth={linearPaybackMonth}
             />
             {result ? (
               <JCurveChart
                 projections={result.monthlyProjections}
                 paybackMonth={result.paybackMonth}
+                jCurve={jCurve}
               />
             ) : null}
           </div>

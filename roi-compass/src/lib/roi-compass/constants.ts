@@ -25,3 +25,14 @@ export const DEFAULT_COST_INPUTS = {
   seatCount: 25,
   costPerSeatPerMonth: 40,
 } as const;
+
+/**
+ * Default J-curve adoption shape.
+ * Dip reduces realized value (not cost); ramp recovers to 1.0; then compounding uplift.
+ */
+export const DEFAULT_JCURVE = {
+  dipDurationMonths: 2,
+  dipSeverity: 0.4, // during the dip, value is reduced by 40%
+  rampDurationMonths: 3,
+  steadyStateMultiplier: 1.1, // 10% compounding uplift once fully ramped
+} as const;

@@ -1,11 +1,13 @@
 import { PROJECTION_WINDOW_MONTHS } from "../../lib/roi-compass/constants";
-import type { ROIResult } from "../../lib/roi-compass/types";
+import type { JCurveParams, ROIResult } from "../../lib/roi-compass/types";
 
 interface ResultsSummaryProps {
   result: ROIResult | null;
   hasMetrics: boolean;
   monthlyCost: number;
   monthlyValue: number;
+  jCurve: JCurveParams;
+  linearPaybackMonth: number | null;
 }
 
 function formatMoney(value: number): string {
@@ -21,6 +23,8 @@ export function ResultsSummary({
   hasMetrics,
   monthlyCost,
   monthlyValue,
+  jCurve,
+  linearPaybackMonth,
 }: ResultsSummaryProps) {
   if (!hasMetrics || !result) {
     return (
@@ -40,26 +44,43 @@ export function ResultsSummary({
         ? "Pays back in month 1"
         : `Pays back in month ${result.paybackMonth}`;
 
+  const dipLabel =
+    jCurve.dipDurationMonths === 1
+      ? "1-month adoption dip"
+      : `${jCurve.dipDurationMonths}-month adoption dip`;
+
+  const delayedVsLinear =
+    linearPaybackMonth !== null &&
+    result.paybackMonth !== null &&
+    result.paybackMonth > linearPaybackMonth;
+
   return (
     <section className="rounded-2xl border border-[var(--color-line)] bg-white/80 p-6 sm:p-7">
       <p className="font-[family-name:var(--font-mono)] text-xs tracking-[0.14em] text-[var(--color-muted)] uppercase">
-        Simple mode · linear projection
+        Simple mode · J-curve projection
       </p>
       <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{headline}</h2>
       <p className="mt-2 max-w-xl text-sm leading-relaxed text-[var(--color-muted)]">
-        Assumes value accrues evenly from month one — no adoption dip yet. Phase 2 adds the J-curve.
+        Includes a {dipLabel}
+        {jCurve.dipSeverity > 0
+          ? ` (${Math.round(jCurve.dipSeverity * 100)}% value reduction while teams learn and verify)`
+          : ""}
+        .
+        {delayedVsLinear
+          ? ` A naive linear model would have said month ${linearPaybackMonth}.`
+          : ""}
       </p>
 
       <dl className="mt-6 grid gap-4 sm:grid-cols-2">
         <div>
           <dt className="text-xs uppercase tracking-wide text-[var(--color-muted)]">
-            Monthly cost
+            Monthly cost (full)
           </dt>
           <dd className="mt-1 text-xl font-medium">{formatMoney(monthlyCost)}</dd>
         </div>
         <div>
           <dt className="text-xs uppercase tracking-wide text-[var(--color-muted)]">
-            Monthly value
+            Steady-state monthly value
           </dt>
           <dd className="mt-1 text-xl font-medium">{formatMoney(monthlyValue)}</dd>
         </div>
@@ -71,7 +92,7 @@ export function ResultsSummary({
         </div>
         <div>
           <dt className="text-xs uppercase tracking-wide text-[var(--color-muted)]">
-            Total value ({PROJECTION_WINDOW_MONTHS} mo)
+            Total value ({PROJECTION_WINDOW_MONTHS} mo, curve-adjusted)
           </dt>
           <dd className="mt-1 text-xl font-medium">{formatMoney(result.totalValueOverWindow)}</dd>
         </div>
