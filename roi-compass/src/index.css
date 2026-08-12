@@ -25,3 +25,34 @@ body {
     radial-gradient(900px 500px at 90% 0%, rgba(10, 10, 10, 0.06), transparent 50%),
     linear-gradient(180deg, #fafafa 0%, #f0f0f2 100%);
 }
+
+@media print {
+  @page {
+    size: letter;
+    margin: 0.6in;
+  }
+
+  body {
+    background: #fff !important;
+    color: #0a0a0a;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .share-export {
+    max-width: none !important;
+    gap: 1.25rem !important;
+  }
+
+  .share-export section,
+  .share-export article {
+    break-inside: avoid;
+  }
+
+  /* Keep Recharts SVG readable on paper / PDF */
+  .recharts-responsive-container {
+    min-height: 260px !important;
+  }
+}

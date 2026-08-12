@@ -2,7 +2,7 @@
 
 **A payback-timeline calculator for AI tool spend — built on the J-curve, not a spreadsheet fantasy.**
 
-> Status: 🚧 In Progress · [Live demo →](/ai-lab/roi-compass/) · [Case study →](#) · [Build spec →](./SKILL.md)
+> Status: ✅ v1 complete · [Live demo →](/ai-lab/roi-compass/) · [Case study →](#) · [Build spec →](./SKILL.md)
 
 ---
 
@@ -90,7 +90,7 @@ Advanced mode runs this three times (best/likely/worst assumption sets) and repo
 - [x] **v2 — J-Curve Engine:** dip/recovery/compounding phases, configurable curve shape
 - [x] **v3 — Advanced Mode:** best/likely/worst scenario bands, confidence intervals, custom metric input
 - [x] **v4 — Hidden Cost Layer:** token/usage estimator, verification-time capture, infra cost presets by tool category
-- [ ] **v5 — Shareable Reports:** exportable summary (PDF/link) for stakeholder/CFO conversations
+- [x] **v5 — Shareable Reports:** exportable summary (PDF/link) for stakeholder/CFO conversations
 
 Build phases map 1:1 to the [SKILL.md](./SKILL.md) Phase 0–5 checklist. Do not build ahead of the current phase.
 

@@ -30,7 +30,9 @@ const SCENARIO_ORDER: ScenarioType[] = ["best", "likely", "worst"];
 interface ScenarioComparisonProps {
   result: AdvancedROIResult;
   scenarios: Record<ScenarioType, ScenarioAssumptions>;
-  onChangeScenario: (type: ScenarioType, next: ScenarioAssumptions) => void;
+  onChangeScenario?: (type: ScenarioType, next: ScenarioAssumptions) => void;
+  /** When true, hide editable assumption controls (export / print view). */
+  readOnly?: boolean;
 }
 
 function formatAxisMoney(value: number): string {
@@ -49,6 +51,7 @@ export function ScenarioComparison({
   result,
   scenarios,
   onChangeScenario,
+  readOnly = false,
 }: ScenarioComparisonProps) {
   const chartData = Array.from({ length: PROJECTION_WINDOW_MONTHS }, (_, index) => {
     const month = index + 1;
@@ -155,24 +158,26 @@ export function ScenarioComparison({
         </table>
       </section>
 
-      <section className="flex flex-col gap-4">
-        <div>
-          <h2 className="text-lg font-medium tracking-tight">Scenario assumptions</h2>
-          <p className="mt-1 text-sm text-[var(--color-muted)]">
-            Edit one band at a time — the other two stay as-is.
-          </p>
-        </div>
-        <div className="grid gap-4 lg:grid-cols-3">
-          {SCENARIO_ORDER.map((type) => (
-            <ScenarioEditor
-              key={type}
-              type={type}
-              value={scenarios[type]}
-              onChange={(next) => onChangeScenario(type, next)}
-            />
-          ))}
-        </div>
-      </section>
+      {!readOnly && onChangeScenario ? (
+        <section className="flex flex-col gap-4">
+          <div>
+            <h2 className="text-lg font-medium tracking-tight">Scenario assumptions</h2>
+            <p className="mt-1 text-sm text-[var(--color-muted)]">
+              Edit one band at a time — the other two stay as-is.
+            </p>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-3">
+            {SCENARIO_ORDER.map((type) => (
+              <ScenarioEditor
+                key={type}
+                type={type}
+                value={scenarios[type]}
+                onChange={(next) => onChangeScenario(type, next)}
+              />
+            ))}
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }
