@@ -1358,14 +1358,21 @@
         animation: none !important;
         transition: none !important;
       }
-      .bento-drag-ghost.notes-panel,
-      .bento-drag-ghost.notes-panel .quote-sticky-note {
+      .bento-drag-ghost.notes-panel {
         border-radius: 2px;
         overflow: visible;
         background: transparent;
         box-shadow: none;
+        box-sizing: border-box;
+        padding: var(--widget-pad, var(--tile-pad, 16px)) !important;
       }
       .bento-drag-ghost.notes-panel .quote-sticky-note {
+        border-radius: 2px;
+        overflow: hidden;
+        background: #ffeb3b;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
         box-shadow:
           0 1px 1px rgba(0, 0, 0, 0.06),
           0 6px 16px rgba(0, 0, 0, 0.18),
@@ -14123,6 +14130,16 @@
           var bg = window.getComputedStyle(srcBanner).backgroundColor;
           if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
             ghostBanner.style.background = bg;
+          }
+        }
+        if (widget === 'notes') {
+          var srcNote = source.querySelector('.quote-sticky-note');
+          var ghostNote = ghost.querySelector('.quote-sticky-note');
+          if (srcNote && ghostNote) {
+            var noteBg = window.getComputedStyle(srcNote).backgroundColor;
+            if (noteBg && noteBg !== 'rgba(0, 0, 0, 0)' && noteBg !== 'transparent') {
+              ghostNote.style.setProperty('background', noteBg, 'important');
+            }
           }
         }
         lockDragGhostRect(ghost, rect);
