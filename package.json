@@ -1,1 +1,14 @@
-{"name":"theshivanshumathur","private":true,"type":"module","scripts":{"dev":"node server.js"},"dependencies":{"express":"^4.21.2"}}
+{
+  "name": "theshivanshumathur",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "roi:dev": "npm --prefix roi-compass run dev",
+    "roi:build": "npm --prefix roi-compass run build",
+    "roi:test": "npm --prefix roi-compass run test"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

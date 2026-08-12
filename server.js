@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 5173;
 const root = path.join(__dirname, "src");
+const roiCompassRoot = path.join(root, "ai-lab", "roi-compass");
 
 const app = express();
 app.use(express.json({ limit: '8kb' }));
@@ -45,9 +46,13 @@ app.post("/api/speak", async (req, res) => {
   }
 });
 
-// Required for AI Lab WebGL workers / SharedArrayBuffer
+function isRoiCompassPath(pathname) {
+  return pathname === "/ai-lab/roi-compass" || pathname.startsWith("/ai-lab/roi-compass/");
+}
+
+// Required for AI Lab WebGL workers / SharedArrayBuffer — not for ROI Compass
 app.use((req, res, next) => {
-  if (req.path.startsWith("/ai-lab")) {
+  if (req.path.startsWith("/ai-lab") && !isRoiCompassPath(req.path)) {
     res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
     res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
     // Allow homepage (and other same-site pages) to fetch AI Lab assets
@@ -56,9 +61,23 @@ app.use((req, res, next) => {
   next();
 });
 
+// ROI Compass Vite build (must be before AI Lab SPA fallback)
+app.use(
+  "/ai-lab/roi-compass",
+  express.static(roiCompassRoot, { index: "index.html", fallthrough: true }),
+);
+
+app.get(/^\/ai-lab\/roi-compass(\/.*)?$/, (req, res, next) => {
+  if (path.extname(req.path)) return next();
+  res.sendFile(path.join(roiCompassRoot, "index.html"), (err) => {
+    if (err) next();
+  });
+});
+
 app.use(express.static(root, { index: "index.html", extensions: ["html"] }));
 
 app.get(/^\/ai-lab(\/.*)?$/, (req, res, next) => {
+  if (isRoiCompassPath(req.path)) return next();
   if (path.extname(req.path)) return next();
   res.sendFile(path.join(root, "ai-lab", "index.html"));
 });
@@ -69,6 +88,7 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Dashboard: http://localhost:${PORT}/`);
-  console.log(`AI Lab:    http://localhost:${PORT}/ai-lab/`);
+  console.log(`Dashboard:    http://localhost:${PORT}/`);
+  console.log(`AI Lab:       http://localhost:${PORT}/ai-lab/`);
+  console.log(`ROI Compass:  http://localhost:${PORT}/ai-lab/roi-compass/`);
 });

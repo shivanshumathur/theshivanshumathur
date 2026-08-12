@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+:root {
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Share Tech Mono", ui-monospace, monospace;
+  --color-ink: #0a0a0a;
+  --color-muted: #525252;
+  --color-surface: #f4f4f5;
+  --color-accent: #2563eb;
+  --color-line: rgba(10, 10, 10, 0.12);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(37, 99, 235, 0.12), transparent 55%),
+    radial-gradient(900px 500px at 90% 0%, rgba(10, 10, 10, 0.06), transparent 50%),
+    linear-gradient(180deg, #fafafa 0%, #f0f0f2 100%);
+}
