@@ -1038,9 +1038,10 @@
         grid-column: span 2;
         grid-row: span 2;
         width: 100%;
-        height: 100%;
+        height: auto;
         min-height: 0;
         aspect-ratio: auto;
+        align-self: start;
       }
 
       .cell-ailab[data-size="large"],
@@ -12940,6 +12941,15 @@
 
       /* ---------- Defaults ---------- */
       var DEFAULT_WIDGET_SIZES = { notes: 'small', profile: 'large', ailab: 'small', work: 'small', music: 'small' };
+      var WIDGET_LARGE_DISABLED = { ailab: true, work: true, music: true, notes: true };
+      function widgetAllowsLarge(key) {
+        return !WIDGET_LARGE_DISABLED[key];
+      }
+      function normalizeWidgetSize(key, size) {
+        if (size === 'large' && !widgetAllowsLarge(key)) return 'small';
+        if (size !== 'small' && size !== 'large') return DEFAULT_WIDGET_SIZES[key] || 'small';
+        return size;
+      }
       var DEFAULT_WIDGET_LAYOUT = {
         profile: { col: 1, row: 1 },
         ailab: { col: 7, row: 1 },
@@ -13003,6 +13013,7 @@
           if (state.widgetSizes[key] !== 'small' && state.widgetSizes[key] !== 'large') {
             state.widgetSizes[key] = DEFAULT_WIDGET_SIZES[key];
           }
+          state.widgetSizes[key] = normalizeWidgetSize(key, state.widgetSizes[key]);
         });
       }
       function ensureWidgetLayout() {
@@ -13044,6 +13055,12 @@
         state.widgetLayout = JSON.parse(JSON.stringify(DEFAULT_WIDGET_LAYOUT));
         state.widgetSizes = JSON.parse(JSON.stringify(DEFAULT_WIDGET_SIZES));
         state.widgetLayoutV9 = true;
+        notesNeedsDefaultSlot = false;
+        try { saveState(); } catch (e) { /* ignore */ }
+      }
+      if (!state.widgetLayoutV11) {
+        state.widgetLayout = JSON.parse(JSON.stringify(DEFAULT_WIDGET_LAYOUT));
+        state.widgetLayoutV11 = true;
         notesNeedsDefaultSlot = false;
         try { saveState(); } catch (e) { /* ignore */ }
       }
@@ -13359,6 +13376,14 @@
         return cells;
       }
       function widgetsOverlap(a, b, layout) {
+        if ((a === 'profile' && b === 'music') || (a === 'music' && b === 'profile')) {
+          var layoutRef = layout || state.widgetLayout;
+          var profilePos = layoutRef.profile;
+          var musicPos = layoutRef.music;
+          if (profilePos && musicPos && musicPos.col === profilePos.col && musicPos.row >= profilePos.row) {
+            return false;
+          }
+        }
         var aCells = occupiedCellsFor(a, layout);
         var bSet = {};
         occupiedCellsFor(b, layout).forEach(function (cell) { bSet[cell] = true; });
@@ -13418,10 +13443,35 @@
         el.style.removeProperty('max-height');
         var h = el.getBoundingClientRect().height;
         var step = m.tileH + m.gap;
-        var rowSpan = Math.max(2, Math.ceil((h + m.gap * 0.25) / step));
+        var bottom = el.getBoundingClientRect().bottom - m.top;
+        var endRow = Math.max(pos.row, Math.floor((bottom - 1) / step) + 1);
+        var rowSpan = Math.max(1, endRow - pos.row + 1);
         profileAutoRowSpan = rowSpan;
         el.style.setProperty('grid-row', pos.row + ' / span ' + rowSpan, 'important');
         return rowSpan;
+      }
+      function placeMusicBelowProfile() {
+        if (!isDesktopBento() || !widgetIsVisible('music') || !widgetIsVisible('profile')) return;
+        var profileEl = widgetEl('profile');
+        var musicEl = widgetEl('music');
+        var m = getBentoMetrics();
+        if (!profileEl || !musicEl || !m) return;
+        ensureWidgetLayout();
+        var profilePos = state.widgetLayout.profile || DEFAULT_WIDGET_LAYOUT.profile;
+        var musicPos = state.widgetLayout.music;
+        if (!musicPos || musicPos.col !== profilePos.col) {
+          musicEl.style.removeProperty('margin-top');
+          musicEl.style.removeProperty('align-self');
+          return;
+        }
+        var profileBottom = profileEl.getBoundingClientRect().bottom - m.top;
+        var step = m.tileH + m.gap;
+        var musicRow = Math.max(profilePos.row, Math.floor(profileBottom / step) + 1);
+        state.widgetLayout.music = { col: profilePos.col, row: musicRow };
+        var musicRowTop = (musicRow - 1) * step;
+        var offset = Math.max(0, Math.round(profileBottom + m.gap - musicRowTop));
+        musicEl.style.setProperty('margin-top', offset + 'px', 'important');
+        musicEl.style.setProperty('align-self', 'start', 'important');
       }
       function pinWidgetToLayout(key) {
         var el = widgetEl(key);
@@ -13487,6 +13537,7 @@
       function applyWidgetSizeInPlace(key, size) {
         var el = widgetEl(key);
         if (!el) return;
+        size = normalizeWidgetSize(key, size);
         state.widgetSizes[key] = size;
         if (!isDesktopBento()) {
           el.setAttribute('data-size', size);
@@ -13528,9 +13579,11 @@
           if (focusKey) resolveLayoutOverlaps(focusKey);
           BENTO_WIDGET_KEYS.forEach(pinWidgetToLayout);
           syncProfileAutoSpan();
+          placeMusicBelowProfile();
           resolveLayoutOverlaps('profile');
           BENTO_WIDGET_KEYS.forEach(pinWidgetToLayout);
           syncProfileAutoSpan();
+          placeMusicBelowProfile();
         }
         if (window.__vantaInstance) {
           requestAnimationFrame(function () {
@@ -13950,9 +14003,11 @@
         syncBentoBoard();
         profileAutoRowSpan = null;
         syncProfileAutoSpan();
+        placeMusicBelowProfile();
         resolveLayoutOverlaps('profile');
         BENTO_WIDGET_KEYS.forEach(pinWidgetToLayout);
         syncProfileAutoSpan();
+        placeMusicBelowProfile();
       });
       if ('ResizeObserver' in window) {
         var stageEl = document.querySelector('.bento-wrap') || document.querySelector('.bento');
@@ -13960,9 +14015,11 @@
           syncBentoBoard();
           profileAutoRowSpan = null;
           syncProfileAutoSpan();
+          placeMusicBelowProfile();
           resolveLayoutOverlaps('profile');
           BENTO_WIDGET_KEYS.forEach(pinWidgetToLayout);
           syncProfileAutoSpan();
+          placeMusicBelowProfile();
         }).observe(stageEl);
       }
 
@@ -14153,7 +14210,12 @@
         widgetGallery.querySelectorAll('.wg-card[data-add-widget]').forEach(function (card) {
           var key = card.getAttribute('data-add-widget');
           var size = card.getAttribute('data-add-size');
-          var on = state.widgets[key] !== false && String(state.widgetSizes[key] || DEFAULT_WIDGET_SIZES[key]) === size;
+          if (size === 'large' && !widgetAllowsLarge(key)) {
+            card.hidden = true;
+            return;
+          }
+          card.hidden = false;
+          var on = state.widgets[key] !== false && normalizeWidgetSize(key, state.widgetSizes[key] || DEFAULT_WIDGET_SIZES[key]) === size;
           card.classList.toggle('is-added', on);
         });
       }
@@ -14241,7 +14303,13 @@
       }
       function syncWidgetMenuState() {
         if (!widgetMenu || !activeWidgetKey) return;
-        var size = state.widgetSizes[activeWidgetKey] || DEFAULT_WIDGET_SIZES[activeWidgetKey];
+        var size = normalizeWidgetSize(activeWidgetKey, state.widgetSizes[activeWidgetKey] || DEFAULT_WIDGET_SIZES[activeWidgetKey]);
+        var allowLarge = widgetAllowsLarge(activeWidgetKey);
+        var largeBtn = widgetMenu.querySelector('[data-widget-size="large"]');
+        if (largeBtn) {
+          largeBtn.hidden = !allowLarge;
+          largeBtn.disabled = !allowLarge;
+        }
         widgetMenu.querySelectorAll('[data-widget-size]').forEach(function (btn) {
           var on = btn.getAttribute('data-widget-size') === size;
           btn.classList.toggle('is-checked', on);
@@ -14517,6 +14585,7 @@
           var size = item.getAttribute('data-widget-size');
           var action = item.getAttribute('data-action');
           if (size) {
+            size = normalizeWidgetSize(activeWidgetKey, size);
             state.widgetSizes[activeWidgetKey] = size;
             applyWidgetSizes({ focusKey: activeWidgetKey });
             saveState();
@@ -14560,8 +14629,8 @@
           var card = e.target.closest('.wg-card[data-add-widget]');
           if (!card || !widgetGallery.contains(card)) return;
           var key = card.getAttribute('data-add-widget');
-          var size = card.getAttribute('data-add-size') || 'small';
-          var currentSize = state.widgetSizes[key] || DEFAULT_WIDGET_SIZES[key];
+          var size = normalizeWidgetSize(key, card.getAttribute('data-add-size') || 'small');
+          var currentSize = normalizeWidgetSize(key, state.widgetSizes[key] || DEFAULT_WIDGET_SIZES[key]);
           var isSame = state.widgets[key] !== false && currentSize === size;
           if (isSame) {
             state.widgets[key] = false;
@@ -14905,6 +14974,7 @@
         state.widgetSpanV7 = true;
         state.widgetLayoutV8 = true;
         state.widgetLayoutV9 = true;
+        state.widgetLayoutV11 = true;
         applyAll();
         applyWallpaper('2');
         saveState();
