@@ -1267,6 +1267,14 @@
         height: auto;
         min-height: 0 !important;
       }
+      .bento-drag-ghost.cell-listen {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        box-sizing: border-box !important;
+        padding: var(--widget-pad, var(--tile-pad, 16px)) !important;
+        overflow: hidden !important;
+      }
       .bento-drag-ghost.bento-tile {
         aspect-ratio: auto !important;
         padding: var(--widget-pad, var(--tile-pad, 16px)) !important;
@@ -1315,17 +1323,28 @@
       .bento-drag-ghost.cell-listen[data-size="small"] .music-player-shell {
         gap: 10px;
         justify-content: space-between;
-        height: auto !important;
+        width: 100% !important;
+        height: 100% !important;
         max-height: 100% !important;
         min-height: 0 !important;
         flex: 1 1 auto !important;
         overflow: hidden;
+        box-sizing: border-box;
       }
       .bento-drag-ghost.cell-listen[data-size="small"] .music-banner {
         flex: 1 1 auto !important;
+        align-self: stretch !important;
+        width: 100% !important;
         min-height: 0 !important;
-        height: auto !important;
         max-height: 100% !important;
+        box-sizing: border-box;
+      }
+      .bento-drag-ghost.cell-listen[data-size="small"] .music-banner img {
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center center !important;
       }
       .bento-drag-ghost.cell-listen[data-size="small"] .music-controls {
         flex: 0 0 auto;
@@ -13984,12 +14003,24 @@
           shell.appendChild(controls);
         }
         ghost.appendChild(shell);
+        copyFrozenStyles(source.querySelector('.music-player-shell'), shell);
+        shell.style.setProperty('width', '100%', 'important');
+        shell.style.setProperty('height', '100%', 'important');
         var srcBannerEl = source.querySelector('.music-banner');
         var ghostBanner = ghost.querySelector('.music-banner');
         if (srcBannerEl && ghostBanner) {
-          var cs = window.getComputedStyle(srcBannerEl);
-          ghostBanner.style.width = cs.width;
-          ghostBanner.style.height = cs.height;
+          copyFrozenStyles(srcBannerEl, ghostBanner, { skipLayout: true });
+          ghostBanner.style.setProperty('width', '100%', 'important');
+          ghostBanner.style.setProperty('align-self', 'stretch', 'important');
+          ghostBanner.style.removeProperty('height');
+        }
+        var srcImg = source.querySelector('.music-banner img');
+        var ghostImg = ghost.querySelector('.music-banner img');
+        if (srcImg && ghostImg) {
+          ghostImg.style.setProperty('width', '100%', 'important');
+          ghostImg.style.setProperty('height', '100%', 'important');
+          ghostImg.style.setProperty('object-fit', 'cover', 'important');
+          ghostImg.style.setProperty('object-position', 'center center', 'important');
         }
       }
       function buildWorkSmallGhost(source, ghost) {
