@@ -6,6 +6,8 @@ export interface CostInputs {
   hiddenInfraCostPerMonth?: number; // vector DB, orchestration, observability — Phase 4
   verificationHoursPerWeekPerSeat?: number; // human review time — Phase 4
   fullyLoadedHourlyRate?: number; // used to convert verification hours to $ — Phase 4
+  /** Training, migration, integration, change management — recouped before payback. */
+  oneTimeImplementationCost?: number;
 }
 
 // --- Value side ---

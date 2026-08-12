@@ -15,6 +15,7 @@ interface ResultsSummaryProps {
   monthlyValue: number;
   jCurve: JCurveParams;
   linearPaybackMonth: number | null;
+  oneTimeImplementationCost?: number;
 }
 
 function formatMoney(value: number): string {
@@ -39,6 +40,7 @@ export function ResultsSummary({
   monthlyValue,
   jCurve,
   linearPaybackMonth,
+  oneTimeImplementationCost = 0,
 }: ResultsSummaryProps) {
   if (!hasMetrics) {
     return (
@@ -57,6 +59,8 @@ export function ResultsSummary({
         advancedResult={advancedResult}
         monthlyCost={monthlyCost}
         monthlyValue={monthlyValue}
+        oneTimeImplementationCost={oneTimeImplementationCost}
+        jCurve={jCurve}
       />
     );
   }
@@ -77,6 +81,18 @@ export function ResultsSummary({
       ? "1-month adoption dip"
       : `${jCurve.dipDurationMonths}-month adoption dip`;
 
+  const explanationParts: string[] = [];
+  if (oneTimeImplementationCost > 0) {
+    explanationParts.push(`${formatMoney(oneTimeImplementationCost)} upfront implementation cost`);
+  }
+  if (jCurve.dipDurationMonths > 0 && jCurve.dipSeverity > 0) {
+    explanationParts.push(
+      `a ${dipLabel} (${Math.round(jCurve.dipSeverity * 100)}% value reduction while teams learn and verify)`,
+    );
+  } else if (jCurve.dipDurationMonths > 0) {
+    explanationParts.push(`a ${dipLabel}`);
+  }
+
   const delayedVsLinear =
     linearPaybackMonth !== null &&
     result.paybackMonth !== null &&
@@ -89,11 +105,9 @@ export function ResultsSummary({
       </p>
       <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{headline}</h2>
       <p className="mt-2 max-w-xl text-sm leading-relaxed text-[var(--color-muted)]">
-        Includes a {dipLabel}
-        {jCurve.dipSeverity > 0
-          ? ` (${Math.round(jCurve.dipSeverity * 100)}% value reduction while teams learn and verify)`
-          : ""}
-        .
+        {explanationParts.length > 0
+          ? `Includes ${explanationParts.join(" and ")}.`
+          : "Cumulative net starts at zero with no upfront investment."}
         {delayedVsLinear
           ? ` A naive linear model would have said month ${linearPaybackMonth}.`
           : ""}
@@ -112,6 +126,14 @@ export function ResultsSummary({
           </dt>
           <dd className="mt-1 text-xl font-medium">{formatMoney(monthlyValue)}</dd>
         </div>
+        {oneTimeImplementationCost > 0 ? (
+          <div>
+            <dt className="text-xs uppercase tracking-wide text-[var(--color-muted)]">
+              Upfront implementation
+            </dt>
+            <dd className="mt-1 text-xl font-medium">{formatMoney(oneTimeImplementationCost)}</dd>
+          </div>
+        ) : null}
         <div>
           <dt className="text-xs uppercase tracking-wide text-[var(--color-muted)]">
             Total cost ({PROJECTION_WINDOW_MONTHS} mo)
@@ -133,10 +155,14 @@ function AdvancedSummary({
   advancedResult,
   monthlyCost,
   monthlyValue,
+  oneTimeImplementationCost,
+  jCurve,
 }: {
   advancedResult: AdvancedROIResult;
   monthlyCost: number;
   monthlyValue: number;
+  oneTimeImplementationCost: number;
+  jCurve: JCurveParams;
 }) {
   const { best, likely, worst } = advancedResult;
   const ranks = [best.paybackMonth, likely.paybackMonth, worst.paybackMonth];
@@ -158,6 +184,11 @@ function AdvancedSummary({
         : `Payback: ${low}–${high} months, most likely month ${likelyLabel}`;
   }
 
+  const dipLabel =
+    jCurve.dipDurationMonths === 1
+      ? "1-month adoption dip"
+      : `${jCurve.dipDurationMonths}-month adoption dip`;
+
   return (
     <section className="rounded-2xl border border-[var(--color-line)] bg-white/80 p-6 sm:p-7">
       <p className="font-[family-name:var(--font-mono)] text-xs tracking-[0.14em] text-[var(--color-muted)] uppercase">
@@ -165,8 +196,12 @@ function AdvancedSummary({
       </p>
       <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{headline}</h2>
       <p className="mt-2 max-w-xl text-sm leading-relaxed text-[var(--color-muted)]">
-        Range reflects best / likely / worst adoption and J-curve assumptions — not false
-        precision on a single number.
+        Range reflects best / likely / worst adoption assumptions
+        {oneTimeImplementationCost > 0
+          ? `, including ${formatMoney(oneTimeImplementationCost)} upfront implementation cost`
+          : ""}
+        {jCurve.dipDurationMonths > 0 ? ` and a ${dipLabel}` : ""}. Same upfront cost applies to
+        every scenario.
       </p>
 
       <dl className="mt-6 grid gap-4 sm:grid-cols-3">
@@ -197,6 +232,14 @@ function AdvancedSummary({
           </dt>
           <dd className="mt-1 text-lg font-medium">{formatMoney(monthlyValue)}</dd>
         </div>
+        {oneTimeImplementationCost > 0 ? (
+          <div className="sm:col-span-2">
+            <dt className="text-xs uppercase tracking-wide text-[var(--color-muted)]">
+              Upfront implementation
+            </dt>
+            <dd className="mt-1 text-lg font-medium">{formatMoney(oneTimeImplementationCost)}</dd>
+          </div>
+        ) : null}
       </dl>
     </section>
   );

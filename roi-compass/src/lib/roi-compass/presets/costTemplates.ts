@@ -16,10 +16,12 @@ export const COST_TEMPLATES: CostTemplate[] = [
   {
     key: "coding-assistant",
     label: "Coding assistant",
-    description: "Copilot / Cursor-style tools — moderate token overage, high verification tax.",
+    description:
+      "Copilot / Cursor-style tools — deeper workflow integration, higher upfront change cost.",
     apply: (current) => ({
       ...current,
       costPerSeatPerMonth: current.costPerSeatPerMonth || 40,
+      oneTimeImplementationCost: 25000,
       usageBasedCostPerMonth: 18 * current.seatCount,
       hiddenInfraCostPerMonth: 200,
       verificationHoursPerWeekPerSeat: 3,
@@ -29,10 +31,11 @@ export const COST_TEMPLATES: CostTemplate[] = [
   {
     key: "design-ux",
     label: "Design / UX tool",
-    description: "Generative design or research assists — lower infra, still meaningful review time.",
+    description: "Generative design or research assists — mid-size rollout / training investment.",
     apply: (current) => ({
       ...current,
       costPerSeatPerMonth: current.costPerSeatPerMonth || 35,
+      oneTimeImplementationCost: 8000,
       usageBasedCostPerMonth: 8 * current.seatCount,
       hiddenInfraCostPerMonth: 120,
       verificationHoursPerWeekPerSeat: 2.5,
@@ -42,10 +45,11 @@ export const COST_TEMPLATES: CostTemplate[] = [
   {
     key: "content-writing",
     label: "Content / writing tool",
-    description: "Drafting assistants — lighter infra, heavy editorial verification.",
+    description: "Drafting assistants — lighter integration, still needs editorial onboarding.",
     apply: (current) => ({
       ...current,
       costPerSeatPerMonth: current.costPerSeatPerMonth || 30,
+      oneTimeImplementationCost: 5000,
       usageBasedCostPerMonth: 12 * current.seatCount,
       hiddenInfraCostPerMonth: 80,
       verificationHoursPerWeekPerSeat: 4,

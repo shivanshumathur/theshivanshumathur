@@ -76,7 +76,8 @@ export function calculateTotalMonthlyValue(metrics: UXMetric[]): number {
 
 /**
  * Linear month-over-month projection (no J-curve).
- * Payback = first 1-indexed month where cumulative net value ≥ 0.
+ * Payback = first 1-indexed month where cumulative net value ≥ 0
+ * (after starting at −oneTimeImplementationCost).
  */
 export function runSimpleProjection(costs: CostInputs, metrics: UXMetric[]): ROIResult {
   const monthlyCost = calculateTotalMonthlyCost(costs);
@@ -84,6 +85,7 @@ export function runSimpleProjection(costs: CostInputs, metrics: UXMetric[]): ROI
   return buildProjectionFromMonthlyValues(
     Array.from({ length: PROJECTION_WINDOW_MONTHS }, () => monthlyValue),
     monthlyCost,
+    costs.oneTimeImplementationCost ?? 0,
   );
 }
 
@@ -91,6 +93,7 @@ export function runSimpleProjection(costs: CostInputs, metrics: UXMetric[]): ROI
  * J-curve-adjusted projection: multipliers apply to monthly *value* only.
  * Cost is paid in full every month from day one.
  * `adoptionRate` (0–1) scales realized value before the J-curve (Phase 3 scenarios).
+ * Upfront implementation cost seeds cumulative net as a negative starting point.
  */
 export function runJCurveProjection(
   costs: CostInputs,
@@ -102,17 +105,31 @@ export function runJCurveProjection(
   const monthlyValue = calculateTotalMonthlyValue(metrics) * adoptionRate;
   const rawValues = Array.from({ length: PROJECTION_WINDOW_MONTHS }, () => monthlyValue);
   const adjustedValues = applyJCurve(rawValues, jCurveParams);
-  return buildProjectionFromMonthlyValues(adjustedValues, monthlyCost);
+  return buildProjectionFromMonthlyValues(
+    adjustedValues,
+    monthlyCost,
+    costs.oneTimeImplementationCost ?? 0,
+  );
 }
 
 function buildProjectionFromMonthlyValues(
   monthlyValues: number[],
   monthlyCost: number,
+  oneTimeImplementationCost: number = 0,
 ): ROIResult {
   const monthlyProjections: MonthlyProjection[] = [];
-  let cumulativeNetValue = 0;
+  let cumulativeNetValue = -oneTimeImplementationCost;
   let paybackMonth: number | null = null;
   let totalValueOverWindow = 0;
+
+  // Month 0 anchor so the chart starts at −upfront when investment is nonzero.
+  if (oneTimeImplementationCost > 0) {
+    monthlyProjections.push({
+      month: 0,
+      monthlyNetValue: -oneTimeImplementationCost,
+      cumulativeNetValue,
+    });
+  }
 
   monthlyValues.forEach((monthlyValue, index) => {
     const month = index + 1;
@@ -133,7 +150,7 @@ function buildProjectionFromMonthlyValues(
 
   return {
     paybackMonth,
-    totalCostOverWindow: monthlyCost * monthlyValues.length,
+    totalCostOverWindow: monthlyCost * monthlyValues.length + oneTimeImplementationCost,
     totalValueOverWindow,
     monthlyProjections,
   };

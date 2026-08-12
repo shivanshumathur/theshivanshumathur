@@ -60,6 +60,18 @@ export function CostInputForm({ value, onChange }: CostInputFormProps) {
         ))}
       </div>
 
+      <OptionalNumberField
+        label="Upfront implementation cost ($)"
+        value={value.oneTimeImplementationCost}
+        onChange={(oneTimeImplementationCost) => {
+          setActiveTemplate(null);
+          patch({ oneTimeImplementationCost });
+        }}
+      />
+      <p className="-mt-2 text-xs text-[var(--color-muted)]">
+        Training, migration, integration, change management — recouped before payback.
+      </p>
+
       <div className="grid gap-4 sm:grid-cols-2">
         <NumberField
           label="Seat count"

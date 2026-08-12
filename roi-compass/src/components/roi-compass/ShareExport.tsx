@@ -69,6 +69,7 @@ export function ShareExport({
         monthlyValue={monthlyValue}
         jCurve={jCurve}
         linearPaybackMonth={linearPaybackMonth}
+        oneTimeImplementationCost={costs.oneTimeImplementationCost ?? 0}
       />
 
       <section className="rounded-2xl border border-[var(--color-line)] bg-white/80 p-5 sm:p-6">
@@ -82,6 +83,11 @@ export function ShareExport({
               <li>
                 {costs.seatCount} seats × {formatMoney(costs.costPerSeatPerMonth)}/seat
               </li>
+              {(costs.oneTimeImplementationCost ?? 0) > 0 ? (
+                <li>
+                  Upfront implementation: {formatMoney(costs.oneTimeImplementationCost ?? 0)}
+                </li>
+              ) : null}
               {costs.usageBasedCostPerMonth !== undefined ? (
                 <li>Usage / tokens: {formatMoney(costs.usageBasedCostPerMonth)}/mo</li>
               ) : null}

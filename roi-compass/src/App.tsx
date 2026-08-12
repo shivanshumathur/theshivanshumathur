@@ -220,6 +220,7 @@ export default function App() {
                   monthlyValue={monthlyValue}
                   jCurve={jCurve}
                   linearPaybackMonth={linearPaybackMonth}
+                  oneTimeImplementationCost={costs.oneTimeImplementationCost ?? 0}
                 />
 
                 <CostBreakdown costs={costs} />

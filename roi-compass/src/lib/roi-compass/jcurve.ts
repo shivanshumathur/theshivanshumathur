@@ -1,4 +1,4 @@
-import type { JCurveParams } from "./types";
+import type { JCurveParams, MonthlyProjection } from "./types";
 
 /**
  * Multiplier applied to that month's raw monthly *value* (0-indexed month).
@@ -30,7 +30,7 @@ export function applyJCurve(rawMonthlyValues: number[], params: JCurveParams): n
   return rawMonthlyValues.map((value, month) => value * getJCurveMultiplier(month, params));
 }
 
-/** 1-indexed inclusive month ranges for chart phase annotations. */
+/** 1-indexed inclusive month ranges for J-curve adoption phases. */
 export function getJCurvePhaseRanges(params: JCurveParams): {
   dip: { start: number; end: number } | null;
   ramp: { start: number; end: number } | null;
@@ -46,5 +46,66 @@ export function getJCurvePhaseRanges(params: JCurveParams): {
         ? { start: dipEnd + 1, end: rampEnd }
         : null,
     compoundStart: rampEnd + 1,
+  };
+}
+
+/**
+ * Contiguous months (from first negative) where cumulative net value is still < 0.
+ * Used for chart "Dip" shading — the underwater payback period.
+ */
+export function getUnderwaterMonthRange(
+  projections: MonthlyProjection[],
+): { start: number; end: number } | null {
+  const ordered = projections.filter((row) => row.month >= 0);
+  const firstNegative = ordered.find((row) => row.cumulativeNetValue < 0);
+  if (!firstNegative) return null;
+
+  let end = firstNegative.month;
+  for (const row of ordered) {
+    if (row.month < firstNegative.month) continue;
+    if (row.cumulativeNetValue < 0) {
+      end = row.month;
+    } else {
+      break;
+    }
+  }
+
+  return { start: firstNegative.month, end };
+}
+
+/**
+ * Chart bands: Dip = underwater (cumulative < 0); Ramp / Compounding follow J-curve
+ * phases but start after the underwater region so bands stay distinct.
+ */
+export function getChartPhaseBands(
+  projections: MonthlyProjection[],
+  params: JCurveParams,
+): {
+  dip: { start: number; end: number } | null;
+  ramp: { start: number; end: number } | null;
+  compound: { start: number; end: number } | null;
+} {
+  const phases = getJCurvePhaseRanges(params);
+  const lastMonth = projections[projections.length - 1]?.month ?? 24;
+  const underwater = getUnderwaterMonthRange(projections);
+  const afterDip = underwater ? underwater.end + 1 : 1;
+
+  let ramp: { start: number; end: number } | null = null;
+  if (phases.ramp) {
+    const start = Math.max(phases.ramp.start, afterDip);
+    const end = phases.ramp.end;
+    if (start <= end) {
+      ramp = { start, end };
+    }
+  }
+
+  const compoundStart = Math.max(phases.compoundStart, afterDip, ramp ? ramp.end + 1 : afterDip);
+  const compound =
+    compoundStart <= lastMonth ? { start: compoundStart, end: lastMonth } : null;
+
+  return {
+    dip: underwater,
+    ramp,
+    compound,
   };
 }

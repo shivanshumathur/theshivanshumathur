@@ -9,7 +9,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { getJCurvePhaseRanges } from "../../lib/roi-compass/jcurve";
+import { getChartPhaseBands } from "../../lib/roi-compass/jcurve";
 import type { JCurveParams, MonthlyProjection } from "../../lib/roi-compass/types";
 
 interface JCurveChartProps {
@@ -25,13 +25,17 @@ function formatAxisMoney(value: number): string {
   return `$${Math.round(value)}`;
 }
 
+/** Ensure single-month bands still paint a visible width on the category axis. */
+function areaX2(start: number, end: number): number {
+  return end <= start ? start + 0.85 : end;
+}
+
 export function JCurveChart({ projections, paybackMonth, jCurve }: JCurveChartProps) {
   if (projections.length === 0) {
     return null;
   }
 
-  const phases = getJCurvePhaseRanges(jCurve);
-  const lastMonth = projections[projections.length - 1]?.month ?? 24;
+  const bands = getChartPhaseBands(projections, jCurve);
 
   return (
     <section className="rounded-2xl border border-[var(--color-line)] bg-white/80 p-4 sm:p-6">
@@ -39,7 +43,7 @@ export function JCurveChart({ projections, paybackMonth, jCurve }: JCurveChartPr
         <div>
           <h2 className="text-lg font-medium tracking-tight">J-curve payback timeline</h2>
           <p className="text-sm text-[var(--color-muted)]">
-            Cumulative net value with adoption dip, recovery ramp, and compounding.
+            Cumulative net value — underwater until upfront cost and adoption dip are recovered.
           </p>
         </div>
         {paybackMonth !== null ? (
@@ -54,38 +58,41 @@ export function JCurveChart({ projections, paybackMonth, jCurve }: JCurveChartPr
       </div>
 
       <div className="mb-3 flex flex-wrap gap-3 text-xs text-[var(--color-muted)]">
-        <LegendSwatch color="rgba(37, 99, 235, 0.12)" label="Dip" />
-        <LegendSwatch color="rgba(37, 99, 235, 0.22)" label="Ramp" />
-        <LegendSwatch color="rgba(10, 10, 10, 0.06)" label="Compounding" />
+        <LegendSwatch color="rgba(37, 99, 235, 0.2)" label="Dip (below $0)" />
+        <LegendSwatch color="rgba(37, 99, 235, 0.32)" label="Ramp" />
+        <LegendSwatch color="rgba(10, 10, 10, 0.08)" label="Compounding" />
       </div>
 
       <div className="h-72 w-full sm:h-80">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={projections} margin={{ top: 16, right: 12, left: 4, bottom: 0 }}>
-            {phases.dip ? (
+            {bands.dip ? (
               <ReferenceArea
-                x1={phases.dip.start}
-                x2={phases.dip.end}
-                fill="rgba(37, 99, 235, 0.12)"
+                x1={bands.dip.start}
+                x2={areaX2(bands.dip.start, bands.dip.end)}
+                fill="rgba(37, 99, 235, 0.2)"
                 strokeOpacity={0}
+                ifOverflow="extendDomain"
                 label={{ value: "Dip", position: "insideTopLeft", fill: "#525252", fontSize: 11 }}
               />
             ) : null}
-            {phases.ramp ? (
+            {bands.ramp ? (
               <ReferenceArea
-                x1={phases.ramp.start}
-                x2={phases.ramp.end}
-                fill="rgba(37, 99, 235, 0.22)"
+                x1={bands.ramp.start}
+                x2={areaX2(bands.ramp.start, bands.ramp.end)}
+                fill="rgba(37, 99, 235, 0.32)"
                 strokeOpacity={0}
+                ifOverflow="extendDomain"
                 label={{ value: "Ramp", position: "insideTopLeft", fill: "#525252", fontSize: 11 }}
               />
             ) : null}
-            {phases.compoundStart <= lastMonth ? (
+            {bands.compound ? (
               <ReferenceArea
-                x1={phases.compoundStart}
-                x2={lastMonth}
-                fill="rgba(10, 10, 10, 0.05)"
+                x1={bands.compound.start}
+                x2={areaX2(bands.compound.start, bands.compound.end)}
+                fill="rgba(10, 10, 10, 0.08)"
                 strokeOpacity={0}
+                ifOverflow="extendDomain"
                 label={{
                   value: "Compounding",
                   position: "insideTopLeft",

@@ -30,6 +30,8 @@ export const PRODUCT_TAGLINE =
 export const DEFAULT_COST_INPUTS = {
   seatCount: 25,
   costPerSeatPerMonth: 40,
+  /** Mid-size rollout default — without this, payback falsely lands in month 1. */
+  oneTimeImplementationCost: 12000,
 } as const;
 
 /**
