@@ -29,9 +29,9 @@ body.light-mode .dock-sep {
 .dock-item--ask.ask-dock-live .siri-orb {
   transform: scale(1.06);
   box-shadow:
-    0 0 0 1px rgba(220, 200, 255, 0.34),
+    0 0 0 1px rgba(200, 220, 255, 0.34),
     0 0 16px rgba(120, 90, 220, 0.4),
-    0 0 28px rgba(233, 30, 99, 0.2);
+    0 0 28px rgba(34, 211, 238, 0.22);
 }
 
 .ask-overlay {
@@ -57,11 +57,11 @@ body.light-mode .dock-sep {
   position: absolute;
   top: 46px;
   right: 18px;
-  width: min(430px, calc(100vw - 28px));
+  width: min(400px, calc(100vw - 28px));
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 8px;
   opacity: 0;
   transform: translateX(28px);
   pointer-events: none;
@@ -93,40 +93,34 @@ body.light-mode .ask-glass {
 
 .ask-bar {
   width: 100%;
-  min-height: 52px;
+  min-height: 46px;
   border-radius: 999px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 6px 8px 6px 8px;
+  gap: 8px;
+  padding: 5px 6px 5px 6px;
 }
 
 .ask-orb-wrap {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border: none;
-  background: none;
-  padding: 0;
-  cursor: pointer;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
-  touch-action: none;
-  -webkit-tap-highlight-color: transparent;
-}
-.ask-orb-wrap:focus-visible {
-  outline: 2px solid var(--accent, #0a84ff);
-  outline-offset: 2px;
+  pointer-events: none;
 }
 .ask-orb-wrap .siri-orb {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
 }
 .ask-overlay[data-state="listening"] .ask-orb-wrap .siri-orb {
   transform: scale(1.06);
   box-shadow:
-    0 0 0 1px rgba(220, 200, 255, 0.38),
+    0 0 0 1px rgba(200, 220, 255, 0.38),
     0 0 18px rgba(120, 90, 220, 0.45),
-    0 0 32px rgba(233, 30, 99, 0.22);
+    0 0 32px rgba(34, 211, 238, 0.25);
 }
 .ask-overlay[data-state="thinking"] .ask-orb-wrap .siri-orb {
   transform: scale(0.92);
@@ -142,7 +136,7 @@ body.light-mode .ask-glass {
   background: transparent;
   color: #fff;
   font: inherit;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 400;
   letter-spacing: -0.2px;
   outline: none;
@@ -161,8 +155,8 @@ body.light-mode .ask-input::placeholder {
 .ask-mic,
 .ask-speaker {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   border: none;
   border-radius: 50%;
   background: transparent;
@@ -195,9 +189,9 @@ body.light-mode .ask-speaker {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  gap: 6px;
   width: 100%;
-  padding-left: 10px;
+  padding-left: 8px;
 }
 .ask-overlay.is-answered .ask-chips {
   display: none;
@@ -206,17 +200,16 @@ body.light-mode .ask-speaker {
 .ask-chip {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   width: fit-content;
   max-width: 100%;
   border: none;
   border-radius: 999px;
-  padding: 8px 16px 8px 8px;
+  padding: 8px 16px;
   color: #fff;
   font: inherit;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  letter-spacing: -0.15px;
+  letter-spacing: -0.1px;
   cursor: pointer;
   text-align: left;
 }
@@ -229,34 +222,6 @@ body.light-mode .ask-chip {
 body.light-mode .ask-chip:hover {
   background: rgba(255, 255, 255, 0.78);
 }
-.ask-chip-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  overflow: hidden;
-}
-.ask-chip-icon svg,
-.ask-chip-icon img {
-  display: block;
-}
-.ask-chip-icon--orb .siri-orb {
-  width: 28px;
-  height: 28px;
-}
-.ask-chip-icon--work {
-  background: linear-gradient(180deg, #64d2ff 0%, #0a84ff 100%);
-}
-.ask-chip-icon--mail {
-  background: linear-gradient(180deg, #6cb4ff 0%, #0071e3 100%);
-}
-.ask-chip-icon--cal {
-  background: linear-gradient(180deg, #ff6b6b 0%, #ff3b30 100%);
-}
-
 .ask-reply {
   display: none;
   width: fit-content;
@@ -396,10 +361,14 @@ body.light-mode .ask-reply.is-refuse {
 @media (max-width: 640px) {
   .ask-stage {
     top: auto;
-    bottom: 88px;
-    right: 12px;
-    left: 12px;
-    width: auto;
+    bottom: 96px;
+    right: auto;
+    left: 50%;
+    width: min(380px, calc(100vw - 32px));
+    transform: translateX(-50%) translateY(16px);
+  }
+  .ask-overlay.open .ask-stage {
+    transform: translateX(-50%) translateY(0);
   }
 }
 

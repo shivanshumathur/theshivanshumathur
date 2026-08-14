@@ -2,7 +2,6 @@
   var overlay = document.getElementById('ask-overlay');
   if (!overlay) return;
 
-  var orbBtn = document.getElementById('ask-orb');
   var dockBtn = document.getElementById('open-ask');
   var statusEl = document.getElementById('ask-status');
   var userEl = document.getElementById('ask-user');
@@ -417,7 +416,6 @@
     });
   }
 
-  bindHold(orbBtn, false);
   bindHold(dockBtn, true);
 
   if (dockBtn) {

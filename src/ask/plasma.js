@@ -74,9 +74,9 @@
     var svg = node('svg', { class: 'plasma-globe', viewBox: '0 0 100 100', 'aria-hidden': 'true' });
     var defs = node('defs');
     var gas = node('radialGradient', { id: uid + '-gas', cx: '50%', cy: '48%', r: '52%' });
-    gas.appendChild(stop('0%', '#ff4d88', '0.18'));
-    gas.appendChild(stop('32%', '#7c3aed', '0.2'));
-    gas.appendChild(stop('62%', '#4c1d95', '0.08'));
+    gas.appendChild(stop('0%', '#22d3ee', '0.18'));
+    gas.appendChild(stop('32%', '#7c3aed', '0.22'));
+    gas.appendChild(stop('62%', '#4338ca', '0.08'));
     gas.appendChild(stop('100%', '#05060c', '0'));
     defs.appendChild(gas);
     svg.appendChild(defs);
@@ -93,10 +93,10 @@
         x2: '80',
         y2: '30'
       });
-      grad.appendChild(stop('0%', '#f8ffff'));
+      grad.appendChild(stop('0%', '#f4fbff'));
       grad.appendChild(stop('26%', '#7df9ff'));
       grad.appendChild(stop('66%', '#818cf8'));
-      grad.appendChild(stop('100%', spec.hero ? '#ff6b9d' : '#c4b5fd'));
+      grad.appendChild(stop('100%', spec.hero ? '#a855f7' : '#c4b5fd'));
       defs.appendChild(grad);
 
       var glow = node('path', { class: spec.hero ? 'plasma-filament-glow is-main' : 'plasma-filament-glow' });

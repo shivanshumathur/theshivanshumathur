@@ -47,9 +47,47 @@
     },
     {
       id: 'companies',
-      keys: ['compan', 'epam', 'simplilearn', 'nec', 'where did he', 'clients', 'employ', 'who has he worked'],
+      keys: ['compan', 'nec', 'where did he', 'clients', 'employ', 'who has he worked'],
       speak: "He's worked with Novartis, Atlassian, EPAM, Simplilearn, and NEC — enterprise finance, developer platforms, and learning products.",
       show: "Novartis · Atlassian · EPAM · Simplilearn · NEC.",
+      action: null
+    },
+    {
+      id: 'meraken',
+      keys: ['meraken', 'founder', 'startup', 'venture', 'his own company', 'entrepreneur', 'entrepreneurship'],
+      speak: "He's also the Founder of Meraken, his own venture, since October 2024 — alongside his design work.",
+      show: "Meraken · Founder · Oct 2024–present.",
+      action: null
+    },
+    {
+      id: 'epam',
+      keys: ['epam', 'onepsp', 'psp', 'patient support', 'resume filtration', 'hiring tool', 'qlik', 'matplotlib'],
+      speak: "At EPAM Systems he's an Experience Designer since March 2023. He led design on Novartis's OnePSP dashboard and built an AI-driven resume filtration tool.",
+      show: "EPAM Systems · Experience Designer · Mar 2023–present.",
+      action: null,
+      cards: [{ type: 'project', title: 'OnePSP', subtitle: 'Novartis Patient Support Program dashboard, via EPAM', meta: 'Key Designer · Qlik · Figma · AngularJS' }]
+    },
+    {
+      id: 'simplilearn',
+      keys: ['simplilearn', 'skillup', 'edtech', 'learning platform', 'lms', 'upskilling', 'mau', 'traffic to lead'],
+      speak: "At Simplilearn he redesigned learning journeys, lifting upskilling completion from 13% to 30% and growing monthly active users 18%.",
+      show: "Simplilearn: UX Designer · Jul 2022–Mar 2023 · upskilling 13%→30%.",
+      action: null,
+      cards: [{ type: 'metrics', title: 'Simplilearn impact', metrics: [{ value: '13%→30%', label: 'Upskilling completion' }, { value: '18%', label: 'MAU growth' }, { value: '2.3%→3.7%', label: 'Traffic-to-lead' }] }]
+    },
+    {
+      id: 'origin',
+      keys: ['education', 'degree', 'iit', 'iit delhi', 'lovely professional university', 'lpu', 'college', 'university', 'study', 'studied', 'studies', 'school', 'early career', 'before design', 'how did he start', 'data engineer', 'nec corporation', 'xenonstack', 'background story'],
+      speak: "He studied Computer Science at Lovely Professional University, then Research and Strategy at IIT Delhi. He started out as a data engineer before moving into UX and product design.",
+      show: "LPU (B.Tech CSE) · IIT Delhi (Research & Strategy) · started as a data engineer at NEC.",
+      action: null,
+      cards: [{ type: 'process', title: 'Path into design', steps: ['B.Tech CSE, Lovely Professional University', 'Data Engineer, NEC Corporation', 'Research & Strategy, IIT Delhi', 'Shift into UX and product design'] }]
+    },
+    {
+      id: 'awards',
+      keys: ['awards', 'honors', 'honours', 'hackathon', 'competition', 'ctf', 'achievements', 'recognition', 'skills', 'languages'],
+      speak: "He's won a couple of cybersecurity CTF challenges, an NEC hackathon, and a healthtech innovation challenge. He speaks English, Hindi, and some German.",
+      show: "NEC Hackathon · India Innovation Challenge 2019 · 2x CTF wins · AGBI HealthTech Challenge.",
       action: null
     },
     {
