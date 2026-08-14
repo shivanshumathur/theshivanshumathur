@@ -141,6 +141,11 @@
                             inset 0 0.5px 0 rgba(255, 255, 255, 0.55),
                             inset 0 -0.5px 0 rgba(255, 255, 255, 0.1);
       --glass-blur: blur(44px) saturate(160%) brightness(1.04);
+      --glass-fill-content: rgba(17, 17, 19, 0.8);
+      --glass-fill-chrome: rgba(28, 28, 30, 0.94);
+      --glass-blur-chrome: blur(40px) saturate(105%);
+      --radius-menu: 14px;
+      --radius-panel: 20px;
 
       color: var(--text-primary);
       background: var(--bg);
@@ -210,6 +215,11 @@
                             inset 0 0.5px 0 rgba(255, 255, 255, 0.95),
                             inset 0 -0.5px 0 rgba(255, 255, 255, 0.32);
       --glass-blur: blur(44px) saturate(180%) brightness(1.06);
+      --glass-fill-content: rgba(255, 255, 255, 0.8);
+      --glass-fill-chrome: rgba(250, 250, 252, 0.95);
+      --glass-blur-chrome: blur(40px) saturate(105%);
+      --radius-menu: 14px;
+      --radius-panel: 20px;
     }
 
     /* ===== Top status bar ===== */
@@ -258,14 +268,12 @@
       display: none;
       flex-direction: column;
       z-index: 140;
-      border-radius: 12px;
-      background: rgba(36, 36, 38, 0.62);
-      border: 0.5px solid rgba(255, 255, 255, 0.2);
-      box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.4),
-        inset 0 0.5px 0 rgba(255, 255, 255, 0.22);
-      backdrop-filter: blur(40px) saturate(180%);
-      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border-radius: var(--radius-menu);
+      background: var(--glass-fill-chrome);
+      border: 0.5px solid var(--glass-stroke);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur-chrome);
+      -webkit-backdrop-filter: var(--glass-blur-chrome);
     }
     .home-menu.open { display: flex; }
     .home-menu-item {
@@ -277,7 +285,7 @@
       padding: 8px 12px;
       border: none;
       background: transparent;
-      color: #fff;
+      color: var(--text-primary);
       border-radius: 7px;
       font: inherit;
       font-size: 13px;
@@ -290,11 +298,12 @@
     }
     .home-menu-item:hover {
       background: var(--accent, #007AFF);
+      color: #fff;
     }
     .home-menu-sep {
       height: 1px;
       margin: 4px 8px;
-      background: rgba(255, 255, 255, 0.12);
+      background: var(--border-subtle);
     }
 
     /* ===== Desktop right-click menu (macOS density + Home/Settings chrome) ===== */
@@ -305,15 +314,13 @@
       padding: 4px 5px;
       display: flex;
       flex-direction: column;
-      border-radius: 10px;
-      background: rgba(36, 36, 38, 0.62);
-      border: 0.5px solid rgba(255, 255, 255, 0.2);
-      box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.4),
-        inset 0 0.5px 0 rgba(255, 255, 255, 0.22);
-      backdrop-filter: blur(40px) saturate(180%);
-      -webkit-backdrop-filter: blur(40px) saturate(180%);
-      color: rgba(255, 255, 255, 0.92);
+      border-radius: var(--radius-menu);
+      background: var(--glass-fill-chrome);
+      border: 0.5px solid var(--glass-stroke);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur-chrome);
+      -webkit-backdrop-filter: var(--glass-blur-chrome);
+      color: var(--text-primary);
       font-size: 13px;
       font-weight: 400;
       line-height: 1.25;
@@ -384,14 +391,12 @@
       min-width: 148px;
       padding: 4px 5px;
       flex-direction: column;
-      border-radius: 10px;
-      background: rgba(36, 36, 38, 0.62);
-      border: 0.5px solid rgba(255, 255, 255, 0.2);
-      box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.4),
-        inset 0 0.5px 0 rgba(255, 255, 255, 0.22);
-      backdrop-filter: blur(40px) saturate(180%);
-      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border-radius: var(--radius-menu);
+      background: var(--glass-fill-chrome);
+      border: 0.5px solid var(--glass-stroke);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur-chrome);
+      -webkit-backdrop-filter: var(--glass-blur-chrome);
       z-index: 1;
     }
     .desktop-submenu.flip {
@@ -431,17 +436,15 @@
       height: min(540px, 68vh);
       display: flex;
       flex-direction: column;
-      border-radius: 22px 22px 0 0;
+      border-radius: var(--radius-panel) var(--radius-panel) 0 0;
       overflow: hidden;
-      color: #fff;
-      background: rgba(40, 40, 42, 0.72);
-      border: 0.5px solid rgba(255, 255, 255, 0.18);
+      color: var(--text-primary);
+      background: var(--glass-fill-content);
+      border: 0.5px solid var(--glass-stroke);
       border-bottom: none;
-      box-shadow:
-        0 -12px 50px rgba(0, 0, 0, 0.4),
-        inset 0 0.5px 0 rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(48px) saturate(180%);
-      -webkit-backdrop-filter: blur(48px) saturate(180%);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
       transform: translateY(110%);
       opacity: 1;
       transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
@@ -820,6 +823,16 @@
       background: #fff;
       transform: scale(1.02);
     }
+    body.light-mode .widget-gallery-sidebar { background: rgba(0, 0, 0, 0.03); }
+    body.light-mode .widget-gallery-search input { background: rgba(0, 0, 0, 0.05); color: var(--text-primary); }
+    body.light-mode .widget-gallery-search input::placeholder { color: var(--text-muted); }
+    body.light-mode .widget-gallery-nav-item { color: var(--text-secondary); }
+    body.light-mode .widget-gallery-nav-item:hover { background: rgba(0, 0, 0, 0.05); }
+    body.light-mode .widget-gallery-nav-item.active { background: rgba(0, 0, 0, 0.08); }
+    body.light-mode .widget-gallery-section-title,
+    body.light-mode .wg-card-caption,
+    body.light-mode .widget-gallery-hint { color: var(--text-muted); }
+    body.light-mode .widget-gallery-footer { background: rgba(0, 0, 0, 0.03); }
     @media (max-width: 720px) {
       .widget-gallery-overlay {
         padding: 0;
@@ -1423,14 +1436,14 @@
       width: min(340px, 92vw);
       overflow: hidden;
       padding: 12px 28px 22px;
-      border-radius: 20px;
+      border-radius: var(--radius-panel);
       text-align: center;
-      color: #fff;
-      background: rgba(28, 24, 36, 0.62);
-      border: 0.5px solid rgba(255, 255, 255, 0.16);
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(48px) saturate(180%);
-      -webkit-backdrop-filter: blur(48px) saturate(180%);
+      color: var(--text-primary);
+      background: var(--glass-fill-chrome);
+      border: 0.5px solid var(--glass-stroke);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur-chrome);
+      -webkit-backdrop-filter: var(--glass-blur-chrome);
     }
     .about-system-card.maximized {
       width: min(420px, 94vw);
@@ -1506,6 +1519,12 @@
       line-height: 1.4;
       color: rgba(255, 255, 255, 0.32);
     }
+    body.light-mode .about-system-card h2,
+    body.light-mode .about-specs td,
+    body.light-mode .about-specs td code { color: var(--text-primary); }
+    body.light-mode .about-system-sub,
+    body.light-mode .about-specs th { color: var(--text-muted); }
+    body.light-mode .about-legal { color: var(--text-faint); }
     .status-icon {
       width: 32px;
       height: 32px;
@@ -1543,16 +1562,13 @@
       display: none;
       flex-direction: column;
       gap: 10px;
-      border-radius: 22px;
-      color: #fff;
-      background: rgba(36, 36, 38, 0.46);
-      border: 0.5px solid rgba(255, 255, 255, 0.2);
-      box-shadow:
-        0 0 0 0.5px rgba(0, 0, 0, 0.25),
-        0 18px 50px rgba(0, 0, 0, 0.42),
-        inset 0 0.5px 0 rgba(255, 255, 255, 0.28);
-      backdrop-filter: blur(48px) saturate(180%) brightness(1.05);
-      -webkit-backdrop-filter: blur(48px) saturate(180%) brightness(1.05);
+      border-radius: var(--radius-panel);
+      color: var(--text-primary);
+      background: var(--glass-fill-chrome);
+      border: 0.5px solid var(--glass-stroke);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur-chrome);
+      -webkit-backdrop-filter: var(--glass-blur-chrome);
     }
     .cc-panel.open {
       display: flex;
@@ -1714,6 +1730,19 @@
     .cc-slider::-moz-range-track {
       background: transparent;
       border: none;
+    }
+    body.light-mode .cc-module {
+      background: rgba(0, 0, 0, 0.035);
+      border-color: rgba(0, 0, 0, 0.06);
+      box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.6);
+    }
+    body.light-mode .cc-music-art { background: rgba(0, 0, 0, 0.05); }
+    body.light-mode .cc-music-title { color: var(--text-primary); }
+    body.light-mode .cc-music-artist { color: var(--text-muted); }
+    body.light-mode .cc-music-btn { color: rgba(0, 0, 0, 0.7); }
+    body.light-mode .cc-music-btn:hover { color: #000; }
+    body.light-mode .cc-slider {
+      background: linear-gradient(to right, #1d1d1f var(--fill, 80%), rgba(0, 0, 0, 0.12) var(--fill, 80%));
     }
     @media (max-width: 480px) {
       .cc-panel {
@@ -3538,6 +3567,49 @@
     .dock-icon--mail {
       background: linear-gradient(180deg, #6cb4ff 0%, #0a84ff 48%, #0071e3 100%);
     }
+    /* Shared squircle badge for tool/brand logos — same visual language as .dock-icon */
+    .tool-icon {
+      position: relative;
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: rgba(127, 127, 137, 0.14);
+      border: 0.5px solid var(--border-subtle);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14), 0 6px 12px rgba(0, 0, 0, 0.06);
+    }
+    .tool-icon::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, transparent 42%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .tool-icon img,
+    .tool-icon svg {
+      position: relative;
+      z-index: 0;
+      width: 60%;
+      height: 60%;
+      object-fit: contain;
+      display: block;
+    }
+    .tool-icon--sm {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+    }
+    .tool-icon--xs {
+      width: 20px;
+      height: 20px;
+      border-radius: 5.5px;
+    }
     /* macOS dock tooltip */
     .dock-item::after {
       content: attr(data-label);
@@ -3649,16 +3721,16 @@
       width: 420px;
       max-width: 90vw;
       height: 100vh;
-      background: var(--bg-card);
-      border-left: 1px solid var(--border);
+      background: var(--glass-fill-content);
+      border-left: 0.5px solid var(--glass-stroke);
       box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
       z-index: 999;
       display: flex;
       flex-direction: column;
       transform: translateX(100%);
       transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
     }
     .chatbot-sidebar.open {
       transform: translateX(0);
@@ -3868,14 +3940,18 @@
       position: relative;
       width: min(820px, 92vw);
       height: min(560px, 84vh);
-      background: #1c1c1e;
-      border: 0.5px solid rgba(255, 255, 255, 0.12);
-      border-radius: 12px;
+      background: rgba(28, 28, 30, 0.82);
+      border: 0.5px solid rgba(255, 255, 255, 0.16);
+      border-radius: var(--radius-panel);
       overflow: hidden;
       display: flex;
       flex-direction: row;
       color: #fff;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+      box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.14),
+                  0 24px 80px rgba(0, 0, 0, 0.45),
+                  inset 0 0.5px 0 rgba(255, 255, 255, 0.14);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
       transform: scale(0.94) translateY(20px);
       opacity: 0;
       transition: transform 0.35s cubic-bezier(0.2,0.9,0.3,1), opacity 0.25s ease, width 0.2s ease, height 0.2s ease;
@@ -7126,7 +7202,6 @@
       width: 32px;
       height: 32px;
       flex-shrink: 0;
-      object-fit: contain;
     }
     .platform-expandable-title {
       font-size: 19px;
@@ -9069,10 +9144,12 @@
       width: 100%;
       max-width: 640px;
       max-height: 88vh;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      background: var(--glass-fill-content);
+      border: 0.5px solid var(--glass-stroke);
+      border-radius: var(--radius-panel);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -9528,27 +9605,27 @@
   <div class="status-bar">
     <div class="status-bar-left">
       <button type="button" class="status-icon" id="nav-home" title="Home" aria-label="Home" aria-haspopup="true" aria-expanded="false" style="background:none;border:none;cursor:pointer;font-family:inherit;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5 12 3l9 7.5V20a1.5 1.5 0 01-1.5 1.5H15v-6H9v6H4.5A1.5 1.5 0 013 20v-9.5z"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5 12 3l9 7.5V20a1.5 1.5 0 01-1.5 1.5H15v-6H9v6H4.5A1.5 1.5 0 013 20v-9.5z"/></svg>
       </button>
       <div class="home-menu" id="home-menu" role="menu" aria-label="Home menu">
         <button type="button" class="home-menu-item" id="home-about" role="menuitem">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 11v6M12 8h.01"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 11v6M12 8h.01"/></svg>
           About This System
         </button>
         <button type="button" class="home-menu-item" id="home-settings" role="menuitem">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9c.3.7.9 1.2 1.6 1.3H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9c.3.7.9 1.2 1.6 1.3H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>
           System Settings
         </button>
         <div class="home-menu-sep"></div>
         <button type="button" class="home-menu-item" id="home-lock" role="menuitem">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>
           Lock Screen
         </button>
       </div>
     </div>
     <div class="status-bar-right">
       <button type="button" class="status-icon" id="open-settings" title="Control Center" aria-label="Open Control Center" style="background:none;border:none;cursor:pointer;font-family:inherit;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
           <rect x="3" y="4.5" width="18" height="6" rx="3"/>
           <circle cx="15.2" cy="7.5" r="1.7" fill="currentColor" stroke="none"/>
           <rect x="3" y="13.5" width="18" height="6" rx="3"/>
@@ -9572,7 +9649,7 @@
       </div>
       <div class="about-system-hero">
         <div class="about-icon" style="background: linear-gradient(135deg, #0082FF, #06b6d4);">
-          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
         </div>
         <h2>Personal OS</h2>
         <p class="about-system-sub">Web desktop, Version 1.0</p>
@@ -9611,8 +9688,8 @@
     <div class="cc-row">
       <div class="cc-module cc-appearance">
         <button type="button" class="cc-appearance-btn" id="cc-appearance" title="Toggle appearance" aria-label="Toggle light and dark mode">
-          <svg id="cc-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 3v1.5M12 19.5V21M4.2 4.2l1.1 1.1M18.7 18.7l1.1 1.1M3 12h1.5M19.5 12H21M4.2 19.8l1.1-1.1M18.7 5.3l1.1-1.1"/></svg>
-          <svg id="cc-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 14.3A8.5 8.5 0 1110.2 3a7 7 0 1010.8 11.3z"/></svg>
+          <svg id="cc-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 3v1.5M12 19.5V21M4.2 4.2l1.1 1.1M18.7 18.7l1.1 1.1M3 12h1.5M19.5 12H21M4.2 19.8l1.1-1.1M18.7 5.3l1.1-1.1"/></svg>
+          <svg id="cc-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 14.3A8.5 8.5 0 1110.2 3a7 7 0 1010.8 11.3z"/></svg>
         </button>
       </div>
       <div class="cc-module cc-music" id="cc-music">
@@ -9625,14 +9702,14 @@
         </div>
         <div class="cc-music-controls">
           <button type="button" class="cc-music-btn" id="cc-music-prev" aria-label="Previous track">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2.2v12H6V6zm3.2 6 10.3 6.2V5.8L9.2 12z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h3v14H6zm4 7 9 7V5z"/></svg>
           </button>
           <button type="button" class="cc-music-btn cc-music-play" id="cc-music-toggle" aria-label="Play">
-            <svg class="cc-icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5z"/></svg>
-            <svg class="cc-icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3.6v14H7V5zm6.4 0H17v14h-3.6V5z"/></svg>
+            <svg class="cc-icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="cc-icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zm6 0h4v14h-4z"/></svg>
           </button>
           <button type="button" class="cc-music-btn" id="cc-music-next" aria-label="Next track">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15.8 6H18v12h-2.2V6zM4.5 18.2V5.8L14.8 12 4.5 18.2z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 5v14l9-7zm10 0h3v14h-3z"/></svg>
           </button>
         </div>
       </div>
@@ -9641,9 +9718,9 @@
     <div class="cc-module cc-slider-card">
       <div class="cc-slider-label">Display</div>
       <div class="cc-slider-row">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path stroke-linecap="round" d="M12 3.5v1.6M12 18.9v1.6M4.9 4.9l1.1 1.1M18 18l1.1 1.1M3.5 12h1.6M18.9 12h1.6M4.9 19.1l1.1-1.1M18 6l1.1-1.1"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path stroke-linecap="round" d="M12 3.5v1.6M12 18.9v1.6M4.9 4.9l1.1 1.1M18 18l1.1 1.1M3.5 12h1.6M18.9 12h1.6M4.9 19.1l1.1-1.1M18 6l1.1-1.1"/></svg>
         <input type="range" class="cc-slider" id="cc-brightness" min="20" max="100" value="100" aria-label="Display brightness">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
       </div>
     </div>
 
@@ -9661,28 +9738,28 @@
     <div class="desktop-menu-row has-sub" data-sub="widgets">
       <button type="button" class="desktop-menu-item" data-action="widgets" role="menuitem" aria-haspopup="true">
         Add Widget
-        <svg class="desktop-menu-chevron" viewBox="0 0 8 12" fill="none" aria-hidden="true"><path d="M2 1.5 6.5 6 2 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="desktop-menu-chevron" viewBox="0 0 8 12" fill="none" aria-hidden="true"><path d="M2 1.5 6.5 6 2 10.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="desktop-submenu" data-sub="widgets" role="menu">
         <button type="button" class="desktop-menu-item" data-toggle-widget="notes" role="menuitemcheckbox">
           Notes
-          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </button>
         <button type="button" class="desktop-menu-item" data-toggle-widget="profile" role="menuitemcheckbox">
           Profile
-          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </button>
         <button type="button" class="desktop-menu-item" data-toggle-widget="ailab" role="menuitemcheckbox">
           AI Lab
-          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </button>
         <button type="button" class="desktop-menu-item" data-toggle-widget="work" role="menuitemcheckbox">
           Work
-          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </button>
         <button type="button" class="desktop-menu-item" data-toggle-widget="music" role="menuitemcheckbox">
           Music
-          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </button>
       </div>
     </div>
@@ -9697,24 +9774,24 @@
     <div class="desktop-menu-row has-sub" data-sub="wallpaper">
       <button type="button" class="desktop-menu-item" data-action="wallpaper" role="menuitem" aria-haspopup="true">
         Change Wallpaper
-        <svg class="desktop-menu-chevron" viewBox="0 0 8 12" fill="none" aria-hidden="true"><path d="M2 1.5 6.5 6 2 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="desktop-menu-chevron" viewBox="0 0 8 12" fill="none" aria-hidden="true"><path d="M2 1.5 6.5 6 2 10.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="desktop-submenu" data-sub="wallpaper" role="menu">
         <button type="button" class="desktop-menu-item" data-wallpaper="1" role="menuitemradio">
           Sequoia
-          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </button>
         <button type="button" class="desktop-menu-item" data-wallpaper="2" role="menuitemradio">
           Ambient
-          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </button>
         <button type="button" class="desktop-menu-item" data-wallpaper="11" role="menuitemradio">
           Horizon
-          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </button>
         <button type="button" class="desktop-menu-item" data-wallpaper="9" role="menuitemradio">
           Nebula
-          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </button>
       </div>
     </div>
@@ -9723,7 +9800,7 @@
     <div class="desktop-menu-row">
       <button type="button" class="desktop-menu-item" data-action="dark" role="menuitemcheckbox" aria-checked="false">
         Dark Mode
-        <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </button>
     </div>
     <div class="home-menu-sep"></div>
@@ -9741,11 +9818,11 @@
   <div class="desktop-menu" id="widget-menu" hidden role="menu" aria-label="Widget">
     <div class="desktop-menu-label">Size</div>
     <button type="button" class="desktop-menu-item check-left" data-widget-size="small" role="menuitemradio">
-      <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       Small
     </button>
     <button type="button" class="desktop-menu-item check-left" data-widget-size="large" role="menuitemradio">
-      <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="desktop-menu-check" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       Large
     </button>
     <div class="home-menu-sep"></div>
@@ -9760,32 +9837,32 @@
       <div class="widget-gallery-body">
         <aside class="widget-gallery-sidebar">
           <div class="widget-gallery-search">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-3.5-3.5"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-3.5-3.5"/></svg>
             <input type="search" id="widget-gallery-search" placeholder="Search Widgets" autocomplete="off">
           </div>
           <div class="widget-gallery-nav" id="widget-gallery-nav">
             <button type="button" class="widget-gallery-nav-item active" data-gallery-cat="all">
-              <span class="widget-gallery-nav-icon all" aria-hidden="true">◉</span>
+              <span class="widget-gallery-nav-icon all" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></span>
               All Widgets
             </button>
             <button type="button" class="widget-gallery-nav-item" data-gallery-cat="profile">
-              <span class="widget-gallery-nav-icon profile" aria-hidden="true">S</span>
+              <span class="widget-gallery-nav-icon profile" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span>
               Profile
             </button>
             <button type="button" class="widget-gallery-nav-item" data-gallery-cat="notes">
-              <span class="widget-gallery-nav-icon notes" aria-hidden="true">N</span>
+              <span class="widget-gallery-nav-icon notes" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5c4800" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l5 5v13H6z"/><path d="M15 3v5h5M9 12h6M9 16h6"/></svg></span>
               Notes
             </button>
             <button type="button" class="widget-gallery-nav-item" data-gallery-cat="ailab">
-              <span class="widget-gallery-nav-icon ailab" aria-hidden="true">AI</span>
+              <span class="widget-gallery-nav-icon ailab" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9.5l-4.2 1.9L12 16l-1.8-4.6L6 9.5l4.2-1.9L12 3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg></span>
               AI Lab
             </button>
             <button type="button" class="widget-gallery-nav-item" data-gallery-cat="work">
-              <span class="widget-gallery-nav-icon work" aria-hidden="true">W</span>
+              <span class="widget-gallery-nav-icon work" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M9 8V6.5A1.5 1.5 0 0110.5 5h3A1.5 1.5 0 0115 6.5V8"/></svg></span>
               Work
             </button>
             <button type="button" class="widget-gallery-nav-item" data-gallery-cat="music">
-              <span class="widget-gallery-nav-icon music" aria-hidden="true">♪</span>
+              <span class="widget-gallery-nav-icon music" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg></span>
               Music
             </button>
           </div>
@@ -9796,7 +9873,7 @@
             <h3 class="widget-gallery-section-title">Suggestions</h3>
             <div class="widget-gallery-grid">
               <button type="button" class="wg-card" data-add-widget="notes" data-add-size="large" data-gallery-cat="notes">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview notes large">
                   <div class="wg-notes-text">Design is not just what it looks like. Design is how it works.</div>
                   <div class="wg-notes-author">— Steve Jobs</div>
@@ -9804,14 +9881,14 @@
                 <div class="wg-card-caption">Notes</div>
               </button>
               <button type="button" class="wg-card" data-add-widget="music" data-add-size="small" data-gallery-cat="music">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview glass music small">
                   <div class="wg-art-wrap"><img class="wg-art" src="https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg" alt=""></div>
                 </div>
                 <div class="wg-card-caption">Music</div>
               </button>
               <button type="button" class="wg-card" data-add-widget="ailab" data-add-size="small" data-gallery-cat="ailab">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview glass small">
                   <div class="wg-visual"><img src="./assets/logos/ai-lab-memoji.png" alt=""></div>
                   <div class="wg-label">AI Lab</div>
@@ -9819,17 +9896,17 @@
                 <div class="wg-card-caption">AI Lab</div>
               </button>
               <button type="button" class="wg-card" data-add-widget="work" data-add-size="small" data-gallery-cat="work">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview glass small">
                   <div class="wg-visual" style="background:linear-gradient(180deg,#64d2ff,#0a84ff);">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="4" y="5" width="10" height="13" rx="1.5"/><rect x="9" y="7" width="10" height="13" rx="1.5"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75"><rect x="4" y="5" width="10" height="13" rx="1.5"/><rect x="9" y="7" width="10" height="13" rx="1.5"/></svg>
                   </div>
                   <div class="wg-label">Portfolio</div>
                 </div>
                 <div class="wg-card-caption">Work</div>
               </button>
               <button type="button" class="wg-card" data-add-widget="profile" data-add-size="large" data-gallery-cat="profile">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview profile profile-large large">
                   <div class="wg-profile-banner"></div>
                   <div class="wg-profile-body">
@@ -9847,14 +9924,14 @@
             <h3 class="widget-gallery-section-title">Notes</h3>
             <div class="widget-gallery-grid">
               <button type="button" class="wg-card" data-add-widget="notes" data-add-size="small" data-gallery-cat="notes">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview notes small">
                   <div class="wg-notes-text">Design is not just what it looks like…</div>
                 </div>
                 <div class="wg-card-caption">Small</div>
               </button>
               <button type="button" class="wg-card" data-add-widget="notes" data-add-size="large" data-gallery-cat="notes">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview notes large">
                   <div class="wg-notes-text">Design is not just what it looks like. Design is how it works.</div>
                   <div class="wg-notes-author">— Steve Jobs</div>
@@ -9868,7 +9945,7 @@
             <h3 class="widget-gallery-section-title">Profile</h3>
             <div class="widget-gallery-grid">
               <button type="button" class="wg-card" data-add-widget="profile" data-add-size="small" data-gallery-cat="profile">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview profile small">
                   <div class="wg-profile-body">
                     <img class="wg-avatar" src="./assets/logos/ShivanshuMathur.jpg" alt="">
@@ -9878,7 +9955,7 @@
                 <div class="wg-card-caption">Small</div>
               </button>
               <button type="button" class="wg-card" data-add-widget="profile" data-add-size="large" data-gallery-cat="profile">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview profile profile-large large">
                   <div class="wg-profile-banner"></div>
                   <div class="wg-profile-body">
@@ -9896,14 +9973,14 @@
             <h3 class="widget-gallery-section-title">AI Lab</h3>
             <div class="widget-gallery-grid">
               <button type="button" class="wg-card" data-add-widget="ailab" data-add-size="small" data-gallery-cat="ailab">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview glass small">
                   <div class="wg-visual"><img src="./assets/logos/ai-lab-memoji.png" alt=""></div>
                 </div>
                 <div class="wg-card-caption">Small</div>
               </button>
               <button type="button" class="wg-card" data-add-widget="ailab" data-add-size="large" data-gallery-cat="ailab">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview glass large ailab-large">
                   <div class="wg-visual"><img src="./assets/logos/ai-lab-memoji.png" alt=""></div>
                   <div class="wg-ailab-copy">
@@ -9921,19 +9998,19 @@
             <h3 class="widget-gallery-section-title">Work</h3>
             <div class="widget-gallery-grid">
               <button type="button" class="wg-card" data-add-widget="work" data-add-size="small" data-gallery-cat="work">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview glass small">
                   <div class="wg-visual" style="background:linear-gradient(180deg,#64d2ff,#0a84ff);">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="4" y="5" width="10" height="13" rx="1.5"/><rect x="9" y="7" width="10" height="13" rx="1.5"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75"><rect x="4" y="5" width="10" height="13" rx="1.5"/><rect x="9" y="7" width="10" height="13" rx="1.5"/></svg>
                   </div>
                 </div>
                 <div class="wg-card-caption">Small</div>
               </button>
               <button type="button" class="wg-card" data-add-widget="work" data-add-size="large" data-gallery-cat="work">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview glass large">
                   <div class="wg-visual" style="background:linear-gradient(180deg,#64d2ff,#0a84ff);">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="4" y="5" width="10" height="13" rx="1.5"/><rect x="9" y="7" width="10" height="13" rx="1.5"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75"><rect x="4" y="5" width="10" height="13" rx="1.5"/><rect x="9" y="7" width="10" height="13" rx="1.5"/></svg>
                   </div>
                   <div class="wg-label">View Portfolio</div>
                 </div>
@@ -9946,14 +10023,14 @@
             <h3 class="widget-gallery-section-title">Music</h3>
             <div class="widget-gallery-grid">
               <button type="button" class="wg-card" data-add-widget="music" data-add-size="small" data-gallery-cat="music">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview glass music small">
                   <div class="wg-art-wrap"><img class="wg-art" src="https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg" alt=""></div>
                 </div>
                 <div class="wg-card-caption">Small</div>
               </button>
               <button type="button" class="wg-card" data-add-widget="music" data-add-size="large" data-gallery-cat="music">
-                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                <span class="wg-card-badge" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6.2 4.8 9 10 3" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
                 <div class="wg-preview glass music large">
                   <div class="wg-art-wrap"><img class="wg-art" src="https://img.youtube.com/vi/JgDNFQ2RaLQ/hqdefault.jpg" alt=""></div>
                   <div class="wg-meta">
@@ -10058,7 +10135,7 @@
 
           <div class="profile-actions widget-detail-lg">
             <a href="mailto:ershivanshumathur@gmail.com" class="btn-chat">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
               Let's chat
             </a>
             <a href="https://www.linkedin.com/in/shivanshumathur/" target="_blank" rel="noopener noreferrer" class="btn-linkedin" hidden>
@@ -10083,7 +10160,7 @@
             <div class="bento-tile-cta">
               <span class="btn-linkedin">
                 Enter AI Lab
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
               </span>
             </div>
           </div>
@@ -10103,12 +10180,12 @@
         <div class="bento-tile-cta">
           <button type="button" class="btn-linkedin folio-idle-cta" id="open-work-folio">
             View Portfolio
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
           </button>
           <form class="folio-auth" id="folio-auth" autocomplete="off">
             <input type="password" id="folio-password" name="folio-password" placeholder="Password" autocomplete="off" spellcheck="false">
             <button type="submit" class="folio-auth-go" aria-label="Unlock">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
             </button>
           </form>
         </div>
@@ -10169,13 +10246,13 @@
       <!-- Finder Toolbar -->
       <div class="finder-toolbar">
         <button class="finder-nav-btn" id="btn-toggle-sidebar" title="Toggle sidebar">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"/></svg>
         </button>
         <button class="finder-nav-btn disabled" title="Back">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
         </button>
         <button class="finder-nav-btn disabled" title="Forward">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
         </button>
         <span class="finder-breadcrumb">/Selected Projects</span>
       </div>
@@ -10187,7 +10264,7 @@
         <nav class="finder-sidebar" aria-label="Project categories">
           <div class="sidebar-section-label">Favorites</div>
           <button class="sidebar-item active" id="sidebar-hot-work" data-filter="__hot__">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
             Selected Projects
           </button>
         </nav>
@@ -10198,7 +10275,7 @@
           <!-- Hero -->
           <div class="hot-hero">
             <div class="hot-hero-eyebrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 6.51 6.51 0 009 11.5a3 3 0 105.476-1.717 6.012 6.012 0 00.886-4.569z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 6.51 6.51 0 009 11.5a3 3 0 105.476-1.717 6.012 6.012 0 00.886-4.569z"/></svg>
               Curated Collection
             </div>
             <h2 class="hot-hero-title">Selected Projects</h2>
@@ -10229,7 +10306,7 @@
                 </div>
                 <a href="#" class="btn-chat" style="margin-top: 16px; align-self: flex-start;">
                   Read case study
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </a>
               </div>
             </button>
@@ -10255,7 +10332,7 @@
                 </div>
                 <a href="#" class="btn-chat" style="margin-top: 16px; align-self: flex-start;">
                   Read case study
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </a>
               </div>
             </button>
@@ -10298,11 +10375,11 @@
                 </div>
                 <div class="apple-meta-item" style="text-align: left;">
                   <span class="apple-meta-label">Tools & Tech</span>
-                  <span class="apple-meta-value" style="display: flex; align-items: center; gap: 12px; justify-content: flex-start; flex-wrap: nowrap;">
-                    <img src="./assets/tools-icons/Miro Icon.svg.svg" alt="Miro" style="height: 20px; width: auto;">
-                    <img src="./assets/tools-icons/Figma_Logo.svg" alt="Figma" style="height: 20px; width: auto;">
-                    <img src="./assets/tools-icons/Jira_Logo.svg" alt="Jira" style="height: 20px; width: auto;">
-                    <img src="./assets/tools-icons/SAP_Logo.svg" alt="SAP" style="height: 20px; width: auto;">
+                  <span class="apple-meta-value" style="display: flex; align-items: center; gap: 8px; justify-content: flex-start; flex-wrap: nowrap;">
+                    <span class="tool-icon tool-icon--sm"><img src="./assets/tools-icons/Miro Icon.svg.svg" alt="Miro"></span>
+                    <span class="tool-icon tool-icon--sm"><img src="./assets/tools-icons/Figma_Logo.svg" alt="Figma"></span>
+                    <span class="tool-icon tool-icon--sm"><img src="./assets/tools-icons/Jira_Logo.svg" alt="Jira"></span>
+                    <span class="tool-icon tool-icon--sm"><img src="./assets/tools-icons/SAP_Logo.svg" alt="SAP"></span>
                   </span>
                 </div>
               </div>
@@ -10486,12 +10563,12 @@
 
                 <div class="role-scroll-wrapper apple-reveal">
                   <button class="role-scroll-arrow role-scroll-arrow-left" aria-label="Scroll left">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
                   </button>
                   <div class="apple-role-grid apple-role-grid-scroll" id="role-scroll-container">
                   <div class="apple-role-card">
                     <div class="apple-role-card-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>
                     </div>
                     <div class="apple-role-card-title">Problem Framing</div>
                     <img src="./assets/case-studies/Financial Planning Platform/Problem Framing.png" alt="Problem Framing" class="apple-role-card-image" loading="lazy">
@@ -10499,7 +10576,7 @@
                   </div>
                   <div class="apple-role-card">
                     <div class="apple-role-card-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z"/></svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z"/></svg>
                     </div>
                     <div class="apple-role-card-title">Platform Strategy & Sequencing</div>
                     <img src="./assets/case-studies/Financial Planning Platform/Platform Strategy & Sequencing.png" alt="Platform Strategy & Sequencing" class="apple-role-card-image" loading="lazy">
@@ -10507,7 +10584,7 @@
                   </div>
                   <div class="apple-role-card">
                     <div class="apple-role-card-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
                     </div>
                     <div class="apple-role-card-title">Persona Development</div>
                     <img src="./assets/case-studies/Financial Planning Platform/Persona.png" alt="Persona Development" class="apple-role-card-image" loading="lazy">
@@ -10515,7 +10592,7 @@
                   </div>
                   <div class="apple-role-card">
                     <div class="apple-role-card-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
                     </div>
                     <div class="apple-role-card-title">KPI Mapping & Standardization</div>
                     <img src="./assets/case-studies/Financial Planning Platform/KPI Mapping.png" alt="KPI Mapping & Standardization" class="apple-role-card-image" loading="lazy">
@@ -10523,7 +10600,7 @@
                   </div>
                     <div class="apple-role-card">
                       <div class="apple-role-card-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg>
                       </div>
                       <div class="apple-role-card-title">Tool Integration & Architecture</div>
                       <img src="./assets/case-studies/Financial Planning Platform/Tool Integration.png" alt="Tool Integration & Architecture" class="apple-role-card-image" loading="lazy">
@@ -10531,7 +10608,7 @@
                     </div>
                     <div class="apple-role-card">
                       <div class="apple-role-card-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
                       </div>
                       <div class="apple-role-card-title">Card Sorting</div>
                       <img src="./assets/case-studies/Financial Planning Platform/Card Sorting.png" alt="Card Sorting" class="apple-role-card-image" loading="lazy">
@@ -10539,7 +10616,7 @@
                     </div>
                     <div class="apple-role-card">
                       <div class="apple-role-card-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
                       </div>
                       <div class="apple-role-card-title">User Flow Design</div>
                       <img src="./assets/case-studies/Financial Planning Platform/User Flow.png" alt="User Flow Design" class="apple-role-card-image" loading="lazy">
@@ -10547,7 +10624,7 @@
                     </div>
                     <div class="apple-role-card">
                       <div class="apple-role-card-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h11.25c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h11.25c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/></svg>
                       </div>
                       <div class="apple-role-card-title">Wireframing & Dot Voting</div>
                       <img src="./assets/case-studies/Financial Planning Platform/Wireframing.png" alt="Wireframing & Dot Voting" class="apple-role-card-image" loading="lazy">
@@ -10555,7 +10632,7 @@
                     </div>
                   <div class="apple-role-card">
                     <div class="apple-role-card-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0c0 1.649-.625 3.149-1.65 4.243C2.625 17.351 4.125 18 5.75 18s3.125-.649 4.15-1.757A7.5 7.5 0 014.5 12zm15 0c0 1.649-.625 3.149-1.65 4.243C17.625 17.351 19.125 18 20.75 18s3.125-.649 4.15-1.757A7.5 7.5 0 0019.5 12z"/></svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0015 0m-15 0a7.5 7.5 0 1115 0m-15 0c0 1.649-.625 3.149-1.65 4.243C2.625 17.351 4.125 18 5.75 18s3.125-.649 4.15-1.757A7.5 7.5 0 014.5 12zm15 0c0 1.649-.625 3.149-1.65 4.243C17.625 17.351 19.125 18 20.75 18s3.125-.649 4.15-1.757A7.5 7.5 0 0019.5 12z"/></svg>
                     </div>
                     <div class="apple-role-card-title">Design System</div>
                     <img src="./assets/case-studies/Financial Planning Platform/Design System.png" alt="Design System" class="apple-role-card-image" loading="lazy">
@@ -10563,7 +10640,7 @@
                   </div>
                   <div class="apple-role-card">
                     <div class="apple-role-card-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
                     </div>
                     <div class="apple-role-card-title">Design and Prototyping</div>
                     <img src="./assets/case-studies/Financial Planning Platform/Experience Design.png" alt="Design and Prototyping" class="apple-role-card-image" loading="lazy">
@@ -10571,7 +10648,7 @@
                   </div>
                   <div class="apple-role-card">
                     <div class="apple-role-card-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg>
                     </div>
                     <div class="apple-role-card-title">Cross-functional Alignment</div>
                     <img src="./assets/case-studies/Financial Planning Platform/Crose Functional.png" alt="Cross-functional Alignment" class="apple-role-card-image" loading="lazy">
@@ -10579,7 +10656,7 @@
                   </div>
                   </div>
                   <button class="role-scroll-arrow role-scroll-arrow-right" aria-label="Scroll right">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
                   </button>
                 </div>
               </div>
@@ -10599,10 +10676,10 @@
                     <div class="platform-expandable-item active" data-platform="cfcc">
                       <button class="platform-expandable-header">
                         <div class="platform-expandable-title-wrapper">
-                          <img src="./assets/case-studies/Financial Planning Platform/CFCC.svg" alt="CF/CC" class="platform-expandable-icon" loading="lazy">
+                          <span class="tool-icon platform-expandable-icon"><img src="./assets/case-studies/Financial Planning Platform/CFCC.svg" alt="CF/CC" loading="lazy"></span>
                           <span class="platform-expandable-title">CF / CC</span>
                     </div>
-                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                           <path d="M6 9L12 15L18 9"/>
                         </svg>
                       </button>
@@ -10618,10 +10695,10 @@
                     <div class="platform-expandable-item" data-platform="marketmodel">
                       <button class="platform-expandable-header">
                         <div class="platform-expandable-title-wrapper">
-                          <img src="./assets/case-studies/Financial Planning Platform/MarketModel_Logo.svg" alt="Market Model" class="platform-expandable-icon" loading="lazy">
+                          <span class="tool-icon platform-expandable-icon"><img src="./assets/case-studies/Financial Planning Platform/MarketModel_Logo.svg" alt="Market Model" loading="lazy"></span>
                           <span class="platform-expandable-title">Market Model</span>
                     </div>
-                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                           <path d="M6 9L12 15L18 9"/>
                         </svg>
                       </button>
@@ -10637,10 +10714,10 @@
                     <div class="platform-expandable-item" data-platform="costinsights">
                       <button class="platform-expandable-header">
                         <div class="platform-expandable-title-wrapper">
-                          <img src="./assets/case-studies/Financial Planning Platform/CostInsights_Logo.svg" alt="Cost Insights" class="platform-expandable-icon" loading="lazy">
+                          <span class="tool-icon platform-expandable-icon"><img src="./assets/case-studies/Financial Planning Platform/CostInsights_Logo.svg" alt="Cost Insights" loading="lazy"></span>
                           <span class="platform-expandable-title">Cost Insights</span>
                     </div>
-                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                           <path d="M6 9L12 15L18 9"/>
                         </svg>
                       </button>
@@ -10656,10 +10733,10 @@
                     <div class="platform-expandable-item" data-platform="dost">
                       <button class="platform-expandable-header">
                         <div class="platform-expandable-title-wrapper">
-                          <img src="./assets/case-studies/Financial Planning Platform/Dost_Logo.svg" alt="DOST" class="platform-expandable-icon" loading="lazy">
+                          <span class="tool-icon platform-expandable-icon"><img src="./assets/case-studies/Financial Planning Platform/Dost_Logo.svg" alt="DOST" loading="lazy"></span>
                           <span class="platform-expandable-title">DOST</span>
                     </div>
-                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
                           <path d="M6 9L12 15L18 9"/>
                         </svg>
                       </button>
@@ -10914,7 +10991,7 @@
                         <div class="impact-capabilities">
                           <div class="impact-capability-row">
                             <span class="impact-capability-icon" aria-hidden="true">
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
                             </span>
                             <span>
                               <span class="impact-capability-headline">4 layers, integrated platform</span><span class="impact-capability-aside"> — was 150+ sheets</span>
@@ -10922,7 +10999,7 @@
                           </div>
                           <div class="impact-capability-row">
                             <span class="impact-capability-icon" aria-hidden="true">
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
                             </span>
                             <span>
                               <span class="impact-capability-headline">Full audit trail</span><span class="impact-capability-aside"> — was zero visibility</span>
@@ -10930,7 +11007,7 @@
                           </div>
                           <div class="impact-capability-row">
                             <span class="impact-capability-icon" aria-hidden="true">
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
                             </span>
                             <span>
                               <span class="impact-capability-headline">Self-service enabled</span><span class="impact-capability-aside"> — was negligible</span>
@@ -11166,11 +11243,11 @@
                   </p>
                   <div class="apple-cta-row">
                     <a href="https://calendly.com/shivanshu-mthr8/30min" target="_blank" rel="noopener noreferrer" class="btn-chat">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 9.75h18M5.25 19.5h13.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H5.25a2.25 2.25 0 00-2.25 2.25v10.5a2.25 2.25 0 002.25 2.25z"/></svg>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 9.75h18M5.25 19.5h13.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H5.25a2.25 2.25 0 00-2.25 2.25v10.5a2.25 2.25 0 002.25 2.25z"/></svg>
                       Book a Call
                     </a>
                     <a href="mailto:ershivanshumathur@gmail.com" class="btn-linkedin">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
                       Email me Directly
                     </a>
                   </div>
@@ -11221,12 +11298,12 @@
                 </div>
                 <div class="apple-meta-item" style="text-align: left;">
                   <span class="apple-meta-label">Tools</span>
-                  <span class="apple-meta-value" style="display: flex; align-items: center; gap: 12px; justify-content: flex-start; flex-wrap: nowrap;">
-                    <img src="./assets/tools-icons/Miro Icon.svg.svg" alt="Miro" style="height: 20px; width: auto;">
-                    <img src="./assets/tools-icons/Figma_Logo.svg" alt="Figma" style="height: 20px; width: auto;">
-                    <img src="./assets/tools-icons/useberry_icon.png" alt="Useberry" style="height: 20px; width: auto; border-radius: 4px;">
-                    <img src="./assets/tools-icons/confluence-logo.svg" alt="Confluence" style="height: 20px; width: auto;">
-                    <img src="./assets/tools-icons/chatgpt.png" alt="ChatGPT" style="height: 20px; width: auto;">
+                  <span class="apple-meta-value" style="display: flex; align-items: center; gap: 8px; justify-content: flex-start; flex-wrap: nowrap;">
+                    <span class="tool-icon tool-icon--sm"><img src="./assets/tools-icons/Miro Icon.svg.svg" alt="Miro"></span>
+                    <span class="tool-icon tool-icon--sm"><img src="./assets/tools-icons/Figma_Logo.svg" alt="Figma"></span>
+                    <span class="tool-icon tool-icon--sm"><img src="./assets/tools-icons/useberry_icon.png" alt="Useberry"></span>
+                    <span class="tool-icon tool-icon--sm"><img src="./assets/tools-icons/confluence-logo.svg" alt="Confluence"></span>
+                    <span class="tool-icon tool-icon--sm"><img src="./assets/tools-icons/chatgpt.png" alt="ChatGPT"></span>
                   </span>
                 </div>
               </div>
@@ -11308,7 +11385,7 @@
                     </p>
                   </div>
                   <button type="button" class="btn-chat fv-survey-open" style="flex-shrink: 0; margin-top: 4px; border: none; cursor: pointer;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
                     Survey Results
                   </button>
                 </div>
@@ -11361,7 +11438,7 @@
                       </div>
                       <div class="fv-funnel-track"><div class="fv-funnel-fill" style="width:100%;"></div></div>
                       <div class="fv-funnel-leak">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5v9a3 3 0 003 3h12m0 0l-4.5-4.5m4.5 4.5L15 21"/></svg>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5v9a3 3 0 003 3h12m0 0l-4.5-4.5m4.5 4.5L15 21"/></svg>
                         <span><strong>54%</strong> never heard Forge existed</span>
                       </div>
                     </div>
@@ -11372,7 +11449,7 @@
                       </div>
                       <div class="fv-funnel-track"><div class="fv-funnel-fill" style="width:46%;"></div></div>
                       <div class="fv-funnel-leak">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5v9a3 3 0 003 3h12m0 0l-4.5-4.5m4.5 4.5L15 21"/></svg>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5v9a3 3 0 003 3h12m0 0l-4.5-4.5m4.5 4.5L15 21"/></svg>
                         <span><strong>31%</strong> couldn't articulate its value</span>
                       </div>
                     </div>
@@ -11383,7 +11460,7 @@
                       </div>
                       <div class="fv-funnel-track"><div class="fv-funnel-fill" style="width:15%;"></div></div>
                       <div class="fv-funnel-leak">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5v9a3 3 0 003 3h12m0 0l-4.5-4.5m4.5 4.5L15 21"/></svg>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5v9a3 3 0 003 3h12m0 0l-4.5-4.5m4.5 4.5L15 21"/></svg>
                         <span><strong>14%</strong> hit a blocker, no way to get unstuck</span>
                       </div>
                     </div>
@@ -11615,7 +11692,7 @@
                             <stop offset="100%" stop-color="#2684FF" stop-opacity="0"/>
                           </linearGradient>
                         </defs>
-                        <g stroke="#ececec" stroke-width="1">
+                        <g stroke="#ececec" stroke-width="1.75">
                           <line x1="108" y1="28" x2="536" y2="28"/>
                           <line x1="108" y1="42" x2="536" y2="42"/>
                           <line x1="108" y1="56" x2="536" y2="56"/>
@@ -11634,20 +11711,20 @@
                           <text x="100" y="144">Curious</text>
                         </g>
                         <path d="M132,140 C149,133 165,129 182,126 C199,123 215,116 232,112 C249,108 265,91 282,84 C299,77 315,84 332,84 C349,84 365,77 382,70 C399,63 415,56 432,56 C449,56 465,56 482,56 C499,56 515,56 532,56 L532,140 L132,140 Z" fill="url(#fvFrictionFill)"/>
-                        <path d="M132,140 C149,133 165,129 182,126 C199,123 215,116 232,112 C249,108 265,91 282,84 C299,77 315,84 332,84 C349,84 365,77 382,70 C399,63 415,56 432,56 C449,56 465,56 482,56 C499,56 515,56 532,56" fill="none" stroke="#2684FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M132,140 C149,133 165,129 182,126 C199,123 215,116 232,112 C249,108 265,91 282,84 C299,77 315,84 332,84 C349,84 365,77 382,70 C399,63 415,56 432,56 C449,56 465,56 482,56 C499,56 515,56 532,56" fill="none" stroke="#2684FF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
                         <g>
-                          <circle cx="132" cy="140" r="4.5" fill="#fff" stroke="#2684FF" stroke-width="2"/>
-                          <circle cx="182" cy="126" r="4.5" fill="#fff" stroke="#2684FF" stroke-width="2"/>
-                          <circle cx="232" cy="112" r="4.5" fill="#fff" stroke="#2684FF" stroke-width="2"/>
-                          <circle cx="282" cy="84" r="4.5" fill="#fff" stroke="#2684FF" stroke-width="2"/>
-                          <circle cx="332" cy="84" r="4.5" fill="#fff" stroke="#2684FF" stroke-width="2"/>
-                          <circle cx="382" cy="70" r="4.5" fill="#fff" stroke="#2684FF" stroke-width="2"/>
-                          <circle cx="432" cy="56" r="5.5" fill="#C9372C" stroke="#fff" stroke-width="2"/>
-                          <circle cx="482" cy="56" r="4.5" fill="#fff" stroke="#C9372C" stroke-width="2"/>
-                          <circle cx="532" cy="56" r="4.5" fill="#fff" stroke="#C9372C" stroke-width="2"/>
+                          <circle cx="132" cy="140" r="4.5" fill="#fff" stroke="#2684FF" stroke-width="1.75"/>
+                          <circle cx="182" cy="126" r="4.5" fill="#fff" stroke="#2684FF" stroke-width="1.75"/>
+                          <circle cx="232" cy="112" r="4.5" fill="#fff" stroke="#2684FF" stroke-width="1.75"/>
+                          <circle cx="282" cy="84" r="4.5" fill="#fff" stroke="#2684FF" stroke-width="1.75"/>
+                          <circle cx="332" cy="84" r="4.5" fill="#fff" stroke="#2684FF" stroke-width="1.75"/>
+                          <circle cx="382" cy="70" r="4.5" fill="#fff" stroke="#2684FF" stroke-width="1.75"/>
+                          <circle cx="432" cy="56" r="5.5" fill="#C9372C" stroke="#fff" stroke-width="1.75"/>
+                          <circle cx="482" cy="56" r="4.5" fill="#fff" stroke="#C9372C" stroke-width="1.75"/>
+                          <circle cx="532" cy="56" r="4.5" fill="#fff" stroke="#C9372C" stroke-width="1.75"/>
                         </g>
                         <text x="432" y="42" text-anchor="middle" fill="#C9372C" font-size="10" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">Peak</text>
-                        <g stroke="#d0d0d0" stroke-width="1.5">
+                        <g stroke="#d0d0d0" stroke-width="1.75">
                           <line x1="132" y1="148" x2="132" y2="156"/>
                           <line x1="182" y1="148" x2="182" y2="156"/>
                           <line x1="232" y1="148" x2="232" y2="156"/>
@@ -11926,7 +12003,7 @@
                           <img src="./assets/case-studies/forge/generic_icon forge.webp" alt="" class="platform-expandable-icon" width="32" height="32" loading="lazy">
                           <span class="platform-expandable-title">Consolidated documentation</span>
                         </div>
-                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                           <path d="M6 9L12 15L18 9"/>
                         </svg>
                       </button>
@@ -11944,7 +12021,7 @@
                           <img src="./assets/case-studies/forge/generic_icon forge.webp" alt="" class="platform-expandable-icon" width="32" height="32" loading="lazy">
                           <span class="platform-expandable-title">Developer Community space</span>
                         </div>
-                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                           <path d="M6 9L12 15L18 9"/>
                         </svg>
                       </button>
@@ -11962,7 +12039,7 @@
                           <img src="./assets/case-studies/forge/generic_icon forge.webp" alt="" class="platform-expandable-icon" width="32" height="32" loading="lazy">
                           <span class="platform-expandable-title">Task-oriented tutorials</span>
                         </div>
-                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                           <path d="M6 9L12 15L18 9"/>
                         </svg>
                       </button>
@@ -11980,7 +12057,7 @@
                           <img src="./assets/case-studies/forge/generic_icon forge.webp" alt="" class="platform-expandable-icon" width="32" height="32" loading="lazy">
                           <span class="platform-expandable-title">Marketplace visibility</span>
                         </div>
-                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <svg class="platform-expandable-caret" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                           <path d="M6 9L12 15L18 9"/>
                         </svg>
                       </button>
@@ -12088,11 +12165,11 @@
                   </p>
                   <div class="apple-cta-row">
                     <a href="https://calendly.com/shivanshu-mthr8/30min" target="_blank" rel="noopener noreferrer" class="btn-chat">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 9.75h18M5.25 19.5h13.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H5.25a2.25 2.25 0 00-2.25 2.25v10.5a2.25 2.25 0 002.25 2.25z"/></svg>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 9.75h18M5.25 19.5h13.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H5.25a2.25 2.25 0 00-2.25 2.25v10.5a2.25 2.25 0 002.25 2.25z"/></svg>
                       Book a Call
                     </a>
                     <a href="mailto:ershivanshumathur@gmail.com" class="btn-linkedin">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
                       Email me Directly
                     </a>
                   </div>
@@ -12133,7 +12210,7 @@
       <!-- Finder Toolbar -->
       <div class="finder-toolbar">
         <button class="finder-nav-btn" id="articles-back-btn" title="Back" style="display: none;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
         </button>
         <span class="finder-breadcrumb" id="articles-breadcrumb">/Articles</span>
       </div>
@@ -12164,37 +12241,37 @@
                 <button class="article-item" data-article="1">
                   <span class="article-number">1</span>
                   <span class="article-title">AI Is Not a Tool. It's a Teammate.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="2">
                   <span class="article-number">2</span>
                   <span class="article-title">From UX Designer to UX Orchestrator.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="3">
                   <span class="article-number">3</span>
                   <span class="article-title">What Exactly Is Agentic AI? (For Leaders, Not Engineers).</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="4">
                   <span class="article-number">4</span>
                   <span class="article-title">The 5 Levels of AI Maturity in Organizations.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="5">
                   <span class="article-number">5</span>
                   <span class="article-title">Why Senior Professionals Feel Threatened (And Why They Shouldn't).</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="6">
                   <span class="article-number">6</span>
                   <span class="article-title">Agentic AI vs Traditional Automation.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="7">
                   <span class="article-number">7</span>
                   <span class="article-title">The New Skill: Designing Systems That Think.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
               </div>
             </div>
@@ -12212,42 +12289,42 @@
                 <button class="article-item" data-article="8">
                   <span class="article-number">8</span>
                   <span class="article-title">How Agentic AI Changes UX Research.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="9">
                   <span class="article-number">9</span>
                   <span class="article-title">AI-Powered Persona Evolution.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="10">
                   <span class="article-number">10</span>
                   <span class="article-title">Designing Multi-Agent UX Systems.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="11">
                   <span class="article-number">11</span>
                   <span class="article-title">The Future of Dashboards: From Data Display to Decision Agents.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="12">
                   <span class="article-number">12</span>
                   <span class="article-title">Agentic AI in Service Design.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="13">
                   <span class="article-number">13</span>
                   <span class="article-title">UX Governance in an AI-Driven World.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="14">
                   <span class="article-number">14</span>
                   <span class="article-title">Measuring UX When AI Is Acting on Its Own.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="15">
                   <span class="article-number">15</span>
                   <span class="article-title">Case Study Deep Dive (Enterprise Scenario).</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
               </div>
             </div>
@@ -12265,37 +12342,37 @@
                 <button class="article-item" data-article="16">
                   <span class="article-number">16</span>
                   <span class="article-title">The Organizational Impact of Agentic AI.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="17">
                   <span class="article-number">17</span>
                   <span class="article-title">Should UX Own AI Strategy?</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="18">
                   <span class="article-number">18</span>
                   <span class="article-title">Risk, Compliance & Ethical Boundaries.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="19">
                   <span class="article-number">19</span>
                   <span class="article-title">Budgeting for Agentic AI.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="20">
                   <span class="article-number">20</span>
                   <span class="article-title">Change Management for AI Adoption.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="21">
                   <span class="article-number">21</span>
                   <span class="article-title">The Future UX Org Structure (2027 Outlook).</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="22">
                   <span class="article-number">22</span>
                   <span class="article-title">The Competitive Advantage of Early Adoption.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
               </div>
             </div>
@@ -12313,42 +12390,42 @@
                 <button class="article-item" data-article="23">
                   <span class="article-number">23</span>
                   <span class="article-title">The Philosophy of Designing Intelligence.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="24">
                   <span class="article-number">24</span>
                   <span class="article-title">When Should You NOT Use Agentic AI?</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="25">
                   <span class="article-number">25</span>
                   <span class="article-title">The Cognitive Load Problem in AI UX.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="26">
                   <span class="article-number">26</span>
                   <span class="article-title">Agentic AI in B2B vs B2C UX.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="27">
                   <span class="article-number">27</span>
                   <span class="article-title">The Skills Senior Professionals Must Develop in 2026.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="28">
                   <span class="article-number">28</span>
                   <span class="article-title">How to Start in the Next 30 Days (Practical Roadmap).</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="29">
                   <span class="article-number">29</span>
                   <span class="article-title">The Long-Term Vision: AI-Native Organizations.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
                 <button class="article-item" data-article="30">
                   <span class="article-number">30</span>
                   <span class="article-title">The Future of UX Strategy in an Agentic World.</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                 </button>
               </div>
             </div>
@@ -12385,7 +12462,7 @@
             </div>
           </div>
           <div class="settings-search">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
             <input type="search" id="settings-search" placeholder="Search" autocomplete="off">
           </div>
 
@@ -12402,8 +12479,8 @@
               <span class="sr-only">typography text size accent colour font</span>
               <div class="settings-sidebar-icon" aria-hidden="true">
                 <svg viewBox="0 0 16 16">
-                  <circle cx="8" cy="8" r="6" fill="none" stroke="#fff" stroke-width="1.4"/>
-                  <path d="M8 2a6 6 0 0 0 0 12Z" fill="#fff"/>
+                  <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.75"/>
+                  <path d="M8 2a6 6 0 0 0 0 12Z" fill="currentColor"/>
                 </svg>
               </div>
               Appearance
@@ -12411,7 +12488,7 @@
             <button class="settings-sidebar-item" data-pane="wallpaper">
               <div class="settings-sidebar-icon" aria-hidden="true">
                 <svg viewBox="0 0 16 16">
-                  <g fill="#fff">
+                  <g fill="currentColor">
                     <circle cx="8" cy="8" r="1.35"/>
                     <ellipse cx="8" cy="3.9" rx="1.35" ry="2.15"/>
                     <ellipse cx="8" cy="12.1" rx="1.35" ry="2.15"/>
@@ -12432,8 +12509,8 @@
             <button class="settings-sidebar-item" data-pane="lock">
               <div class="settings-sidebar-icon" aria-hidden="true">
                 <svg viewBox="0 0 16 16" fill="none">
-                  <path d="M5.4 7.2V5.85a2.6 2.6 0 015.2 0V7.2" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
-                  <rect x="4.1" y="7.2" width="7.8" height="5.7" rx="1.4" fill="#fff"/>
+                  <path d="M5.4 7.2V5.85a2.6 2.6 0 015.2 0V7.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                  <rect x="4.1" y="7.2" width="7.8" height="5.7" rx="1.4" fill="currentColor"/>
                 </svg>
               </div>
               Lock Screen
@@ -12444,8 +12521,8 @@
             <button class="settings-sidebar-item" data-pane="about">
               <div class="settings-sidebar-icon" aria-hidden="true">
                 <svg viewBox="0 0 16 16" fill="none">
-                  <circle cx="8" cy="8" r="6" stroke="#fff" stroke-width="1.4"/>
-                  <path d="M8 7.2v4.2M8 5.15h.01" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+                  <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.75"/>
+                  <path d="M8 7.2v4.2M8 5.15h.01" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
                 </svg>
               </div>
               About
@@ -12457,10 +12534,10 @@
           <div class="settings-toolbar">
             <div class="settings-titlebar-nav">
               <button type="button" title="Back">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
               </button>
               <button type="button" title="Forward">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
               </button>
             </div>
             <div class="settings-titlebar-title" id="settings-pane-title">Users &amp; Groups</div>
@@ -12804,7 +12881,7 @@
             <div class="settings-section">
               <div class="about-card">
                 <div class="about-icon" style="background: linear-gradient(135deg, #0082FF, #06b6d4);">
-                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/></svg>
                 </div>
                 <h3>Personal OS</h3>
                 <p class="about-version">Version 1.0</p>
@@ -12840,8 +12917,8 @@
           <span class="dock-icon dock-icon--work" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none">
               <rect x="3" y="8" width="18" height="12" rx="2.5" fill="#fff" fill-opacity="0.96"/>
-              <path d="M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8" stroke="#0066cc" stroke-width="1.6" stroke-linecap="round"/>
-              <path d="M3 13h18" stroke="#0a84ff" stroke-width="1.3" stroke-opacity="0.45"/>
+              <path d="M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8" stroke="#0066cc" stroke-width="1.75" stroke-linecap="round"/>
+              <path d="M3 13h18" stroke="#0a84ff" stroke-width="1.75" stroke-opacity="0.45"/>
               <rect x="10.25" y="12.25" width="3.5" height="2.2" rx="0.7" fill="#0066cc"/>
             </svg>
           </span>
@@ -12849,7 +12926,7 @@
         <form class="dock-auth" id="dock-auth" autocomplete="off">
           <input type="password" id="dock-password" name="dock-password" placeholder="Password" autocomplete="off" spellcheck="false">
           <button type="submit" class="folio-auth-go" aria-label="Unlock">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
           </button>
         </form>
       </div>
@@ -12868,7 +12945,7 @@
         <span class="dock-icon dock-icon--mail" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none">
             <rect x="3" y="5.5" width="18" height="13" rx="2.2" fill="#fff" fill-opacity="0.97"/>
-            <path d="M4.2 7.2 12 12.4l7.8-5.2" stroke="#0071e3" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4.2 7.2 12 12.4l7.8-5.2" stroke="#0071e3" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
       </a>
@@ -12899,18 +12976,18 @@
         </span>
         <input class="ask-input" id="ask-input" type="text" placeholder="Type to Ask" autocomplete="off" spellcheck="false" aria-label="Type to Ask">
         <button type="button" class="ask-speaker is-off" id="ask-speaker" title="Turn voice on" aria-label="Turn voice on" aria-pressed="false">
-          <svg class="ask-speaker-on" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg class="ask-speaker-on" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M11 5L6 9H2v6h4l5 4V5z"/>
             <path d="M15.5 8.5a5 5 0 010 7"/>
             <path d="M18.5 6a9 9 0 010 12"/>
           </svg>
-          <svg class="ask-speaker-off" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg class="ask-speaker-off" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M11 5L6 9H2v6h4l5 4V5z"/>
             <path d="M22 9l-6 6M16 9l6 6"/>
           </svg>
         </button>
         <button type="button" class="ask-mic" id="ask-mic" title="Listen" aria-label="Listen">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="9" y="3" width="6" height="11" rx="3"/>
             <path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/>
           </svg>
@@ -16187,7 +16264,7 @@
     <div class="fv-modal-backdrop" data-fv-close></div>
     <div class="fv-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="fv-survey-title">
       <button type="button" class="fv-modal-close" aria-label="Close survey results" data-fv-close>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
       <div class="fv-modal-scroll">
         <div class="fv-modal-eyebrow">Survey Results</div>

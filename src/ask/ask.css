@@ -75,20 +75,11 @@ body.light-mode .dock-sep {
 }
 
 .ask-glass {
-  background: rgba(32, 32, 36, 0.52);
-  border: 0.5px solid rgba(255, 255, 255, 0.16);
-  box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.28),
-    inset 0 0.5px 0 rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(36px) saturate(1.6);
-  -webkit-backdrop-filter: blur(36px) saturate(1.6);
-}
-body.light-mode .ask-glass {
-  background: rgba(246, 246, 248, 0.62);
-  border-color: rgba(255, 255, 255, 0.55);
-  box-shadow:
-    0 10px 36px rgba(0, 0, 0, 0.12),
-    inset 0 0.5px 0 rgba(255, 255, 255, 0.8);
+  background: var(--glass-fill-chrome);
+  border: 0.5px solid var(--glass-stroke);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--glass-blur-chrome);
+  -webkit-backdrop-filter: var(--glass-blur-chrome);
 }
 
 .ask-bar {
